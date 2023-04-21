@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/ttd_admin_style.css' %}">
+</head>
+
+<body>
+    <main class="main2">
+        <div class="welcoming_holder">
+            <div class="welcoming_holder_text">
+                <p id="typing-text"></p>
+            </div>
+            <div class="welcoming_holder_btn">
+                <div class="btn_create_acount">
+                    <p> <a href="{% url 'ttd_admin_signin' %}">CREATE ACCOUNT</a> </p>
+                </div>
+            </div>
+
+        </div>
+        <div class="form_holder">
+            <div class="ttd_admin_container">
+                <div id="header">
+                    <h4 id="header_text"></h4>
+                </div>
+                <form action="ttd_admin_homepage" method="POST">
+                    {% csrf_token %}
+                    <label for="username" id="usern"></label><br><br>
+                    <input type="email" name="username" id="username" required><br>
+                    <label for="password" id="passw"></label><br><br>
+                    <input type="password" name="password" id="password" required> <br>
+                    <span id="displayPassword"><input type="checkbox" id="checkbox"> <label for="checkbox"
+                            id="status">show password</label></span>
+                    <input type="submit" value="LOGIN">
+                </form>
+            </div>
+        </div>
+    </main>
+    <script src="{% static 'js/ttd_user_script.js' %}"></script>
+    <script src="{% static 'js/ttd_user_script2.js' %}"></script>
+</body>
+
+</html>

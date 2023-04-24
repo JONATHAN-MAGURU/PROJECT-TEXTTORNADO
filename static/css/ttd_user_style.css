@@ -7,16 +7,16 @@
 }
 
 body {
-    background-color: #020216;
+    background-color: rgb(13, 23, 33);
     color: white;
-    
+
 }
 
 header {
     padding: 15px;
     overflow: auto;
     width: 100%;
-    background-color: yellowgreen;
+    background-color: slateblue;
     letter-spacing: 2px;
 }
 
@@ -24,7 +24,7 @@ main {
     display: flex;
     width: 100%;
     margin-top: 2%;
-    padding: 50px;
+    padding: 20px;
     flex-wrap: nowrap;
     border: none;
     background-color: transparent;
@@ -34,13 +34,13 @@ main {
 .form_holder {
     width: 35%;
     transition: 0.3s;
-    padding:0;
+    padding: 0;
 }
 
 .welcoming_holder {
     width: 30%;
     padding: 20px;
-    height:400px ;
+    height: 400px;
     transition: 0.3s;
     overflow: hidden;
 
@@ -63,7 +63,7 @@ p {
 }
 
 .welcoming_holder:hover {
-    box-shadow: 10px 10px yellowgreen;
+    box-shadow: 10px 10px slateblue;
     border: 1px solid #201f1f;
 }
 
@@ -76,13 +76,13 @@ p {
 }
 
 .ttd_admin_container:hover {
-    box-shadow: 10px 10px yellowgreen;
+    box-shadow: 10px 10px slateblue;
     border: 1px solid #201f1f;
     border-radius: 0;
 }
 
 form {
-    padding:20px;
+    padding:  16px;
 }
 
 input {
@@ -90,7 +90,7 @@ input {
     padding: 10px;
     color: #ffffff;
     margin-bottom: 10px;
-    background-color: #020216;
+    background-color: rgb(13, 23, 33);
     outline: none;
     border: 1px solid #ffffff;
     border-radius: 5px;
@@ -100,16 +100,17 @@ input[type='submit'] {
     width: 100%;
     padding: 10px;
     color: #FFFFFF;
-    background: yellowgreen;
+    background: slateblue;
     border: none;
     cursor: pointer;
     transition: 0.3s;
 }
+
 input[type='button'] {
     width: 100%;
     padding: 10px;
     color: #FFFFFF;
-    background: yellowgreen;
+    background: slateblue;
     border: none;
     cursor: pointer;
     transition: 0.3s;
@@ -123,13 +124,14 @@ a {
 input[type='submit']:hover {
     box-shadow: 10px 10px;
 }
+
 input[type='button']:hover {
     box-shadow: 10px 10px;
 }
 
 input[type='checkbox'] {
     width: auto;
-    accent-color: yellowgreen;
+    accent-color: slateblue;
     transform: scale(1.3);
     margin-right: 10px;
     transition: 0.9s;
@@ -147,7 +149,7 @@ h4 {
 }
 
 #typing-text::after {
-    content: "|";
+    content: " ";
     animation: blink 0.7s infinite;
     color: #ffffff;
 }
@@ -162,9 +164,13 @@ h4 {
     opacity: 0;
 }
 
+#displayPassword2 {
+    opacity: 0;
+}
+
 #header {
     padding: 15px;
-    background: yellowgreen;
+    background: slateblue;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     letter-spacing: 2px;
@@ -175,7 +181,7 @@ h4 {
 .btn_create_acount {
     width: 100%;
     padding: 10px;
-    background-color: yellowgreen;
+    background-color: slateblue;
     color: #ffffff;
     border-radius: 5px;
     text-align: center;
@@ -190,13 +196,14 @@ h4 {
 }
 
 
-.hidden_form_part{
-height: 0;
-overflow: hidden;
-transition: 0.3s;
+.hidden_form_part {
+    height: 0;
+    overflow: hidden;
+    transition: 0.3s;
 }
-.shown_form_part{
-overflow: hidden;
-height: 420px;
-transition: 0.3s;
+
+.shown_form_part {
+    overflow: hidden;
+    height: auto;
+    transition: 0.3s;
 }

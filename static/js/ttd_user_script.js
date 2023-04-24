@@ -1,7 +1,11 @@
 const passwordInput = document.getElementById("password");
+const passwordInput2 = document.getElementById("password_u");
 const showPasswordCheckbox = document.getElementById("checkbox");
+const showPasswordCheckbox2 = document.getElementById("checkbox2");
 const msg = document.getElementById("status");
+const msg2 = document.getElementById("status2");
 const pass_box = document.getElementById("displayPassword");
+const pass_box2 = document.getElementById("displayPassword2");
 const main = document.getElementsByClassName('main2')[0];
 const main_height = window.innerHeight;
 const main_width = window.innerWidth;
@@ -21,10 +25,7 @@ const pass = document.getElementById("password");
 const pass2 = document.getElementById("password2");
 const warn1 = document.getElementById("warn1");
 const v_code = document.getElementById("v_code");
-
-
-
-
+const log_user = document.getElementById("log_user");
 main.style.height = main_height + "px";
 
 
@@ -78,10 +79,8 @@ s_form.addEventListener('submit', function (event) {
 });
 
 shown_form.addEventListener('click', function () {
-
   hidden_form_part.style.height = "0";
   shown_form_part.style.height = "400px";
-
 });
 
 passwordInput.addEventListener('keydown', function () {
@@ -105,6 +104,25 @@ showPasswordCheckbox.addEventListener('change', function () {
   }
 });
 
+
+passwordInput2.addEventListener('keydown', function () {
+  if (passwordInput2.value.length > 0) {
+    pass_box2.style.opacity = "1";
+  }
+  else {
+    pass_box2.style.opacity = "0";
+  }
+});
+showPasswordCheckbox2.addEventListener('change', function () {
+  if (showPasswordCheckbox2.checked) {
+    passwordInput2.type = 'text';
+    msg2.innerHTML = 'hide password';
+  }
+  else {
+    passwordInput2.type = 'password';
+    msg2.innerHTML = 'show password';
+  }
+});
 
 function send_data(data) {
   var csrfToken = document.querySelector('#csrf_token').value;
@@ -137,14 +155,12 @@ function send_data(data) {
               else {
                 alert("bad request")
               }
-
             });
             var code2 = code.value;
             const vp = {
               x,
               code2
             };
-
             const json_data2 = JSON.stringify(vp);
             XHR.send(json_data2);
           });
@@ -154,7 +170,6 @@ function send_data(data) {
     else {
       alert("something went wrong");
     }
-
   });
   return XHR2.send(data);
 }

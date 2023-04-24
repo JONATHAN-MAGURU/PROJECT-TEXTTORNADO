@@ -4,7 +4,7 @@ from django.db import models
 class Player(models.Model):
     username = models.CharField(max_length=100)
     password = models.CharField(max_length=100)
-    number =  models.IntegerField()
+    number =  models.CharField(max_length=100)
     width =  models.IntegerField()
     height =  models.IntegerField()
     player_id = models.IntegerField()

@@ -51,12 +51,27 @@ def v_player(request):
         
 
 def v_player2(request):
+    
     if request.method == 'POST':
         user_data2 = json.loads(request.body)
-        ttd_id = user_data2['x']
+        ttd_id2 = user_data2['x']
         code = user_data2['code2']
+        player = Player.objects.get(player_id = ttd_id2)
+        player.v_code = code
+        player.save()
+    return HttpResponse(f"yes {ttd_id2}  {code} ")
 
-    return HttpResponse(f"yes {ttd_id}  {code} ")
+def login_user(request):
+     if request.method == 'POST':
+        user_dataa = json.loads(request.body)
+        username_u = user_dataa['username_u2']
+        password_u = user_dataa['password2']
+        
+        
+        if Player.objects.filter(username = username_u , password = password_u).exists():
+            return HttpResponse("account exists")
+        else:
+            return HttpResponse(" Account by that details does not exists ")
 
 
 

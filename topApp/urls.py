@@ -7,4 +7,5 @@ urlpatterns = [
     path('ttd_user_homepage/', views.ttd_user_homepage, name='ttd_user_homepage'),
     path('v_player', views.v_player, name='v_player'),
     path('v_player2', views.v_player2, name='v_player2'),
+    path('login_user', views.login_user, name='login_user'),
 ]

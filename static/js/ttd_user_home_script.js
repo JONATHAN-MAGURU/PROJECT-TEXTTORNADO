@@ -31,6 +31,13 @@ const log_out_hider = document.getElementsByClassName('log_out_hider')[0];
 const opt = screen.availHeight;
 const fontss = document.getElementById('fontss');
 const font_changer = document.getElementsByClassName('typing-text')[0];
+const manage_account_holder = document.getElementsByClassName('manage_account_holder')[0];
+const manage_account = document.getElementsByClassName('manage_account')[0];
+const changee = document.getElementsByClassName('change')[0];
+const change_pass = document.getElementsByClassName('change_pass')[0];
+const manage_close1 = document.getElementsByClassName('manage_close')[0];
+const manage_close2 = document.getElementsByClassName('manage_close')[1];
+const manage_close3 = document.getElementsByClassName('manage_close')[2];
 
 main_container.style.height = opt - 120 + "px";
 settings_container.style.height = opt - 150 + "px";
@@ -109,7 +116,7 @@ options_logout_1_1.addEventListener('click', function () {
 });
 
 player_name.addEventListener('click', function () {
-        options_player.style.height = opt - 250 + "px";
+        options_player.style.maxHeight ='300px';
         options.style.height = 0;
         options_logout.style.width = "0";
         options_notf.style.height = "0";
@@ -147,3 +154,24 @@ for (x = 10; x <= 30; x += 2) {
 fontss.addEventListener("change", function () {
         font_changer.style.fontSize = fontss.value;
 });
+
+manage_account.addEventListener('click',  function(){
+        manage_account_holder.style.width = "23%";
+})
+changee.addEventListener('click',  function(){
+        change_pass.style.maxHeight = "300px";
+        change_pass.style.opacity = '1';
+})
+
+manage_close3.addEventListener('click', function(){
+        options_player.style.maxHeight = '0';
+})
+manage_close1.addEventListener('click', function(){
+        manage_account_holder.style.width = "0";
+})
+
+manage_close2.addEventListener('click', function () {
+        change_pass.style.maxHeight = 0;
+        change_pass.style.opacity = 0;
+})
+

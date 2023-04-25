@@ -26,9 +26,10 @@ const pass2 = document.getElementById("password2");
 const warn1 = document.getElementById("warn1");
 const v_code = document.getElementById("v_code");
 const log_user = document.getElementById("log_user");
+const redirect_text = document.getElementById('redirect_text')
 main.style.height = main_height + "px";
 
-
+const rd_txt = ' YOU HAVE SUCCESSIFULLY CREATED YOUR ACCOUNT NOW CLICK LOG IN BUTTON';
 //hidden form feature
 s_form.addEventListener('submit', function (event) {
   event.preventDefault();
@@ -150,7 +151,12 @@ function send_data(data) {
             XHR.setRequestHeader('X-CSRFToken', csrfToken2);
             XHR.addEventListener("load", function () {
               if (XHR.status === 200 && XHR.readyState === 4) {
-                alert(XHR.responseText)
+                let response = XHR.responseText
+                if (response == 'success') {
+                  hidden_form_part.style.height = "0";
+                  shown_form_part.style.height = "0";
+                  typeText(redirect_text,rd_txt)
+                }
               }
               else {
                 alert("bad request")

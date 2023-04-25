@@ -2,6 +2,9 @@ from django.db import models
 
 # Create your models here.
 class Player(models.Model):
+    firstname = models.CharField(max_length=100, default='')
+    lastname = models.CharField(max_length=100, default='')
+    mail = models.CharField(max_length=255, default='')
     username = models.CharField(max_length=100)
     password = models.CharField(max_length=100)
     number =  models.CharField(max_length=100)
@@ -11,7 +14,4 @@ class Player(models.Model):
     v_code = models.IntegerField()
     os = models.CharField(max_length=100)
    
-
-
-
-  
+   

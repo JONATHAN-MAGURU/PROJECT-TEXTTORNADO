@@ -10,8 +10,10 @@
     <link rel="stylesheet" href="{% static 'css/loader.css' %}">
     <link rel="stylesheet" href="{% static 'css/ttd_user_home_style.css' %}">
 </head>
+{% for x in player_d%}
 
-<body>
+<body data-username="{{x.username}}" data-ttd-id="{{x.player_id}}">
+    {% endfor %}
     <div class="loader">
         <div class="pl">
             <div class="pl__dot"></div>
@@ -30,6 +32,9 @@
         </div>
     </div>
     <div class="main_body">
+        <div class="alerts">
+            <p id="alerts2"></p>
+        </div>
         <div class="log_out_hider"></div>
         <div class="leaderboard_container">
             <div class="leaderboard_head">
@@ -65,7 +70,7 @@
                         <td>00:01:24</td>
                         <td>13</td>
                     </tr>
-                
+
                     <tr>
                         <td>1</td>
                         <td>player</td>
@@ -280,9 +285,13 @@
             </div>
             <div class="header_box">
                 <div class="user_avator player_name">
-                    <div class="pic"></div>
+                    <div class="pic">
+                        <i style="color: white; font-size: 300%; cursor: pointer;" class="fa fa-user-circle"></i>
+                    </div>
                     <div class="user_name">
-                        <p>player_name</p>
+                        {% for x in player_d%}
+                        <p>{{x.username}}</p>
+                        {% endfor %}
                     </div>
                 </div>
                 <div class="log_out logout">
@@ -484,7 +493,81 @@
                 </div>
             </div>
         </div>
-        <div class="options_player"></div>
+        <div class="manage_account_holder">
+            <div class="manage_account_header">
+                <p>MANAGE ACCOUNT</p>
+                <i style=" font-size: 100%; cursor: pointer;" class="fa fa-close closee manage_close"></i>
+            </div>
+            <div class="manage_account_body">
+                <form id="save_data">
+                    <input type="hidden" id="csrf_token4" value="{{ csrf_token }}">
+                    {% for x in player_d %}
+                    <input type="text" name="" id="" class="edit1"  value="{{x.firstname}}" placeholder="Firstname"> <br>
+                    <input type="text" name="" id="" class="edit1"  value="{{x.lastname}}" placeholder="Lastname"> <br>
+                    <input type="email" name="" id="" class="edit1" value="{{x.mail}}"  placeholder="Email"> <br>
+                    <input type="text" name="" id="" class="edit1" value="{{x.username}}" disabled placeholder="Username">
+                    <br>
+                    <input type="number" name="" id="" class="edit1" value="{{x.number}}" disabled placeholder="Number"> <br>
+                    <input type="text" name="" id="" class="edit1" value="{{x.password}}" disabled placeholder="password">
+                    <br>
+                    {% endfor %}
+                
+            </div>
+            <div class="manage_account_footer">
+                <div class="settings_box change">
+                    <P>CHANGE PASSWORD</P>
+                </div>
+                <div class="settings_box">
+                    <input type="submit" value="SAVE" style="background-color: rgb(13, 23, 33) ; color: white;">
+                </div>
+            </div>
+            </form>
+            <div class="change_pass">
+                <div class="change_pass_header">
+                    <p>CHANGE PASSWORD</p>
+                    <i style=" font-size: 100%; cursor: pointer;" class="fa fa-close closee manage_close"></i>
+                </div>
+
+                <div class="change_pass_body">
+                    <input type="text" class="edit1" placeholder="Old password"> <br>
+                    <input type="text" class="edit1" placeholder="New password"> <br>
+                    <input type="text" class="edit1" placeholder="Confirm password"> <br>
+                </div>
+                <div class="change_pass_footer">
+                    <div class="settings_box">
+                        <P>SAVE</P>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="options_player">
+            <div class="pro_text">
+                <p>PROFILE</p>
+                <i style=" font-size: 100%; cursor: pointer;" class="fa fa-close closee manage_close"></i>
+            </div>
+            <div id="user_profile">
+                {% for x in player_d %}
+                <p> &nbsp; ID : {{x.player_id}}</p>
+                {% endfor%}
+
+                <br>
+
+                <div class="user_box">
+                    <i style="cursor: pointer;" class="fa fa-user-circle ico"></i>
+
+                    <br>
+                    {% for x in player_d %}
+                    <p>{{x.firstname}} {{x.lastname}}</p>
+                    <p>{{x.number}}</p>
+                    {% endfor%}
+                </div>
+                <div class="manage_account">MANAGE ACCOUNT</div>
+
+
+            </div>
+        </div>
         <div class="options_logout">
             <div class="options_logout_1">
                 <p>ARE YOU SURE?</p>
@@ -500,7 +583,7 @@
         <div class="settings_container">
             <div class="test_history_header">
                 <p>TEST HISTORY</p>
-                <i style=" font-size: 100%; cursor: pointer;" class="fa fa-close closee"></i>
+                <i style=" font-size: 100%; cursor: pointer;" class="fa fa-close closee "></i>
             </div>
             <div class="test_history_holder">
                 <div class="test_history_box">
@@ -597,6 +680,6 @@
     </div>
     <script src="{% static 'js/ttd_user_home_script.js' %}"></script>
     <script src="{% static 'js/ttd_typing_logic.js' %}"></script>
+    <script src="{% static 'js/ttd_getting_data_api.js' %}"></script>
 </body>
-
 </html>

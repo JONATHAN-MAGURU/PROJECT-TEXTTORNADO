@@ -24,12 +24,12 @@
                 <div id="header">
                     <h4 id="header_text"></h4>
                 </div>
-                <form id="log_user">
-                    <input type="hidden" id="csrf_token3" value="{{ csrf_token }}">
+                <form action="ttd_user_homepage" method="POST">
+                   {% csrf_token %}
                     <label for="username" id="usern22"></label><br><br>
-                    <input type="text" name="username" id="username_u" required><br>
+                    <input type="text" name="username_u2" id="username_u" required><br>
                     <label for="password" id="passw22"></label><br><br>
-                    <input type="password" name="password" id="password_u" required> <br>
+                    <input type="password" name="password2" id="password_u" required> <br>
                     <span id="displayPassword2"><input type="checkbox" id="checkbox2"> <label for="checkbox"
                             id="status2">show password</label></span>
                     <input type="submit" value="LOGIN">
@@ -37,8 +37,6 @@
             </div>
         </div>
     </main>
-    <script src="{% static 'js/ttd_user_script.js' %}"></script>
     <script src="{% static 'js/ttd_user_script2.js' %}"></script>
-    <script src="{% static 'js/user_log_in_request.js' %}"></script>
 </body>
 </html>

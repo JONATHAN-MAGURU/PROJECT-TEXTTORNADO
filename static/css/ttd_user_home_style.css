@@ -99,7 +99,7 @@ body {
 .container_A_1_1_1 {
     width: auto;
     height: 30px;
-    
+
     color: white;
     border-radius: 3px;
     background-color: gray;
@@ -371,17 +371,20 @@ select {
     padding: 8px;
     box-shadow: 0px 0px 3px #000000;
 }
-#qs1{
+
+#qs1 {
     width: 100%;
-margin-bottom: 10px;
-border: none;
-background-color: #1d2a35;
+    margin-bottom: 10px;
+    border: none;
+    background-color: #1d2a35;
 }
-#qs2{
+
+#qs2 {
     width: 100%;
     border: none;
     box-shadow: 0px 0px 2px #000000;
 }
+
 .settings_container {
     width: 0;
     transition: 0.3s;
@@ -390,10 +393,8 @@ background-color: #1d2a35;
     right: 0;
     top: 48px;
     overflow-x: visible;
-    height: 500px;
     background-color: rgb(13, 23, 33);
     box-shadow: 0px 0px 3px #000000;
-
 }
 
 .test_history_header {
@@ -414,7 +415,7 @@ background-color: #1d2a35;
     height: 100%;
     overflow-y: scroll;
     padding: 10px;
-background-color: rgb(13, 23, 33);
+    background-color: rgb(13, 23, 33);
 
 }
 
@@ -426,6 +427,7 @@ background-color: rgb(13, 23, 33);
     background-color: #1d2a35;
 
 }
+
 .test_history_box1 {
     width: 100%;
     height: auto;
@@ -435,17 +437,18 @@ background-color: rgb(13, 23, 33);
 }
 
 .issue_holder1 {
-    width:100%;
+    width: 100%;
     text-align: center;
     height: auto;
     padding: 8px;
     box-shadow: 0px 0px 1px #000000;
-    background-color:transparent;
+    background-color: transparent;
     font-size: 70%;
     letter-spacing: 2px;
 }
+
 .issue_holder2 {
-    max-width:70%;
+    max-width: 70%;
     height: auto;
     padding: 8px;
     right: 5px;
@@ -457,8 +460,9 @@ background-color: rgb(13, 23, 33);
     border-radius: 3px;
     letter-spacing: 2px;
 }
+
 .issue_holder3 {
-    max-width:70%;
+    max-width: 70%;
     height: auto;
     padding: 8px;
     left: 5px;
@@ -471,7 +475,7 @@ background-color: rgb(13, 23, 33);
     letter-spacing: 2px;
 }
 
-.issue_input{
+.issue_input {
     position: absolute;
     bottom: 0;
     box-shadow: 0px 0px 5px #000000;
@@ -482,28 +486,8 @@ background-color: rgb(13, 23, 33);
     justify-content: space-between;
     width: 100%;
 }
-input[type="text"]{
-    padding: 10px 15px;
-    background-color: transparent;
-    border: 1px solid slateblue;
-    outline: none;
-  
-    color:white;
-}
-input[type="submit"]{
-    padding: 10px;
-    background-color: transparent;
-    border: 1px solid slateblue;
-    font-size: 80%;
-   transition: 0.4s;
-    outline: none;
-    color:white;
-}
-input[type="submit"]:hover { 
-background-color: slateblue;
-}
 
-.asked_q{
+.asked_q {
     width: 100%;
     font-size: 80%;
     height: auto;
@@ -513,7 +497,7 @@ background-color: slateblue;
 
 }
 
-.ask{
+.ask {
     width: auto;
 
     height: auto;
@@ -525,8 +509,9 @@ background-color: slateblue;
     padding: 10px;
     background-color: #1d2a35;
 }
-.ask_holder{
-    width:0%;
+
+.ask_holder {
+    width: 0%;
     position: absolute;
     height: auto;
     box-shadow: 0px 0px 9px #000000;
@@ -538,16 +523,17 @@ background-color: slateblue;
     font-size: 70%;
     border-radius: 3px;
     cursor: pointer;
-    background-color:rgb(13, 23, 33);
+    background-color: rgb(13, 23, 33);
 }
-.question_holder{
+
+.question_holder {
     display: flex;
     flex-direction: column;
     padding: 10px;
     justify-content: space-evenly;
 }
 
-.ask:hover{
+.ask:hover {
     outline: 1px solid slateblue;
 }
 
@@ -619,6 +605,7 @@ background-color: slateblue;
     border-radius: 2px;
     right: 20px;
 }
+
 .closee1 {
     float: right;
     box-shadow: 0px 0px 3px #000000;
@@ -631,6 +618,7 @@ background-color: slateblue;
 .closee:hover {
     outline: 1px solid slateblue;
 }
+
 .closee1:hover {
     outline: 1px solid slateblue;
 }
@@ -748,16 +736,14 @@ background-color: slateblue;
 }
 
 .options_player {
-    width: 25%;
-    height: 0;
-    display: block;
+    width: 20%;
+    max-height: 0;
     box-shadow: 0px 0px 8px #000000;
     background-color: rgb(13, 23, 33);
     position: fixed;
     overflow: hidden;
     top: 49px;
-    z-index: 30;
-    transition: 0.2s;
+    transition: 0.3s;
     right: 10%;
 }
 
@@ -912,7 +898,7 @@ a {
 
 .typing-text p {
     font-size: 90%;
-    text-align:justify;
+    text-align: justify;
     letter-spacing: 1px;
 }
 
@@ -1000,8 +986,8 @@ li:not(:first-child) span {
     font-weight: 500;
 }
 
-#reshulf{
-    background-color:rgb(13, 23, 33);
+#reshulf {
+    background-color: rgb(13, 23, 33);
     font-size: 65%;
     letter-spacing: 2px;
     transition: 0.4s;
@@ -1013,6 +999,203 @@ li:not(:first-child) span {
     box-shadow: 0px 0px 6px #000000;
     padding: 6px;
 }
-#reshulf:hover{
+
+#reshulf:hover {
     outline: 1px solid slateblue;
+}
+
+#user_profile {
+    padding: 15px 12px;
+    display: flex;
+    flex-direction: column;
+    font-size: 70%;
+    letter-spacing: 2px;
+    width: 100%;
+
+}
+
+.user_box {
+    text-align: center;
+    width: 100%;
+    background-color: #1d2a35;
+    height: auto;
+    border-radius: 4px;
+    padding: 12px;
+}
+
+.ico {
+    color: gray;
+    font-size: 500%;
+}
+
+.manage_account {
+    padding: 8px;
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+    text-align: center;
+    font-size: 80%;
+    box-shadow: 0px 0px 3px #000000;
+    letter-spacing: 2px;
+    margin-top: 5px;
+    border-radius: 3px;
+}
+
+.manage_account:hover {
+    outline: 1px solid slateblue;
+}
+
+.manage_account_holder {
+    width: 0%;
+    position: fixed;
+    height: auto;
+    box-shadow: 0px 0px 9px #000000;
+    transition: 0.3s;
+    z-index: 100;
+    right: 30%;
+    overflow: hidden;
+    top: 20%;
+    font-size: 70%;
+    z-index: 90;
+    border-radius: 3px;
+    cursor: pointer;
+    background-color: rgb(13, 23, 33);
+}
+
+.manage_account_header {
+    padding: 6px;
+    overflow: hidden;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom: 1px solid slateblue;
+    letter-spacing: 2px;
+    font-size: 80%;
+}
+
+.manage_account_body {
+    padding: 12px;
+    width: 100%;
+    letter-spacing: 2px;
+    overflow: hidden;
+    font-size: 80%;
+}
+
+.manage_account_footer {
+    padding: 12px;
+    width: 100%;
+    letter-spacing: 2px;
+    font-size: 110%;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+
+}
+
+.edit1 {
+    width: 100%;
+    border: none;
+    background-color: #1d2a35;
+    padding: 8px;
+    color: white;
+    outline: none;
+    margin-bottom: 18px;
+    border-radius: 3px;
+}
+
+.change_pass {
+    width: 100%;
+    position: absolute;
+    max-height: 0;
+    box-shadow: 1px 1px 20px #000000;
+    right: 0%;
+    transition: 0.3s;
+    overflow: hidden;
+    z-index: 200;
+    opacity: 0;
+    bottom: 0;
+    font-size: 70%;
+    z-index: 90;
+    border-radius: 3px;
+    cursor: pointer;
+    background-color: rgb(13, 23, 33);
+}
+
+.change_pass_header {
+    padding: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    border-bottom: 1px solid slateblue;
+    letter-spacing: 2px;
+    font-size: 120%;
+}
+
+.change_pass_footer {
+    padding: 10px;
+    overflow: hidden;
+    width: 100%;
+    letter-spacing: 2px;
+    font-size: 150%;
+}
+
+.change_pass_body {
+    padding: 12px;
+}
+
+.pro_text {
+    padding: 6px;
+    display: flex;
+    font-size: 80%;
+    letter-spacing: 3px;
+    justify-content: space-between;
+    border-bottom: 1px solid slateblue;
+}
+
+@keyframes alertss {
+    0% {
+        top: -110px;
+        left: 40%;
+    }
+
+
+    50% {
+        top: 120px;
+        left: 40%;
+    }
+
+    100% {
+        top: -110px;
+        left: 40%;
+    }
+
+
+}
+
+.animated {
+    animation-name: alertss;
+    animation-duration: 3s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-out;
+    animation-direction: normal;
+    animation-delay: 0.5s;
+}
+
+.alerts {
+    display: inline-block;
+    z-index: 130;
+    width: 20%;
+    height: 80px;
+    padding: 8px;
+    font-size: 90%;
+    top: -120px;
+    left: 40%;
+    border-bottom: 2px solid slateblue;
+    background-color: rgb(13, 23, 33);
+    box-shadow: 1px 1px 4px #000000;
+    position: absolute;
 }

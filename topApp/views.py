@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse , redirect
 import json
 from topApp.models import Player
 import random
@@ -11,7 +11,17 @@ def ttd_user_signin(request):
     return render(request, 'ttd_user_signin.html')
 
 def ttd_user_homepage(request):
-    return render(request, 'ttd_user_homepage.html')
+      if request.method == 'POST':
+        username_u = request.POST['username_u2']
+        password_u = request.POST['password2']
+        players = Player.objects.filter(username = username_u , password = password_u) 
+        if players.exists():
+            player_details =  players.values()
+            return render(request, 'ttd_user_homepage.html',{'player_d':player_details})
+        else:
+            return HttpResponse('Failed to connect')
+      return redirect('ttd_user_homepage')
+        
 
 def id_gen():
     nums = ['1' , '2', '3','4','5', '6', '7', '8', '9']
@@ -50,8 +60,7 @@ def v_player(request):
         
         
 
-def v_player2(request):
-    
+def v_player2(request): 
     if request.method == 'POST':
         user_data2 = json.loads(request.body)
         ttd_id2 = user_data2['x']
@@ -59,19 +68,36 @@ def v_player2(request):
         player = Player.objects.get(player_id = ttd_id2)
         player.v_code = code
         player.save()
-    return HttpResponse(f"yes {ttd_id2}  {code} ")
+        return HttpResponse("success")
 
-def login_user(request):
-     if request.method == 'POST':
-        user_dataa = json.loads(request.body)
-        username_u = user_dataa['username_u2']
-        password_u = user_dataa['password2']
-        
-        
-        if Player.objects.filter(username = username_u , password = password_u).exists():
-            return HttpResponse("account exists")
+def second_player_data(request):
+    if request.method == 'POST':
+        player_d = json.loads(request.body)
+        username = player_d['username']
+        username2 = player_d['usern2']
+        firstname = player_d['firstname2']
+        lastname = player_d['lastname2']
+        email = player_d['mail']
+        player_id = player_d['id']
+        player_data = Player.objects.filter(username = username , player_id = player_id)
+        if player_data.exists():
+            player_data2 = Player.objects.get(username = username, player_id = player_id)
+            player_data2.username = username2
+            player_data2.firstname =firstname
+            player_data2.lastname= lastname
+            player_data2.mail = email
+            player_data2.save()
+            return HttpResponse('You have successsifully updated your account')
         else:
-            return HttpResponse(" Account by that details does not exists ")
+            return HttpResponse('we cant update your account right now')
+    else:
+        return HttpResponse('something went wrong')
+
+
+    
+
+
+
 
 
 

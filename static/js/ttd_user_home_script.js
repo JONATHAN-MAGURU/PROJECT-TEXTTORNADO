@@ -10,8 +10,9 @@ const closee2 = document.getElementsByClassName('closee')[1];
 const closee3 = document.getElementsByClassName('closee')[2];
 const closee4 = document.getElementsByClassName('closee')[3];
 const closee5 = document.getElementsByClassName('closee')[4];
+const close_comm = document.getElementsByClassName('closee6')[0];
 const closee11 = document.getElementsByClassName('closee1')[0];
-const player_name = document.getElementsByClassName('player_name')[0];
+const player_name = document.getElementsByClassName('user_name')[0];
 const options_player = document.getElementsByClassName('options_player')[0];
 const options_logout = document.getElementsByClassName('options_logout')[0];
 const leaderboard_hider = document.getElementsByClassName('leaderboard_hider')[0];
@@ -38,6 +39,11 @@ const change_pass = document.getElementsByClassName('change_pass')[0];
 const manage_close1 = document.getElementsByClassName('manage_close')[0];
 const manage_close2 = document.getElementsByClassName('manage_close')[1];
 const manage_close3 = document.getElementsByClassName('manage_close')[2];
+const write_comment = document.getElementsByClassName('write_comment')[0];
+const comment_b = document.getElementsByClassName('write_coment_holder')[0];
+const open_comm = document.getElementById('open_comm');
+const options_comments = document.getElementsByClassName('options_comments')[0];
+const comment_body = document.getElementsByClassName('comment_body')[0];
 
 main_container.style.height = opt - 120 + "px";
 settings_container.style.height = opt - 150 + "px";
@@ -45,6 +51,18 @@ settings_container2.style.height = opt - 150 + "px";
 settings_container3.style.height = opt - 150 + "px";
 settings_container4.style.height = opt - 150 + "px";
 
+open_comm.addEventListener('click', function () {
+        options_comments.style.height = opt - 160 + "px";
+        comment_body.style.maxHeight = opt - 200 + "px";
+        options.style.height = "0";
+        options_player.style.height = "0";
+        leaderboard_hider.style.width = "0";
+        options_logout.style.width = "0";
+        options_notf.style.height = 0;
+})
+close_comm.addEventListener('click', function () {
+        options_comments.style.height = 0;
+})
 
 settings_box.addEventListener('click', function () {
         settings_container.style.width = "27%";
@@ -85,12 +103,13 @@ buy_tokens.addEventListener('click', function () {
         options.style.height = opt + "px";
         leaderboard_hider.style.width = "25%";
         options_notf.style.height = 0;
-        options_player.style.height = "0";
-        options_logout.style.width = "0";
+        options_player.style.height = 0;
+        options_logout.style.width = 0;
         settings_container.style.width = 0;
         settings_container2.style.width = 0;
         settings_container3.style.width = 0;
         settings_container4.style.width = 0;
+        options_comments.style.height = 0;
 });
 
 notf.addEventListener('click', function () {
@@ -99,28 +118,32 @@ notf.addEventListener('click', function () {
         options_player.style.height = "0";
         leaderboard_hider.style.width = "0";
         options_logout.style.width = "0";
+        options_comments.style.height = 0;
 });
 
 logout.addEventListener('click', function () {
         options_logout.style.width = "20%";
         log_out_hider.style.width = "100%";
         options_notf.style.height = '0';
+        options_comments.style.height = 0;
         options.style.height = 0;
         leaderboard_hider.style.width = "0";
         options_player.style.height = 0;
+        options_comments.style.height = 0;
 });
 options_logout_1_1.addEventListener('click', function () {
         options_logout.style.width = 0;
         log_out_hider.style.width = 0;
-       
+
 });
 
 player_name.addEventListener('click', function () {
-        options_player.style.maxHeight ='300px';
+        options_player.style.height = '250px';
         options.style.height = 0;
         options_logout.style.width = "0";
         options_notf.style.height = "0";
         leaderboard_hider.style.width = "0";
+        options_comments.style.height = 0;
 });
 
 closee1.addEventListener('click', function () {
@@ -155,18 +178,19 @@ fontss.addEventListener("change", function () {
         font_changer.style.fontSize = fontss.value;
 });
 
-manage_account.addEventListener('click',  function(){
+manage_account.addEventListener('click', function () {
         manage_account_holder.style.width = "23%";
 })
-changee.addEventListener('click',  function(){
+changee.addEventListener('click', function () {
         change_pass.style.maxHeight = "300px";
         change_pass.style.opacity = '1';
 })
 
-manage_close3.addEventListener('click', function(){
-        options_player.style.maxHeight = '0';
+manage_close3.addEventListener('click', function () {
+        options_player.style.height = '0';
+        manage_account_holder.style.width = "0";
 })
-manage_close1.addEventListener('click', function(){
+manage_close1.addEventListener('click', function () {
         manage_account_holder.style.width = "0";
 })
 
@@ -175,3 +199,6 @@ manage_close2.addEventListener('click', function () {
         change_pass.style.opacity = 0;
 })
 
+write_comment.addEventListener('click', function () {
+        comment_b.style.maxHeight = '300px';
+})

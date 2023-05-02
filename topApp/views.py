@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponse , redirect
 import json
-from topApp.models import Player
+from django.http import HttpResponse, JsonResponse
+from topApp.models import Player, Comments, TypingDetails
 import random
 # Create your views here.
 def ttd_user_login(request):
@@ -94,11 +95,62 @@ def second_player_data(request):
         return HttpResponse('something went wrong')
 
 
-    
+def sending_comments(request):
+    if request.method == 'POST':
+        player_comments = json.loads(request.body)
+        username = player_comments['username']
+        ttd_id = player_comments['id']
+        comment = player_comments['comment']
+        comment2 = Comments.objects.create(username2 = username, player_id2 = ttd_id, comment = comment )
+        comment2.save()
+        return HttpResponse('success')
 
 
+def get_comments(request):
+    comments = Comments.objects.all()
+    return JsonResponse({"comments":list(comments.values())})
 
 
+def get_my_data(request):
+    if request.method == 'POST':
+        seralize = json.loads(request.body)
+        username = seralize['username']
+        ttd_id = seralize['id']
+        mydata = Player.objects.filter(username = username, player_id = ttd_id)
+        if mydata.exists():
+           mydata2 = mydata.values()
+           return JsonResponse({'mydata':list(mydata2)})
+    else:
+        return HttpResponse('an error occured')
 
 
+def typing_details(request):
+    if request.method == 'POST':
+        td = json.loads(request.body)
+        wpm = td['wpm']
+        cpm = td['cpm']
+        mistakes = td['mistakes']
+        username = td['username']
+        ttd_id = td['id']
+        ttd_id2 = int(ttd_id)
+        wpm2 = wpm[0:2]
+        wpm1 = int(wpm2)
+        print(wpm2)
+        cpm1 = int(cpm)
+        mistakes1 = int(mistakes)
+        if TypingDetails.objects.filter(play_id = ttd_id2).exists():
+            player_d = TypingDetails.objects.get(play_id = ttd_id2)
+            player_d.wpm = wpm1,
+            player_d.cpm = cpm1,
+            player_d.mistakes = mistakes1,
+            player_d.save()
+            return HttpResponse('success')
+        else:
+            player_d2 = TypingDetails.objects.create(wpm = wpm1, cpm = cpm1, mistakes = mistakes1, play_id = ttd_id, username =username)
+            player_d2.save()
+            return HttpResponse('success')
+
+def get_test_details(request):
+     results = TypingDetails.objects.all().order_by('-wpm',)
+     return JsonResponse({"results":list(results.values())})
 

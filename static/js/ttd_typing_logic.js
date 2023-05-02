@@ -79,8 +79,10 @@ function initTyping() {
         wpmTag.innerText = wpm;
         mistakeTag.innerText = mistakes;
         cpmTag.innerText = charIndex - mistakes;
+
     } else {
         clearInterval(timer);
+        saveDetails();
         inpField.value = "";
     }
 }
@@ -95,6 +97,26 @@ function initTimer() {
         clearInterval(timer);
     }
 }
+
+function saveDetails() {
+    const wpm = wpmTag.innerText;
+    const mistakes = mistakeTag.innerText;
+    const cpm = cpmTag.innerText;
+    const dat2 = {
+        wpm,
+        mistakes,
+        cpm,
+        username,
+        id
+    };
+    const json_dat2 = JSON.stringify(dat2);
+    var xhr2 = new XMLHttpRequest();
+    const csrfToken6 = document.querySelector('#csrf_token6').value
+    xhr2.open('POST', '/typing_details');
+    xhr2.setRequestHeader('Content-Type', 'application/json');
+    xhr2.setRequestHeader('X-CSRFToken', csrfToken6);
+    xhr2.send(json_dat2);
+    }
 
 function resetGame() {
     loadParagraph();

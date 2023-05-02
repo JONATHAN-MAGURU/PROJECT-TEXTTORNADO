@@ -13,5 +13,17 @@ class Player(models.Model):
     player_id = models.IntegerField()
     v_code = models.IntegerField()
     os = models.CharField(max_length=100)
+    amount_of_comments =models.IntegerField(default=0)
+
+class Comments(models.Model):
+    player_id2 = models.CharField(max_length=10)
+    username2 = models.CharField(max_length=100)
+    comment = models.CharField(max_length= 1000)
    
-   
+
+class TypingDetails(models.Model):
+    wpm = models.IntegerField()
+    cpm = models.IntegerField()
+    mistakes = models.IntegerField()
+    play_id = models.CharField(max_length=10)
+    username = models.CharField(max_length=255)

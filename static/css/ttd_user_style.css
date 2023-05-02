@@ -24,6 +24,7 @@ main {
     display: flex;
     width: 100%;
     margin-top: 2%;
+    font-size: 90%;
     padding: 20px;
     flex-wrap: nowrap;
     border: none;
@@ -34,15 +35,17 @@ main {
 .form_holder {
     width: 35%;
     transition: 0.3s;
-    padding: 0;
+    padding: 20px;
 }
 
 .welcoming_holder {
     width: 30%;
     padding: 20px;
     height: 400px;
-    transition: 0.3s;
+    outline: none;
+    transition: 1s;
     overflow: hidden;
+    box-shadow: 0px 0px 10px black;
 
 }
 
@@ -63,26 +66,27 @@ p {
 }
 
 .welcoming_holder:hover {
-    box-shadow: 10px 10px slateblue;
+    box-shadow: 1px 1px 30px slateblue;
     border: 1px solid #201f1f;
+    outline: none;
 }
 
 .ttd_admin_container {
-    width: 90%;
+    width: 100%;
     border-radius: 5px;
-    transition: 0.2s;
-    padding: 0;
-    box-shadow: 0px 0px 4px gray;
+    transition: 1s;
+    padding: 15px;
+    box-shadow: 0px 0px 10px black;
 }
 
 .ttd_admin_container:hover {
-    box-shadow: 10px 10px slateblue;
+    box-shadow: 1px 1px 30px slateblue;
     border: 1px solid #201f1f;
     border-radius: 0;
 }
 
 form {
-    padding:  16px;
+    padding: 16px;
 }
 
 input {
@@ -122,11 +126,11 @@ a {
 }
 
 input[type='submit']:hover {
-    box-shadow: 10px 10px;
+    box-shadow: 1px 1px 10px slateblue;
 }
 
 input[type='button']:hover {
-    box-shadow: 10px 10px;
+    box-shadow: 1px 1px 30px slateblue;
 }
 
 input[type='checkbox'] {
@@ -192,7 +196,8 @@ h4 {
 }
 
 .btn_create_acount:hover {
-    box-shadow: 10px 10px;
+    box-shadow: 1px 1px 10px slateblue;
+    background-color: transparent;
 }
 
 

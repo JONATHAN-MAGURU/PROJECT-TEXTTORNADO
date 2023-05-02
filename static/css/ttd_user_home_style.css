@@ -279,26 +279,45 @@ select {
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width: 100%;
-    font-size: 85%;
+    font-size: 65%;
+    border: none;
+    box-shadow: 0px 0px 2px #000000;
+}
+
+#leader th {
+
+    padding: 6px;
+}
+
+
+
+#leader th {
+    text-align: left;
+    color: slateblue;
+    letter-spacing: 2px;
+}
+
+#leader2 {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 80%;
     border: none;
 }
 
-#leader td,
-#leader th {
+#leader2 td {
+    color: white;
+    text-align: left;
+    letter-spacing: 2px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+#leader2 td {
     border-bottom: 1px solid #1d2a35;
     padding: 4px;
 }
 
-
-
-#leader th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    color: slateblue;
-    font-size: 90%;
-    letter-spacing: 2px;
-}
 
 .user_avator {
     padding: 0;
@@ -606,6 +625,24 @@ select {
     right: 20px;
 }
 
+.closee5 {
+    float: right;
+    box-shadow: 0px 0px 3px #000000;
+    padding: 10px 15px;
+    transition: 0.3s;
+    border-radius: 2px;
+    right: 20px;
+}
+
+.closee6 {
+    float: right;
+    box-shadow: 0px 0px 3px #000000;
+    padding: 10px 15px;
+    transition: 0.3s;
+    border-radius: 2px;
+    right: 20px;
+}
+
 .closee1 {
     float: right;
     box-shadow: 0px 0px 3px #000000;
@@ -619,7 +656,15 @@ select {
     outline: 1px solid slateblue;
 }
 
+.closee5:hover {
+    outline: 1px solid slateblue;
+}
+
 .closee1:hover {
+    outline: 1px solid slateblue;
+}
+
+.closee6:hover {
     outline: 1px solid slateblue;
 }
 
@@ -722,7 +767,21 @@ select {
 
 
 .options_notf {
-    width: 30%;
+    width: 25%;
+    height: 0;
+    display: block;
+    box-shadow: 0px 0px 12px #000000;
+    background-color: rgb(13, 23, 33);
+    position: fixed;
+    overflow: hidden;
+    top: 47px;
+    z-index: 30;
+    transition: 0.2s;
+    right: 25%;
+}
+
+.options_comments {
+    width: 25%;
     height: 0;
     display: block;
     box-shadow: 0px 0px 12px #000000;
@@ -735,9 +794,86 @@ select {
     right: 20%;
 }
 
+.comment_header {
+    padding: 3px;
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid slateblue;
+    justify-content: space-between;
+}
+
+.comment_body {
+    padding: 9px;
+    overflow: scroll;
+    max-height: 0;
+}
+
+.comment_holder {
+    border-radius: 5px;
+    background-color: #1d2a35;
+    padding: 6px;
+    font-size: 90%;
+    margin: 10px;
+    max-width: 230px;
+    border-left: 4px solid slateblue;
+    box-shadow: 0px 0px 2px #000000;
+}
+
+.comment_holder2 {
+    border-radius: 5px;
+    background-color: #1d2a35;
+    padding: 6px;
+    font-size: 90%;
+    margin-left: 150px;
+    margin-top: 8px;
+    max-width: 230px;
+    border-right: 4px solid yellowgreen;
+    box-shadow: 0px 0px 2px #000000;
+}
+
+.write_coment_holder {
+    width: 100%;
+    overflow: hidden;
+    top: 0px;
+    z-index: 100;
+    transition: 0.2s;
+    position: absolute;
+    max-height: 0;
+    box-shadow: 1px 1px 20px #000000;
+    background-color: rgb(13, 23, 33);
+}
+
+.write_coment_header {
+    width: 100%;
+    padding: 5px;
+    border-bottom: 1px solid slateblue;
+}
+
+.write_coment_body {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+
+}
+
+.edit3 {
+    padding: 8px;
+    font-size: 80%;
+    letter-spacing: 2px;
+    width: 100%;
+    color: white;
+    background-color: rgb(13, 23, 33);
+    box-shadow: 0px 0px 2px #000000;
+    border-radius: 4px;
+}
+
+.edit3:hover {
+    outline: 1px solid slateblue;
+}
+
 .options_player {
     width: 20%;
-    max-height: 0;
+    height: 0;
     box-shadow: 0px 0px 8px #000000;
     background-color: rgb(13, 23, 33);
     position: fixed;
@@ -1099,6 +1235,17 @@ li:not(:first-child) span {
     border: none;
     background-color: #1d2a35;
     padding: 8px;
+    color: white;
+    outline: none;
+    margin-bottom: 18px;
+    border-radius: 3px;
+}
+
+.edit2 {
+    width: 100%;
+    border: none;
+    background-color: #1d2a35;
+    padding: 10px;
     color: white;
     outline: none;
     margin-bottom: 18px;

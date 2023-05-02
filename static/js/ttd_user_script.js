@@ -138,24 +138,24 @@ function send_data(data) {
       }
       else {
         let x = XHR2.responseText;
-        let y = x.length
+        let y = x.length;
         if (y == 7) {
           hidden_form_part.style.height = "auto";
           shown_form_part.style.height = "0";
           s_form2.addEventListener('submit', function (e) {
             e.preventDefault()
-            var csrfToken2 = document.querySelector('#csrf_token2').value;
+            var csrfToken = document.querySelector('#csrf_token').value;
             var XHR = new XMLHttpRequest();
             XHR.open('POST', '/v_player2', true);
             XHR.setRequestHeader('Content-Type', 'application/json');
-            XHR.setRequestHeader('X-CSRFToken', csrfToken2);
+            XHR.setRequestHeader('X-CSRFToken', csrfToken);
             XHR.addEventListener("load", function () {
               if (XHR.status === 200 && XHR.readyState === 4) {
                 let response = XHR.responseText
                 if (response == 'success') {
                   hidden_form_part.style.height = "0";
                   shown_form_part.style.height = "0";
-                  typeText(redirect_text,rd_txt)
+                  typeText(redirect_text, rd_txt)
                 }
               }
               else {

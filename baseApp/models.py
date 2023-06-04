@@ -11,3 +11,13 @@ class Admins_details(models.Model):
 
 class Aunthaticate(models.Model):
     v_code = models.CharField(max_length=50)
+    
+class Typing_testing(models.Model):
+    test = models.CharField(max_length=1000000);
+    test_name = models.CharField(max_length=1000000);
+    test_type = models.CharField(max_length=1000000);
+    test_id = models.IntegerField();
+
+class Variant_paragraphs(models.Model):
+    variant_p = models.CharField(max_length=1000000, default="")
+    variant_id = models.IntegerField(default=0)

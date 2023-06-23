@@ -1400,26 +1400,6 @@ li:not(:first-child) span {
   box-shadow: 1px 1px 4px #000000;
   position: absolute;
 }
-.cont_holder{
-  display: flex;
-  justify-content: center;
-  padding: 8px;
-  flex-direction: row;
-}
-.cont_btn{
-  width: 80px;
-  text-align: center;
-  box-shadow: 0px 0px 5px #000000;
-  font-size: 80%;
-  letter-spacing: 2px;
-  cursor: pointer;
-  transition: 0.6s;
-  border-radius: 5px;
-}
-.cont_btn:hover{
-  outline: 1px solid slateblue;
-
-}
 
 .tips {
   position: fixed;
@@ -1432,7 +1412,7 @@ li:not(:first-child) span {
   font-size: 70%;
   overflow-y: visible;
   margin: auto;
-  display:none;
+  display: none;
   transition: 1s;
   top: 20%;
   left: 49%;

@@ -365,7 +365,7 @@ li:hover {
     padding: 0;
     opacity: 1;
     top: 48px;
-    background-color: rgb(13, 23, 33);
+    background-color: #020216;
     height: 0;
     color:white;
     overflow-y: scroll;
@@ -390,69 +390,6 @@ li:hover {
     flex-direction: row;
     justify-content: space-between;
     box-shadow: 0px 0px 3px gray;
-}
-.nav_options_menu_holder {
-    padding: 10px;
-    letter-spacing: 2px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    font-size: 80%;
-}
-textarea{
-    resize: none;
-    background-color: #1d2a35;
-    color: white;
-    box-shadow: 0px 0px 2px #000000;
-    padding: 8px;
-    border-radius: 5px;
-    width: 100%;
-    font-size: 140%;
-    border: none;
-    outline: none;
-}
-input[type='text']{
-    background-color: #1d2a35;
-    color: white;
-    box-shadow: 0px 0px 2px #000000;
-    padding: 12px;
-    border-radius: 5px;
-    width: 100%;
-    margin-top: 8px;
-    font-size: 130%;
-    border: none;
-    outline: none;
-
-}
-input[type='text']:focus{
-    outline: 1px solid slateblue;
-}
-textarea:focus{
-    outline: 1px solid slateblue;
-}
-.nav_options_container_A{
-    background-color: #1d2a35;
-    width: 42%;
-    padding: 15px;
-    height: auto;
-    
-}
-.nav_options_container_B{
-    width: 57%;
-    background-color: #1d2a35;
-    height: auto;
-}
-.nav_options_container_C{
-    width: 50%;
-    background-color:#1d2a35;
-    height: 350px;
-    border-radius: 3px;
-    display: none;
-    position: fixed;
-    top:20%;
-    left: 60%;
-    box-shadow: 0px 0px 50px #000000;
-    transform: translate(-60%, 10%);
 }
 
 .notifications {
@@ -582,38 +519,4 @@ input[type="search"]{
     border-radius: 6px;
     background-color: transparent;
     color: white;
-}
-
-input[type="submit"]{
-    padding: 10px 25px;
-    background-color: #1d2a35;
-    border: none;
-    width: auto;
-    background-color: slateblue;
-    cursor: pointer;
-    border-radius: 3px;
-    letter-spacing: 2px;
-    color: white;
-    margin-top: 10px;
-    box-shadow: 0px 0px 2px #000000;
-}
-input[type="submit"]:hover{
-    outline: 1px solid slateblue;
-}
-
-button{
-    padding: 10px;
-    margin: 8px;
-    letter-spacing: 2px;
-    box-shadow: 0px 0px 2px #000000;
-    font-size: 80%;
-    color: white;
-    border-radius: 3px;
-    outline: none;
-    border: none;
-    background: transparent;
-}
-
-button:hover{
-    box-shadow: 2px 2px 50px slateblue;
 }

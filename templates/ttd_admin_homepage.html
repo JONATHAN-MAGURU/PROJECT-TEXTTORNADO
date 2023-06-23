@@ -244,35 +244,6 @@
             <p>TYPING TEST</p>
             <i style="color: #000000; font-size: 150%;" class="fa fa-close msg " onclick="close_option_test()"></i>
         </div>
-        <div class="nav_options_menu_holder">
-            <div class="nav_options_container_A">
-                <br>
-                <p style="letter-spacing:3px;display: flex; justify-content:space-around;">CHARACTERS : <span
-                        id="amoutW"></span> WORDS : <span id="amoutC"></span></p>
-                <br>
-                <form id="typing_test">
-                    <input type="hidden" id="csrf_token2" value="{{ csrf_token }}">
-                    <textarea id="textarea" cols="30" rows="10" placeholder="Typing test..."
-                        required></textarea> <br>
-
-                    <input id="ename "type="text" placeholder="Event name..." required> <br>
-                    <input id="etype "type="text" placeholder="Event type..." required> <br>
-                    <input id="Language"type="text" placeholder="Language..." required> <br>
-
-
-                    <br>
-                    <input type="submit" value="SAVE">
-                    <input type="submit" value="SAVE & ADD TO REPO">
-                </form>
-            </div>
-            <div class="nav_options_container_B">
-               <button>GENERATE</button>
-               <button>REPOSTORY</button>
-               <button>HISTORY</button>
-
-            </div>
-            <div class="nav_options_container_C"></div>
-        </div>
     </div>
 
 
@@ -364,11 +335,7 @@
             <i style="color: #000000; font-size: 150%;" class="fa fa-close msg " onclick="close_notf()"></i>
         </div>
     </div>
-
-  
-   
-    <script src="{% static 'admin_js/ttd_admin_home_script.js' %}"></script>
-    <script src="{% static 'admin_js/ttd_admin_home_script2.js' %}"></script>
-
+    <script src="{% static 'js/ttd_admin_home_script.js' %}"></script>
 </body>
+
 </html>

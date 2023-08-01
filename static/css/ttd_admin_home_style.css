@@ -1,8 +1,9 @@
 * {
     box-sizing: border-box;
     padding: 0;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: "system-ui", sans-serif;
     margin: 0;
+    scroll-behavior: smooth;
 }
 
 body {
@@ -89,13 +90,13 @@ li:hover {
 
 .btn {
     float: right;
-    padding: 8px;
+    padding: 5px;
     outline: none;
     border: none;
     background-color: slateblue;
     color: #ffffff;
     cursor: pointer;
-    border-radius: 4px;
+    border-radius: 2px;
     margin-right: 5px;
 }
 
@@ -162,7 +163,7 @@ li:hover {
     padding: 10px;
     height: 40px;
     box-shadow: 0px 0px 3px gray;
-    z-index: 100;
+    z-index: 80;
     transition: 0.3s;
     border-radius: 50%;
 }
@@ -194,14 +195,14 @@ li:hover {
 
 .settings_holder:hover {
     background-color: slateblue;
-    color: #ffffff   ;
+    color: #ffffff;
 }
 
 .main_container {
     margin-left: 16%;
     width: 84%;
     margin-top: 50px;
-    
+
     transition: 0.5s;
     /* box-shadow: 0px 0px 3px #535252; */
     background-color: transparent;
@@ -230,9 +231,9 @@ li:hover {
     background-color: white;
 }
 
-.container_A_1_1{
+.container_A_1_1 {
     padding: 10px;
-    height:auto;
+    height: auto;
 }
 
 .container_A_2 {
@@ -313,7 +314,7 @@ li:hover {
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color:slateblue;
+    background-color: slateblue;
     padding: 2px;
 }
 
@@ -338,7 +339,8 @@ li:hover {
     height: 300px;
     box-shadow: 0px 0px 3px gray;
 }
-.container_C_1_header{
+
+.container_C_1_header {
     width: 100%;
     height: 70px;
     border-top-left-radius: 5px;
@@ -365,9 +367,9 @@ li:hover {
     padding: 0;
     opacity: 1;
     top: 48px;
-    background-color: #020216;
+    background-color: rgb(13, 23, 33);
     height: 0;
-    color:white;
+    color: white;
     overflow-y: scroll;
     transition: 0.3s;
 }
@@ -383,13 +385,105 @@ li:hover {
 }
 
 .nav_options_menu_header {
-    padding: 10px;
+    padding: 8px;
     letter-spacing: 4px;
     font-size: small;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     box-shadow: 0px 0px 3px gray;
+}
+
+.nav_options_menu_holder {
+    padding: 10px;
+    letter-spacing: 2px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 90%;
+}
+
+button {
+    cursor:pointer;
+}
+
+textarea {
+    resize: none;
+    background-color: #1d2a35;
+    color: white;
+    box-shadow: 0px 0px 2px #000000;
+    padding: 8px;
+    border-radius: 2px;
+    width: 100%;
+    font-size: 130%;
+    border: none;
+    text-align: justify;
+    outline: none;
+}
+
+input[type='text'] {
+    background-color: #1d2a35;
+    color: white;
+    box-shadow: 0px 0px 2px #000000;
+    padding: 12px;
+    border-radius: 5px;
+    width: 100%;
+    margin-top: 8px;
+    font-size: 130%;
+    border: none;
+    outline: none;
+
+}
+
+input[type='text']:focus {
+    outline: 1px solid slateblue;
+}
+
+textarea:focus {
+    outline: 1px solid slateblue;
+}
+
+.nav_options_container_A {
+    background-color: #1d2a35;
+    width: 38%;
+    padding: 15px;
+    height: auto;
+
+}
+
+.nav_options_container_B {
+    width: 60%;
+    background-color: #1d2a35;
+    padding: 15px;
+    overflow: scroll;
+}
+
+.nav_options_container_C {
+    width: 30%;
+    background-color: #1d2a35;
+    height: 180px;
+    border-radius: 3px;
+    display:none;
+    z-index: 100;
+    position: fixed;
+    padding: 20px;
+    top: 25%;
+    left: 50%;
+    transition: 0.3s;
+    box-shadow: 0.5px 0.5px 5px #000000;
+    transform: translate(-25%, 50%);
+}
+
+.dialogCover{
+    width: 100%;
+    height: 100vh;
+    top:0;
+    left:0;
+    z-index: 10;
+    display:none;
+    position: fixed;
+    opacity: 0.3;
+    background-color: #000000;
 }
 
 .notifications {
@@ -399,40 +493,42 @@ li:hover {
     z-index: 5;
     top: 49px;
     height: 0;
+    color: white;
     box-shadow: 0px 0px 3px gray;
-    background: #ffffff;
+    background:  #1d2a35;
     overflow-y: scroll;
-    transition: 0.3s;
+    transition: 0.1s;
     opacity: 1;
 }
 
 .messages {
     width: 30%;
     position: fixed;
+    color: white;
     right: 2px;
     z-index: 5;
     top: 49px;
     height: 0;
     box-shadow: 0px 0px 3px gray;
-    background: #ffffff;
+    background:  #1d2a35;
     overflow-y: scroll;
-    transition: 0.3s;
+    transition: 0.1s;
+    height: 0;
     opacity: 1;
 }
 
 .notf_msg_hider {
     width: 100%;
-    transition: 0.2s;
+    transition: 0.1s;
     position: fixed;
     z-index: 4;
     opacity: 0;
     background-color: #000000;
     top: 49px;
-    height: 0;
     left: 0;
 }
 
-a{
+a {
     text-decoration: none;
     color: white;
 }
@@ -461,7 +557,7 @@ a{
     color: white;
 }
 
-.date_dash{
+.date_dash {
     padding: 0;
     display: flex;
     flex-direction: row;
@@ -470,14 +566,15 @@ a{
     height: auto;
 }
 
-.date_dash_box1{
+.date_dash_box1 {
     width: 40%;
     display: flex;
     flex-direction: row;
     padding: 5px;
-    
+
 }
-.icon{
+
+.icon {
     width: auto;
     height: auto;
     background-color: slateblue;
@@ -486,37 +583,263 @@ a{
     box-shadow: 0px 0px 3px gray;
     border-radius: 2px;
 }
-.dash{
+
+.dash {
     width: auto;
     height: auto;
     line-height: 10px;
     cursor: pointer;
     padding: 4px;
 }
-.date_dash_box2{
+
+.date_dash_box2 {
     width: 15%;
     padding: 5px;
     text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
     border-radius: 5px;
     cursor: pointer;
 }
-.date_dash_box2:hover{
-   background-color: slateblue;
-   
+
+.date_dash_box2:hover {
+    background-color: slateblue;
+
 }
 
-.clo{
+.clo {
     display: block;
 }
-.ope{
+
+.ope {
     display: none;
 }
 
-input[type="search"]{
-    padding: 6px;
-    border: 1px solid white;
-    width: 200px;
-    border-radius: 6px;
-    background-color: transparent;
+input[type="search"] {
+    padding: 10px;
+    width: 100%;
+    border-radius: 2px;
+    background-color: rgb(13, 23, 33);
     color: white;
+    box-shadow: 0.5px 0.5px 4px #000000;
+    border: none;
+    outline: none;
 }
+
+input[type="submit"] {
+    padding: 10px 25px;
+    background-color: #1d2a35;
+    border: none;
+    width: auto;
+    background-color: slateblue;
+    cursor: pointer;
+    border-radius: 3px;
+    letter-spacing: 2px;
+    color: white;
+    margin-top: 10px;
+    box-shadow: 0px 0px 2px #000000;
+}
+
+input[type="submit"]:hover {
+    outline: 1px solid slateblue;
+}
+
+button {
+    padding: 8px;
+    box-shadow: 0.5px 0.5px 4px #000000;
+    font-size: 80%;
+    color: white;
+    margin: 2px;
+    border-radius: 2px;
+    outline: none;
+    border: none;
+    display: inline-block;
+    background: rgb(13, 23, 33);
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: slateblue;
+}
+
+.typing_test_p {
+    color: white;
+    background-color: rgb(13, 23, 33);
+    padding: 10px;
+    border-radius: 1px;
+    box-shadow: 0.5px 0.5px 5px #000000;
+    text-align: justify;
+    transition: 0.3s;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    transition: 0.8s;
+    justify-content: start;
+    margin-bottom: 20px;
+}
+.userHolder {
+    color: rgb(218, 213, 213);
+    background-color: rgb(13, 23, 33);
+    padding: 6px;
+    border-radius: 1px;
+    box-shadow: 0.5px 0.5px 3px #000000;
+    transition: 0.3s;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    margin-bottom: 15px;
+}
+
+.typing_test_p:hover {
+    outline: 0.7px solid gray;
+}
+.userHolder:hover {
+    outline: 0.7px solid gray;
+}
+
+.custom-checkbox input[type="checkbox"] {
+    /* Hide the default checkbox */
+    position: absolute;
+    opacity: 0;
+}
+
+.custom-checkbox .checkmark {
+    display: inline-block;
+    width: 23px;
+    height: 23px;
+    background-color: transparent;
+    border: 2px solid gray;
+    margin-right: 20px;
+    margin-top: 25px;
+    position: relative;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.custom-checkbox .checkmark::after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 6px;
+    top: 1.3px;
+    width: 6px;
+    height: 12px;
+    border: solid slateblue;
+    border-width: 0 2px 2px 0;
+    transition: 0.4s;
+    transform: rotate(45deg);
+}
+
+
+.custom-checkbox input[type="checkbox"]:checked+.checkmark::after {
+    display: block;
+}
+
+
+
+.custom-checkbox2 input[type="checkbox"] {
+    /* Hide the default checkbox */
+    position: absolute;
+    opacity: 0;
+}
+
+.custom-checkbox2 .checkmark2 {
+    display: inline-block;
+    width: 23px;
+    height: 23px;
+    background-color: transparent;
+    border: 2px solid gray;
+    margin-right: 10px;
+    position: relative;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+/* Create the checkmark for the custom checkbox */
+.custom-checkbox2 .checkmark2::after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 6px;
+    top: 1.3px;
+    width: 6px;
+    height: 12px;
+    border: solid slateblue;
+    border-width: 0 2px 2px 0;
+    transition: 0.4s;
+    transform: rotate(45deg);
+}
+
+
+.custom-checkbox2 input[type="checkbox"]:checked+.checkmark2::after {
+    display: block;
+}
+.custom-checkbox3 input[type="checkbox"] {
+    /* Hide the default checkbox */
+    position: absolute;
+    opacity: 0;
+}
+
+.custom-checkbox3 .checkmark3 {
+    display: inline-block;
+    width: 23px;
+    height: 23px;
+    background-color: transparent;
+    border: 2px solid gray;
+    margin-right: 25px;
+    position: relative;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+/* Create the checkmark for the custom checkbox */
+.custom-checkbox3 .checkmark3::after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 6px;
+    top: 1.3px;
+    width: 6px;
+    height: 12px;
+    border: solid slateblue;
+    border-width: 0 2px 2px 0;
+    transition: 0.4s;
+    transform: rotate(45deg);
+}
+
+
+.custom-checkbox3 input[type="checkbox"]:checked+.checkmark3::after {
+    display: block;
+}
+
+
+.containerAction {
+    width:0%;
+    height: 50px;
+    position: fixed;
+    top: 45px;
+    right: 14px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #1d2a35;
+    padding: 0px;
+    overflow: hidden;
+    transition: 0.4s;
+    border-radius: 3px;
+    box-shadow: 0.5px 0.5px 5px #000000;
+}
+
+.editor{
+        width: 35%;
+        background-color: #1d2a35;
+        height: auto;
+        border-radius: 2px;
+        display:none;
+        z-index: 100;
+        position: fixed;
+        padding: 20px;
+        top: 10%;
+        left: 50%;
+        transition: 0.3s;
+        box-shadow: 0.5px 0.5px 5px #000000;
+        transform: translate(-50%, 30%);
+    }

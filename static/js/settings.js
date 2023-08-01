@@ -1,4 +1,4 @@
-const on = 1;
+const on = id;
 let off = 0;
 const bk1 = " #d1dad3";
 const bk2 = " rgb(13, 23, 33)";

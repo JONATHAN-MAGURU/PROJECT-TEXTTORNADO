@@ -17,55 +17,464 @@ const analy_opt = document.getElementById("analy");
 const game_opt = document.getElementById("game");
 const secu_opt = document.getElementById("secu");
 const repo_opt = document.getElementById("repo");
+const sp = document.getElementById("sp");
 const supp_opt = document.getElementById("supp");
-const nav_options_hider =
-  document.getElementsByClassName("nav_options_hider")[0];
+const savedStatus = document.getElementById("savedStatus");
+const clear_btn = document.getElementById("clear_btn");
+const nav_options_hider = document.getElementsByClassName("nav_options_hider")[0];
 const notifications = document.getElementsByClassName("notifications")[0];
 const messages = document.getElementsByClassName("messages")[0];
 const notff_hider = document.getElementById("notff");
 const msgg_hider = document.getElementById("msgg");
-
-const ename = document.getElementById("ename");
-const etype = document.getElementById("etype");
-const language = document.getElementById("language");
+document.getElementsByClassName("nav_options_container_A")[0].style.height = body_height - 180 + "px";
+document.getElementsByClassName("nav_options_container_B")[0].style.height = body_height - 180 + "px";
+document.getElementsByClassName("nav_options_container_A")[0].style.width = "29%";
+document.getElementsByClassName("nav_options_container_B")[0].style.width = "70%";
+document.getElementsByClassName("nav_options_container_A")[1].style.height = body_height - 180 + "px";
+document.getElementsByClassName("nav_options_container_B")[1].style.height = body_height - 180 + "px";
 const textarea = document.getElementById("textarea");
 const typing_test = document.getElementById("typing_test");
+const delete_ps = document.getElementsByClassName("delete");
+const typing_test_p = document.getElementsByClassName("typing_test_p");
+const checkedArray = [];
+const toEdit = [];
+const containerAction = document.getElementsByClassName("containerAction")[0];
+const majorCheck = document.getElementById("majorCheck");
 
-textarea.addEventListener("keydown", function () {
+for (const delete_p of delete_ps) {
+  delete_p.style.display = "none";
+}
+
+const savedStatusWarn = setInterval(function () {
+  savedStatus.innerHTML = "";
+}, 6000);
+
+const typing_test_p_array = Array.from(typing_test_p);
+typing_test_p_array.forEach((typing_test_p2, index) => {
+  typing_test_p2.addEventListener("mouseover", () => {
+    console.log("Index of typing_test_p2:", index);
+    for (const delete_p of delete_ps) {
+      delete_p.style.display = "inline-block";
+    }
+  });
+});
+
+for (const typing_test_p2 of typing_test_p) {
+  typing_test_p2.addEventListener("mouseout", () => {
+    for (const delete_p of delete_ps) {
+      delete_p.style.display = "none";
+    }
+  })
+}
+
+const textareaUpdate = setInterval(() => {
   let x = textarea.value;
   let y = x.split(" ");
-  document.getElementById("amoutW").innerHTML = x.length;
-  document.getElementById("amoutC").innerHTML = y.length;
-});
+  document.getElementById("amoutW").textContent = x.length;
+  document.getElementById("amoutC").textContent = y.length - 1;
+}, 10)
 
 typing_test.addEventListener("submit", function (event) {
   event.preventDefault();
-  let ename2 = ename.value;
-  let etype2 = etype.value;
-  let lang = language.value;
   let textarea2 = textarea.value;
-
-  const typing_words = {
-    ename2,
-    etype2,
-    lang,
-    textarea2,
-  };
-
+  const typing_words = { textarea2 };
   const json_data_4 = JSON.stringify(typing_words);
   const XHR3 = new XMLHttpRequest();
   const csrfToken3 = document.querySelector("#csrf_token2").value;
-  XHR3.open("POST", "/ttd_user_homepage", true);
+  XHR3.open("POST", "/typing_tests", true);
   XHR3.setRequestHeader("Content-Type", "application/json");
   XHR3.setRequestHeader("X-CSRFToken", csrfToken3);
   XHR3.addEventListener("load", function () {
     if (XHR3.status === 200 && XHR3.readyState === 4) {
-      console.log("success");
+      savedStatus.innerHTML = XHR3.responseText
+      checkedArray.splice(0);
+      getTypingTests();
     } else {
-      console.log("something went wrong !!!");
+      savedStatus.innerHTML = "something went wrong !!!";
     }
   });
   XHR3.send(json_data_4);
+});
+clear_btn.addEventListener("click", function () {
+  textarea.value = "";
+  document.getElementById("amoutW").innerHTML = "";
+  document.getElementById("amoutC").innerHTML = "";
+});
+const lengthOfArryUpdater = setInterval(function () {
+  if (checkedArray.length == 0) {
+    containerAction.style.width = "0%";
+    containerAction.style.padding = "0";
+    majorCheck.checked = false;
+
+  }
+}, 10);
+
+function getTypingTests() {
+  document.getElementById("typeOfparagraphs").innerText = "SAVED TESTS :";
+  document.getElementById("edit").style.display = "block";
+  const xhrttd1 = new XMLHttpRequest();
+  xhrttd1.open("GET", "/get_typing_tests");
+  xhrttd1.onload = function () {
+    if (xhrttd1.status === 200) {
+      var response = JSON.parse(xhrttd1.responseText);
+      var test_typing_p = document.getElementsByClassName("nav_options_container_B")[1];
+      test_typing_p.innerHTML = "";
+
+      sp.innerHTML = response.Typing_testings.length;
+      for (var key in response.Typing_testings) {
+        var temp = '<div class="typing_test_p"><label class="custom-checkbox"><input type="checkbox" data-id="' + response.Typing_testings[key].test_id + '" data-test="' + response.Typing_testings[key].test + '"><span class="checkmark"></span></label>' + response.Typing_testings[key].test + '<p style="display:none">' + response.Typing_testings[key].test_id + '</p></div>';
+        test_typing_p.innerHTML += temp;
+      }
+    } else {
+      console.log("Request failed. Returned status of " + xhrttd1.status);
+    }
+
+    const checkboxes = test_typing_p.querySelectorAll('input[type="checkbox"]');
+    majorCheck.addEventListener('change', function () {
+      checkedArray.splice(0);
+
+      if (majorCheck.checked) {
+        for (const check of checkboxes) {
+          check.checked = true;
+          checkedArray.push(check.dataset.id);
+        }
+      } else {
+        for (const check of checkboxes) {
+          check.checked = false;
+        }
+      }
+
+      document.getElementById("numOfChecked").innerHTML = checkedArray.length + " SELECTED";
+    });
+
+    for (const check of checkboxes) {
+      check.addEventListener("change", () => {
+        if (check.checked) {
+          checkedArray.push(check.dataset.id);
+          toEdit.push(check.dataset.test);
+        } else {
+          const index = checkedArray.indexOf(check.dataset.id);
+          const index2 = toEdit.indexOf(check.dataset.test);
+          if (index !== -1) {
+            checkedArray.splice(index, 1);
+          }
+          if (index2 !== -1) {
+            toEdit.splice(index2, 1);
+          }
+        }
+        document.getElementById("numOfChecked").innerHTML = checkedArray.length + " SELECTED";
+        containerAction.style.width = checkedArray.length > 0 ? "50%" : "0%";
+        containerAction.style.padding = checkedArray.length > 0 ? "10px" : "0";
+      });
+    }
+  };
+  xhrttd1.send();
+}
+getTypingTests();
+
+document.getElementById("edit").addEventListener("click", function () {
+  showEditor();
+  for (const edit of toEdit) {
+    document.getElementById("textarea2").value = edit;
+  }
+});
+
+function getVAriants() {
+  document.getElementById("typingTests").style.display = "block";
+  document.getElementById("getVAriants").style.display = "none";
+  document.getElementById("edit").style.display = "none";
+  document.getElementById("typeOfparagraphs").innerText = "SAVED VARIANTS :";
+  const xhrttd1 = new XMLHttpRequest();
+  xhrttd1.open("GET", "/get_typing_variants");
+  xhrttd1.onload = function () {
+    if (xhrttd1.status === 200) {
+      var response = JSON.parse(xhrttd1.responseText);
+      var test_typing_p = document.getElementsByClassName("nav_options_container_B")[1];
+      test_typing_p.innerHTML = "";
+
+      sp.innerHTML = response.variant_paragraphs.length;
+      for (var key in response.variant_paragraphs) {
+        var temp = '<div class="typing_test_p"><label class="custom-checkbox"><input type="checkbox" data-id="' + response.variant_paragraphs[key].variant_id + '"><span class="checkmark"></span></label>' + response.variant_paragraphs[key].variant_p + '<p style="display:none">' + response.variant_paragraphs[key].variant_id + '</p></div>';
+        test_typing_p.innerHTML += temp;
+      }
+    } else {
+      console.log("Request failed. Returned status of " + xhrttd1.status);
+    }
+    const checkboxes = test_typing_p.querySelectorAll('input[type="checkbox"]');
+    majorCheck.addEventListener('change', function () {
+      checkedArray.splice(0);
+
+      if (majorCheck.checked) {
+        for (const check of checkboxes) {
+          check.checked = true;
+          checkedArray.push(check.dataset.id);
+        }
+      } else {
+        for (const check of checkboxes) {
+          check.checked = false;
+        }
+      }
+      document.getElementById("numOfChecked").innerHTML = checkedArray.length + " SELECTED";
+    });
+
+    for (const check of checkboxes) {
+      check.addEventListener("change", () => {
+        if (check.checked) {
+          checkedArray.push(check.dataset.id);
+        } else {
+          const index = checkedArray.indexOf(check.dataset.id);
+          if (index !== -1) {
+            checkedArray.splice(index, 1);
+          }
+        }
+
+        document.getElementById("numOfChecked").innerHTML = checkedArray.length + " SELECTED";
+        containerAction.style.width = checkedArray.length > 0 ? "50%" : "0%";
+        containerAction.style.padding = checkedArray.length > 0 ? "10px" : "0";
+      });
+    }
+  };
+  xhrttd1.send();
+}
+
+
+document.getElementsByClassName("deleteBtn")[0].addEventListener("click", function () {
+  if (document.getElementById("typingTests").style.display == "none") {
+    var deleteDestination = "/delete_paragraphs";
+  }
+  else {
+    var deleteDestination = "/delete_variants";
+  }
+  const paragraphToDelete = { checkedArray };
+  const paragraphToDeleteJson = JSON.stringify(paragraphToDelete);
+  const xhrttd2 = new XMLHttpRequest();
+  const csrfToken3 = document.querySelector("#csrf_token2").value;
+  xhrttd2.open("POST", deleteDestination, true);
+  xhrttd2.setRequestHeader("Content-Type", "application/json");
+  xhrttd2.setRequestHeader("X-CSRFToken", csrfToken3);
+  xhrttd2.addEventListener("load", function () {
+    if (xhrttd2.status === 200 && xhrttd2.readyState === 4) {
+      savedStatus.innerHTML = xhrttd2.responseText;
+      checkedArray.splice(0);
+      hideDialogBox();
+      if (document.getElementById("typingTests").style.display == "none") {
+        getTypingTests()
+
+      }
+      else {
+        getVAriants();
+      }
+    } else {
+      savedStatus.innerHTML = "something went wrong !!!";
+    }
+  });
+  xhrttd2.send(paragraphToDeleteJson);
+});
+
+document.getElementById("typingTests").addEventListener("click", function () {
+  document.getElementById("typingTests").style.display = "none";
+  document.getElementById("getVAriants").style.display = "block";
+  document.getElementById("typeOfparagraphs").innerText = "SAVED PARAGRAPHS :";
+});
+
+function showDialogBox(dialogHead, dialogBody) {
+  document.getElementsByClassName("nav_options_container_C")[0].style.display = "block";
+  document.getElementsByClassName("dialogCover")[0].style.display = "block";
+  document.getElementById("dialogaHead").textContent = dialogHead;
+  document.getElementById("dialogBody").textContent = dialogBody;
+}
+function hideDialogBox() {
+  document.getElementsByClassName("nav_options_container_C")[0].style.display = "none";
+  document.getElementsByClassName("dialogCover")[0].style.display = "none";
+}
+
+function showEditor() {
+  document.getElementsByClassName("dialogCover")[0].style.display = "block";
+  document.getElementsByClassName("editor")[0].style.display = "block";
+}
+function hideEditor() {
+  document.getElementsByClassName("dialogCover")[0].style.display = "none";
+  document.getElementsByClassName("editor")[0].style.display = "none";
+}
+
+document.getElementsByClassName("deleteBtn")[1].addEventListener("click", function () {
+  if (document.getElementById("typingTests").style.display == "none") {
+    showDialogBox("Delete these test paragraphs?", "Are you sure you want to dalete these paragraphs from database?");
+  }
+  else {
+    showDialogBox("Delete these variants?", "Are you sure you want to dalete these variant paragraphs from database?");
+  }
+});
+
+const denieEdit = setInterval(() => {
+  const editButton = document.getElementById("edit");
+  const checkedArrayLength = checkedArray.length;
+
+  if (checkedArrayLength !== 1) {
+    editButton.style.cursor = "not-allowed";
+    editButton.disabled = true;
+  } else {
+    editButton.style.cursor = "pointer";
+    editButton.disabled = false;
+  }
+}, 100);
+
+
+document.getElementById("cancel").addEventListener("click", function () {
+
+});
+
+document.getElementById("typing_test_edit").addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const toEditId = checkedArray[0];
+  const toEditText = document.getElementById("textarea2").value;
+  const editingWords = { toEditId, toEditText };
+
+  try {
+    const response = await fetch("/editing_tests", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": document.querySelector("#csrf_token2").value,
+      },
+      body: JSON.stringify(editingWords),
+    });
+
+    if (response.status === 200 && response.ok) {
+      const savedStatus = document.getElementById("savedStatus");
+      savedStatus.innerHTML = await response.text();
+      getTypingTests();
+      checkedArray.splice(0);
+      hideEditor();
+    } else {
+      throw new Error("Something went wrong !!!");
+    }
+  } catch (error) {
+    const savedStatus = document.getElementById("savedStatus");
+    savedStatus.innerHTML = "Something went wrong !!!";
+    console.error(error);
+  }
+});
+
+
+
+
+function getUser() {
+  const xhrttd1 = new XMLHttpRequest();
+  xhrttd1.open("GET", "/getUsers");
+  xhrttd1.onload = function () {
+    if (xhrttd1.status === 200) {
+      var response = JSON.parse(xhrttd1.responseText);
+      var test_typing_p = document.getElementsByClassName("nav_options_container_B")[0];
+      test_typing_p.innerHTML = "";
+      for (var key in response.user) {
+        var temp = '<div class="userHolder"><label class="custom-checkbox3"><input type="checkbox" data-id="' + response.user[key].player_id + '" data-test="' + response.user[key].username + '"><span class="checkmark3"></span></label>' + '<i style="color: gray; font-size: 170%;" class="fa fa-user-circle-o"></i>&nbsp;' + response.user[key].username + '<p style="display:none">' + response.user[key].player_id + '</p></div>';
+        test_typing_p.innerHTML += temp;
+      }
+    } else {
+      console.log("Request failed. Returned status of " + xhrttd1.status);
+    }
+    const checkboxes = test_typing_p.querySelectorAll('input[type="checkbox"]');
+    majorCheck.addEventListener('change', function () {
+      checkedArray.splice(0);
+      if (majorCheck.checked) {
+        for (const check of checkboxes) {
+          check.checked = true;
+          checkedArray.push(check.dataset.id);
+        }
+      } else {
+        for (const check of checkboxes) {
+          check.checked = false;
+        }
+      }
+      document.getElementById("numOfChecked").innerHTML = checkedArray.length + " SELECTED";
+    });
+    for (const check of checkboxes) {
+      check.addEventListener("change", () => {
+        if (check.checked) {
+          checkedArray.push(check.dataset.id);
+          toEdit.push(check.dataset.test);
+        } else {
+          const index = checkedArray.indexOf(check.dataset.id);
+          const index2 = toEdit.indexOf(check.dataset.test);
+          if (index !== -1) {
+            checkedArray.splice(index, 1);
+          }
+          if (index2 !== -1) {
+            toEdit.splice(index2, 1);
+          }
+        }
+        document.getElementById("numOfChecked").innerHTML = checkedArray.length + " SELECTED";
+        containerAction.style.width = checkedArray.length > 0 ? "70%" : "0%";
+        containerAction.style.padding = checkedArray.length > 0 ? "10px" : "0";
+      });
+    }
+  }
+  xhrttd1.send();
+}
+getUser();
+
+
+document.getElementById("searchForm").addEventListener("submit", function (event) {
+  event.preventDefault();
+  const toSearch = document.getElementById("search").value;
+  const toSearch1 = { toSearch };
+  const jsonData = JSON.stringify(toSearch1);
+  const XHR3 = new XMLHttpRequest();
+  const csrfToken3 = document.querySelector("#csrf_token2").value;
+  const test_typing_p = document.getElementsByClassName("nav_options_container_B")[0];
+  XHR3.open("POST", "/getSearch", true);
+  XHR3.setRequestHeader("Content-Type", "application/json");
+  XHR3.setRequestHeader("X-CSRFToken", csrfToken3);
+  XHR3.addEventListener("load", function () {
+    if (XHR3.status === 200 && XHR3.readyState === 4) {
+      var response = JSON.parse(XHR3.responseText);
+      test_typing_p.innerHTML = "";
+        for (var key in response.searchResults) {
+          var temp = '<div class="userHolder"><label class="custom-checkbox3"><input type="checkbox" data-id="' + response.searchResults[key].player_id + '" data-test="' + response.searchResults[key].username + '"><span class="checkmark3"></span></label>' + '<i style="color: gray; font-size: 170%;" class="fa fa-user-circle-o"></i>&nbsp;' + response.searchResults[key].username + '<p style="display:none">' + response.searchResults[key].player_id + '</p></div>';
+          test_typing_p.innerHTML += temp;
+        }
+    } else {
+      alert("not good");
+    }
+    const checkboxes = test_typing_p.querySelectorAll('input[type="checkbox"]');
+    majorCheck.addEventListener('change', function () {
+      checkedArray.splice(0);
+      if (majorCheck.checked) {
+        for (const check of checkboxes) {
+          check.checked = true;
+          checkedArray.push(check.dataset.id);
+        }
+      } else {
+        for (const check of checkboxes) {
+          check.checked = false;
+        }
+      }
+      document.getElementById("numOfChecked").innerHTML = checkedArray.length + " SELECTED";
+    });
+    for (const check of checkboxes) {
+      check.addEventListener("change", () => {
+        if (check.checked) {
+          checkedArray.push(check.dataset.id);
+          toEdit.push(check.dataset.test);
+        } else {
+          const index = checkedArray.indexOf(check.dataset.id);
+          const index2 = toEdit.indexOf(check.dataset.test);
+          if (index !== -1) {
+            checkedArray.splice(index, 1);
+          }
+          if (index2 !== -1) {
+            toEdit.splice(index2, 1);
+          }
+        }
+        document.getElementById("numOfChecked").innerHTML = checkedArray.length + " SELECTED";
+        containerAction.style.width = checkedArray.length > 0 ? "70%" : "0%";
+        containerAction.style.padding = checkedArray.length > 0 ? "10px" : "0";
+      });
+    }
+  });
+  XHR3.send(jsonData);
 });
 
 
@@ -83,12 +492,12 @@ function close_notf() {
 function open_msg() {
   messages.style.height = body_height - 130 + "px";
   msgg_hider.style.height = body_height + "px";
-  msgg_hider.style.opacity = "0.5";
+  msgg_hider.style.opacity = "0";
 }
 function close_msg() {
   messages.style.height = 0;
   msgg_hider.style.height = 0;
-  msgg_hider.style.opacity = "0.5";
+  msgg_hider.style.opacity = "0";
 }
 
 function open_admin() {
@@ -129,6 +538,7 @@ function open_test() {
 function close_option_test() {
   test_opt.style.width = "0%";
   nav_options_hider.style.width = "0%";
+  checkedArray.splice(0);
 }
 
 function open_res() {
@@ -286,7 +696,7 @@ var myChart = new Chart(ctx, {
       {
         label: "Number of People",
         data: [12, 15, 5, 9, 5, 7, 6, 9, 5, 10, 12, 3],
-        backgroundColor: "rgba(106, 90, 205, 0.2)",
+        backgroundColor: "rgba(13, 23, 33,0.6)",
         borderColor: "rgba(106, 90, 205, 1)",
         borderWidth: 2,
       },

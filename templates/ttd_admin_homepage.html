@@ -224,12 +224,31 @@
         </table>
     </div>
 
+
+
+
     <div class="nav_options" id="users">
         <div class="nav_options_menu_header">
             <p>USERS</p>
-            <i style="color: #000000; font-size: 150%;" class="fa fa-close msg " onclick="close_option_users()"></i>
+            <i style="color: #ffffff; font-size: 150%;" class="fa fa-close msg " onclick="close_option_users()"></i>
+        </div>
+        <div class="nav_options_menu_holder">
+            <div class="nav_options_container_B"></div>
+            <div class="nav_options_container_A">
+                <form id="searchForm">
+                    <input type="search" placeholder="Search..." id="search" required>
+                </form>
+                <br>
+                <p id="error"></p>
+                <br>  
+                <button>ACTIVE ACCOUNTS</button>
+                <button>DEACTIVE ACCOUNTS</button>
+            </div>
         </div>
     </div>
+
+
+
 
 
     <div class="nav_options" id="compt">
@@ -241,12 +260,72 @@
 
     <div class="nav_options" id="test">
         <div class="nav_options_menu_header">
-            <p>TYPING TEST</p>
-            <i style="color: #000000; font-size: 150%;" class="fa fa-close msg " onclick="close_option_test()"></i>
+            <p>TYPING TEST</p><button><span id="typeOfparagraphs"></span><span id="sp"></span></button> <button id="getVAriants" onclick="getVAriants()">SHOW VARIANTS</button> 
+            <button onclick=" getTypingTests()" id="typingTests" style="display:none">SHOW TESTS</button> 
+            <i style="font-size: 150%;" class="fa fa-close msg " onclick="close_option_test()"></i>
+        </div>
+        <div class="nav_options_menu_holder">
+            <div class="nav_options_container_A">
+                <br>
+                
+                    <br>
+                <p style="letter-spacing:3px;display: flex; justify-content:space-around;"><button>CHARACTERS : <span
+                        id="amoutW"></span></button> <button>WORDS : <span id="amoutC"></span></button></p>
+                <br>
+                <form id="typing_test">
+                    <input type="hidden" id="csrf_token2" value="{{ csrf_token }}">
+                    <textarea id="textarea" cols="30" rows="10" placeholder="Typing test..."
+                        required></textarea> <br>
+                     <br>
+                        <p style="color:yellowgreen" id="savedStatus"></p>
+                    <br>
+                    <input type="submit" value="SAVE">
+                </form>
+                <br>
+                <button>GENERATE</button>
+                <button id="clear_btn">CLEAR</button>
+                <button>REPOSTORY</button>
+            </div>
+            <div class="nav_options_container_B"> </div>
+
+            <div class="nav_options_container_C">
+                <i style="color: #ffffff; font-size: 150%; float:right" class="fa fa-close msg" onclick="hideDialogBox()"></i>
+                <h3 id="dialogaHead"></h3>
+                <br>
+                <p id="dialogBody"></p>
+                <br>
+                <br>
+                <div style="display:flex; justify-content:space-between">
+                <button style="width:48%; background:slateblue;"  class="deleteBtn">DELETE</button>
+                <button style="width:48%" onclick="hideDialogBox()">CANCEL</button>
+              </div>
+            </div>
+            <div class="dialogCover"></div>
+            <div class="editor">
+                <i style="color: #ffffff; font-size: 150%; float:right" class="fa fa-close msg" onclick="hideEditor()"></i>
+                <br>
+                <br>
+                <form id="typing_test_edit">
+                    <input type="hidden" id="csrf_token2" value="{{ csrf_token }}">
+                    <textarea id="textarea2" cols="20" rows="10"
+                        required></textarea> <br>
+                    <br>
+                    <input type="submit" value="SAVE">
+                </form>
+            </div>
+           
+            <div class="containerAction">
+                <label class="custom-checkbox2"><input type="checkbox"id="majorCheck" ><span class="checkmark2"></span><span> <sup id="numOfChecked"></sup></span></label>
+                <button class="">ACTIVATE</button>
+                <button class="">DEACTIVATE</button>
+                <button class="">VIEW DETAILS</button>
+                <button class="deleteBtn">DELETE</button>
+                <button id="edit">EDIT</button>
+                <button id="cancel">CANCEL</button>
+
+            </div>
         </div>
     </div>
-
-
     <div class="nav_options" id="res">
         <div class="nav_options_menu_header">
             <p>RESULTS</p>
@@ -335,7 +414,6 @@
             <i style="color: #000000; font-size: 150%;" class="fa fa-close msg " onclick="close_notf()"></i>
         </div>
     </div>
-    <script src="{% static 'js/ttd_admin_home_script.js' %}"></script>
+    <script src="{% static 'admin_js/ttd_admin_home_script.js' %}"></script>
 </body>
-
 </html>

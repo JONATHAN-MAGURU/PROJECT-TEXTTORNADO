@@ -34,7 +34,7 @@ let timer,
   maxTime = 60,
   timeLeft = maxTime,
   charIndex = (mistakes = isTyping = 0);
-
+ 
 function loadParagraph() {
   const ranIndex = Math.floor(Math.random() * paragraphs.length);
   typingText.innerHTML = "";
@@ -43,9 +43,14 @@ function loadParagraph() {
     typingText.innerHTML += span;
   });
 
+  const wrds = typingText.innerText.length;
+  const char = typingText.innerHTML.split(" ");
+  document.getElementsByClassName("aow")[0].innerHTML =char.length;
+  document.getElementsByClassName("aol")[0].innerHTML =  wrds ;
+
   inpField.addEventListener("keydown", function () {
     inpField.focus();
-    tryAgainBtn.style.display ="none";
+    tryAgainBtn.style.display = "none";
   });
   typingText.addEventListener("click", function () {
     inpField.focus();
@@ -100,7 +105,9 @@ function initTimer() {
   if (timeLeft > 0) {
     timeLeft--;
     timeTag.innerText = timeLeft;
-    let wpm = Math.round(((charIndex - mistakes) / 5 / (maxTime - timeLeft)) * 60);
+    let wpm = Math.round(
+      ((charIndex - mistakes) / 5 / (maxTime - timeLeft)) * 60
+    );
     wpmTag.innerText = wpm;
   } else {
     clearInterval(timer);

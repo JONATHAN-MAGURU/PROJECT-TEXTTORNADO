@@ -3,7 +3,7 @@ from django.http import HttpResponse, JsonResponse
 from datetime import datetime
 from datetime import date
 import json
-from baseApp.models import Admins_details, Aunthaticate, Typing_testing, Variant_paragraphs
+from baseApp.models import Admins_details, Aunthaticate, Typing_testing, Variant_paragraphs, Frontend
 from topApp.models import Player
 from topApp.views import id_gen
 import random
@@ -128,6 +128,10 @@ def getUsers(request):
     user = Player.objects.all()
     return JsonResponse({"user": list(user.values())})
 
+def getFontendCodes(request):
+    codes = Frontend.objects.all()
+    return JsonResponse({"codes": list(codes.values())})
+
 def getSearch(request):
      if request.method == 'POST':
         player = json.loads(request.body)
@@ -139,4 +143,37 @@ def getSearch(request):
             return JsonResponse({"searchResults" : list(results)})
         else:
             return JsonResponse({"error" : list("error")})
-    
+        
+
+def getPlayerData(request):
+    if request.method == 'POST':
+        player = json.loads(request.body)
+        playerId = player.get('userId')
+        getPlayer = Player.objects.filter(player_id=playerId)
+
+        if getPlayer.exists():
+            playerResults = getPlayer.values()
+            return JsonResponse({"playerResults": list(playerResults)})
+        else:
+            return JsonResponse({"error": "Player not found"}, status=400)
+
+
+def startFrontend(request):
+     if request.method == 'POST':
+        code = json.loads(request.body)
+        code1 = code['firstId']
+        print(code1)
+        if code1 == 85747:
+            getCode= Frontend.objects.get(FrontendId = 5747)
+            getCode.FrontendId = code1
+            getCode.save()
+            return HttpResponse("UPDATED SUCCESSIFULLY...")
+        elif code1 == 5747:
+            getCode= Frontend.objects.get(FrontendId = 85747)
+            getCode.FrontendId = code1
+            getCode.save()
+            return HttpResponse("UPDATED SUCCESSIFULLY...")
+        else:
+            return HttpResponse("UPDATE FAILED...")
+     else:
+         return("something went wrong")

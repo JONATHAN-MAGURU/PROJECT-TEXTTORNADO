@@ -12,7 +12,6 @@ const closee4 = document.getElementsByClassName("closee")[3];
 const closee5 = document.getElementsByClassName("closee")[4];
 const close_comm = document.getElementsByClassName("closee6")[0];
 const closee11 = document.getElementsByClassName("closee1")[0];
-const player_name = document.getElementsByClassName("user_name")[0];
 const options_player = document.getElementsByClassName("options_player")[0];
 const options_logout = document.getElementsByClassName("options_logout")[0];
 const leaderboard_hider =
@@ -52,6 +51,7 @@ const comment_b = document.getElementsByClassName("write_coment_holder")[0];
 const open_comm = document.getElementById("open_comm");
 const options_comments = document.getElementsByClassName("options_comments")[0];
 const comment_body = document.getElementsByClassName("comment_body")[0];
+const leaderboard = document.getElementsByClassName("leaderboard_container")[0].style.height = opt - 140 + "px";
 
 main_container.style.height = opt - 120 + "px";
 settings_container.style.height = opt - 150 + "px";
@@ -115,11 +115,30 @@ settings_box4.addEventListener("click", function () {
   settings_container3.style.width = 0;
 });
 
-const delay_loader = setTimeout(function () {
-  loader.style.height = "0vh";
-  loader.style.opacity = "0";
-  main_body.style.display = "block";
-}, 10);
+setInterval(function () {
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", "/getFontendCodes");
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      var response = JSON.parse(xhr.responseText);
+      for (var key in response.codes) {
+        if (response.codes[key].FrontendId == 5747) {
+          loader.style.height = "0vh";
+          loader.style.opacity = "0";
+          main_body.style.display = "block";
+        } 
+        else{
+          loader.style.height = "100vh";
+          loader.style.opacity = "1";
+          main_body.style.display = "none";
+        }
+      }
+    } else {
+      console.log("Request failed.  Returned status of " + xhr.status);
+    }
+  };
+  xhr.send();
+}, 1000);
 
 buy_tokens.addEventListener("click", function () {
   options.style.height = opt + "px";
@@ -187,8 +206,8 @@ options_logout_1_1.addEventListener("click", function () {
   lg_tickets1.innerHTML = "";
 });
 
-player_name.addEventListener("click", function () {
-  options_player.style.height = "250px";
+ function openManageAccount() {
+  options_player.style.height = "370px";
   options.style.height = 0;
   options_logout.style.width = "0";
   options_notf.style.height = "0";
@@ -201,7 +220,7 @@ player_name.addEventListener("click", function () {
   ep_tickets1.innerHTML = "";
   lg_tickets.innerHTML = "";
   lg_tickets1.innerHTML = "";
-});
+}
 
 closee1.addEventListener("click", function () {
   options.style.height = 0;
@@ -234,7 +253,7 @@ closee11.addEventListener("click", function () {
   ask_holder.style.width = "0%";
 });
 
-for (x = 14; x <= 38; x += 2) {
+for (x = 14; x <= 30; x += 2) {
   fontss.innerHTML += "<option>" + x + "px" + "</option>";
 }
 
@@ -267,8 +286,10 @@ write_comment.addEventListener("click", function () {
   comment_b.style.maxHeight = "300px";
 });
 
-document.getElementsByClassName("cont_btn")[0].addEventListener("click", function () {
-  resetGame();
-  tips.style.display = "none";
-  tryAgainBtn.style.display ="block";
-});
+document
+  .getElementsByClassName("cont_btn")[0]
+  .addEventListener("click", function () {
+    resetGame();
+    tips.style.display = "none";
+    tryAgainBtn.style.display = "block";
+  });

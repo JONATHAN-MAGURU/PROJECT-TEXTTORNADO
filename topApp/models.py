@@ -1,7 +1,6 @@
 from django.db import models
 from datetime import datetime
 
-# Create your models here.
 class Player(models.Model):
     firstname = models.CharField(max_length=100, default='')
     lastname = models.CharField(max_length=100, default='')
@@ -15,6 +14,8 @@ class Player(models.Model):
     v_code = models.IntegerField()
     os = models.CharField(max_length=100)
     amount_of_comments =models.IntegerField(default=0)
+    profile_pic = models.ImageField(default="user_default_pic_x6puuUx.jpg", null=True, blank= True )
+    date  = models.DateTimeField(default=datetime.now, blank=True)
 
 class Comments(models.Model):
     player_id2 = models.CharField(max_length=10)

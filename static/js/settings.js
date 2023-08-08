@@ -1,7 +1,7 @@
 const on = id;
 let off = 0;
 const bk1 = " #d1dad3";
-const bk2 = " rgb(13, 23, 33)";
+const bk2 = " #1d2a35";
 const body = document.getElementById("body");
 const container_head = document.getElementsByClassName("container_head")[0];
 const container_A = document.getElementsByClassName("container_A")[0];

@@ -12,36 +12,78 @@ const send_comment = document.getElementById("comment_form");
 
 save_data.addEventListener("submit", function (e) {
   e.preventDefault();
+  const imageInput = document.getElementById("imageInput");
   var firstname2 = firstname.value;
   var lastname2 = lastname.value;
   var mail = email.value;
   var usern2 = usern.value;
 
-  const prayer2 = {
-    firstname2,
-    lastname2,
-    mail,
-    username,
-    id,
-    usern2,
-  };
+  const selectedImage = imageInput.files[0];
 
-  const json_data3 = JSON.stringify(prayer2);
-  const XHR3 = new XMLHttpRequest();
-  const csrfToken4 = document.querySelector("#csrf_token4").value;
-  XHR3.open("POST", "/second_player_data", true);
-  XHR3.setRequestHeader("Content-Type", "application/json");
-  XHR3.setRequestHeader("X-CSRFToken", csrfToken4);
-  XHR3.addEventListener("load", function () {
-    if (XHR3.status === 200 && XHR3.readyState === 4) {
-      const response = this.responseText;
-      element.classList.add("animated");
-      alert2.innerHTML = response;
-    } else {
-      alert("something went wrong !!!");
-    }
-  });
-  XHR3.send(json_data3);
+  if (selectedImage) {
+    const reader = new FileReader();
+    reader.onload = function (event) {
+      const img = new Image();
+      img.onload = function () {
+        const maxWidth = 800;
+        const maxHeight = 800;
+        let newWidth = img.width;
+        let newHeight = img.height;
+
+        // Calculate new dimensions while maintaining aspect ratio
+        if (img.width > maxWidth) {
+          newWidth = maxWidth;
+          newHeight = (img.height * maxWidth) / img.width;
+        }
+        if (newHeight > maxHeight) {
+          newHeight = maxHeight;
+          newWidth = (img.width * maxHeight) / img.height;
+        }
+
+        const canvas = document.createElement("canvas");
+        canvas.width = newWidth;
+        canvas.height = newHeight;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, newWidth, newHeight);
+
+        // Convert the resized image to base64
+        const resizedImageBase64 = canvas.toDataURL("image/jpeg", 0.8); // Adjust quality if needed
+
+        const data = {
+          firstname2,
+          lastname2,
+          mail,
+          username,
+          id,
+          usern2,
+         resizedImageBase64,
+        };
+
+        const json_data3 = JSON.stringify(data);
+        const XHR3 = new XMLHttpRequest();
+        const csrfToken4 = document.querySelector("#csrf_token4").value;
+        XHR3.open("POST", "/second_player_data", true);
+        XHR3.setRequestHeader("Content-Type", "application/json");
+        XHR3.setRequestHeader("X-CSRFToken", csrfToken4);
+        XHR3.addEventListener("load", function () {
+          if (XHR3.status === 200 && XHR3.readyState === 4) {
+            const response = this.responseText;
+            element.classList.add("animated");
+            alert2.innerHTML = response;
+            window.location.reload();
+          } else {
+            alert("something went wrong !!!");
+          }
+        });
+        XHR3.send(json_data3);
+      };
+
+      img.src = event.target.result;
+    };
+    reader.readAsDataURL(selectedImage); 
+  } else {
+    alert("Please select an image.");
+  }
 });
 
 send_comment.addEventListener("submit", function (e) {
@@ -61,6 +103,7 @@ send_comment.addEventListener("submit", function (e) {
   XHR4.setRequestHeader("X-CSRFToken", csrfToken5);
   XHR4.addEventListener("load", function () {
     if (XHR4.status === 200 && XHR4.readyState === 4) {
+      
     } else {
       alert("something went wrong !!!");
     }
@@ -207,7 +250,7 @@ document.addEventListener("DOMContentLoaded", function () {
               response.history[key].cpm +
               "<br> MISTAKES : " +
               response.history[key].mistakes +
-              '</p></div>';
+              "</p></div>";
             history_Body.innerHTML += temp;
           }
         }
@@ -216,5 +259,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     };
     xhr5.send();
-  }, 1000);
+  }, 5000);
 });
+

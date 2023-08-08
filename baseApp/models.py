@@ -19,3 +19,6 @@ class Typing_testing(models.Model):
 class Variant_paragraphs(models.Model):
     variant_p = models.CharField(max_length=1000000, default="")
     variant_id = models.IntegerField(default=0)
+
+class Frontend(models.Model):
+    FrontendId = models.IntegerField(default=5747)

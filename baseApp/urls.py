@@ -15,4 +15,7 @@ urlpatterns = [
     path('getUsers', views.getUsers, name='getUsers'),
     path('editing_tests', views.editing_tests, name='editing_tests'),
     path('getSearch', views.getSearch, name='getSearch'),
+    path('getPlayerData', views.getPlayerData, name='getPlayerData'),
+    path('startFrontend', views.startFrontend, name='startFrontend'),
+    path('getFontendCodes', views.getFontendCodes, name='getFontendCodes'),
 ]

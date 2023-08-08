@@ -76,10 +76,12 @@
             </div>
             <div class="header_box">
                 <div class="user_avator player_name">
-                    <div class="pic">
-                        <i style="color: white; font-size: 300%; cursor: pointer;" class="fa fa-user-circle"></i>
+                    <div class="pic" onclick="openManageAccount()">
+                        {% for x in player_d%}
+                        <img  class="pic" src ="/images/{{x.profile_pic}}"/>
+                        {% endfor %}
                     </div>
-                    <div class="user_name">
+                    <div class="user_name" onclick="openManageAccount()">
                         {% for x in player_d%}
                         <p>{{x.username}}</p>
                         {% endfor %}
@@ -92,7 +94,7 @@
         </div>
         <div class="main_container">
             <div class="container_A">
-                <div class="container_AA">
+               <!-- <div class="container_AA">
                     <div class="container_A_1_2">
                         <div class="counters2">
                             <p style="font-size: 60%;">TICKETS LEFT</p>
@@ -111,92 +113,87 @@
                         </div>
                         <div class="container_A_1_1_2"> 0 </div>
                     </div>
-                </div>
+                </div>-->
                 <div class="container_A_1">
                     <div class="container_A_1_1">
                         <div class="counters">
-                            <p style="font-size: 60%;">TIME LEFT</p>
+                            <p >TIME LEFT</p>
                         </div>
 
                         <div class="container_A_1_1_1"> <span class="time_left">60</span><span>s</span></div>
                     </div>
                     <div class="container_A_1_1">
                         <div class="counters">
-                            <p style="font-size: 60%;">MISTAKES</p>
+                            <p>MISTAKES</p>
                         </div>
 
                         <div class="container_A_1_1_1"> <span id="mistakee"> 0 </span></div>
                     </div>
                     <div class="container_A_1_1">
                         <div class="counters">
-                            <p style="font-size: 60%;">WPM</p>
+                            <p>WPM</p>
                         </div>
 
                         <div class="container_A_1_1_1"><span id="wpm">0</span></div>
                     </div>
                     <div class="container_A_1_1">
                         <div class="counters">
-                            <p style="font-size: 60%;">CPM</p>
+                            <p>CPM</p>
                         </div>
 
                         <div class="container_A_1_1_1"> <span id="cpm"> 0 </span> </div>
                     </div>
                 </div>
                 <div class="container_A_2">
-                    <div class="container_A_2_1">
-                        <div class="fonts_holder">
-                            <div class="text_holder">
-                                <p>FONT SIZE</p>
-                            </div>
-                            <select name="" id="fontss">
-                            </select>
-                        </div>
-                        <p class="des1">YOUR TIME STARTS WHEN YOU START TYPING</p>
-                        <div class="fonts_holder">
-                            <div class="text_holder">
-                                <p>FONT</p>
-                            </div>
-                            <select name="" id="">
-                                <option value="">cursive</option>
-                                <option value="">cursive</option>
-                                <option value="">cursive</option>
-                                <option value="">cursive</option>
-                            </select>
-                        </div>
-                    </div>
+                   
                     <div class="container_A_2_2">
+                        <div class="container_A_2_1">
+                            <div class="fonts_holder">
+                                <div class="text_holder">
+                                    <p>FONT SIZE</p>
+                                </div>
+                                <select name="" id="fontss">
+                                </select>
+                            </div>
+                           
+                            <div class="fonts_holder">
+                                <div class="text_holder">
+                                    <p>FONT</p>
+                                </div>
+                                <select name="" id="">
+                                    <option value="">cursive</option>
+                                    <option value="">cursive</option>
+                                    <option value="">cursive</option>
+                                    <option value="">cursive</option>
+                                </select>
+                            </div>
+                            <div id="reshulf">
+                                <p> RESHUFFLE </p>
+                            </div>
+                        </div>
                         <div class="typing_text_holder">
                             <div class="wrapper">
                                 <input type="text" class="input-field">
                                 <div class="content-box">
                                     <div class="typing-text">
-                                        <p></p>
+                                        <p id="qty"></p>
                                     </div>
                                 </div>
-                            </div>
-                            <div id="reshulf">
-                                <p> RESHUFFLE </p>
                             </div>
                         </div>
                     </div>
                     <div class="aow_holder">
                         <div class="container_A_1_3">
                             <div class="counters">
-                                <p style="font-size: 60%;">AMOUNT OF WORDS</p>
+                                <p style="font-size: 100%;">AMOUNT OF WORDS</p>
                             </div>
-                            <div class="container_A_1_1_1"> 24 </div>
+                            <div class="container_A_1_1_1 aow" > </div>
                         </div>
                         <div class="container_A_1_3">
                             <div class="counters">
-                                <p style="font-size: 60%;">AMOUNT OF LETTERS</p>
+                                <p style="font-size: 100%;">AMOUNT OF LETTERS</p>
                             </div>
-                            <div class="container_A_1_1_1"> 134</div>
-                        </div>
-                        <div class="container_A_1_3">
-                            <div class="counters">
-                                <p style="font-size: 60%;">ESTIMATED TIME</p>
-                            </div>
-                            <div class="container_A_1_1_1">24s</div>
+                            <div class="container_A_1_1_1 aol"></div>
                         </div>
                     </div>
                 </div>
@@ -226,7 +223,6 @@
                         <P id="word2"></P>
                     </div>
                 </div>
-                <div class="container_B_1 container_B_1_3"></div>
             </div>
         </div>
         <div class="settings">
@@ -349,6 +345,7 @@
                     <input type="text" name="" id="" class="edit1" value="{{x.password}}" disabled
                         placeholder="password">
                     <br>
+                    <input type="file" id="imageInput" name="image" accept="image/*" placeholder="upload image">
                     {% endfor %}
 
             </div>
@@ -397,13 +394,16 @@
                 <br>
 
                 <div class="user_box">
-                    <i style="cursor: pointer;" class="fa fa-user-circle ico"></i>
+                    {% for x in player_d%}
+                    <img  class="ico" src ="/images/{{x.profile_pic}}"/>
+                    {% endfor %}
 
                     <br>
                     <div class="user_d">
 
                     </div>
                 </div>
+                <br>
                 <div class="manage_account">MANAGE ACCOUNT</div>
 
 
@@ -561,7 +561,6 @@
     <script src="{% static 'js/ttd_getting_data_api.js' %}"></script>
     <script src="{% static 'js/timers.js' %}"></script>
     <script src="{% static 'js/home_typos.js' %}"></script>
-    <script src="{% static 'js/settings.js' %}"></script>
 </body>
 
 </html>

@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
     <link rel="stylesheet" href="{% static 'css/loader.css' %}">
     <link rel="stylesheet" href="{% static 'css/ttd_user_home_style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/ttd_user_home_style_mobile.css' %}">
 </head>
 {% for x in player_d%}
 
@@ -37,33 +38,33 @@
         </div>
         <div class="log_out_hider"></div>
         <div class="leaderboard_container">
-            <div class="leaderboard_head">
-                <p>LEADERBOARD</p>
+            <h5 style="border-bottom: 1px solid #21262d; padding: 10px">
+              &nbsp;<i
+                class="fa fa-trophy"
+                style="color: #e6007a; font-size: 180%"
+              ></i
+              >&nbsp;TOP USERS BY WPM
+            </h5>
+            <div class="leaderboardHead">
+              <div class="userBox" style="font-size : 90%; border: 1px solid #21262d; color: gray;">
+                <div class="rankLB">RANK</div>
+                <div class="firstnameLB" style="text-align: center">USER</div>
+                <div class="wpmLB">WPM</div>
+                <div class="charLB">CPM</div>
+                <div class="mistLB">MISTAKE</div>
+              </div>
             </div>
-            <table id="leader">
-                <tr>
-                    <th style="width: 32px;">#</th>
-                    <th style="width: 170px;">USERNAME</th>
-                    <th>WPM</th>
-                    <th>CPM</th>
-                    <th>MISTAKE</th>
-                </tr>
-            </table>
-            <div class="leaderboard_body">
-                <table class="res_body" id="leader2">
-
-                </table>
-            </div>
-        </div>
+            <div class="loader2f"></div>
+            <div class="leaderboardBody"></div>
+          </div>
         <div class="container_head">
             <div class="header_box">
-                <h4 style=" cursor: pointer"><i style="color: white; font-size: 100%; cursor: pointer;"
-                        class="fa fa-angellist"></i> &nbsp; TEXT<span style="color:slateblue">TORNADO </span> </h4>
-                <div class="log_out">
+                <h4 style=" cursor: pointer">TEXTTORNADO</h4>
+                <div class="log_out displayNone">
                     <P>PRACTICE </P>
                 </div>
             </div>
-            <div class="header_box" style="font-size:80%;">
+            <div class="header_box displayNone" style="font-size:80%;">
                 <div class="log_out buy_tokens">
                     <P>BUY TICKETS</P>
                 </div>
@@ -74,25 +75,26 @@
                     <P>COMMENTS</P>
                 </div>
             </div>
-            <div class="header_box">
+            <div class="header_box header_box2">
                 <div class="user_avator player_name">
                     <div class="pic" onclick="openManageAccount()">
                         {% for x in player_d%}
                         <img  class="pic" src ="/images/{{x.profile_pic}}"/>
                         {% endfor %}
                     </div>
-                    <div class="user_name" onclick="openManageAccount()">
+                    <div class="user_name displayNone" onclick="openManageAccount()">
                         {% for x in player_d%}
                         <p>{{x.username}}</p>
                         {% endfor %}
                     </div>
                 </div>
-                <div class="log_out logout">
+                <div class="log_out logout displayNone">
                     LOGOUT
                 </div>
             </div>
         </div>
         <div class="main_container">
+            <button class="disNan" id="leaderb">LEADERBOARD</button>
             <div class="container_A">
                <!-- <div class="container_AA">
                     <div class="container_A_1_2">
@@ -114,6 +116,7 @@
                         <div class="container_A_1_1_2"> 0 </div>
                     </div>
                 </div>-->
+                
                 <div class="container_A_1">
                     <div class="container_A_1_1">
                         <div class="counters">
@@ -150,7 +153,7 @@
                         <div class="container_A_2_1">
                             <div class="fonts_holder">
                                 <div class="text_holder">
-                                    <p>FONT SIZE</p>
+                                    <p id="fontSize">FONT SIZE</p>
                                 </div>
                                 <select name="" id="fontss">
                                 </select>
@@ -158,7 +161,7 @@
                            
                             <div class="fonts_holder">
                                 <div class="text_holder">
-                                    <p>FONT</p>
+                                    <p id="font">FONT</p>
                                 </div>
                                 <select name="" id="">
                                     <option value="">cursive</option>
@@ -168,7 +171,7 @@
                                 </select>
                             </div>
                             <div id="reshulf">
-                                <p> RESHUFFLE </p>
+                                <p> <i style=" font-size: 100%; cursor: pointer;" class="fa fa-random"></i>  </p>
                             </div>
                         </div>
                         <div class="typing_text_holder">
@@ -185,13 +188,13 @@
                     <div class="aow_holder">
                         <div class="container_A_1_3">
                             <div class="counters">
-                                <p style="font-size: 100%;">AMOUNT OF WORDS</p>
+                                <p style="font-size: 100%;">WORDS</p>
                             </div>
                             <div class="container_A_1_1_1 aow" > </div>
                         </div>
                         <div class="container_A_1_3">
                             <div class="counters">
-                                <p style="font-size: 100%;">AMOUNT OF LETTERS</p>
+                                <p style="font-size: 100%;">LETTERS</p>
                             </div>
                             <div class="container_A_1_1_1 aol"></div>
                         </div>
@@ -325,7 +328,7 @@
                 </div>
             </div>
         </div>
-        <div class="manage_account_holder">
+        <div class="manage_account_holder manage_account_holder2">
             <div class="manage_account_header">
                 <p>MANAGE ACCOUNT</p>
                 <i style=" font-size: 100%; cursor: pointer;" class="fa fa-close closee5 manage_close"></i>
@@ -345,6 +348,7 @@
                     <input type="text" name="" id="" class="edit1" value="{{x.password}}" disabled
                         placeholder="password">
                     <br>
+                    <label for="imageInput">UPLOAD PHOTO</label> <br>
                     <input type="file" id="imageInput" name="image" accept="image/*" placeholder="upload image">
                     {% endfor %}
 

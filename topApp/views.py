@@ -201,9 +201,7 @@ def get_test_details(request):
 def user_history():
     typing_details = TypingDetails.objects.all()
     for typing_detail in typing_details:
-        if TypingDetailsHistory.objects.filter(typo_id2=typing_detail.typo_id).exists():
-            print("DATA ALREADY EXISTS")
-        else:
+        if not TypingDetailsHistory.objects.filter(typo_id2=typing_detail.typo_id).exists():
             history = TypingDetailsHistory.objects.create(
                 wpm=typing_detail.wpm,
                 cpm=typing_detail.cpm,
@@ -212,7 +210,8 @@ def user_history():
                 username=typing_detail.username,
                 typo_id2=typing_detail.typo_id,
             )
-    history.save()
+            history.save()
+
 
 
 def get_history(request):

@@ -56,7 +56,7 @@ save_data.addEventListener("submit", function (e) {
           username,
           id,
           usern2,
-         resizedImageBase64,
+          resizedImageBase64,
         };
 
         const json_data3 = JSON.stringify(data);
@@ -80,7 +80,7 @@ save_data.addEventListener("submit", function (e) {
 
       img.src = event.target.result;
     };
-    reader.readAsDataURL(selectedImage); 
+    reader.readAsDataURL(selectedImage);
   } else {
     alert("Please select an image.");
   }
@@ -103,7 +103,6 @@ send_comment.addEventListener("submit", function (e) {
   XHR4.setRequestHeader("X-CSRFToken", csrfToken5);
   XHR4.addEventListener("load", function () {
     if (XHR4.status === 200 && XHR4.readyState === 4) {
-      
     } else {
       alert("something went wrong !!!");
     }
@@ -188,37 +187,37 @@ document.addEventListener("DOMContentLoaded", function () {
     xhr3.onload = function () {
       if (xhr3.status === 200) {
         var response = JSON.parse(xhr3.responseText);
-        var res_Body = document.querySelector(".res_body");
+        var res_Body = document.querySelector(".leaderboardBody");
         res_Body.innerHTML = "";
         let x = 1;
         for (var key in response.results) {
-          if (response.results[key].play_id == id) {
+          if (x % 2 == 0) {
             var temp =
-              '<tr style="background-image:linear-gradient(to top right,#020412 20%, #383235 40%,#04071c 70%);"><td>' +
+              '<div class="userBox"><div class="rankLB">' +
               x++ +
-              "</td><td>" +
+              '</div><div class="firstnameLB">' +
               response.results[key].username +
-              "</td><td>" +
+              '</div><div class="wpmLB">' +
               response.results[key].wpm +
-              "</td><td>" +
+              '</div><div class="charLB">' +
               response.results[key].cpm +
-              "</td><td>" +
+              '</div> <div class="mistLB">' +
               response.results[key].mistakes +
-              "</td></tr>";
+              "</div></div>";
             res_Body.innerHTML += temp;
           } else {
             var temp =
-              "<tr><td>" +
+              '<div  style="background:transparent; border:none;" class="userBox"><div class="rankLB">' +
               x++ +
-              "</td><td>" +
+              '</div><div class="firstnameLB">' +
               response.results[key].username +
-              "</td><td>" +
+              '</div><div class="wpmLB">' +
               response.results[key].wpm +
-              "</td><td>" +
+              '</div><div class="charLB">' +
               response.results[key].cpm +
-              "</td><td>" +
+              '</div> <div class="mistLB">' +
               response.results[key].mistakes +
-              "</td></tr >";
+              "</div></div>";
             res_Body.innerHTML += temp;
           }
         }
@@ -261,4 +260,3 @@ document.addEventListener("DOMContentLoaded", function () {
     xhr5.send();
   }, 5000);
 });
-

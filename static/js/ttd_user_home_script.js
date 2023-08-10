@@ -35,6 +35,7 @@ const options_logout_1_1 =
   document.getElementsByClassName("options_logout_1_1")[1];
 const log_out_hider = document.getElementsByClassName("log_out_hider")[0];
 const opt = screen.availHeight;
+const opt2 = screen.availWidth;
 const fontss = document.getElementById("fontss");
 const font_changer = document.getElementsByClassName("typing-text")[0];
 const manage_account_holder = document.getElementsByClassName(
@@ -51,7 +52,9 @@ const comment_b = document.getElementsByClassName("write_coment_holder")[0];
 const open_comm = document.getElementById("open_comm");
 const options_comments = document.getElementsByClassName("options_comments")[0];
 const comment_body = document.getElementsByClassName("comment_body")[0];
-const leaderboard = document.getElementsByClassName("leaderboard_container")[0].style.height = opt - 140 + "px";
+const leaderboard = (document.getElementsByClassName(
+  "leaderboard_container"
+)[0].style.height = opt - 140 + "px");
 
 main_container.style.height = opt - 120 + "px";
 settings_container.style.height = opt - 150 + "px";
@@ -126,8 +129,7 @@ setInterval(function () {
           loader.style.height = "0vh";
           loader.style.opacity = "0";
           main_body.style.display = "block";
-        } 
-        else{
+        } else {
           loader.style.height = "100vh";
           loader.style.opacity = "1";
           main_body.style.display = "none";
@@ -139,6 +141,12 @@ setInterval(function () {
   };
   xhr.send();
 }, 1000);
+
+  document.getElementById("leaderb").addEventListener("click", function () {
+    
+    document.getElementsByClassName("leaderboard_container2")[0].style.width =
+      "100%";
+  });
 
 buy_tokens.addEventListener("click", function () {
   options.style.height = opt + "px";
@@ -206,7 +214,7 @@ options_logout_1_1.addEventListener("click", function () {
   lg_tickets1.innerHTML = "";
 });
 
- function openManageAccount() {
+function openManageAccount() {
   options_player.style.height = "370px";
   options.style.height = 0;
   options_logout.style.width = "0";
@@ -263,6 +271,8 @@ fontss.addEventListener("change", function () {
 
 manage_account.addEventListener("click", function () {
   manage_account_holder.style.width = "23%";
+  document.getElementsByClassName("manage_account_holder2")[0].style.width =
+    "100%";
 });
 changee.addEventListener("click", function () {
   change_pass.style.maxHeight = "300px";

@@ -425,16 +425,16 @@ function getUser() {
       userHold.innerHTML = "";
       for (var key in response.user) {
         var temp =
-          '<div class="userHolder"><label class="custom-checkbox3"><input type="checkbox" data-id="' +
+          '<div class="userHolder"><div style="display:flex;flex-direction:row;"><label class="custom-checkbox3"><input type="checkbox" data-id="' +
           response.user[key].player_id +
           '" data-test="' +
           response.user[key].username +
           '"><span class="checkmark3"></span></label>' +
           '<img style="width:30px;height:30px; border-radius:50%;" src="/images/' +
           response.user[key].profile_pic +
-          '">&nbsp;' +
+          '">&nbsp;<P>' +
           response.user[key].username +
-          '<p style="display:none">' +
+          "</P></div><p>" +
           response.user[key].player_id +
           "</p></div>";
         userHold.innerHTML += temp;
@@ -624,11 +624,10 @@ document.getElementById("viewDetails").addEventListener("click", function () {
         userRes.innerHTML += temp6;
         userRes.innerHTML += temp7;
         userRes.innerHTML += temp8;
-        imgElement.src = "/images/"+response.playerResults[key].profile_pic;
+        imgElement.src = "/images/" + response.playerResults[key].profile_pic;
         imgElement.style.width = "300px";
         imgElement.style.height = "300px";
         imgElement.style.borderRadius = "10%";
-
 
         imageContainer.appendChild(imgElement);
       }

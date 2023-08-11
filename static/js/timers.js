@@ -1,49 +1,57 @@
-// Set the total number of seconds (3 days)
-var totalSeconds = 3 * 24 * 60 * 60;
+var totalMilliseconds = 3 * 24 * 60 * 60 * 1000;
 
-// Update the timer every second
-var timer2 = setInterval(function () {
-  // Calculate the remaining days, hours, minutes and seconds
-  var days = Math.floor(totalSeconds / (24 * 60 * 60));
-  var hours = Math.floor((totalSeconds / (60 * 60)) % 24);
-  var minutes = Math.floor((totalSeconds / 60) % 60);
-  var seconds = Math.floor(totalSeconds % 60);
+// Update the timer every 100 milliseconds
+const timer2 = setInterval(function () {
+    // Calculate the remaining days, hours, minutes, seconds, and milliseconds
+    const days = Math.floor(totalMilliseconds / (24 * 60 * 60 * 1000));
+    const hours = Math.floor((totalMilliseconds / (60 * 60 * 1000)) % 24);
+    const minutes = Math.floor((totalMilliseconds / (60 * 1000)) % 60);
+    const seconds = Math.floor((totalMilliseconds / 1000) % 60);
+    const milliseconds = Math.floor(totalMilliseconds % 1000);
 
-  // Display the remaining time on the webpage
-  document.getElementById("timer").innerHTML = days + " DAYS, " + hours + ":" + minutes + ":" + seconds;
+    // Display the remaining time on the webpage
+    document.getElementById("days").innerHTML = days;
+    document.getElementById("hours").innerHTML = hours;
+    document.getElementById("mins").innerHTML = minutes;
+    document.getElementById("seconds").innerHTML = seconds;
+    document.getElementById("milliseconds").innerHTML = milliseconds;
 
-  // Decrement the total number of seconds
-  totalSeconds--;
+    // Decrement the total number of milliseconds
+    totalMilliseconds -= 8; // Decrement by 100 milliseconds
 
-  // Stop the timer when it reaches zero
-  if (totalSeconds < 0) {
-    clearInterval(timer2);
-    document.getElementById("timer").innerHTML = "Time's up!";
-  }
-}, 1000);
+    // Stop the timer when it reaches zero
+    if (totalMilliseconds < 0) {
+        clearInterval(timer2);
+        document.getElementById("timer").innerHTML = "Time's up!";
+    }
+}, 8); // Update every 100 milliseconds
 
 
+var totalMilliseconds2 = 4 * 24 * 60 * 60 * 1000;
+// Update the timer every 100 milliseconds
+const timer3 = setInterval(function () {
+    // Calculate the remaining days, hours, minutes, seconds, and milliseconds
+    const days2 = Math.floor(totalMilliseconds2 / (24 * 60 * 60 * 1000));
+    const hours2 = Math.floor((totalMilliseconds2 / (60 * 60 * 1000)) % 24);
+    const minutes2 = Math.floor((totalMilliseconds2 / (60 * 1000)) % 60);
+    const seconds2 = Math.floor((totalMilliseconds / 1000) % 60);
+    const milliseconds2 = Math.floor(totalMilliseconds2 % 1000);
 
-// Set the total number of seconds (3 days)
-var totalSeconds1 = 4 * 24 * 60 * 60;
+    // Display the remaining time on the webpage
+    document.getElementById("days2").innerHTML = days2;
+    document.getElementById("hours2").innerHTML = hours2;
+    document.getElementById("mins2").innerHTML = minutes2;
+    document.getElementById("seconds2").innerHTML = seconds2;
+    document.getElementById("milliseconds2").innerHTML = milliseconds2;
 
-// Update the timer every second
-var timer1 = setInterval(function () {
-  // Calculate the remaining days, hours, minutes and seconds
-  var days1 = Math.floor(totalSeconds1 / (24 * 60 * 60));
-  var hours1 = Math.floor((totalSeconds1 / (60 * 60)) % 24);
-  var minutes1 = Math.floor((totalSeconds1 / 60) % 60);
-  var seconds1 = Math.floor(totalSeconds1 % 60);
+    // Decrement the total number of milliseconds
+    totalMilliseconds2 -= 8; // Decrement by 100 milliseconds
 
-  // Display the remaining time on the webpage
-  document.getElementById("timer1").innerHTML = days1 + " DAYS, " + hours1 + ":" + minutes1 + ":" + seconds1;
+    // Stop the timer when it reaches zero
+    if (totalMilliseconds2 < 0) {
+        clearInterval(timer3);
+        document.getElementById("time").innerHTML = "Time's up!";
+    }
+}, 8); // Update every 100 milliseconds
 
-  // Decrement the total number of seconds
-  totalSeconds1--;
 
-  // Stop the timer when it reaches zero
-  if (totalSeconds1 < 0) {
-    clearInterval(timer1);
-    document.getElementById("timer1").innerHTML = "Time's up!";
-  }
-}, 1000);

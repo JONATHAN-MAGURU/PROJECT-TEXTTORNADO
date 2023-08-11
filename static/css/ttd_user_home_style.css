@@ -173,8 +173,19 @@
     flex-direction: column;
   }
   .event_d {
-    font-size: 85%;
+    font-size: 95%;
+    display: flex;
+    flex-direction: column;
+    color: gray;
     letter-spacing: 2px;
+    justify-content: space-between;
+    padding: 10px;
+  }
+  .event_d2 {
+    display: flex;
+    flex-direction:row;
+    letter-spacing: 2px;
+    justify-content: space-between;
   }
 
   .container_B {
@@ -190,7 +201,7 @@
   .container_B_1 {
     width: 100%;
     height: 300px;
-    padding: 12px;
+    padding: 0;
     margin-bottom: 10px;
     background-color: #161b22;
     box-shadow: 0px 0px 2px #000000;
@@ -812,7 +823,8 @@
     letter-spacing: 2px;
     width: 100%;
     color: white;
-    background-color: rgb(13, 23, 33);
+    border: 1px solid #21262d;
+    background-color: #161b22;
     box-shadow: 0px 0px 2px #000000;
     border-radius: 4px;
   }
@@ -824,12 +836,13 @@
   .options_player {
     width: 20%;
     height: 0;
-    box-shadow: 0px 0px 8px #000000;
-    background-color: rgb(13, 23, 33);
+    box-shadow: 0.5px 0.5px 8px #000000;
+    border: none;
+    background-color: #161b22;
     position: fixed;
     overflow: hidden;
-    top: 49px;
-    transition: 0.3s;
+    top: 50px;
+    transition: 0.2s;
     right: 10%;
   }
 
@@ -1145,16 +1158,17 @@
     position: fixed;
     height: auto;
     box-shadow: 0px 0px 9px #000000;
-    transition: 0.3s;
+    transition: 0.2s;
     z-index: 100;
     right: 30%;
     overflow: hidden;
     top: 20%;
+    border: none;
     font-size: 80%;
     z-index: 90;
     border-radius: 3px;
     cursor: pointer;
-    background-color: rgb(13, 23, 33);
+    background-color:#0d1117;
   }
 
   .manage_account_header {
@@ -1190,8 +1204,8 @@
 
   .edit1 {
     width: 100%;
-    border: none;
-    background-color: #0d1117;
+    border: 1px solid #21262d;
+    background-color: #161b22;
     padding: 8px;
     color: white;
     outline: none;
@@ -1460,6 +1474,7 @@
     flex-direction: column;
     position: fixed;
     border: 1px solid #21262d;
+    background-color: #161b22;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     top:52px;
     left: 4px;
@@ -1468,7 +1483,7 @@
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     margin: 10px auto;
-    background-color: #161b22;
+    
 
   }
 
@@ -1478,6 +1493,7 @@
   .leaderboardBody {
     height: auto;
     overflow-y: scroll;
+    scroll-behavior: smooth;
     display: block;
   }
   .userBox {
@@ -1487,6 +1503,7 @@
     flex-direction: row;
     background-color:#0d1117;
     margin: 3px;
+    transition: 0.2s;
     width: 98%;
     border-radius: 4px;
     font-size : 90%; 
@@ -1496,11 +1513,16 @@
     width: 15%;
     padding: 5px;
     color: gray;
+    text-align: center;
     border-radius: 30%;
   }
   .firstnameLB {
     width: 37%;
     color:  rgba(202, 193, 193, 0.9);
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    overflow: hidden;
     padding: 5px;
   }
   .wpmLB {
@@ -1522,5 +1544,46 @@
     text-align: center;
     border-radius: 20%;
     overflow: hidden;
+  }
+
+  .timerMainBox {
+    width: 100%;
+    border-radius: 6px;
+    height: auto;
+    background-color: #161b22;
+    border: 2px solid #21262d;
+    box-shadow: 8px 8px #0d1117;
+    justify-content:start;
+    margin: auto;
+    flex-direction: column;
+    display: flex;
+  }
+
+  .timerSubBox {
+    width: 23%;
+    text-align: center;
+    color: white;
+    justify-content: space-evenly;
+    box-shadow: 8px 8px #0d1117;
+    height: 84px;
+    border: 1px solid #21262d;
+    border-radius: 5px;
+    padding: 1px;
+    background-color: #0d1117;
+    margin: 3px;
+    display: flex;
+    flex-direction: column;
+  }
+  .timerHead {
+    text-align: center;
+    padding: 10px;
+    color: white;
+    letter-spacing: 5px;
+  }
+  .timerBody {
+    text-align: center;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
   }
 }

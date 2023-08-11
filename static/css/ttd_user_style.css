@@ -7,7 +7,7 @@
 }
 
 body {
-    background-color: rgb(13, 23, 33);
+    background-color:#0d1117;
     color: white;
 
 }
@@ -34,6 +34,7 @@ main {
 
 .form_holder {
     width: 35%;
+    
     transition: 0.3s;
     padding: 20px;
 }
@@ -44,6 +45,8 @@ main {
     height: 400px;
     outline: none;
     transition: 1s;
+    background-color:#161b22 ;
+    border: 1px solid #21262d;
     overflow: hidden;
     box-shadow: 0px 0px 10px black;
 

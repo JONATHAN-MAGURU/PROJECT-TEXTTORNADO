@@ -67,6 +67,7 @@ open_comm.addEventListener("click", function () {
   comment_body.style.maxHeight = opt - 200 + "px";
   options.style.height = "0";
   options_player.style.height = "0";
+  options_player.style.border = "none";
   leaderboard_hider.style.width = "0";
   options_logout.style.width = "0";
   options_notf.style.height = 0;
@@ -153,6 +154,7 @@ buy_tokens.addEventListener("click", function () {
   leaderboard_hider.style.width = "25%";
   options_notf.style.height = 0;
   options_player.style.height = 0;
+  options_player.style.border = "none";
   options_logout.style.width = 0;
   settings_container.style.width = 0;
   settings_container2.style.width = 0;
@@ -173,6 +175,7 @@ notf.addEventListener("click", function () {
   options.style.height = "0";
   options_player.style.height = "0";
   leaderboard_hider.style.width = "0";
+  options_player.style.border = "none";
   options_logout.style.width = "0";
   options_comments.style.height = 0;
   t_overview.innerHTML = "";
@@ -192,6 +195,7 @@ logout.addEventListener("click", function () {
   options.style.height = 0;
   leaderboard_hider.style.width = "0";
   options_player.style.height = 0;
+  options_player.style.border = "none";
   options_comments.style.height = 0;
   t_overview.innerHTML = "";
   st_tickets.innerHTML = "";
@@ -216,6 +220,7 @@ options_logout_1_1.addEventListener("click", function () {
 
 function openManageAccount() {
   options_player.style.height = "370px";
+  options_player.style.border = "1px solid #21262d";
   options.style.height = 0;
   options_logout.style.width = "0";
   options_notf.style.height = "0";
@@ -271,8 +276,7 @@ fontss.addEventListener("change", function () {
 
 manage_account.addEventListener("click", function () {
   manage_account_holder.style.width = "23%";
-  document.getElementsByClassName("manage_account_holder2")[0].style.width =
-    "100%";
+  manage_account_holder.style.border = "1px solid #21262d";
 });
 changee.addEventListener("click", function () {
   change_pass.style.maxHeight = "300px";
@@ -281,10 +285,13 @@ changee.addEventListener("click", function () {
 
 manage_close3.addEventListener("click", function () {
   options_player.style.height = "0";
+  options_player.style.border = "none";
   manage_account_holder.style.width = "0";
+  manage_account_holder.style.border = "none";
 });
 manage_close1.addEventListener("click", function () {
   manage_account_holder.style.width = "0";
+  manage_account_holder.style.border = "none";
 });
 
 manage_close2.addEventListener("click", function () {

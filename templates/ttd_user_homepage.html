@@ -48,7 +48,7 @@
             <div class="leaderboardHead">
               <div class="userBox" style="font-size : 90%; border: 1px solid #21262d; color: gray;">
                 <div class="rankLB">RANK</div>
-                <div class="firstnameLB" style="text-align: center">USER</div>
+                <div class="firstnameLB" style="text-align: center; justify-content: center;">USER</div>
                 <div class="wpmLB">WPM</div>
                 <div class="charLB">CPM</div>
                 <div class="mistLB">MISTAKE</div>
@@ -171,7 +171,7 @@
                                 </select>
                             </div>
                             <div id="reshulf">
-                                <p> <i style=" font-size: 100%; cursor: pointer;" class="fa fa-random"></i>  </p>
+                                <i style=" font-size: 100%; cursor: pointer;" class="fa fa-random"></i> 
                             </div>
                         </div>
                         <div class="typing_text_holder">
@@ -202,30 +202,72 @@
                 </div>
             </div>
             <div class="container_B">
-                <div class="container_B_1 container_B_1_1">
-                    <p style="letter-spacing: 2px; text-align: center; font-size: 110%;" id="ends"></p>
-                    <p id="timer" style="text-align: center; font-size: 110%;"></p>
-                    <br>
+                    <div class="timerMainBox">
+                        <div class="timerHead">
+                            <h2>EVENT ENDS IN</h2>
+                        </div>
+                        <div class="timerBody">
+                            <div class="timerSubBox">
+                                <p style="font-size: 200%; color: orange" id="days">00</p>
+                                <p style="font-size: 90%">DAYS</p>
+                            </div>
+                            <div class="timerSubBox">
+                                <p style="font-size: 200%; color: orange" id="hours">00</p>
+                                <p style="font-size: 90%">HOURS</p>
+                            </div>
+                            <div class="timerSubBox">
+                                <p style="font-size: 200%; color: orange" id="mins">00</p>
+                                <p style="font-size: 90%">MINUTES</p>
+                            </div>
+                            <div class="timerSubBox">
+                                <p style="font-size: 200%; color: orange" id="seconds">00</p>
+                                <p style="font-size: 90%">SECONDS</p>
+                            </div>
+                            <div class="timerSubBox">
+                                <p style="font-size: 200%; color: orange" id="milliseconds">00</p>
+                                <p style="font-size: 90%">MS</p>
+                            </div>
+                        </div>
                     <div class="event_d">
-                        <P id="name1"></P>
-                        <P id="type"></P>
-                        <P id="lang"></P>
-                        <P id="given_time"></P>
-                        <P id="word1"></P>
+                       <div class="event_d2"> <P>EVENT NAME</P> <P>XXX</P></div>
+                       <div class="event_d2"> <P>EVENT TYPE</P><P>XXX</P></div>
+                       <div class="event_d2"> <P>LANGUAGE</P><P>XXX</P></div>
+                       <div class="event_d2"> <P>DURATION</P><P>XXX</P></div>
                     </div>
                 </div>
-                <div class="container_B_1 container_B_1_2">
-                    <p style="letter-spacing: 2px; text-align: center; font-size: 110%;" id="start"></p>
-                    <p id="timer1" style="text-align: center; font-size: 110%;"></p>
-                    <br>
-                    <div class="event_d">
-                        <P id="name2"></P>
-                        <P id="type2"></P>
-                        <P id="lang2"></P>
-                        <P id="given_time2"></P>
-                        <P id="word2"></P>
+                <div class="timerMainBox">
+                    <div class="timerHead">
+                        <h2>NEXT EVENT STARTS IN</h2>
                     </div>
+                    <div class="timerBody">
+                        <div class="timerSubBox">
+                            <p style="font-size: 200%; color: orange" id="days2">00</p>
+                            <p style="font-size: 90%">DAYS</p>
+                        </div>
+                        <div class="timerSubBox">
+                            <p style="font-size: 200%; color: orange" id="hours2">00</p>
+                            <p style="font-size: 90%">HOURS</p>
+                        </div>
+                        <div class="timerSubBox">
+                            <p style="font-size: 200%; color: orange" id="mins2">00</p>
+                            <p style="font-size: 90%">MINUTES</p>
+                        </div>
+                        <div class="timerSubBox">
+                            <p style="font-size: 200%; color: orange" id="seconds2">00</p>
+                            <p style="font-size: 90%">SECONDS</p>
+                        </div>
+                        <div class="timerSubBox">
+                            <p style="font-size: 200%; color: orange" id="milliseconds2">00</p>
+                            <p style="font-size: 90%">MS</p>
+                        </div>
+                    </div>
+                <div class="event_d">
+                   <div class="event_d2"> <P>EVENT NAME</P> <P>XXX</P></div>
+                   <div class="event_d2"> <P>EVENT TYPE</P><P>XXX</P></div>
+                   <div class="event_d2"> <P>LANGUAGE</P><P>XXX</P></div>
+                   <div class="event_d2"> <P>DURATION</P><P>XXX</P></div>
                 </div>
+            </div>
             </div>
         </div>
         <div class="settings">
@@ -564,7 +606,7 @@
     <script src="{% static 'js/ttd_typing_logic.js' %}"></script>
     <script src="{% static 'js/ttd_getting_data_api.js' %}"></script>
     <script src="{% static 'js/timers.js' %}"></script>
-    <script src="{% static 'js/home_typos.js' %}"></script>
+    <script src="{% static 'js/home_typoss.js' %}"></script>
 </body>
 
 </html>

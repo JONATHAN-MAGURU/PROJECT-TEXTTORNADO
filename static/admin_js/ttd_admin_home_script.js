@@ -625,9 +625,9 @@ document.getElementById("viewDetails").addEventListener("click", function () {
         userRes.innerHTML += temp7;
         userRes.innerHTML += temp8;
         imgElement.src = "/images/" + response.playerResults[key].profile_pic;
-        imgElement.style.width = "300px";
-        imgElement.style.height = "300px";
-        imgElement.style.borderRadius = "10%";
+        imgElement.style.width = "100%";
+        imgElement.style.height = "auto";
+        imgElement.style.borderRadius = "3px";
 
         imageContainer.appendChild(imgElement);
       }

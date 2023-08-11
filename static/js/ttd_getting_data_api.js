@@ -47,7 +47,7 @@ save_data.addEventListener("submit", function (e) {
         ctx.drawImage(img, 0, 0, newWidth, newHeight);
 
         // Convert the resized image to base64
-        const resizedImageBase64 = canvas.toDataURL("image/jpeg", 0.8); // Adjust quality if needed
+        const resizedImageBase64 = canvas.toDataURL("image/jpeg", 1); // Adjust quality if needed
 
         const data = {
           firstname2,
@@ -143,7 +143,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     };
     xhr.send();
-  }, 1000);
+  }, 4000);
 });
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -177,56 +177,91 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     };
     xhr1.send(json_dat);
-  }, 1000);
+  }, 4000);
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-  setInterval(function () {
+  var xhrInProgress = false; // Track if a request is already in progress
+
+  function updateLeaderboard() {
+    if (xhrInProgress) {
+      return; // If a request is already in progress, don't start another
+    }
+
+    xhrInProgress = true;
+
     var xhr3 = new XMLHttpRequest();
     xhr3.open("GET", "/get_test_details");
     xhr3.onload = function () {
+      xhrInProgress = false; // Reset the flag when the request is complete
+
       if (xhr3.status === 200) {
         var response = JSON.parse(xhr3.responseText);
         var res_Body = document.querySelector(".leaderboardBody");
         res_Body.innerHTML = "";
         let x = 1;
         for (var key in response.results) {
-          if (x % 2 == 0) {
+          if (response.results[key].play_id == id) {
             var temp =
-              '<div class="userBox"><div class="rankLB">' +
+              '<div class="userBox" style="border: 1px solid orange; box-shadow:1px 1px 20px black;"><div style="color:white;" class="rankLB">' +
               x++ +
-              '</div><div class="firstnameLB">' +
+              '</div><div class="firstnameLB" style="color:white;"><img style="width:33px;height:33px; border-radius:50%;" src="' +
+              response.results[key].profile_pic +
+              '">&nbsp;&nbsp;' +
               response.results[key].username +
-              '</div><div class="wpmLB">' +
+              '</div><div  style="color:white;" class="wpmLB">' + 
               response.results[key].wpm +
-              '</div><div class="charLB">' +
+              '</div><div style="color:white;" class="charLB">' +
               response.results[key].cpm +
-              '</div> <div class="mistLB">' +
+              '</div> <div style="color:white;" class="mistLB">' +
               response.results[key].mistakes +
               "</div></div>";
+             
             res_Body.innerHTML += temp;
           } else {
-            var temp =
-              '<div  style="background:transparent; border:none;" class="userBox"><div class="rankLB">' +
-              x++ +
-              '</div><div class="firstnameLB">' +
-              response.results[key].username +
-              '</div><div class="wpmLB">' +
-              response.results[key].wpm +
-              '</div><div class="charLB">' +
-              response.results[key].cpm +
-              '</div> <div class="mistLB">' +
-              response.results[key].mistakes +
-              "</div></div>";
-            res_Body.innerHTML += temp;
+            if (x % 2 == 0) {
+              var temp =
+                '<div class="userBox"><div class="rankLB">' +
+                x++ +
+                '</div><div class="firstnameLB"><img style="width:33px;height:33px; border-radius:50%;" src="' +
+                response.results[key].profile_pic +
+                '">&nbsp;&nbsp;' +
+                response.results[key].username +
+                '</div><div class="wpmLB">' +
+                response.results[key].wpm +
+                '</div><div class="charLB">' +
+                response.results[key].cpm +
+                '</div> <div class="mistLB">' +
+                response.results[key].mistakes +
+                "</div></div>";
+              res_Body.innerHTML += temp;
+            } else {
+              var temp =
+                '<div  style="background:transparent; border:none;" class="userBox"><div class="rankLB">' +
+                x++ +
+                '</div><div class="firstnameLB"><img style="width:33px;height:33px; border-radius:50%;" src="' +
+                response.results[key].profile_pic +
+                '">&nbsp;&nbsp;' +
+                response.results[key].username +
+                '</div><div class="wpmLB">' +
+                response.results[key].wpm +
+                '</div><div class="charLB">' +
+                response.results[key].cpm +
+                '</div> <div class="mistLB">' +
+                response.results[key].mistakes +
+                "</div></div>";
+              res_Body.innerHTML += temp;
+            }
           }
         }
       } else {
-        console.log("Request failed.  Returned status of " + xhr3.status);
+        console.log("Request failed. Returned status of " + xhr3.status);
       }
     };
     xhr3.send();
-  }, 1000);
+  }
+  updateLeaderboard();
+  setInterval(updateLeaderboard, 1000);
 });
 
 document.addEventListener("DOMContentLoaded", function () {

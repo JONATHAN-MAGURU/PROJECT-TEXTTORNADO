@@ -98,7 +98,7 @@ def second_player_data(request):
         lastname = player_d['lastname2']
         email = player_d['mail']
         player_id = player_d['id']
-        profile_pic_data = player_d['resizedImageBase64']  # Image data as base64 string
+        profile_pic_data = player_d['resizedImageBase64'] 
 
         player_data = Player.objects.filter(
             username=username, player_id=player_id)
@@ -111,14 +111,10 @@ def second_player_data(request):
             player_data2.lastname = lastname
             player_data2.mail = email
             
-            # Save the profile pic
             if profile_pic_data:
-                # Convert base64 to image file and save to profile_pic field
                 format, imgstr = profile_pic_data.split(';base64,')
                 ext = format.split('/')[-1]
                 profile_pic = ContentFile(base64.b64decode(imgstr), name=f'{username}_profile.{ext}')
-
-                # Delete the old profile pic if it's not the default
                 if player_data2.profile_pic.name != 'user_default_pic_x6puuUx.jpg':
                     old_pic_path = os.path.join(settings.MEDIA_ROOT, player_data2.profile_pic.name)
                     os.remove(old_pic_path)
@@ -194,8 +190,23 @@ def typing_details(request):
 
 
 def get_test_details(request):
-    results = TypingDetails.objects.all().order_by('-wpm',)
-    return JsonResponse({"results": list(results.values())})
+    results = TypingDetails.objects.all().order_by('-wpm')
+    results_data = list(results.values())
+
+    images_data = {}
+    player_ids = set(result['play_id'] for result in results_data)
+    for player_id in player_ids:
+        player = Player.objects.get(player_id=player_id)
+        images_data[player_id] = player.profile_pic.url if player.profile_pic else None
+
+    final_results = []
+    for result in results_data:
+        player_id = result['play_id']
+        result['profile_pic'] = images_data.get(player_id)
+        final_results.append(result)
+
+    return JsonResponse({"results": final_results})
+
 
 
 def user_history():

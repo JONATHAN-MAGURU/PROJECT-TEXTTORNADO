@@ -1341,15 +1341,15 @@
     background-color: #161b22;
     border-radius: 6px;
     height: auto;
-    transform: translate(-50%, 50%);
+    transform: translate(-50%, 30%);
     color: #ffffff;
     font-size: 90%;
     overflow-y: visible;
     margin: auto;
     display: none;
     transition: 1s;
-    top: 20%;
-    left: 49%;
+    top: 15%;
+    left: 50%;
     box-shadow: 14px 14px 50px #000000;
     border : 1px solid #21262d;
   }
@@ -1585,5 +1585,10 @@
     padding: 5px;
     display: flex;
     justify-content: space-between;
+  }
+  #mistakeError{
+    text-align: center;
+    font-size: 90%;
+    color: red;
   }
 }

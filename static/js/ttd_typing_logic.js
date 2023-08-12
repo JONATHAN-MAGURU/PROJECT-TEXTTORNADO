@@ -3,7 +3,7 @@ const text_D2_2 = document.getElementsByClassName("test_D2")[1];
 const text_D2_3 = document.getElementsByClassName("test_D2")[2];
 const cont_btn = document.getElementsByClassName("cont_btn")[0];
 const paragraphs = [];
-
+const mistakesLimit = 10;
 document.addEventListener("DOMContentLoaded", function () {
   var xhrA = new XMLHttpRequest();
   xhrA.open("GET", "/get_paragraph");
@@ -34,7 +34,7 @@ let timer,
   maxTime = 60,
   timeLeft = maxTime,
   charIndex = (mistakes = isTyping = 0);
- 
+
 function loadParagraph() {
   const ranIndex = Math.floor(Math.random() * paragraphs.length);
   typingText.innerHTML = "";
@@ -45,8 +45,8 @@ function loadParagraph() {
 
   const wrds = typingText.innerText.length;
   const char = typingText.innerHTML.split(" ");
-  document.getElementsByClassName("aow")[0].innerHTML =char.length;
-  document.getElementsByClassName("aol")[0].innerHTML =  wrds ;
+  document.getElementsByClassName("aow")[0].innerHTML = char.length;
+  document.getElementsByClassName("aol")[0].innerHTML = wrds;
 
   inpField.addEventListener("keydown", function () {
     inpField.focus();
@@ -137,7 +137,13 @@ function saveDetails() {
   xhr2.open("POST", "/typing_details", true);
   xhr2.setRequestHeader("Content-Type", "application/json");
   xhr2.setRequestHeader("X-CSRFToken", csrfToken6);
-  xhr2.send(json_dat2);
+
+  if (mistakes22 > mistakesLimit) {
+    document.getElementById("mistakeError").innerHTML ="YOUR RESULTS ARE NOT GOING TO BE  VERIFIED BECAUSE YOU HAVE EXCEEDED MISTAKES LIMIT";
+  } else {
+    xhr2.send(json_dat2);
+    document.getElementById("mistakeError").innerHTML =" ";
+  }
 }
 
 function resetGame() {

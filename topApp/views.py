@@ -4,6 +4,7 @@ from django.http import HttpResponse, JsonResponse
 from topApp.models import Player, Comments, TypingDetails, TypingDetailsHistory
 import random
 import baseApp
+from baseApp.models import EndEvent
 from django.core.files.base import ContentFile
 import base64
 from django.conf import settings
@@ -228,3 +229,7 @@ def user_history():
 def get_history(request):
     history = TypingDetailsHistory.objects.all().order_by('-date',)
     return JsonResponse({"history": list(history.values())})
+
+def getEndEvents(request):
+    end_events = EndEvent.objects.all()
+    return JsonResponse({"end_events": list(end_events.values())})

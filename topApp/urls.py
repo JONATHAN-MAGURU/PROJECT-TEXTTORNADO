@@ -14,5 +14,6 @@ urlpatterns = [
     path('typing_details', views.typing_details, name='typing_details'),
     path('get_test_details', views.get_test_details, name='get_test_details'),
     path('get_history', views.get_history, name='get_history'),
+    path('getEndEvents', views.getEndEvents, name='getEndEvents'),
 
 ]

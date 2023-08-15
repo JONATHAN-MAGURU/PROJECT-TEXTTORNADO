@@ -22,3 +22,8 @@ class Variant_paragraphs(models.Model):
 
 class Frontend(models.Model):
     FrontendId = models.IntegerField(default=5747)
+
+
+class EndEvent(models.Model):
+    endEvent = models.IntegerField(default=0)
+    endEventId = models.IntegerField(default=5747)

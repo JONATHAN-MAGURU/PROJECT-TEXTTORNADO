@@ -4,6 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>control panel</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
     <link
@@ -14,7 +15,6 @@
   </head>
 
   <body>
-   
     <div class="left_side_nav" id="nav">
       <div class="brand_holder">
         <h6>TEXTTORNADO</h6>
@@ -142,7 +142,6 @@
       </div>
     </div>
     <div class="top_side_nav">
-      
       <button class="btn">
         <a href="{% url 'ttd_admin_login' %}">Log out</a>
       </button>
@@ -185,7 +184,7 @@
         class="fa fa-bars msg ope"
       ></i>
     </div>
-    
+
     <div class="main_container" id="home">
       <div class="date_dash">
         <div class="date_dash_box1">
@@ -228,7 +227,7 @@
           </p>
         </div>
       </div>
-    
+
       <div class="container_A" onclick="close_settings()">
         <div class="container_A_1">
           <div class="container_A_1_1">
@@ -317,7 +316,6 @@
     </div>
 
     <div class="nav_options_hider"></div>
-    
 
     <div class="nav_options" id="admins">
       <div class="nav_options_menu_header">
@@ -395,19 +393,21 @@
           <p>
             <i class="fa fa-info-circle" style="font-size: 140%"></i> &nbsp;
             USER DETAILS
-          <i
-            style="color: #ffffff; float:right; font-size: 150%"
-            class="fa fa-close msg" onclick="hideUserData()"
-          ></i></p>
+            <i
+              style="color: #ffffff; float: right; font-size: 150%"
+              class="fa fa-close msg"
+              onclick="hideUserData()"
+            ></i>
+          </p>
         </div>
         <div class="userInfoBody">
-            <br>
-            <br>
-            <center>
-           <div id="imageContainer"></div>
-            </center>
-            <br>
-            <div class="userDBody"></div>
+          <br />
+          <br />
+          <center>
+            <div id="imageContainer"></div>
+          </center>
+          <br />
+          <div class="userDBody"></div>
         </div>
       </div>
     </div>
@@ -416,34 +416,106 @@
       <div class="nav_options_menu_header">
         <p>COMPTITIONS</p>
         <i
-          style="color: #000000; font-size: 150%"
+          style="color: #ffffff; font-size: 150%"
           class="fa fa-close msg"
           onclick="close_option_comp()"
         ></i>
       </div>
-      <div class="nav_options_menu_holder">
-        <div class="nav_options_container_A">
+      <div class="nav_options_menu_holder2">
+        <div class="slideToggles">
           <div class="box">
             <div class="switch-toggle">
-              <br>
-              <h4 style="text-align:center">FRONTEND</h4>
-              <br>
-              <input type="checkbox" id="frontend">
+              <br />
+              <h4 style="text-align: center">FRONTEND</h4>
+              <br />
+              <input type="checkbox" id="frontend" />
               <label for="frontend"></label>
             </div>
           </div>
-          <div class="box2">
+          <div class="box">
             <div class="switch-toggle2">
-              <br>
-              <h4 style="text-align:center">LEADERBOARD</h4>
-              <br>
-              <input type="checkbox" id="leaderboard">
+              <br />
+              <h4 style="text-align: center">LEADERBOARD</h4>
+              <br />
+              <input type="checkbox" id="leaderboard" />
               <label for="leaderboard"></label>
-              
-         
+            </div>
+          </div>
+          <div class="box">
+            <div class="switch-toggle3">
+              <br />
+              <h4 style="text-align: center">TIMER 1</h4>
+              <br />
+              <input type="checkbox" id="endEvent" />
+              <label for="endEvent"></label>
+            </div>
+          </div>
+          <div class="box">
+            <div class="switch-toggle4">
+              <br />
+              <h4 style="text-align: center">TIMER 2</h4>
+              <br />
+              <input type="checkbox" id="nextEvent" />
+              <label for="nextEvent"></label>
+            </div>
+          </div>
+          <div class="box">
+            <div class="switch-toggle5">
+              <br />
+              <h4 style="text-align: center">TYPING AREA</h4>
+              <br />
+              <input type="checkbox" id="typingArea" />
+              <label for="typingArea"></label>
+            </div>
           </div>
         </div>
-        
+        <br />
+        <hr />
+        <div class="slideToggles">
+          <form id="timers1">
+            <div class="timerMainBox">
+              <div class="timerHead">
+                <h3>TIMER 1</h3>
+                <input type="number" placeholder="MAXMUM" id="maxmum" />
+                <input type="number" placeholder="MINMUM" id="minmum" />
+                <input type="hidden" id="csrf_token3" value="{{ csrf_token }}" />
+              </div>
+              <div class="slider-container">
+                <label class="slider-label">&nbsp;MILLISECONDS</label>
+                <input class="slider" type="range" min="0" max="0" id="minsSlider" min="1" />
+              </div>
+              <br />
+              <div class="timerBody">
+                <div class="timerSubBox">
+                  <p style="font-size: 280%; color: orange" id="days2">0</p>
+                  <p style="font-size: 90%">DAYS</p>
+                </div>
+                <div class="timerSubBox">
+                  <p style="font-size: 280%; color: orange" id="hours2">0</p>
+                  <p style="font-size: 90%">HOURS</p>
+                </div>
+                <div class="timerSubBox">
+                  <p style="font-size: 280%; color: orange" id="mins2">0</p>
+                  <p style="font-size: 90%">MINUTES</p>
+                </div>
+                <div class="timerSubBox">
+                  <p style="font-size: 280%; color: orange" id="seconds2">0</p>
+                  <p style="font-size: 90%">SECONDS</p>
+                </div>
+                <div class="timerSubBox">
+                  <p style="font-size: 280%; color: orange" id="milliseconds2">
+                    0
+                  </p>
+                  <p style="font-size: 90%">MS</p>
+                </div>
+              </div>
+              <br />
+              <button style="width:30%">APPLY</button>
+              <br />
+              <p id="timerAlets" style="text-align:center"></p>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
 
@@ -533,6 +605,7 @@
           <br />
           <form id="typing_test_edit">
             <input type="hidden" id="csrf_token2" value="{{ csrf_token }}" />
+            <input type="hidden" id="csrf_token3" value="{{ csrf_token }}" />
             <textarea id="textarea2" cols="20" rows="10" required></textarea>
             <br />
             <br />
@@ -651,9 +724,6 @@
         ></i>
       </div>
     </div>
-    <div class="nav_options" id="admins"></div>
-    <div class="nav_options" id="admins"></div>
-
     <div class="settings">
       <div class="settings_header">
         <p>

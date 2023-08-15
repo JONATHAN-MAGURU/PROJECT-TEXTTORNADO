@@ -3,7 +3,7 @@ from django.http import HttpResponse, JsonResponse
 from datetime import datetime
 from datetime import date
 import json
-from baseApp.models import Admins_details, Aunthaticate, Typing_testing, Variant_paragraphs, Frontend
+from baseApp.models import Admins_details, Aunthaticate, Typing_testing, Variant_paragraphs, Frontend,EndEvent
 from topApp.models import Player
 from topApp.views import id_gen
 import random
@@ -144,7 +144,30 @@ def getSearch(request):
         else:
             return JsonResponse({"error" : list("error")})
         
+def setEventEnd(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            ms = data.get("ms")
+            
+            if ms is not None:
+                try:
+                    event = EndEvent.objects.get(endEventId=5747)
+                    event.endEvent = ms
+                    event.save()
+                    return HttpResponse("Event end updated successfully.", status=200)
+                except EndEvent.DoesNotExist:
+                    return HttpResponse("Event not found.", status=404)
+            else:
+                return HttpResponse("Invalid data format.", status=400)
+        except json.JSONDecodeError:
+            return HttpResponse("Invalid JSON data.", status=400)
+        except Exception as e:
+            return HttpResponse(f"An error occurred: {str(e)}", status=500)
+    else:
+        return HttpResponse("Method not allowed.", status=405)
 
+    
 def getPlayerData(request):
     if request.method == 'POST':
         player = json.loads(request.body)

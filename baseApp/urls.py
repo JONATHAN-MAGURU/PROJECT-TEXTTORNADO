@@ -18,4 +18,5 @@ urlpatterns = [
     path('getPlayerData', views.getPlayerData, name='getPlayerData'),
     path('startFrontend', views.startFrontend, name='startFrontend'),
     path('getFontendCodes', views.getFontendCodes, name='getFontendCodes'),
+    path('setEventEnd', views.setEventEnd, name='setEventEnd'),
 ]

@@ -266,7 +266,7 @@
     transition: 0.4s;
     font-size: 85%;
     overflow: hidden;
-    background-color: rgb(13, 23, 33);
+    background-color: #0d1117;
     padding: 6px;
     box-shadow: 0px 0px 3px #000000;
   }
@@ -346,7 +346,7 @@
   }
 
   #leader2 td {
-    border-bottom: 1px solid rgb(13, 23, 33);
+    border-bottom: 1px solid #0d1117;
     cursor: pointer;
     padding: 4px;
   }
@@ -443,7 +443,7 @@
     right: 0;
     top: 48px;
     overflow-x: visible;
-    background-color: rgb(13, 23, 33);
+    background-color: #0d1117;
     box-shadow: 0px 0px 3px #000000;
   }
 
@@ -454,7 +454,7 @@
     font-size: 85%;
     letter-spacing: 3px;
     box-shadow: 0px 0px 3px #000000;
-    background-color: rgb(13, 23, 33);
+    background-color: #0d1117;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -465,7 +465,7 @@
     height: 100%;
     overflow-y: scroll;
     padding: 10px;
-    background-color: rgb(13, 23, 33);
+    background-color: #0d1117;
   }
 
   .test_history_box {
@@ -478,7 +478,7 @@
     border-radius: 5px;
     margin-bottom: 15px;
     box-shadow: 0px 0px 8px #000000;
-    background-color: rgb(13, 23, 33);
+    background-color: #0d1117;
   }
 
   .test_history_box1 {
@@ -575,7 +575,7 @@
     font-size: 85%;
     border-radius: 3px;
     cursor: pointer;
-    background-color: rgb(13, 23, 33);
+    background-color: #0d1117;
   }
 
   .question_holder {
@@ -626,7 +626,7 @@
     height: 0;
     display: block;
     box-shadow: 0px 0px 3px #000000;
-    background-color: rgb(13, 23, 33);
+    background-color: #0d1117;
     position: fixed;
     top: 45px;
     overflow: hidden;
@@ -744,7 +744,7 @@
     padding: 15px;
     position: relative;
     height: auto;
-    background-color: rgb(13, 23, 33);
+    background-color: #0d1117;
     width: 100%;
     height: 270px;
     text-align: center;
@@ -808,7 +808,7 @@
     height: 0;
     display: block;
     box-shadow: 0px 0px 12px #000000;
-    background-color: rgb(13, 23, 33);
+    background-color: #0d1117;
     position: fixed;
     overflow: hidden;
     top: 47px;
@@ -822,7 +822,7 @@
     height: 0;
     display: block;
     box-shadow: 0px 0px 12px #000000;
-    background-color: rgb(13, 23, 33);
+    background-color: #0d1117;
     position: fixed;
     overflow: hidden;
     top: 47px;
@@ -877,7 +877,7 @@
     position: absolute;
     max-height: 0;
     box-shadow: 1px 1px 20px #000000;
-    background-color: rgb(13, 23, 33);
+    background-color: #0d1117;
   }
 
   .write_coment_header {
@@ -898,7 +898,7 @@
     letter-spacing: 2px;
     width: 100%;
     color: white;
-    background-color: rgb(13, 23, 33);
+    background-color: #0d1117;
     box-shadow: 0px 0px 2px #000000;
     border-radius: 4px;
   }
@@ -911,7 +911,7 @@
     width: 100%;
     height: 0;
     box-shadow: 0px 0px 8px #000000;
-    background-color: rgb(13, 23, 33);
+    background-color: #0d1117;
     position: fixed;
     overflow: hidden;
     top: 49px;
@@ -926,7 +926,7 @@
     flex-direction: column;
     justify-content: space-around;
     box-shadow: 0px 0px 8px #000000;
-    background-color: rgb(13, 23, 33);
+    background-color: #0d1117;
     position: fixed;
     overflow: hidden;
     top: 49px;
@@ -1056,7 +1056,7 @@
 
   .wrapper {
     border-radius: 4px;
-    background-color: rgb(13, 23, 33);
+    background-color: #0d1117;
   }
 
   .wrapper .input-field {
@@ -1239,7 +1239,7 @@
     font-size: 90%;
     border-radius: 3px;
     cursor: pointer;
-    background-color: rgb(13, 23, 33);
+    background-color: #0d1117;
   }
 
   .manage_account_header {
@@ -1310,7 +1310,7 @@
     z-index: 90;
     border-radius: 3px;
     cursor: pointer;
-    background-color: rgb(13, 23, 33);
+    background-color: #0d1117;
   }
 
   .change_pass_header {
@@ -1382,7 +1382,7 @@
     top: -120px;
     left: 40%;
     border-bottom: 2px solid slateblue;
-    background-color: rgb(13, 23, 33);
+    background-color: #0d1117;
     box-shadow: 1px 1px 4px #000000;
     position: absolute;
   }

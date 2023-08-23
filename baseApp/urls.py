@@ -19,4 +19,7 @@ urlpatterns = [
     path('startFrontend', views.startFrontend, name='startFrontend'),
     path('getFontendCodes', views.getFontendCodes, name='getFontendCodes'),
     path('setEventEnd', views.setEventEnd, name='setEventEnd'),
+    path('setEventNext', views.setEventNext, name='setEventNext'),
+    path('startTimerOne', views.startTimerOne, name='startTimerOne'),
+    path('getStartTimerOneCodes', views.getStartTimerOneCodes, name='getStartTimerOneCodes'),
 ]

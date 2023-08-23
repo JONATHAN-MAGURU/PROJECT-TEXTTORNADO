@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", async () => {
+async function processEndEvents() {
   try {
     const response = await fetch("/getEndEvents");
     if (response.status === 200) {
@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const endEvents = data.end_events;
         let totalMilliseconds = 0;
         for (const event of endEvents) {
-          const endEvent = parseInt(event.endEvent, 10); // Convert to integer
+          const endEvent = parseInt(event.endEvent, 10);
           if (!isNaN(endEvent)) {
             totalMilliseconds += endEvent;
           }
@@ -23,7 +23,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   } catch (error) {
     console.error("An error occurred:", error);
   }
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+  processEndEvents();
 });
+
+// Now you can also call processEndEvents() from other places in your code:
+// For example, you can call it in response to user actions or other events.
 
 function startCountdown(totalMilliseconds) {
   const timer = setInterval(() => {
@@ -52,7 +59,6 @@ function updateTimerDisplay(days, hours, minutes, seconds, milliseconds) {
   document.getElementById("milliseconds").innerHTML = milliseconds;
 }
 
-
 document.addEventListener("DOMContentLoaded", async () => {
   try {
     const response = await fetch("/getNextEvents");
@@ -78,7 +84,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error("An error occurred:", error);
   }
 });
-
 
 function startCountdown2(totalMilliseconds2) {
   const timer3 = setInterval(function () {

@@ -1,71 +1,140 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/ttd_user_signup_style.css' %}"
+    />
+    <title>Signup with textornado</title>
+  </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/ttd_user_style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/ttd_user_mobile_style.css' %}">
-</head>
-
-<body>
-    <main class="main2">
-        <div class="welcoming_holder">
-            <div class="welcoming_holder_text">
-                <p id="typing-text2"></p>
-            </div>
-            <div class="welcoming_holder_btn">
-                <a href="{% url 'ttd_user_login'%}">
-                    <div class="btn_create_acount">
-                        <p> LOG IN</p>
-                    </div>
-                </a>
-            </div>
+  <body>
+    <div class="fade"></div>
+    <div class="container">
+      <div class="loading">
+        <img
+          src="/images/loading.gif"
+          style="width: 40px; height: 40px; border-radius: 50%"
+        />
+      </div>
+      <div>
+        <br />
+        <div class="container-logo">
+          <img src="/images/logo.png" alt="logo" id="logo" />
         </div>
-        <div class="form_holder">
-            <div class="ttd_admin_container">
-                <div id="header">
-                    <h4 id="header_text"></h4>
-                </div>
-                <p id="redirect_text" style="font-size: 80%; letter-spacing:2px; margin:10px; text-align: center; "></p>
-                <form class="s_form">
-                    <div class="shown_form_part">
-                        <span style="color:red;font-size: 80%;">&nbsp;&nbsp;&nbsp;&nbsp;<span id="warn1"></span></span>
-                        <br>
-                        <input type="hidden" id="csrf_token" value="{{ csrf_token }}">
-                        <label for="username" id="username"></label><br>
-                        <input type="text" name="username" class="usern" required><br>
-                        <label for="number" id="number"></label><br>
-                        <input type="number" name="number" id="number_u" required><br>
-                        <label for="password" id="passw"></label><br>
-                        <input type="password" name="password" id="password" autocomplete="current-password" required>
-                        <br>
-                        <label for="password2" id="passw2"></label><br>
-                        <input type="password" name="password2" id="password2" required autocomplete="current-password">
-                        <br>
-                        <span id="displayPassword"><input type="checkbox" id="checkbox"> <label for="checkbox"
-                                id="status">show password</label></span>
-                        <input type="submit" value="NEXT">
-                    </div>
-                </form>
-                <form class="s_form2">
-                    <div class="hidden_form_part">
-                        <p>WE HAVE SENT A VERIFICATION CODE TO <span id="v_code"></span></p>
-                        <br>
-                        <label for="verification" id="verification"></label><br>
-                        <input type="number" name="verification" id="verification1"
-                            placeholder="ENTER VERIFICATION CODE" required><br>
-                        <br>
-                        <input type="submit" value="FINISH">
-                    </div>
-                </form>
-            </div>
+        <h1>Text<span style="color: rgb(255, 140, 0)">Tornado</span></h1>
+        <div class="container-error">
+          <i class="fas fa-exclamation-triangle" style="color:red"></i> &nbsp;
+          <span id="error"></span>
         </div>
-    </main>
-    <script src="{% static 'js/ttd_user_script.js' %}"></script>
-    <script src="{% static 'js/ttd_user_script2.js' %}"></script>
-</body>
-
+        <form id="form">
+          <div class="firstForm">
+            <h2>Create your account in 4 steps.</h2>
+            <input type="hidden" id="csrf_token" value="{{ csrf_token }}" />
+            <label for="firstname">Firstname</label> <br />
+            <input type="text" id="firstname" /> <br />
+            <br />
+            <label for="lastname">Lastname</label>
+            <input type="lastname" id="lastname" /> <br />
+            <div class="next-holder">
+              <span style="color: rgb(255, 140, 0); font-size: 80%"
+                >step 1/4</span
+              >
+              <div class="next-btn">Next</div>
+            </div>
+          </div>
+          <div class="secondForm">
+            <label for="firstname">Password</label> <br />
+            <input type="password" id="ppassword" /> <br />
+            <br />
+            <label for="lastname">Confirm password</label>
+            <input type="password" id="cpassword" /> <br />
+            <div>
+              <label class="custom-checkbox"
+                ><input type="checkbox" id="checkbox" /><span
+                  class="checkmark"
+                ></span
+              ></label>
+              <label for="checkbox"><sup>show password</sup></label>
+            </div>
+            <div class="next-holder">
+              <span style="color: rgb(255, 140, 0); font-size: 80%"
+                >step 2/4</span
+              >
+              <div class="next-btn">Next</div>
+            </div>
+          </div>
+          <div class="thirdForm">
+            <label for="username">Username</label> <br />
+            <input
+              type="text"
+              id="username"
+              placeholder="Choose unique username without spaces"
+            />
+            <br />
+            <div class="next-holder">
+              <span style="color: rgb(255, 140, 0); font-size: 80%"
+                >step 3/4</span
+              >
+              <div class="next-btn">Next</div>
+            </div>
+          </div>
+          <div class="fourthForm">
+            <span
+              >Enter your phone number so TextTordo can help you if you forget
+              the password to your account</span
+            >
+            <br />
+            <input type="number" id="number" placeholder="Phone number" />
+            <br />
+            <div class="next-holder">
+              <span style="color: rgb(255, 140, 0); font-size: 80%"
+                >step 4/4</span
+              >
+              <div class="next-btn">Next</div>
+            </div>
+          </div>
+          <div class="fiveForm">
+            <span
+              >a 6-digit verification code has been sent to
+              <span id="num"></span>. Don’t see the text message?
+              <span class="link-color resend">Send a new code</span>
+            </span>
+            <br />
+            <br />
+            <label style="font-size: 120%" for="code">Enter the code</label>
+            <input type="number" id="code" placeholder="" />
+            <br />
+            <div class="next-holder">
+              <div class="next-btn" style="width: 100%">Verify</div>
+            </div>
+          </div>
+        </form>
+        <br />
+        <div class="container-new-acc">
+          <span>Already have account?</span>
+          <span><a href="{% url 'ttd_user_login'%}" class="link-color"
+            >Sign In</a
+          ></span><span>.</span>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <p class="link-color">Terms</p>
+      <p class="link-color">Privacy</p>
+      <p style="color: grey; font-size: 80%">contant TextTernado Support</p>
+    </footer>
+    <div class="sub-footer">
+      <p>@ capsualcode 2023</p>
+    </div>
+    <script src="{% static 'js/ttd_user_script_signup.js' %}"></script>
+  </body>
 </html>

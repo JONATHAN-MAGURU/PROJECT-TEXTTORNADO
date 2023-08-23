@@ -44,7 +44,7 @@
           </li>
           <li onclick="open_comp()">
             <i style="color: #ebe2e2; font-size: 100%" class="fa fa-bolt"></i>
-            &nbsp; &nbsp; Comptitions
+            &nbsp; &nbsp; Control panel
           </li>
           <li onclick="open_test()">
             <i
@@ -296,13 +296,102 @@
       </div>
       <div class="container_C">
         <div class="container_C_1">
-          <div class="container_C_1_header"></div>
+          <div class="timerMainBox">
+            <div class="timerHead">
+              <h3>EVENT ENDS IN</h3>
+            </div>
+            <div class="timerBody">
+              <div class="timerSubBox">
+                <p style="font-size: 200%; color: orange" id="days">00</p>
+                <p style="font-size: 90%">DAYS</p>
+              </div>
+              <div class="timerSubBox">
+                <p style="font-size: 200%; color: orange" id="hours">00</p>
+                <p style="font-size: 90%">HOURS</p>
+              </div>
+              <div class="timerSubBox">
+                <p style="font-size: 200%; color: orange" id="mins">00</p>
+                <p style="font-size: 90%">MINUTES</p>
+              </div>
+              <div class="timerSubBox">
+                <p style="font-size: 200%; color: orange" id="seconds">00</p>
+                <p style="font-size: 90%">SECONDS</p>
+              </div>
+              <div class="timerSubBox">
+                <p style="font-size: 200%; color: orange" id="milliseconds">
+                  00
+                </p>
+                <p style="font-size: 90%">MS</p>
+              </div>
+            </div>
+            <div class="event_d">
+              <div class="event_d2">
+                <p>EVENT NAME</p>
+                <p>XXX</p>
+              </div>
+              <div class="event_d2">
+                <p>EVENT TYPE</p>
+                <p>XXX</p>
+              </div>
+              <div class="event_d2">
+                <p>LANGUAGE</p>
+                <p>XXX</p>
+              </div>
+              <div class="event_d2">
+                <p>DURATION</p>
+                <p>XXX</p>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="container_C_1">
-          <div class="container_C_1_header"></div>
-        </div>
-        <div class="container_C_1">
-          <div class="container_C_1_header"></div>
+          <div class="timerMainBox">
+            <div class="timerHead">
+              <h3>NEXT EVENT STARTS IN</h3>
+            </div>
+            <div class="timerBody">
+              <div class="timerSubBox">
+                <p style="font-size: 200%; color: orange" id="days2">00</p>
+                <p style="font-size: 90%">DAYS</p>
+              </div>
+              <div class="timerSubBox">
+                <p style="font-size: 200%; color: orange" id="hours2">00</p>
+                <p style="font-size: 90%">HOURS</p>
+              </div>
+              <div class="timerSubBox">
+                <p style="font-size: 200%; color: orange" id="mins2">00</p>
+                <p style="font-size: 90%">MINUTES</p>
+              </div>
+              <div class="timerSubBox">
+                <p style="font-size: 200%; color: orange" id="seconds2">00</p>
+                <p style="font-size: 90%">SECONDS</p>
+              </div>
+              <div class="timerSubBox">
+                <p style="font-size: 200%; color: orange" id="milliseconds2">
+                  00
+                </p>
+                <p style="font-size: 90%">MS</p>
+              </div>
+            </div>
+            <div class="event_d">
+              <div class="event_d2">
+                <p>EVENT NAME</p>
+                <p>XXX</p>
+              </div>
+              <div class="event_d2">
+                <p>EVENT TYPE</p>
+                <p>XXX</p>
+              </div>
+              <div class="event_d2">
+                <p>LANGUAGE</p>
+                <p>XXX</p>
+              </div>
+              <div class="event_d2">
+                <p>DURATION</p>
+                <p>XXX</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="container_D"></div>
@@ -478,41 +567,106 @@
                 <h3>TIMER 1</h3>
                 <input type="number" placeholder="MAXMUM" id="maxmum" />
                 <input type="number" placeholder="MINMUM" id="minmum" />
-                <input type="hidden" id="csrf_token3" value="{{ csrf_token }}" />
+                <input
+                  type="hidden"
+                  id="csrf_token3"
+                  value="{{ csrf_token }}"
+                />
               </div>
               <div class="slider-container">
                 <label class="slider-label">&nbsp;MILLISECONDS</label>
-                <input class="slider" type="range" min="0" max="0" id="minsSlider" min="1" />
+                <input
+                  class="slider"
+                  type="range"
+                  min="0"
+                  max="0"
+                  id="minsSlider"
+                  min="1"
+                />
               </div>
               <br />
               <div class="timerBody">
                 <div class="timerSubBox">
-                  <p style="font-size: 280%; color: orange" id="days2">0</p>
+                  <p style="font-size: 280%; color: orange" id="days3">0</p>
                   <p style="font-size: 90%">DAYS</p>
                 </div>
                 <div class="timerSubBox">
-                  <p style="font-size: 280%; color: orange" id="hours2">0</p>
+                  <p style="font-size: 280%; color: orange" id="hours3">0</p>
                   <p style="font-size: 90%">HOURS</p>
                 </div>
                 <div class="timerSubBox">
-                  <p style="font-size: 280%; color: orange" id="mins2">0</p>
+                  <p style="font-size: 280%; color: orange" id="mins3">0</p>
                   <p style="font-size: 90%">MINUTES</p>
                 </div>
                 <div class="timerSubBox">
-                  <p style="font-size: 280%; color: orange" id="seconds2">0</p>
+                  <p style="font-size: 280%; color: orange" id="seconds3">0</p>
                   <p style="font-size: 90%">SECONDS</p>
                 </div>
                 <div class="timerSubBox">
-                  <p style="font-size: 280%; color: orange" id="milliseconds2">
+                  <p style="font-size: 280%; color: orange" id="milliseconds3">
                     0
                   </p>
                   <p style="font-size: 90%">MS</p>
                 </div>
               </div>
               <br />
-              <button style="width:30%">APPLY</button>
+              <button style="width: 30%">APPLY</button>
               <br />
-              <p id="timerAlets" style="text-align:center"></p>
+              <p id="timerAlets" style="text-align: center"></p>
+            </div>
+          </form>
+          <form id="timers2">
+            <div class="timerMainBox">
+              <div class="timerHead">
+                <h3>TIMER 2</h3>
+                <input type="number" placeholder="MAXMUM" id="maxmum2" />
+                <input type="number" placeholder="MINMUM" id="minmum2" />
+                <input
+                  type="hidden"
+                  id="csrf_token4"
+                  value="{{ csrf_token }}"
+                />
+              </div>
+              <div class="slider-container">
+                <label class="slider-label">&nbsp;MILLISECONDS</label>
+                <input
+                  class="slider"
+                  type="range"
+                  min="0"
+                  max="0"
+                  id="minsSlider2"
+                  min="1"
+                />
+              </div>
+              <br />
+              <div class="timerBody">
+                <div class="timerSubBox">
+                  <p style="font-size: 280%; color: orange" id="days2b">0</p>
+                  <p style="font-size: 90%">DAYS</p>
+                </div>
+                <div class="timerSubBox">
+                  <p style="font-size: 280%; color: orange" id="hours2b">0</p>
+                  <p style="font-size: 90%">HOURS</p>
+                </div>
+                <div class="timerSubBox">
+                  <p style="font-size: 280%; color: orange" id="mins2b">0</p>
+                  <p style="font-size: 90%">MINUTES</p>
+                </div>
+                <div class="timerSubBox">
+                  <p style="font-size: 280%; color: orange" id="seconds2b">0</p>
+                  <p style="font-size: 90%">SECONDS</p>
+                </div>
+                <div class="timerSubBox">
+                  <p style="font-size: 280%; color: orange" id="milliseconds2b">
+                    0
+                  </p>
+                  <p style="font-size: 90%">MS</p>
+                </div>
+              </div>
+              <br />
+              <button style="width: 30%">APPLY</button>
+              <br />
+              <p id="timerAlets2" style="text-align: center"></p>
             </div>
           </form>
         </div>
@@ -556,7 +710,9 @@
           </p>
           <br />
           <form id="typing_test">
-            <input type="hidden" id="csrf_token2" value="{{ csrf_token }}" />
+            <input type="hidden" id="csrf_token5" value="{{ csrf_token }}" />
+            <input type="hidden" id="csrf_token6" value="{{ csrf_token }}" />
+            <input type="hidden" id="csrf_token7" value="{{ csrf_token }}" />
             <textarea
               id="textarea"
               cols="30"
@@ -759,5 +915,6 @@
     </div>
     <script src="{% static 'admin_js/ttd_admin_home_script.js' %}"></script>
     <script src="{% static 'admin_js/ttd_admin_home_script2.js' %}"></script>
+    <script src="{% static 'admin_js/adminTimers.js' %}"></script>
   </body>
 </html>

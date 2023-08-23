@@ -219,14 +219,14 @@ li:hover {
 
 .container_A_1 {
   width: 69%;
-  border-left: 4px solid orange;
-  cursor: pointer;
+  border: 1px solid #21262d;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
   border-radius: 3px;
   height: auto;
   padding: 0;
   overflow: hidden;
-  background-color:#161b22;
+  background-color: #161b22;
 }
 
 .container_A_1_1 {
@@ -253,7 +253,7 @@ li:hover {
   border-radius: 3px;
   cursor: pointer;
   padding: 0px;
-  background-color:#161b22;
+  background-color: #161b22;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -279,9 +279,9 @@ li:hover {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  border-bottom: 5px solid orange;
+  border-bottom: 5px solid #0d1117;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  background-color:#161b22;
+  background-color: #161b22;
   margin-top: 25px;
 }
 
@@ -289,15 +289,15 @@ li:hover {
   width: 27%;
   height: 115px;
   margin: 5px;
-  border: 1px solid orange;
+  border: 1px solid #21262d;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   border-radius: 3px;
   cursor: pointer;
   padding: 8px;
-  background-color:#161b22;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  background-color: #161b22;
 }
 
 ::-webkit-scrollbar {
@@ -325,19 +325,12 @@ li:hover {
 }
 
 .container_C_1 {
-  width: 32%;
+  width: 48%;
   border-radius: 7px;
-  background-color: #ffffff;
-  height: 300px;
+  background-color: transparent;
+  height: auto;
+  border: 1px solid #21262d;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-}
-
-.container_C_1_header {
-  width: 100%;
-  height: 70px;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  background-color: orange;
 }
 
 .container_D {
@@ -347,9 +340,10 @@ li:hover {
   display: flex;
   height: 400px;
   margin-top: 45px;
+  border: 1px solid #21262d;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   overflow-y: scroll;
-  background: #ffffff;
+  background: #161b22;
 }
 
 .nav_options {
@@ -587,7 +581,7 @@ a {
 }
 
 .date_dash_box2 {
-  width: 15%;
+  width: 30%;
   padding: 5px;
   text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
   border-radius: 5px;
@@ -1160,13 +1154,17 @@ button:hover {
 
 #timers1 {
   border-radius: 3px;
-  width: 50%;
+  width: 48%;
+}
+#timers2 {
+  border-radius: 3px;
+  width: 48%;
 }
 
-input[type="number"]{
+input[type="number"] {
   padding: 6px;
   border: none;
-  background-color:transparent;
+  background-color: transparent;
   box-shadow: 1px 1px 10px #000000;
   color: gray;
   border-radius: 3px;
@@ -1209,5 +1207,21 @@ input[type="number"]{
   text-align: center;
   padding: 5px;
   display: flex;
+  justify-content: space-between;
+}
+
+.event_d {
+  font-size: 95%;
+  display: flex;
+  flex-direction: column;
+  color: gray;
+  letter-spacing: 2px;
+  justify-content: space-between;
+  padding: 10px;
+}
+.event_d2 {
+  display: flex;
+  flex-direction: row;
+  letter-spacing: 2px;
   justify-content: space-between;
 }

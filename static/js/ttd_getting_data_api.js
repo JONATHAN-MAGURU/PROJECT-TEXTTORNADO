@@ -154,7 +154,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const json_dat = JSON.stringify(dat);
   setInterval(function () {
     var xhr1 = new XMLHttpRequest();
-    const csrfToken7 = document.querySelector("#csrf_token4").value;
+    const csrfToken7 = document.querySelector("#csrf_token7").value;
     xhr1.open("POST", "/get_my_data");
     xhr1.setRequestHeader("Content-Type", "application/json");
     xhr1.setRequestHeader("X-CSRFToken", csrfToken7);
@@ -209,14 +209,14 @@ document.addEventListener("DOMContentLoaded", function () {
               response.results[key].profile_pic +
               '">&nbsp;&nbsp;' +
               response.results[key].username +
-              '</div><div  style="color:white;" class="wpmLB">' + 
+              '</div><div  style="color:white;" class="wpmLB">' +
               response.results[key].wpm +
               '</div><div style="color:white;" class="charLB">' +
               response.results[key].cpm +
               '</div> <div style="color:white;" class="mistLB">' +
               response.results[key].mistakes +
               "</div></div>";
-             
+
             res_Body.innerHTML += temp;
           } else {
             if (x % 2 == 0) {

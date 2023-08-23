@@ -1,424 +1,117 @@
-@media screen and (max-width: 500px) {
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        text-shadow: 0px 0px 3px #000000;
-    }
-
-    body {
-        background-color: rgb(13, 23, 33);
-        color: white;
-
-    }
-
-    header {
-        padding: 15px;
-        overflow: auto;
-        width: 100%;
-        background-color: slateblue;
-        letter-spacing: 2px;
-    }
-
-    main {
-        display: block;
-        width: 100%;
-        margin-top: 2%;
-        padding: 30px;
-        border: none;
-        background-color: transparent;
-    }
-
-    .form_holder {
-        width: 100%;
-        transition: 0.3s;
-        padding: 0;
-    }
-
-    .welcoming_holder {
-        width: 100%;
-        padding: 20px;
-        height: 200px;
-        transition: 0.3s;
-        overflow: hidden;
-        margin-bottom: 35px;
-        box-shadow: 0px 0px 4px black;
-    }
-
-    .welcoming_holder_text {
-        text-align: justify;
-        width: 100%;
-        height: 30px;
-
-    }
-
-    .welcoming_holder_btn {
-        width: 100%;
-        height: 20px;
-    }
-
-    p {
-        letter-spacing: 4px;
-        font-size: 80%;
-    }
-
-    .welcoming_holder:hover {
-        box-shadow: 6px 6px slateblue;
-        border: 1px solid #201f1f;
-    }
-
-    .ttd_admin_container {
-        width: 100%;
-        border-radius: 5px;
-        font-size: 80%;
-        transition: 0.2s;
-        padding: 20px;
-        box-shadow: 0px 0px 4px black;
-    }
-
-    .ttd_admin_container:hover {
-        box-shadow: 6px 6px slateblue;
-        border: 1px solid #201f1f;
-        border-radius: 0;
-    }
-
-    form {
-        padding: 16px;
-    }
-
-    input {
-        width: 100%;
-        padding: 10px;
-        color: #ffffff;
-        margin-bottom: 10px;
-        background-color: rgb(13, 23, 33);
-        outline: none;
-        border: 1px solid #ffffff;
-        border-radius: 5px;
-    }
-
-    input[type='submit'] {
-        width: 100%;
-        padding: 10px;
-        color: #FFFFFF;
-        background: slateblue;
-        border: none;
-        cursor: pointer;
-        transition: 0.3s;
-    }
-
-    input[type='button'] {
-        width: 100%;
-        padding: 10px;
-        color: #FFFFFF;
-        background: slateblue;
-        border: none;
-        cursor: pointer;
-        transition: 0.3s;
-    }
-
-    a {
-        text-decoration: none;
-        color: #ffffff;
-    }
-
-    input[type='submit']:hover {
-        box-shadow: 10px 10px;
-    }
-
-    input[type='button']:hover {
-        box-shadow: 10px 10px;
-    }
-
-    input[type='checkbox'] {
-        width: auto;
-        accent-color: slateblue;
-        transform: scale(1.3);
-        margin-right: 10px;
-        transition: 0.9s;
-        margin-left: 10px;
-    }
-
-    label {
-        font-size: 80%;
-        margin: 5px;
-        letter-spacing: 3px;
-    }
-
-    h4 {
-        text-align: center;
-    }
-
-    #typing-text::after {
-        content: " ";
-        animation: blink 0.7s infinite;
-        color: #ffffff;
-    }
-
-    @keyframes blink {
-        50% {
-            opacity: 0;
-        }
-    }
-
-    #displayPassword {
-        opacity: 0;
-    }
-
-    #displayPassword2 {
-        opacity: 0;
-    }
-
-    #header {
-        padding: 15px;
-        background: slateblue;
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
-        letter-spacing: 2px;
-        width: 100%;
-        text-align: center;
-    }
-
-    .btn_create_acount {
-        width: 100%;
-        padding: 10px;
-        background-color: slateblue;
-        color: #ffffff;
-        border-radius: 5px;
-        text-align: center;
-        transition: 0.3s;
-        font-size: 80%;
-        margin-top: 100px;
-        cursor: pointer;
-    }
-
-    .btn_create_acount:hover {
-        box-shadow: 10px 10px;
-    }
-
-
-    .hidden_form_part {
-        height: 0;
-        overflow: hidden;
-        transition: 0.3s;
-    }
-
-    .shown_form_part {
-        overflow: hidden;
-        height: auto;
-        transition: 0.3s;
-    }
-}
-
 @media screen and (max-width: 700px) {
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        text-shadow: 0px 0px 3px #000000;
+    .container {
+      width: 100%;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      height: 95vh;
+      padding: 6px;
+      justify-content: start;
     }
-
-    body {
-        background-color: rgb(13, 23, 33);
-        color: white;
-
+    .container-new-acc {
+      background-color: transparent;
+      font-size: 95%;
+      border: 1px solid #21262d;
+      text-align: center;
+      padding: 10px;
+      width: 90%;
+      border-radius: 6px;
+      margin: auto;
     }
-
-    header {
-        padding: 15px;
-        overflow: auto;
-        width: 100%;
-        letter-spacing: 2px;
+    .container-error {
+      font-size: 95%;
+      background-color: rgba(255, 0, 100, 0.1);
+      text-align: center;
+      width: 90%;
+      border-radius: 6px;
+      display: block;
+      margin: auto;
     }
-
-    main {
-        display: block;
-        width: 100%;
-        margin-top: 2%;
-        padding: 30px;
-        border: none;
-        background-color: transparent;
+    .container-logo {
+      text-align: center;
+      width: 90%;
+      border-radius: 6px;
+      margin: auto;
     }
-
-    .form_holder {
-        width: 100%;
-        transition: 0.3s;
-        padding: 0;
-    }
-
-    .welcoming_holder {
-        width: 100%;
-        padding: 20px;
-        height: 200px;
-        transition: 0.3s;
-        overflow: hidden;
-        margin-bottom: 35px;
-        box-shadow: 0px 0px 4px black;
-    }
-
-    .welcoming_holder_text {
-        text-align: justify;
-        width: 100%;
-        height: 30px;
-
-    }
-
-    .welcoming_holder_btn {
-        width: 100%;
-        height: 20px;
-    }
-
-    p {
-        letter-spacing: 4px;
-        font-size: 80%;
-    }
-
-    .welcoming_holder:hover {
-        box-shadow: 6px 6px slateblue;
-        border: 1px solid #201f1f;
-    }
-
-    .ttd_admin_container {
-        width: 100%;
-        border-radius: 5px;
-        font-size: 80%;
-        transition: 0.2s;
-        padding: 20px;
-        box-shadow: 0px 0px 4px black;
-    }
-
-    .ttd_admin_container:hover {
-        box-shadow: 6px 6px slateblue;
-        border: 1px solid #201f1f;
-        border-radius: 0;
+    h1 {
+      font-size: 20px;
+      font-weight: 450;
+      margin: 5px;
+      text-align: center;
     }
 
     form {
-        padding: 16px;
+      margin: auto;
+      background-color: #161b22;
+      border: 1px solid #21262d;
+      padding: 12px;
+      width: 90%;
+      border-radius: 6px;
     }
-
     input {
-        width: 100%;
-        padding: 10px;
-        color: #ffffff;
-        margin-bottom: 10px;
-        background-color: rgb(13, 23, 33);
-        outline: none;
-        border: 1px solid #ffffff;
-        border-radius: 5px;
+      width: 100%;
+      padding: 7px;
+      border-radius: 4px;
+      margin-top: 5px;
+      outline: none;
+      border: none;
+      color: #ffffff;
+      border: 1px solid #21262d;
+      background-color: #0d1117;
+    }
+    input:focus {
+      outline: 1px solid rgb(255, 140, 0);
     }
 
-    input[type='submit'] {
-        width: 100%;
-        padding: 10px;
-        color: #FFFFFF;
-        background: slateblue;
-        border: none;
-        cursor: pointer;
-        transition: 0.3s;
+    input[type="submit"] {
+      background-color: rgb(255, 140, 0);
+      color: white;
+      margin-top: 13px;
+      cursor: pointer;
+      transition: 0.2s;
+      margin-bottom: 13px;
+      border: none;
+      font-weight: 700;
     }
-
-    input[type='button'] {
-        width: 100%;
-        padding: 10px;
-        color: #FFFFFF;
-        background: slateblue;
-        border: none;
-        cursor: pointer;
-        transition: 0.3s;
+    input[type="submit"]:hover {
+      background-color: rgba(255, 140, 0, 0.8);
     }
-
-    a {
-        text-decoration: none;
-        color: #ffffff;
+    .link-color {
+      color: dodgerblue;
+      cursor: pointer;
+      font-size: 80%;
     }
-
-    input[type='submit']:hover {
-        box-shadow: 10px 10px;
+    footer {
+      height: 15vh;
+      display: flex;
+      padding-top: 8px;
+      width: 90%;
+      margin: auto;
+      display: none;
+      justify-content: space-evenly;
     }
-
-    input[type='button']:hover {
-        box-shadow: 10px 10px;
+    .sub-footer {
+      height: 5vh;
+      padding-top: 5px;
+      color: gray;
+      display: flex;
+      justify-content: center;
     }
-
-    input[type='checkbox'] {
-        width: auto;
-        accent-color: slateblue;
-        transform: scale(1.3);
-        margin-right: 10px;
-        transition: 0.9s;
-        margin-left: 10px;
+    .loading {
+      position: absolute;
+      top: 36%;
+      left: 49%;
+      display: none;
+      z-index: 100;
     }
-
-    label {
-        font-size: 80%;
-        margin: 5px;
-        letter-spacing: 3px;
+    .fade {
+      height: 100vh;
+      width: 100%;
+      position: fixed;
+      display: none;
+      top: 0;
+      left: 0;
+      z-index: 50;
+      background-color: rgba(0, 0, 0, 0.3);
     }
-
-    h4 {
-        text-align: center;
-    }
-
-    #typing-text::after {
-        content: " ";
-        animation: blink 0.7s infinite;
-        color: #ffffff;
-    }
-
-    @keyframes blink {
-        50% {
-            opacity: 0;
-        }
-    }
-
-    #displayPassword {
-        opacity: 0;
-    }
-
-    #displayPassword2 {
-        opacity: 0;
-    }
-
-    #header {
-        padding: 15px;
-        background: slateblue;
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
-        letter-spacing: 2px;
-        width: 100%;
-        text-align: center;
-    }
-
-    .btn_create_acount {
-        width: 100%;
-        padding: 10px;
-        background-color: slateblue;
-        color: #ffffff;
-        border-radius: 5px;
-        text-align: center;
-        transition: 0.3s;
-        font-size: 80%;
-        margin-top: 100px;
-        cursor: pointer;
-    }
-
-    .btn_create_acount:hover {
-        box-shadow: 10px 10px;
-    }
-
-
-    .hidden_form_part {
-        height: 0;
-        overflow: hidden;
-        transition: 0.3s;
-    }
-
-    .shown_form_part {
-        overflow: hidden;
-        height: auto;
-        transition: 0.3s;
-    }
-}
+  }

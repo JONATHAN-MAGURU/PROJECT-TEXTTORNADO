@@ -130,3 +130,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL = '/images/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
+
+account_sid = "ACa02ee7f25edb7b10c4b5f80dc31a46aa"
+auth_token = "b1ea5a659b61624388ec76889a479fc1"
+messaging_service_sid="VA0971f8a78a1f3d2ea60e5733ca1b3d45"

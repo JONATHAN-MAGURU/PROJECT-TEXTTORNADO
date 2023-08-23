@@ -1,5 +1,7 @@
 from django.db import models
 from datetime import datetime
+from django.utils import timezone
+
 
 class Player(models.Model):
     firstname = models.CharField(max_length=100, default='')
@@ -15,7 +17,7 @@ class Player(models.Model):
     os = models.CharField(max_length=100)
     amount_of_comments =models.IntegerField(default=0)
     profile_pic = models.ImageField(default="user_default_pic_x6puuUx.jpg", null=True, blank= True )
-    date  = models.DateTimeField(default=datetime.now, blank=True)
+    date  = models.DateTimeField(default=timezone.now, blank=True)
 
 class Comments(models.Model):
     player_id2 = models.CharField(max_length=10)
@@ -30,7 +32,8 @@ class TypingDetails(models.Model):
     play_id = models.CharField(max_length=10)
     username = models.CharField(max_length=255)
     typo_id = models.IntegerField(default=0)
-    date  = models.DateTimeField(default=datetime.now, blank=True)
+    date = models.DateTimeField(default=timezone.now, blank=True)
+
     
 class TypingDetailsHistory(models.Model):
     wpm = models.IntegerField()
@@ -39,6 +42,6 @@ class TypingDetailsHistory(models.Model):
     play_id = models.CharField(max_length=10)
     username = models.CharField(max_length=255)
     typo_id2 = models.IntegerField(default=0)
-    date  = models.DateTimeField(default=datetime.now, blank=True)
+    date  = models.DateTimeField(default=timezone.now, blank=True)
     
     

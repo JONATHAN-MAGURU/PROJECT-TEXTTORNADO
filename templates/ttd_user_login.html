@@ -1,48 +1,81 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/ttd_user_style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/ttd_user_mobile_style.css' %}">
-</head>
-
-<body>
-    <main class="main2">
-        <div class="welcoming_holder">
-            <div class="welcoming_holder_text">
-                <p id="typing-text"></p>
-            </div>
-            <div class="welcoming_holder_btn">
-                <a href="{% url 'ttd_user_signin' %}">
-                    <div class="btn_create_acount">
-                        <p> CREATE ACCOUNT </p>
-                    </div>
-                </a>
-            </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/ttd_user_style.css' %}" />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/ttd_user_mobile_style.css' %}"
+    />
+  </head>
+  <body>
+    <div class="fade"></div>
+    <div class="container">
+      <div class="loading">
+        <img
+          src="/images/loading.gif"
+          style="width: 40px; height: 40px; border-radius: 50%"
+        />
+      </div>
+      <div>
+        <br />
+        <div class="container-logo">
+          <img
+            src="/images/logo.png"
+            alt="logo"
+            style="
+              width: 50px;
+              height: 50px;
+              border-radius: 50%;
+              margin: auto;
+              border: 1px solid #415c81;
+              background-color: white;
+            "
+          />
         </div>
-        <div class="form_holder">
-            <div class="ttd_admin_container">
-                <div id="header">
-                    <h4 id="header_text"></h4>
-                </div>
-                <form action="ttd_user_homepage" method="POST">
-                    {% csrf_token %}
-                    <label for="username" id="usern22"></label><br>
-                    <input type="text" name="username_u2" id="username_u" required><br>
-                    <label for="password" id="passw22"></label><br>
-                    <input type="password" name="password2" id="password_u" required> <br>
-                    <span id="displayPassword2"><input type="checkbox" id="checkbox2"> <label for="checkbox"
-                            id="status2">show password</label></span>
-                    <input type="submit" value="LOGIN">
-                </form>
-            </div>
+        <h1>Sign in to TextTornado</h1>
+        <div class="container-error">
+          {% if message %}
+          <p style="padding: 10px" id="err">{{ message }}</p>
+          {% endif %}
         </div>
-    </main>
-    <script src="{% static 'js/ttd_user_script2.js' %}"></script>
-</body>
+        <form action="session" method="POST">
+          {% csrf_token %}
+          <label for="username">Username</label> <br />
+          <input type="text" id="username" name="username" /> <br />
+          <br />
+          <label for="username">password</label>
 
+          <input type="password" id="password" name="password" /> <br />
+          <input type="submit" value="Sign in" id="form" />
+          <label class="link-color"
+            ><a href="{% url 'resetPassword'%}" class="link-color"
+              >Forgot password?</a
+            ></label
+          >
+        </form>
+        <br />
+        <div class="container-new-acc">
+          <span>New to TextTornado?</span>
+          <span class="link-color">
+            <a href="{% url 'ttd_user_signin'%}" class="link-color"
+              >Create an account</a
+            ></span
+          ><span>.</span>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <p class="link-color">Terms</p>
+      <p class="link-color">Privacy</p>
+      <p style="color: grey; font-size: 80%">contant TextTernado Support</p>
+    </footer>
+    <div class="sub-footer">
+      <p>@ capsualcode 2023</p>
+    </div>
+    <script src="{% static 'js/user_login_request.js' %}"></script>
+  </body>
 </html>

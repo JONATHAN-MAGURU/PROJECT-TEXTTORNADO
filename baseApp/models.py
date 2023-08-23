@@ -27,3 +27,7 @@ class Frontend(models.Model):
 class EndEvent(models.Model):
     endEvent = models.IntegerField(default=0)
     endEventId = models.IntegerField(default=5747)
+
+class NextEvent(models.Model):
+   nextEvent = models.IntegerField(default=0)
+   nextEventId = models.IntegerField(default=5747)

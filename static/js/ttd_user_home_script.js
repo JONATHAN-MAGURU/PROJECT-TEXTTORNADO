@@ -56,6 +56,11 @@ const leaderboard = (document.getElementsByClassName(
   "leaderboard_container"
 )[0].style.height = opt - 140 + "px");
 
+const userImage = document.getElementsByClassName("ico")[0]
+window.addEventListener("load", function(){
+  userImage.width = 300
+})
+
 main_container.style.height = opt - 120 + "px";
 settings_container.style.height = opt - 150 + "px";
 settings_container2.style.height = opt - 150 + "px";
@@ -65,7 +70,7 @@ settings_container4.style.height = opt - 150 + "px";
 open_comm.addEventListener("click", function () {
   options_comments.style.height = opt - 160 + "px";
   comment_body.style.maxHeight = opt - 200 + "px";
-  options.style.height = "0";
+  options.style.display = "none";
   options_player.style.height = "0";
   options_player.style.border = "none";
   leaderboard_hider.style.width = "0";
@@ -150,8 +155,8 @@ setInterval(function () {
   });
 
 buy_tokens.addEventListener("click", function () {
-  options.style.height = opt + "px";
-  leaderboard_hider.style.width = "25%";
+  options.style.display ="block";
+  leaderboard_hider.style.width = "100%";
   options_notf.style.height = 0;
   options_player.style.height = 0;
   options_player.style.border = "none";
@@ -172,7 +177,7 @@ buy_tokens.addEventListener("click", function () {
 
 notf.addEventListener("click", function () {
   options_notf.style.height = opt - 110 + "px";
-  options.style.height = "0";
+  options.style.display = "none";
   options_player.style.height = "0";
   leaderboard_hider.style.width = "0";
   options_player.style.border = "none";
@@ -192,7 +197,7 @@ logout.addEventListener("click", function () {
   log_out_hider.style.width = "100%";
   options_notf.style.height = "0";
   options_comments.style.height = 0;
-  options.style.height = 0;
+  options.style.display = "none";
   leaderboard_hider.style.width = "0";
   options_player.style.height = 0;
   options_player.style.border = "none";
@@ -221,7 +226,7 @@ options_logout_1_1.addEventListener("click", function () {
 function openManageAccount() {
   options_player.style.height = "370px";
   options_player.style.border = "1px solid #21262d";
-  options.style.height = 0;
+  options.style.display = "none";
   options_logout.style.width = "0";
   options_notf.style.height = "0";
   leaderboard_hider.style.width = "0";
@@ -236,7 +241,7 @@ function openManageAccount() {
 }
 
 closee1.addEventListener("click", function () {
-  options.style.height = 0;
+  options.style.display = "none";
   leaderboard_hider.style.width = "0";
   t_overview.innerHTML = "";
   st_tickets.innerHTML = "";
@@ -266,7 +271,7 @@ closee11.addEventListener("click", function () {
   ask_holder.style.width = "0%";
 });
 
-for (x = 14; x <= 30; x += 2) {
+for (x = 14; x <= 28; x += 2) {
   fontss.innerHTML += "<option>" + x + "px" + "</option>";
 }
 
@@ -310,3 +315,13 @@ document
     tips.style.display = "none";
     tryAgainBtn.style.display = "block";
   });
+
+  document.addEventListener("visibilitychange", function() {
+    if (document.visibilityState === "hidden") {
+      // User switched tabs or minimized the window
+      // Perform actions like pausing videos, animations, etc.
+    } else {
+      window.location.reload();
+    }
+  });
+  

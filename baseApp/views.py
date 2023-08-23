@@ -1,9 +1,12 @@
+import time
 from django.shortcuts import render, HttpResponse, redirect
 from django.http import HttpResponse, JsonResponse
-from datetime import datetime
+from datetime import datetime, timezone
+from datetime import timedelta
+
 from datetime import date
 import json
-from baseApp.models import Admins_details, Aunthaticate, Typing_testing, Variant_paragraphs, Frontend,EndEvent
+from baseApp.models import Admins_details, Aunthaticate, Typing_testing, Variant_paragraphs, Frontend,EndEvent,NextEvent
 from topApp.models import Player
 from topApp.views import id_gen
 import random
@@ -77,7 +80,7 @@ def typing_tests(request):
         get_all_paragraphs = Typing_testing.objects.all().values()
         amount_of_paragraphs = len(get_all_paragraphs)
         if len(count) > 40 :
-            if len(count) <= 60 :
+            if len(count) <= 80 :
                 if amount_of_paragraphs < 10 :
                     paragraphs = Typing_testing.objects.create(test = textarea, test_id =id)
                     paragraphs.save()
@@ -85,7 +88,7 @@ def typing_tests(request):
                 else:
                     return HttpResponse('YOU HAVE REACHED MAXMUM AMOUT OF PARAGRAPHS..')
             else:
-                return HttpResponse('TEST PARAGRAPH SHOULD NOT EXCEED 60 WORDS.')
+                return HttpResponse('TEST PARAGRAPH SHOULD NOT EXCEED 80 WORDS.')
         else:
             return HttpResponse('TEST PARAGRAPH SHOULD BE GREATER THAN 40 WORDS.')
     else:
@@ -132,6 +135,10 @@ def getFontendCodes(request):
     codes = Frontend.objects.all()
     return JsonResponse({"codes": list(codes.values())})
 
+def getStartTimerOneCodes(request):
+    codes = EndEvent.objects.all()
+    return JsonResponse({"codes": list(codes.values())})
+
 def getSearch(request):
      if request.method == 'POST':
         player = json.loads(request.body)
@@ -152,11 +159,66 @@ def setEventEnd(request):
             
             if ms is not None:
                 try:
-                    event = EndEvent.objects.get(endEventId=5747)
+                    event = EndEvent.objects.get(endEventId=85747)
                     event.endEvent = ms
                     event.save()
                     return HttpResponse("Event end updated successfully.", status=200)
                 except EndEvent.DoesNotExist:
+                    return HttpResponse("Failled : Switch timmer 1 off.", status=404)
+            else:
+                return HttpResponse("Invalid data format.", status=400)
+        except json.JSONDecodeError:
+            return HttpResponse("Invalid JSON data.", status=400)
+        except Exception as e:
+            return HttpResponse(f"An error occurred: {str(e)}", status=500)
+    else:
+        return HttpResponse("Method not allowed.", status=405)
+    
+'''def update_end_event():
+    while True:
+        try:
+            event = EndEvent.objects.get(endEventId=5747)
+            new_end_time = event.endEvent - timedelta(milliseconds=500)
+            EndEvent.objects.filter(endEventId=5747).update(endEvent=new_end_time)
+            print("EndEvent updated:", new_end_time)
+        except EndEvent.DoesNotExist:
+            print("EndEvent not found")
+        
+        time.sleep(2)
+
+update_end_event()
+    '''
+
+
+def subtract_until_zero(number, subtract_by):
+    event = EndEvent.objects.get(endEventId=85747)
+    while number > 0:
+        event.endEvent = number
+        event.save()
+        number -= subtract_by
+
+        if number < 0:
+            number = 0
+
+        time.sleep(1)  
+    print("Number has reached 0!")
+
+
+
+
+def setEventNext(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            ms = data.get("ms")
+            
+            if ms is not None:
+                try:
+                    event = NextEvent.objects.get(nextEventId=5747)
+                    event.nextEvent = ms
+                    event.save()
+                    return HttpResponse("Event next updated successfully.", status=200)
+                except NextEvent.DoesNotExist:
                     return HttpResponse("Event not found.", status=404)
             else:
                 return HttpResponse("Invalid data format.", status=400)
@@ -194,6 +256,27 @@ def startFrontend(request):
         elif code1 == 5747:
             getCode= Frontend.objects.get(FrontendId = 85747)
             getCode.FrontendId = code1
+            getCode.save()
+            return HttpResponse("UPDATED SUCCESSIFULLY...")
+        else:
+            return HttpResponse("UPDATE FAILED...")
+     else:
+         return("something went wrong")
+     
+
+def startTimerOne(request):
+     if request.method == 'POST':
+        code = json.loads(request.body)
+        code1 = code['firstId']
+        if code1 == 85747:
+            getCode = EndEvent.objects.get(endEventId = 5747)
+            getCode.endEventId = code1
+            getCode.save()
+            subtract_until_zero(getCode.endEvent, 1000)
+            return HttpResponse("UPDATED SUCCESSIFULLY...")
+        elif code1 == 5747:
+            getCode= EndEvent.objects.get(endEventId = 85747)
+            getCode.endEventId = code1
             getCode.save()
             return HttpResponse("UPDATED SUCCESSIFULLY...")
         else:

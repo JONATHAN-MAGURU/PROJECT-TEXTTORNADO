@@ -3,7 +3,8 @@ const text_D2_2 = document.getElementsByClassName("test_D2")[1];
 const text_D2_3 = document.getElementsByClassName("test_D2")[2];
 const cont_btn = document.getElementsByClassName("cont_btn")[0];
 const paragraphs = [];
-const mistakesLimit = 10;
+const mistakesLimit = 15;
+
 document.addEventListener("DOMContentLoaded", function () {
   var xhrA = new XMLHttpRequest();
   xhrA.open("GET", "/get_paragraph");
@@ -114,10 +115,23 @@ function initTimer() {
   }
 }
 
-function saveDetails() {
+let isRequestInProgress = false;
+
+async function saveDetails() {
+  if (isRequestInProgress) {
+    return;
+  }
+
+  isRequestInProgress = true;
+
   const wpm = wpmTag.innerText;
   const mistakes22 = mistakeTag.innerText;
   const cpm = cpmTag.innerText;
+  accurencyLoader(
+    parseInt(document.getElementsByClassName("aow")[0].innerHTML),
+    parseInt(wpm), parseInt(mistakes22)
+  );
+
   const dat2 = {
     wpm,
     mistakes22,
@@ -131,19 +145,33 @@ function saveDetails() {
   text_D2_2.innerHTML = cpm;
   text_D2_3.innerHTML = mistakes22;
 
-  const json_dat2 = JSON.stringify(dat2);
-  var xhr2 = new XMLHttpRequest();
   const csrfToken6 = document.querySelector("#csrf_token6").value;
-  xhr2.open("POST", "/typing_details", true);
-  xhr2.setRequestHeader("Content-Type", "application/json");
-  xhr2.setRequestHeader("X-CSRFToken", csrfToken6);
 
   if (mistakes22 > mistakesLimit) {
-    document.getElementById("mistakeError").innerHTML ="YOUR RESULTS ARE NOT GOING TO BE  VERIFIED BECAUSE YOU HAVE EXCEEDED MISTAKES LIMIT";
+    document.getElementById("mistakeError").innerHTML =
+      "YOUR RESULTS ARE NOT GOING TO BE VERIFIED BECAUSE YOU HAVE EXCEEDED MISTAKES LIMIT";
   } else {
-    xhr2.send(json_dat2);
-    document.getElementById("mistakeError").innerHTML =" ";
+    try {
+      const response = await fetch("/typing_details", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": csrfToken6,
+        },
+        body: JSON.stringify(dat2),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      document.getElementById("mistakeError").innerHTML = " ";
+    } catch (error) {
+      console.error("Error:", error);
+    }
   }
+
+  isRequestInProgress = false; // Allow the next request to be initiated
 }
 
 function resetGame() {
@@ -160,3 +188,27 @@ function resetGame() {
 
 inpField.addEventListener("input", initTyping);
 tryAgainBtn.addEventListener("click", resetGame);
+
+function accurencyLoader(totalWords, finalWpm,misTakes) {
+  let number = document.getElementById("numberr");
+  let circle = document.querySelector(".circle3");
+  let counter = 0;
+  let maxProgress = (finalWpm / totalWords) * 100;
+  circle.style.setProperty("--progress", 0);
+  number.innerHTML = "0%";
+  if (finalWpm <= totalWords && misTakes < 20) {
+    let interval = setInterval(() => {
+      if (counter >= maxProgress) {
+        clearInterval(interval);
+      } else {
+        counter += 1;
+
+        circle.style.setProperty("--progress", counter);
+        number.innerHTML = counter + "%";
+      }
+    }, 20);
+  }
+  else{
+    circle.style.setProperty("--progress", 0);
+  }
+}

@@ -20,5 +20,8 @@ urlpatterns = [
     path('checkUsername', views.checkUsername, name='checkUsername'),
     path('searchAccount', views.searchAccount, name='searchAccount'),
     path('verifyOtp', views.verifyOtp, name='verifyOtp'),
+    path('verifyOtpReset', views.verifyOtpReset, name='verifyOtpReset'),
+    path('resetPassword2', views.resetPassword2, name='resetPassword2'),
+    path('checkNumber', views.checkNumber, name='checkNumber'),
 
 ]

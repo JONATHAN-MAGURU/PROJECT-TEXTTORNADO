@@ -10,7 +10,8 @@
   body {
     background-color: #0d1117;
     color: #ffffff;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans",
+    Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
   }
 
   .main_body {
@@ -38,7 +39,7 @@
   }
 
   .container_A {
-    width: 58%;
+    width: 60%;
     height: auto;
     display: flex;
     flex-direction: column;
@@ -100,8 +101,8 @@
     height: auto;
     color: gray;
     background-color: transparent;
-    font-size: 150%;
-    padding: 6px;
+    font-size: 140%;
+    padding: 2px;
   }
 
   .container_A_1_1_2 {
@@ -300,7 +301,7 @@
   }
 
   ::-webkit-scrollbar {
-    width: 5px;
+    width: 8px;
     height: 5px;
     border-radius: 50%;
   }
@@ -540,16 +541,16 @@
   }
 
   .counters {
-    padding: 4px;
+    padding: 2px;
   }
 
   .counters2 {
-    padding: 4px;
+    padding: 2px;
   }
 
   .options {
     width: 75%;
-    height:auto;
+    height: auto;
     display: none;
     box-shadow: 0.5px 0.5px 20px #000000;
     border-radius: 8px;
@@ -572,7 +573,7 @@
     justify-content: space-between;
     height: auto;
     background-color: #0d1117;
-    border-bottom:1px solid #21262d;
+    border-bottom: 1px solid #21262d;
   }
 
   .options_header_box {
@@ -636,7 +637,7 @@
   .token_container {
     width: 100%;
     height: auto;
-    justify-content:space-between;
+    justify-content: space-between;
     display: flex;
     flex-direction: row;
     box-shadow: 0px 0px 3px #000000;
@@ -644,7 +645,7 @@
   .token_containerA {
     width: 74%;
     height: auto;
-    justify-content:space-between;
+    justify-content: space-between;
     display: flex;
     overflow: hidden;
     padding: 8px;
@@ -654,7 +655,7 @@
   .token_containerB {
     width: 25%;
     height: auto;
-    justify-content:space-between;
+    justify-content: space-between;
     display: flex;
     overflow: hidden;
     padding: 8px;
@@ -674,7 +675,7 @@
     overflow: hidden;
     transition: 0.5s;
     box-shadow: 0px 0px 3px #000000;
-    background-color:#0d1117;
+    background-color: #0d1117;
     border: 1px solid #21262d;
     border-radius: 8px;
   }
@@ -699,8 +700,6 @@
     letter-spacing: 3px;
   }
 
- 
-
   .star_holder {
     padding: 10px;
     text-align: center;
@@ -712,7 +711,6 @@
     padding: 4px;
     display: flex;
     justify-content: center;
-  
   }
 
   .tickett1 {
@@ -1005,6 +1003,8 @@
   .wrapper {
     border-radius: 4px;
     background-color: #0d1117;
+    max-height: 320px;
+    overflow-y: scroll;
   }
 
   .wrapper .input-field {
@@ -1012,16 +1012,14 @@
     z-index: -999;
     position: absolute;
   }
-  .wrapper:hover {
-    outline: 1px solid white;
-  }
+
 
   .wrapper .content-box {
-    padding: 12px;
+    padding: 10px;
   }
 
   .content-box .typing-text {
-    overflow: hidden;
+    overflow-y: hidden;
   }
 
   .typing-text::-webkit-scrollbar {
@@ -1032,7 +1030,6 @@
     font-size: 100%;
     text-align: justify;
     letter-spacing: 1px;
-    font-family: roboto, "Noto Sans Myanmar UI", arial, sans-serif;
   }
 
   .typing-text p span {
@@ -1120,18 +1117,18 @@
   }
 
   #reshulf {
-    background-color: #0d1117;
-    border: 1px solid #21262d;
-    font-size: 85%;
-    letter-spacing: 2px;
-    cursor: pointer;
-    text-align: center;
-    border-radius: 3px;
-    padding: 8px;
+   cursor: pointer;
+   padding: 3px;
+   font-size: 130%; 
+   color:orange;
+   cursor: pointer;
+   background-color: transparent;
   }
 
-  #reshulf:hover {
-    outline: 1px solid orange;
+  #back{
+    outline: none;
+    cursor: not-allowed;
+    transition: 0.2s;
   }
 
   #user_profile {
@@ -1370,10 +1367,9 @@
     font-size: 90%;
     overflow-y: visible;
     margin: auto;
-    display:none;
+    display: none;
     transition: 1s;
-   
-   
+
     box-shadow: 14px 14px 50px #000000;
     border: 1px solid #21262d;
   }
@@ -1525,6 +1521,13 @@
   }
   .rankLB {
     width: 15%;
+    padding-top: 10px;
+    color: gray;
+    text-align: center;
+    border-radius: 30%;
+  }
+  .rankLB2 {
+    width: 15%;
     padding: 5px;
     color: gray;
     text-align: center;
@@ -1537,24 +1540,53 @@
     flex-direction: row;
     justify-content: start;
     overflow: hidden;
+    padding-top: 3px;
+  }
+  .firstnameLB2 {
+    width: 37%;
+    color: rgba(202, 193, 193, 0.9);
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    overflow: hidden;
     padding: 5px;
   }
   .wpmLB {
     width: 14%;
-    padding: 5px;
     color: gray;
+    padding-top: 10px;
+    text-align: center;
+  }
+  .wpmLB2 {
+    width: 14%;
+    color: gray;
+    padding: 5px;
     text-align: center;
   }
   .charLB {
     width: 15%;
-    padding: 5px;
     text-align: center;
     color: rgba(202, 193, 193, 0.9);
+    padding-top: 10px;
+  }
+  .charLB2 {
+    width: 15%;
+    text-align: center;
+    color: rgba(202, 193, 193, 0.9);
+    padding: 5px;
   }
   .mistLB {
     width: 19%;
-    padding: 5px;
     color: gray;
+    padding-top: 10px;
+    text-align: center;
+    border-radius: 20%;
+    overflow: hidden;
+  }
+  .mistLB2 {
+    width: 19%;
+    color: gray;
+    padding: 5px;
     text-align: center;
     border-radius: 20%;
     overflow: hidden;

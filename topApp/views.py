@@ -51,6 +51,27 @@ def verifyPhoneNumber(request):
             return HttpResponse(error_message, status=500)
     else:
         return HttpResponse('Invalid request method', status=400)
+    
+def resetPassword2(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            password = data['password']
+            number = data['number']
+      
+            try:
+                player = Player.objects.get(number=number)
+                player.password = password
+                player.save()
+                return HttpResponse('saved')
+            except Player.DoesNotExist:
+                return HttpResponse('Player not found', status=404)
+        except Exception as e:
+            error_message = f"An error occurred: {str(e)}"
+            return HttpResponse(error_message, status=500)
+    else:
+        return HttpResponse('Invalid request method', status=400)
+
 
 
 def verifyOtp(request):
@@ -72,7 +93,34 @@ def verifyOtp(request):
             if verification_check.status == 'approved':
                   return HttpResponse('approved')
             else:
-                HttpResponse('pending')
+                return HttpResponse('pending')
+
+        except Exception as e:
+            error_message = f"An error occurred: {str(e)}"
+            return HttpResponse(error_message, status=500)
+    else:
+        return HttpResponse('Invalid request method', status=400)
+    
+def verifyOtpReset(request):
+    if request.method == 'POST':
+        try:
+            account_sid = settings.account_sid
+            auth_token = settings.auth_token
+            messaging_service_sid = settings.messaging_service_sid
+            data = json.loads(request.body)
+            number = data['number']
+            otp = data['otp']
+            client = Client(account_sid, auth_token)
+
+            verification_check = client.verify \
+                                    .v2 \
+                                    .services(messaging_service_sid) \
+                                    .verification_checks \
+                                    .create(to=number, code=otp)         
+            if verification_check.status == 'approved':
+                  return HttpResponse('approved')
+            else:
+                return HttpResponse('pending')
 
         except Exception as e:
             error_message = f"An error occurred: {str(e)}"
@@ -107,6 +155,25 @@ def checkUsername(request):
             username = user_data['username2']
             try:
                 if Player.objects.filter(username=username).exists():
+                    return HttpResponse("not success")
+                else:
+                    return HttpResponse('go ahead')
+            except ObjectDoesNotExist:
+                return HttpResponse("User does not exist")
+    except json.JSONDecodeError:
+        return HttpResponse("Invalid JSON data")
+    except KeyError:
+        return HttpResponse("Invalid JSON key")
+    except Exception as e:
+        return HttpResponse(f"An error occurred: {str(e)}")
+    
+def checkNumber(request):
+    try:
+        if request.method == 'POST':
+            user_data = json.loads(request.body)
+            number = user_data['number']
+            try:
+                if Player.objects.filter(number=number).exists():
                     return HttpResponse("not success")
                 else:
                     return HttpResponse('go ahead')

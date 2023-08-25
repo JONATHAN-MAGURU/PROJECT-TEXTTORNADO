@@ -56,10 +56,10 @@ const leaderboard = (document.getElementsByClassName(
   "leaderboard_container"
 )[0].style.height = opt - 140 + "px");
 
-const userImage = document.getElementsByClassName("ico")[0]
-window.addEventListener("load", function(){
-  userImage.width = 300
-})
+const userImage = document.getElementsByClassName("ico")[0];
+window.addEventListener("load", function () {
+  userImage.width = 300;
+});
 
 main_container.style.height = opt - 120 + "px";
 settings_container.style.height = opt - 150 + "px";
@@ -148,14 +148,13 @@ setInterval(function () {
   xhr.send();
 }, 1000);
 
-  document.getElementById("leaderb").addEventListener("click", function () {
-    
-    document.getElementsByClassName("leaderboard_container2")[0].style.width =
-      "100%";
-  });
+document.getElementById("leaderb").addEventListener("click", function () {
+  document.getElementsByClassName("leaderboard_container2")[0].style.width =
+    "100%";
+});
 
 buy_tokens.addEventListener("click", function () {
-  options.style.display ="block";
+  options.style.display = "block";
   leaderboard_hider.style.width = "100%";
   options_notf.style.height = 0;
   options_player.style.height = 0;
@@ -313,15 +312,21 @@ document
   .addEventListener("click", function () {
     resetGame();
     tips.style.display = "none";
-    tryAgainBtn.style.display = "block";
+    start.style.background = "orange";
+    start.disabled = false;
+    start.style.cursor = "pointer";
+    start.style.outline = "1px solid orange";
+
+    tryAgainBtn.disabled = false;
+    tryAgainBtn.style.cursor = "pointer";
+    tryAgainBtn.style.color = "orange";
   });
 
-  document.addEventListener("visibilitychange", function() {
-    if (document.visibilityState === "hidden") {
-      // User switched tabs or minimized the window
-      // Perform actions like pausing videos, animations, etc.
-    } else {
-      window.location.reload();
-    }
-  });
-  
+document.addEventListener("visibilitychange", function () {
+  if (document.visibilityState === "hidden") {
+    // User switched tabs or minimized the window
+    // Perform actions like pausing videos, animations, etc.
+  } else {
+    window.location.reload();
+  }
+});

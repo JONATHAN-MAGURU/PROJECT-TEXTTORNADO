@@ -1,9 +1,10 @@
 const text_D2_1 = document.getElementsByClassName("test_D2")[0];
 const text_D2_2 = document.getElementsByClassName("test_D2")[1];
 const text_D2_3 = document.getElementsByClassName("test_D2")[2];
-const cont_btn = document.getElementsByClassName("cont_btn")[0];
 const paragraphs = [];
 const mistakesLimit = 15;
+const start = document.querySelector("#start");
+const back = document.querySelector("#back");
 
 document.addEventListener("DOMContentLoaded", function () {
   var xhrA = new XMLHttpRequest();
@@ -36,6 +37,20 @@ let timer,
   timeLeft = maxTime,
   charIndex = (mistakes = isTyping = 0);
 
+function callBack() {
+  back.style.background = "orange";
+  back.style.outline = "1px solid orange";
+  back.disabled = false;
+  back.style.cursor = "pointer";
+}
+
+function callBackoff() {
+  back.style.background = "gray";
+  back.disabled = true;
+  back.style.cursor = "not-allowed";
+  back.style.outline = "none";
+}
+
 function loadParagraph() {
   const ranIndex = Math.floor(Math.random() * paragraphs.length);
   typingText.innerHTML = "";
@@ -51,13 +66,56 @@ function loadParagraph() {
 
   inpField.addEventListener("keydown", function () {
     inpField.focus();
-    tryAgainBtn.style.display = "none";
+    callBackoff();
   });
+
   typingText.addEventListener("click", function () {
+    callBack();
     inpField.focus();
+    tryAgainBtn.disabled = true;
+    tryAgainBtn.style.cursor = "not-allowed";
+    tryAgainBtn.style.color = "gray";
+    start.style.background = "gray";
+    start.disabled = true;
+    start.style.cursor = "not-allowed";
+    start.style.outline = "none";
     typingText.querySelectorAll("span")[0].classList.add("active");
   });
 }
+const wrapper = document.querySelector(".wrapper");
+
+back.addEventListener("click", function () {
+  callBackoff();
+  start.style.background = "orange";
+  start.disabled = false;
+  start.style.cursor = "pointer";
+  start.style.outline = "1px solid orange";
+  typingText.querySelectorAll("span")[0].classList.remove("active");
+  tryAgainBtn.disabled = false;
+  tryAgainBtn.style.cursor = "pointer";
+  tryAgainBtn.style.color = "orange";
+});
+
+start.addEventListener("click", function () {
+  start.disabled = true;
+  start.style.cursor = "not-allowed";
+  tryAgainBtn.disabled = true;
+  tryAgainBtn.style.cursor = "not-allowed";
+  tryAgainBtn.style.color = "gray";
+  start.style.background = "gray";
+  start.style.outline = "none";
+  inpField.focus();
+  callBack();
+  typingText.querySelectorAll("span")[0].classList.add("active");
+});
+
+inpField.addEventListener("focus", function () {
+  wrapper.style.outline = "1px solid rgb(255, 140, 0)";
+});
+
+inpField.addEventListener("blur", function () {
+  wrapper.style.outline = "none";
+});
 
 function initTyping() {
   let characters = typingText.querySelectorAll("span");
@@ -129,7 +187,8 @@ async function saveDetails() {
   const cpm = cpmTag.innerText;
   accurencyLoader(
     parseInt(document.getElementsByClassName("aow")[0].innerHTML),
-    parseInt(wpm), parseInt(mistakes22)
+    parseInt(wpm),
+    parseInt(mistakes22)
   );
 
   const dat2 = {
@@ -189,7 +248,7 @@ function resetGame() {
 inpField.addEventListener("input", initTyping);
 tryAgainBtn.addEventListener("click", resetGame);
 
-function accurencyLoader(totalWords, finalWpm,misTakes) {
+function accurencyLoader(totalWords, finalWpm, misTakes) {
   let number = document.getElementById("numberr");
   let circle = document.querySelector(".circle3");
   let counter = 0;
@@ -207,8 +266,7 @@ function accurencyLoader(totalWords, finalWpm,misTakes) {
         number.innerHTML = counter + "%";
       }
     }, 20);
-  }
-  else{
+  } else {
     circle.style.setProperty("--progress", 0);
   }
 }

@@ -15,7 +15,7 @@ const notAllowedCharacters = "'~`!@#$%^&*()-+=?/><,.'123456789 ";
 const notAllowedCharacters2 = "'~`!@#$%^&*()-+=?/><,.' ";
 const ppassword = document.querySelector("#ppassword");
 const cpassword = document.querySelector("#cpassword");
-const username = document.querySelector("#username");
+const username = document.getElementById("username");
 const number = document.querySelector("#number");
 const code = document.querySelector("#code");
 const resend = document.querySelector(".resend");
@@ -27,21 +27,20 @@ const main_height = window.innerHeight;
 const main_width = window.innerWidth;
 const userAgent = navigator.userAgent;
 
-
 var deviceInfo = "Unknown Device";
 
 if (userAgent.match(/(iPhone|iPod|iPad)/)) {
-    deviceInfo = "Apple Device";
+  deviceInfo = "Apple Device";
 } else if (userAgent.match(/Android/)) {
-    deviceInfo = "Android Device";
+  deviceInfo = "Android Device";
 } else if (userAgent.match(/Windows Phone/)) {
-    deviceInfo = "Windows Phone";
+  deviceInfo = "Windows Phone";
 } else if (userAgent.match(/Windows/)) {
-    deviceInfo = "Windows PC";
+  deviceInfo = "Windows PC";
 } else if (userAgent.match(/Macintosh/)) {
-    deviceInfo = "Macintosh";
+  deviceInfo = "Macintosh";
 } else if (userAgent.match(/Linux/)) {
-    deviceInfo = "Linux PC";
+  deviceInfo = "Linux PC";
 }
 
 checkbox.addEventListener("change", function () {
@@ -196,6 +195,12 @@ function alreadyExist() {
     "username already exist, try another one";
 }
 
+function alreadyExist2() {
+  callErrorContainer();
+  document.querySelector("#error").innerHTML =
+    'That number already exist with another account';
+}
+
 secondNext.addEventListener("click", function () {
   verifyPasswords(ppassword.value, cpassword.value);
 });
@@ -236,7 +241,7 @@ function verifyUsernam(a) {
     loaderAndremover();
     setTimeout(fillFeildsError2, 1000);
   } else {
-    verifyUsername();
+    verifyUsername(username);
   }
 }
 function verifyNumber(a) {
@@ -247,11 +252,7 @@ function verifyNumber(a) {
     loaderAndremover();
     setTimeout(numberLength, 1000);
   } else {
-    requestOtp();
-    loaderAndremover();
-    callErrorContainerOff();
-    document.querySelector("#num").innerHTML = extractNumber();
-    setTimeout(callFiveForm, 1000);
+    verifyExistenceOfNumber();
   }
 }
 
@@ -272,7 +273,7 @@ function sendUserData() {
   const lastnameX = lastname.value;
   const passwordX = ppassword.value;
   const usernameX = username.value;
-  const numberX = number.value;
+  const numberX = extractNumber();
 
   const dataObj = {
     firstnameX,
@@ -370,9 +371,9 @@ async function VerifyOtp() {
   }
 }
 
-async function verifyUsername(username2) {
+async function verifyUsername(username3) {
   try {
-    username2 = username.value;
+    const username2 = username3.value;
     const objData = { username2 };
     const jsonData = JSON.stringify(objData);
 
@@ -396,6 +397,44 @@ async function verifyUsername(username2) {
         callErrorContainerOff();
         loaderAndremover();
         setTimeout(callFourthForm, 1000);
+      }
+    } else {
+      console.log("something went wrong");
+    }
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
+}
+
+async function verifyExistenceOfNumber() {
+  try {
+    const number = extractNumber();
+    const objData = { number };
+    const jsonData = JSON.stringify(objData);
+
+    const csrfToken = document.querySelector("#csrf_token").value;
+
+    const response = await fetch("/checkNumber", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": csrfToken,
+      },
+      body: jsonData,
+    });
+
+    if (response.ok) {
+      const responseData = await response.text();
+      if (responseData == "not success") {
+        loaderAndremover();
+        setTimeout(alreadyExist2, 1200);
+      } else {
+        loaderAndremover();
+        requestOtp();
+        loaderAndremover();
+        callErrorContainerOff();
+        document.querySelector("#num").innerHTML = extractNumber();
+        setTimeout(callFiveForm, 1000);
       }
     } else {
       console.log("something went wrong");

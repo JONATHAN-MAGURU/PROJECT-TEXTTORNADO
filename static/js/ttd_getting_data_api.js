@@ -205,11 +205,11 @@ document.addEventListener("DOMContentLoaded", function () {
             var temp =
               '<div class="userBox" style="border: 1px solid orange; box-shadow:1px 1px 20px black;"><div style="color:white;" class="rankLB">' +
               x++ +
-              '</div><div class="firstnameLB" style="color:white;"><img style="width:33px;height:33px; border-radius:50%;" src="' +
+              '</div><div class="firstnameLB" style="color:white;"><img style="width:35px;height:35px; border-radius:50%;" src="' +
               response.results[key].profile_pic +
-              '">&nbsp;&nbsp;' +
+              '">&nbsp;&nbsp; <div style="margin-top:6.5px">' +
               response.results[key].username +
-              '</div><div  style="color:white;" class="wpmLB">' +
+              '</div></div><div  style="color:white;" class="wpmLB">' +
               response.results[key].wpm +
               '</div><div style="color:white;" class="charLB">' +
               response.results[key].cpm +
@@ -223,11 +223,11 @@ document.addEventListener("DOMContentLoaded", function () {
               var temp =
                 '<div class="userBox"><div class="rankLB">' +
                 x++ +
-                '</div><div class="firstnameLB"><img style="width:33px;height:33px; border-radius:50%;" src="' +
+                '</div><div class="firstnameLB"><img style="width:35px;height:35px; border-radius:50%;" src="' +
                 response.results[key].profile_pic +
-                '">&nbsp;&nbsp;' +
+                '">&nbsp;&nbsp;<div style="margin-top:6.5px">' +
                 response.results[key].username +
-                '</div><div class="wpmLB">' +
+                '</div></div><div class="wpmLB">' +
                 response.results[key].wpm +
                 '</div><div class="charLB">' +
                 response.results[key].cpm +
@@ -239,11 +239,11 @@ document.addEventListener("DOMContentLoaded", function () {
               var temp =
                 '<div  style="background:transparent; border:none;" class="userBox"><div class="rankLB">' +
                 x++ +
-                '</div><div class="firstnameLB"><img style="width:33px;height:33px; border-radius:50%;" src="' +
+                '</div><div class="firstnameLB"><img style="width:35px;height:35px; border-radius:50%;" src="' +
                 response.results[key].profile_pic +
-                '">&nbsp;&nbsp;' +
+                '">&nbsp;&nbsp;<div style="margin-top:6.5px">'  +
                 response.results[key].username +
-                '</div><div class="wpmLB">' +
+                '</div></div><div class="wpmLB">' +
                 response.results[key].wpm +
                 '</div><div class="charLB">' +
                 response.results[key].cpm +

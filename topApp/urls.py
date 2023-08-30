@@ -5,6 +5,7 @@ urlpatterns = [
     path('', views.ttd_user_login, name='ttd_user_login'),
     path('ttd_user_signin/', views.ttd_user_signin, name='ttd_user_signin'),
     path('resetPassword/', views.resetPassword, name='resetPassword'),
+    path('testAPI/', views.testAPI, name='testAPI'),
     path('session', views.session, name='session'),
     path('v_player', views.v_player, name='v_player'),
     path('second_player_data', views.second_player_data, name='second_player_data'),
@@ -23,5 +24,7 @@ urlpatterns = [
     path('verifyOtpReset', views.verifyOtpReset, name='verifyOtpReset'),
     path('resetPassword2', views.resetPassword2, name='resetPassword2'),
     path('checkNumber', views.checkNumber, name='checkNumber'),
-
+    path('get_ticket_data/', views.get_ticket_data, name='get_ticket_data'),
+    path('updateTickets', views.updateTickets, name='updateTickets'),
+    path('processPayment', views.processPayment, name='processPayment'),
 ]

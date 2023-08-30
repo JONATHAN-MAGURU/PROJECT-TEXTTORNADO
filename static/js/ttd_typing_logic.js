@@ -5,6 +5,7 @@ const paragraphs = [];
 const mistakesLimit = 15;
 const start = document.querySelector("#start");
 const back = document.querySelector("#back");
+const wrapper = document.querySelector(".wrapper");
 
 document.addEventListener("DOMContentLoaded", function () {
   var xhrA = new XMLHttpRequest();
@@ -64,25 +65,34 @@ function loadParagraph() {
   document.getElementsByClassName("aow")[0].innerHTML = char.length;
   document.getElementsByClassName("aol")[0].innerHTML = wrds;
 
+  var hasStartedTyping = false;
+
   inpField.addEventListener("keydown", function () {
     inpField.focus();
-    callBackoff();
+
+    if (!hasStartedTyping) {
+      updateTickets();
+      hasStartedTyping = true;
+    }
   });
 
   typingText.addEventListener("click", function () {
-    callBack();
-    inpField.focus();
-    tryAgainBtn.disabled = true;
-    tryAgainBtn.style.cursor = "not-allowed";
-    tryAgainBtn.style.color = "gray";
-    start.style.background = "gray";
-    start.disabled = true;
-    start.style.cursor = "not-allowed";
-    start.style.outline = "none";
-    typingText.querySelectorAll("span")[0].classList.add("active");
+    if (document.getElementById("ticket-avail").innerHTML == 0) {
+      callOutOfticketsHolderOn();
+    } else {
+      callBack();
+      inpField.focus();
+      tryAgainBtn.disabled = true;
+      tryAgainBtn.style.cursor = "not-allowed";
+      tryAgainBtn.style.color = "gray";
+      start.style.background = "gray";
+      start.disabled = true;
+      start.style.cursor = "not-allowed";
+      start.style.outline = "none";
+      typingText.querySelectorAll("span")[0].classList.add("active");
+    }
   });
 }
-const wrapper = document.querySelector(".wrapper");
 
 back.addEventListener("click", function () {
   callBackoff();
@@ -97,16 +107,20 @@ back.addEventListener("click", function () {
 });
 
 start.addEventListener("click", function () {
-  start.disabled = true;
-  start.style.cursor = "not-allowed";
-  tryAgainBtn.disabled = true;
-  tryAgainBtn.style.cursor = "not-allowed";
-  tryAgainBtn.style.color = "gray";
-  start.style.background = "gray";
-  start.style.outline = "none";
-  inpField.focus();
-  callBack();
-  typingText.querySelectorAll("span")[0].classList.add("active");
+  if (document.getElementById("ticket-avail").innerHTML == 0) {
+    callOutOfticketsHolderOn();
+  } else {
+    start.disabled = true;
+    start.style.cursor = "not-allowed";
+    tryAgainBtn.disabled = true;
+    tryAgainBtn.style.cursor = "not-allowed";
+    tryAgainBtn.style.color = "gray";
+    start.style.background = "gray";
+    start.style.outline = "none";
+    inpField.focus();
+    callBack();
+    typingText.querySelectorAll("span")[0].classList.add("active");
+  }
 });
 
 inpField.addEventListener("focus", function () {
@@ -162,6 +176,7 @@ function initTyping() {
 
 function initTimer() {
   if (timeLeft > 0) {
+    callBackoff();
     timeLeft--;
     timeTag.innerText = timeLeft;
     let wpm = Math.round(
@@ -169,6 +184,7 @@ function initTimer() {
     );
     wpmTag.innerText = wpm;
   } else {
+    saveDetails();
     clearInterval(timer);
   }
 }
@@ -269,4 +285,24 @@ function accurencyLoader(totalWords, finalWpm, misTakes) {
   } else {
     circle.style.setProperty("--progress", 0);
   }
+}
+
+function updateTickets() {
+  const firstIdOb = { id };
+  console.log(firstIdOb);
+  const jsonData = JSON.stringify(firstIdOb);
+  const XHR3 = new XMLHttpRequest();
+  const csrfToken = document.querySelector("#csrf_token5").value;
+  XHR3.open("POST", "/updateTickets", true);
+  XHR3.setRequestHeader("Content-Type", "application/json");
+  XHR3.setRequestHeader("X-CSRFToken", csrfToken);
+  XHR3.addEventListener("load", function () {
+    if (XHR3.status === 200 && XHR3.readyState === 4) {
+      console.log(XHR3.responseText);
+      fetchTicketData(id);
+    } else {
+      console.log("something went wrong");
+    }
+  });
+  XHR3.send(jsonData);
 }

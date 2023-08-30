@@ -31,3 +31,4 @@ class EndEvent(models.Model):
 class NextEvent(models.Model):
    nextEvent = models.IntegerField(default=0)
    nextEventId = models.IntegerField(default=5747)
+

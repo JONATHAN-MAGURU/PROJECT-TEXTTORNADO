@@ -166,7 +166,7 @@ document.addEventListener("DOMContentLoaded", function () {
         for (var key in response.mydata) {
           var temp =
             "<p>" +
-            response.mydata[key].firstname +
+            response.mydata[key].username +
             " " +
             response.mydata[key].lastname +
             "</p>";
@@ -241,7 +241,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 x++ +
                 '</div><div class="firstnameLB"><img style="width:35px;height:35px; border-radius:50%;" src="' +
                 response.results[key].profile_pic +
-                '">&nbsp;&nbsp;<div style="margin-top:6.5px">'  +
+                '">&nbsp;&nbsp;<div style="margin-top:6.5px">' +
                 response.results[key].username +
                 '</div></div><div class="wpmLB">' +
                 response.results[key].wpm +
@@ -261,7 +261,7 @@ document.addEventListener("DOMContentLoaded", function () {
     xhr3.send();
   }
   updateLeaderboard();
-  setInterval(updateLeaderboard, 1000);
+  setInterval(updateLeaderboard, 2000);
 });
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -295,3 +295,18 @@ document.addEventListener("DOMContentLoaded", function () {
     xhr5.send();
   }, 5000);
 });
+
+function fetchTicketData(userId) {
+  fetch(`/get_ticket_data?user_id=${userId}`)
+    .then((response) => response.json())
+    .then((data) => {
+      const ticketInfoDiv = document.getElementById("ticket-avail");
+      ticketInfoDiv.innerHTML = `${data.tickets_available}`;
+    })
+    .catch((error) => {
+      console.error("Error fetching ticket data:", error);
+    });
+}
+window.onload = function () {
+  fetchTicketData(id);
+};

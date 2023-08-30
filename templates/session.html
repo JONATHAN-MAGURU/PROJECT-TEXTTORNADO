@@ -10,6 +10,13 @@
       content="no-cache, no-store, must-revalidate"
     />
     <meta http-equiv="Pragma" content="no-cache" />
+
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{% static 'images/favicon.ico' %}"
+    />
+
     <meta http-equiv="Expires" content="0" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
@@ -25,7 +32,12 @@
   </head>
   {% for x in player_d%}
 
-  <body data-username="{{x.username}}" data-ttd-id="{{x.player_id}}" id="body">
+  <body
+    data-username="{{x.username}}"
+    data-ttd-id="{{x.player_id}}"
+    data-number="{{x.number}}"
+    id="body"
+  >
     {% endfor %}
     <div class="loader">
       <div class="pl">
@@ -45,7 +57,149 @@
       </div>
     </div>
     <div class="main_body">
+      <div class="outOfTicketsHolder">
+        <div class="outOfTicketsHead">
+          <h2>You don't have enough tickets.</h2>
+          <p style="line-height: 25px">
+            Purchase your favorite pack of tickets to join typing events. Don't
+            miss the event you can have a ticket with only MK500.
+          </p>
+        </div>
+        <div class="outOfTicketsBody">
+          <div class="next-holder">
+            <div class="cancel-btn">Cancel</div>
+            <div class="next-btn">Buy tickets</div>
+          </div>
+        </div>
+      </div>
+      <div class="choosePaymet">
+        <div class="loading">
+          <img
+            src="/images/loading.gif"
+            style="width: 40px; height: 40px; border-radius: 50%"
+          />
+        </div>
+        <div class="choosePaymentHead">
+          <h2>Payment Details</h2>
+        </div>
+        <div class="choosePaymentBody">
+          <div class="choosePaymentBodyA">
+            <img
+              src="/images/Airtel.png"
+              style="width: 70%; height: 100px; border-radius: 5px"
+            />
+          </div>
+          <div class="choosePaymentBodyB">
+            <p>Tickets : &nbsp;<span id="numberOfTickets"></span></p>
+            <p>Amount :&nbsp;<span>MKW</span><span id="amount"></span></p>
+            <p>Payment method :&nbsp;<span>Airtel money</span></p>
+            {% for x in player_d%}
+            <p>Phone number : &nbsp;<span>{{x.number}}</span></p>
+            {% endfor %}
+            <p>Type :&nbsp;<span id="typeOfTickets"></span></p>
+          </div>
+        </div>
+        <div class="choosePaymentHead">
+          <div class="next-holder">
+            <div class="cancel-btn">Back</div>
+            <button class="next-btn">Continue</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="choosePaymet">
+        <div class="container-error">
+          <i class="fas fa-exclamation-triangle" style="color: red"></i>
+          &nbsp;<span id="errors"></span>
+        </div>
+        <div class="loading">
+          <img
+            src="/images/loading.gif"
+            style="width: 40px; height: 40px; border-radius: 50%"
+          />
+        </div>
+        <div class="choosePaymentHead">
+          <h2>Use Airtel Number</h2>
+        </div>
+        <div class="choosePaymentBody">
+          <div class="choosePaymentBodyA">
+            {% for x in player_d%}
+            <p style="text-align: left; color: gray">
+              We only accept payments from Airtel money since you registered
+              your account using tnm number <span id="newAirtel">{{x.number}}</span>, so enter
+              airtel number to continue with the payments.
+            </p>
+            {% endfor %}
+          </div>
+          <div class="choosePaymentBodyB">
+            <br />
+            <br />
+            <label for="airtel"> &nbsp; Phone number </label> <br />
+            <input
+              type="number"
+              id="airtel"
+              style="
+                outline: none;
+                border: none;
+                padding: 8px;
+                width: 100%;
+                background: #0d1117;
+                color: white;
+                border-radius: 4px;
+                margin: 2px;
+              "
+            />
+          </div>
+        </div>
+        <div class="choosePaymentHead">
+          <div class="next-holder">
+            <div class="cancel-btn">Back</div>
+            <div class="next-btn">Continue</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="choosePaymet">
+        <div class="loading">
+          <img
+            src="/images/loading.gif"
+            style="width: 40px; height: 40px; border-radius: 50%"
+          />
+        </div>
+        <div class="choosePaymentHead">
+          <h2>Enter pin on your phone..</h2>
+        </div>
+        <div class="choosePaymentBody">
+          <div class="choosePaymentBodyA">
+            <p style="text-align: left; color: gray">
+              Your payment details has been successfully sent for processing at the payment provider.
+            </p>
+            <p style="text-align: left; color: gray">
+              You will be notified on your phone to approve the transaction by entering your airtel money pin.
+            </p>
+          </div>
+          <div class="choosePaymentBodyB">
+            <p><span id="countDown">17</span>&nbsp;<span>S</span></p>
+          </div>
+        </div>
+        <div class="choosePaymentHead">
+          <div class="next-holder">
+            <button class="next-btn">Cancel</button>
+          </div>
+        </div>
+      </div>
+
       <div class="leaderboard_hider"></div>
+      <div class="notifications">
+        <div class="notificationsBody">
+          <p id="notText" style="width: 90%; padding: 10px"></p>
+          <div class="closexx onNot">
+            <div class="linex onex"></div>
+            <div class="linex twox"></div>
+          </div>
+        </div>
+      </div>
+
       <div class="alerts">
         <p id="alerts2"></p>
       </div>
@@ -83,7 +237,16 @@
           <h4 style="cursor: pointer">
             TEXT<span style="color: orange">TORNADO</span>
           </h4>
-          <div class="log_out displayNone">
+          <div class="availTicketsHolder">
+            <p>
+              <i
+                style="font-size: 140%; color: yellowgreen; cursor: pointer"
+                class="fa fa-ticket tickettss"
+              ></i>
+              <span id="ticket-avail"> </span>
+            </p>
+          </div>
+          <div class="log_out">
             <p>PRACTICE</p>
           </div>
         </div>
@@ -117,33 +280,11 @@
       <div class="main_container">
         <button class="disNan" id="leaderb">LEADERBOARD</button>
         <div class="container_A">
-          <!-- <div class="container_AA">
-                    <div class="container_A_1_2">
-                        <div class="counters2">
-                            <p style="font-size: 60%;">TICKETS LEFT</p>
-                        </div>
-                        <div class="container_A_1_1_2"> 0 </div>
-                    </div>
-                    <div class="container_A_1_2">
-                        <div class="counters2">
-                            <p style="font-size: 60%;">TICKETS USED</p>
-                        </div>
-                        <div class="container_A_1_1_2"> 0 </div>
-                    </div>
-                    <div class="container_A_1_2">
-                        <div class="counters2">
-                            <p style="font-size: 60%;">TESTS TAKEN</p>
-                        </div>
-                        <div class="container_A_1_1_2"> 0 </div>
-                    </div>
-                </div>-->
-
           <div class="container_A_1">
             <div class="container_A_1_1">
               <div class="counters">
                 <p>TIME LEFT</p>
               </div>
-
               <div class="container_A_1_1_1">
                 <span class="time_left">60</span><span>s</span>
               </div>
@@ -152,7 +293,6 @@
               <div class="counters">
                 <p>MISTAKES</p>
               </div>
-
               <div class="container_A_1_1_1">
                 <span id="mistakee"> 0 </span>
               </div>
@@ -161,24 +301,31 @@
               <div class="counters">
                 <p>WPM</p>
               </div>
-
               <div class="container_A_1_1_1"><span id="wpm">0</span></div>
             </div>
             <div class="container_A_1_1">
               <div class="counters">
                 <p>CPM</p>
               </div>
-
               <div class="container_A_1_1_1"><span id="cpm"> 0 </span></div>
             </div>
           </div>
           <div class="container_A_2">
             <div class="container_A_2_2">
               <div class="container_A_2_1">
-                <button class="log_out " id="start" style="background:orange; font-weight:500; ">
+                <button
+                  class="log_out"
+                  id="start"
+                  style="background: orange; font-weight: 500"
+                >
                   <p>START</p>
                 </button>
-                <button class="log_out " id="back" style="background:gray; font-weight:500;" disabled> 
+                <button
+                  class="log_out"
+                  id="back"
+                  style="background: gray; font-weight: 500"
+                  disabled
+                >
                   <p>BACK</p>
                 </button>
                 <div class="fonts_holder">
@@ -200,9 +347,7 @@
                   </select>
                 </div>
                 <button id="reshulf">
-                  <i
-                    class="fa fa-random"
-                  ></i>
+                  <i class="fa fa-random"></i>
                 </button>
               </div>
               <div class="typing_text_holder">
@@ -358,10 +503,10 @@
           <div class="settings_box write_comment">
             <p>WRITE COMMENT</p>
           </div>
-          <i
-            style="font-size: 100%; cursor: pointer"
-            class="fa fa-close closee6"
-          ></i>
+          <div class="closexx">
+            <div class="linex onex"></div>
+            <div class="linex twox"></div>
+          </div>
         </div>
         <div class="comment_body"></div>
       </div>
@@ -372,17 +517,30 @@
               style="font-size: 150%; color: orange; cursor: pointer"
               class="fa fa-ticket"
             ></i>
-            &nbsp;BUY TICKETS
+            &nbsp;STORE
           </div>
           <div class="options_header_box">
-            <i
-              style="font-size: 100%; cursor: pointer"
-              class="fa fa-close closee"
-            ></i>
+            <div class="closexx closee">
+              <div class="linex onex"></div>
+              <div class="linex twox"></div>
+            </div>
           </div>
         </div>
         <div class="token_container">
-          <div class="token_containerB"></div>
+          <div class="token_containerB">
+            <div class="otherOptions">
+              <p>Buy tickets</p>
+            </div>
+            <div class="otherOptions">
+              <p>Share tickets</p>
+            </div>
+            <div class="otherOptions">
+              <p>Claim free tickets</p>
+            </div>
+            <div class="otherOptions">
+              <p>Help</p>
+            </div>
+          </div>
           <div class="token_containerA">
             <div class="token_holder">
               <i
@@ -578,7 +736,7 @@
               name=""
               id=""
               class="edit1"
-              value="{{x.number}}"
+              value=""
               disabled
               placeholder="Number"
             />
@@ -841,6 +999,5 @@
     <script src="{% static 'js/ttd_typing_logic.js' %}"></script>
     <script src="{% static 'js/ttd_getting_data_api.js' %}"></script>
     <script src="{% static 'js/timers.js' %}"></script>
-    <script src="{% static 'js/home_typoss.js' %}"></script>
   </body>
 </html>

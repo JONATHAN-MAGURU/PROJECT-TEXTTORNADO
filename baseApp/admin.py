@@ -9,3 +9,4 @@ admin.site.register(Variant_paragraphs)
 admin.site.register(Frontend)
 admin.site.register(EndEvent)
 admin.site.register(NextEvent)
+

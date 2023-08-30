@@ -10,12 +10,19 @@
   body {
     background-color: #0d1117;
     color: #ffffff;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans",
-    Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI,
+      Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica, Arial,
+      sans-serif;
   }
 
   .main_body {
     display: none;
+  }
+
+  h2 {
+    font-size: 22px;
+    font-weight: 450;
+    margin: 5px;
   }
 
   .main_container {
@@ -74,7 +81,6 @@
   .container_A_1_3 {
     width: 45%;
     height: auto;
-    border: 1px solid #21262d;
     display: flex;
     flex-direction: column-reverse;
     text-align: center;
@@ -263,7 +269,7 @@
     cursor: pointer;
     width: auto;
     text-align: center;
-    border-radius: 2px;
+    border-radius: 4px;
     border: none;
     letter-spacing: 2px;
     transition: 0.4s;
@@ -272,6 +278,21 @@
     overflow: hidden;
     background-color: #0d1117;
     padding: 6px;
+    box-shadow: 0px 0px 3px #000000;
+  }
+  .availTicketsHolder {
+    cursor: pointer;
+    width: auto;
+    text-align: center;
+    border-radius: 2px;
+    border: none;
+    letter-spacing: 2px;
+    transition: 0.4s;
+    font-size: 95%;
+    outline: 1px solid orange;
+    overflow: hidden;
+    background-color: #0d1117;
+    padding: 4px;
     box-shadow: 0px 0px 3px #000000;
   }
 
@@ -531,7 +552,23 @@
     padding: 6px 12px;
     border: 1px solid #21262d;
   }
-
+  .otherOptions {
+    cursor: pointer;
+    width: 100%;
+    border-radius: 2px;
+    width: 100%;
+    margin-top: 8px;
+    letter-spacing: 1px;
+    border: none;
+    transition: 0.4s;
+    font-size: 100%;
+    overflow: hidden;
+    padding: 8px;
+    border: 1px solid #21262d;
+  }
+  .otherOptions:hover {
+    border: 1px solid orange;
+  }
   .price_box:hover {
     outline: 1px solid orange;
   }
@@ -584,7 +621,6 @@
 
   .closee {
     float: right;
-    box-shadow: 0px 0px 3px #000000;
     padding: 10px 15px;
     transition: 0.3s;
     border-radius: 2px;
@@ -593,7 +629,6 @@
 
   .closee5 {
     float: right;
-    box-shadow: 0px 0px 3px #000000;
     padding: 10px 15px;
     transition: 0.3s;
     border-radius: 2px;
@@ -655,12 +690,12 @@
   .token_containerB {
     width: 25%;
     height: auto;
-    justify-content: space-between;
+    justify-content: start;
     display: flex;
     overflow: hidden;
     padding: 8px;
     border-right: 1px solid #21262d;
-    flex-direction: row;
+    flex-direction: column;
     background-color: #0d1117;
   }
 
@@ -917,7 +952,7 @@
   .leaderboard_hider {
     width: 0;
     background-color: #000000;
-    opacity: 0.5;
+    opacity: 0.8;
     position: fixed;
     overflow: hidden;
     z-index: 5;
@@ -1012,7 +1047,6 @@
     z-index: -999;
     position: absolute;
   }
-
 
   .wrapper .content-box {
     padding: 10px;
@@ -1117,17 +1151,23 @@
   }
 
   #reshulf {
-   cursor: pointer;
-   padding: 3px;
-   font-size: 130%; 
-   color:orange;
-   cursor: pointer;
-   background-color: transparent;
+    cursor: pointer;
+    padding: 3px;
+    font-size: 130%;
+    color: orange;
+    cursor: pointer;
+    background-color: transparent;
   }
 
-  #back{
+  #back {
     outline: none;
     cursor: not-allowed;
+    border-radius: 3px;
+    transition: 0.2s;
+  }
+
+  #start {
+    border-radius: 3px;
     transition: 0.2s;
   }
 
@@ -1369,7 +1409,6 @@
     margin: auto;
     display: none;
     transition: 1s;
-
     box-shadow: 14px 14px 50px #000000;
     border: 1px solid #21262d;
   }
@@ -1689,4 +1728,200 @@
       stroke-dashoffset: calc(372 - (372 * var(--progress) / 100));
     }
   }
+}
+
+.outOfTicketsHolder {
+  position: fixed;
+  width: 30%;
+  background-color: #161b22;
+  border-radius: 6px;
+  height: auto;
+  z-index: 100;
+  transform: translate(-50%, 35%);
+  left: 49.5%;
+  top: 15%;
+  color: #ffffff;
+  font-size: 90%;
+  overflow-y: visible;
+  margin: auto;
+  display: none;
+  transition: 1s;
+  border: 1px solid #21262d;
+  overflow: hidden;
+  box-shadow: 14px 14px 50px #000000;
+}
+
+.outOfTicketsHead {
+  width: 100%;
+  height: auto;
+  padding: 12px;
+}
+.outOfTicketsBody {
+  width: 100%;
+  height: auto;
+  background-color: #0d1117;
+  padding: 14px;
+}
+
+.next-holder {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px;
+}
+.next-btn {
+  background-color: rgb(255, 140, 0);
+  width: 27%;
+  padding: 8px;
+  transition: 0.1s;
+  text-align: center;
+  margin-left: 6px;
+  border-radius: 4px;
+  color: white;
+  font-weight: 550;
+  cursor: pointer;
+}
+.next-btn:hover {
+  background-color: rgba(255, 140, 0, 0.8);
+}
+.cancel-btn:hover {
+  background-color: #151b25;
+}
+.cancel-btn {
+  border: 1px solid #21262d;
+  background-color: #0d1117;
+  width: 27%;
+  padding: 6px;
+  transition: 0.1s;
+  text-align: center;
+  margin-right: 6px;
+  border-radius: 4px;
+  font-weight: 550;
+  cursor: pointer;
+}
+
+#countDown{
+  font-size: 350%;
+  font-weight: 700;
+}
+.choosePaymet {
+  position: fixed;
+  width: 40%;
+  background-color: #161b22;
+  border-radius: 6px;
+  height: auto;
+  z-index: 50;
+  transform: translate(-50%, 25%);
+  left: 49.5%;
+  top: 10%;
+  color: #ffffff;
+  font-size: 90%;
+  overflow-y: visible;
+  margin: auto;
+  display: none;
+  transition: 1s;
+  border: 1px solid #21262d;
+  box-shadow: 14px 14px 50px #000000;
+  overflow: hidden;
+}
+
+.choosePaymentHead {
+  width: 100%;
+  background-color: #0d1117;
+  height: auto;
+  padding: 5px;
+}
+.choosePaymentBody {
+  width: 100%;
+  height: auto;
+  display: flex;
+  padding: 10px;
+  font-size: 100%;
+  font-weight: 550;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.choosePaymentBodyA {
+  text-align: center;
+  padding: 4px;
+  width: 50%;
+}
+.choosePaymentBodyB {
+  padding: 3px;
+  width: 50%;
+}
+
+.closexx {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+}
+
+.linex {
+  position: absolute;
+  width: 20px;
+  height: 3px;
+  background-color: #6b6c7b;
+  border-radius: 30px;
+}
+
+.linex.onex {
+  transform: rotate(45deg);
+}
+
+.linex.twox {
+  transform: rotate(135deg);
+}
+
+.loading {
+  position: absolute;
+  top: 2%;
+  left: 90%;
+  display: none;
+  z-index: 1000;
+}
+
+.container-error {
+  font-size: 90%;
+  border: 1px solid rgba(255, 0, 4, 0.5);
+  background-color: rgba(255, 0, 100, 0.1);
+  padding: 8px;
+  width: 100%;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  display: none;
+  margin: auto;
+}
+
+.notifications {
+  position: fixed;
+  z-index: 1000;
+  background-color: #141516;
+  border: 2px solid #21262d;
+  box-shadow: 14px 14px 80px #000000;
+  transition: 0.1s;
+  right: 0;
+  overflow: hidden;
+  font-size: 90%;
+  opacity: 0;
+  width: 0%;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+  height:auto;
+  bottom: 20px;
+}
+
+.notificationsBody {
+  padding: 5px;
+  display: flex;
+  border-radius: 2px;
+  justify-content: space-between;
+  width: 100%;
+  border-left: 4px solid orange;
 }

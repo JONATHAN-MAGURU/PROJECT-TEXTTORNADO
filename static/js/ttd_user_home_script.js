@@ -10,7 +10,7 @@ const closee2 = document.getElementsByClassName("closee")[1];
 const closee3 = document.getElementsByClassName("closee")[2];
 const closee4 = document.getElementsByClassName("closee")[3];
 const closee5 = document.getElementsByClassName("closee")[4];
-const close_comm = document.getElementsByClassName("closee6")[0];
+const close_comm = document.getElementsByClassName("closexx")[1];
 const closee11 = document.getElementsByClassName("closee1")[0];
 const options_player = document.getElementsByClassName("options_player")[0];
 const options_logout = document.getElementsByClassName("options_logout")[0];
@@ -56,6 +56,10 @@ const leaderboard = (document.getElementsByClassName(
   "leaderboard_container"
 )[0].style.height = opt - 140 + "px");
 
+const notifications = document.querySelector(".notifications");
+
+const airtel = document.querySelector("#airtel");
+
 const userImage = document.getElementsByClassName("ico")[0];
 window.addEventListener("load", function () {
   userImage.width = 300;
@@ -76,24 +80,11 @@ open_comm.addEventListener("click", function () {
   leaderboard_hider.style.width = "0";
   options_logout.style.width = "0";
   options_notf.style.height = 0;
-  t_overview.innerHTML = "";
-  st_tickets.innerHTML = "";
-  st_tickets1.innerHTML = "";
-  ep_tickets.innerHTML = "";
-  ep_tickets1.innerHTML = "";
-  lg_tickets.innerHTML = "";
-  lg_tickets1.innerHTML = "";
 });
 
 close_comm.addEventListener("click", function () {
   options_comments.style.height = 0;
   t_overview.innerHTML = "";
-  st_tickets.innerHTML = "";
-  st_tickets1.innerHTML = "";
-  ep_tickets.innerHTML = "";
-  ep_tickets1.innerHTML = "";
-  lg_tickets.innerHTML = "";
-  lg_tickets1.innerHTML = "";
 });
 
 settings_box.addEventListener("click", function () {
@@ -146,7 +137,7 @@ setInterval(function () {
     }
   };
   xhr.send();
-}, 1000);
+}, 2000);
 
 document.getElementById("leaderb").addEventListener("click", function () {
   document.getElementsByClassName("leaderboard_container2")[0].style.width =
@@ -154,6 +145,10 @@ document.getElementById("leaderb").addEventListener("click", function () {
 });
 
 buy_tokens.addEventListener("click", function () {
+  buyTickets();
+});
+
+function buyTickets() {
   options.style.display = "block";
   leaderboard_hider.style.width = "100%";
   options_notf.style.height = 0;
@@ -165,14 +160,11 @@ buy_tokens.addEventListener("click", function () {
   settings_container3.style.width = 0;
   settings_container4.style.width = 0;
   options_comments.style.height = 0;
-  typeText1(t_overview, t_overview_text);
-  typeText1(st_tickets, st_tickets_text);
-  typeText1(st_tickets1, st_tickets_text1);
-  typeText1(ep_tickets, ep_tickets_text);
-  typeText1(ep_tickets1, ep_tickets_text1);
-  typeText1(lg_tickets, lg_tickets_text);
-  typeText1(lg_tickets1, lg_tickets_text1);
-});
+}
+function buyTicketsOff() {
+  options.style.display = "none";
+  leaderboard_hider.style.width = "0";
+}
 
 notf.addEventListener("click", function () {
   options_notf.style.height = opt - 110 + "px";
@@ -182,13 +174,6 @@ notf.addEventListener("click", function () {
   options_player.style.border = "none";
   options_logout.style.width = "0";
   options_comments.style.height = 0;
-  t_overview.innerHTML = "";
-  st_tickets.innerHTML = "";
-  st_tickets1.innerHTML = "";
-  ep_tickets.innerHTML = "";
-  ep_tickets1.innerHTML = "";
-  lg_tickets.innerHTML = "";
-  lg_tickets1.innerHTML = "";
 });
 
 logout.addEventListener("click", function () {
@@ -201,25 +186,11 @@ logout.addEventListener("click", function () {
   options_player.style.height = 0;
   options_player.style.border = "none";
   options_comments.style.height = 0;
-  t_overview.innerHTML = "";
-  st_tickets.innerHTML = "";
-  st_tickets1.innerHTML = "";
-  ep_tickets.innerHTML = "";
-  ep_tickets1.innerHTML = "";
-  lg_tickets.innerHTML = "";
-  lg_tickets1.innerHTML = "";
 });
 
 options_logout_1_1.addEventListener("click", function () {
   options_logout.style.width = 0;
   log_out_hider.style.width = 0;
-  t_overview.innerHTML = "";
-  st_tickets.innerHTML = "";
-  st_tickets1.innerHTML = "";
-  ep_tickets.innerHTML = "";
-  ep_tickets1.innerHTML = "";
-  lg_tickets.innerHTML = "";
-  lg_tickets1.innerHTML = "";
 });
 
 function openManageAccount() {
@@ -230,25 +201,11 @@ function openManageAccount() {
   options_notf.style.height = "0";
   leaderboard_hider.style.width = "0";
   options_comments.style.height = 0;
-  t_overview.innerHTML = "";
-  st_tickets.innerHTML = "";
-  st_tickets1.innerHTML = "";
-  ep_tickets.innerHTML = "";
-  ep_tickets1.innerHTML = "";
-  lg_tickets.innerHTML = "";
-  lg_tickets1.innerHTML = "";
 }
 
 closee1.addEventListener("click", function () {
   options.style.display = "none";
   leaderboard_hider.style.width = "0";
-  t_overview.innerHTML = "";
-  st_tickets.innerHTML = "";
-  st_tickets1.innerHTML = "";
-  ep_tickets.innerHTML = "";
-  ep_tickets1.innerHTML = "";
-  lg_tickets.innerHTML = "";
-  lg_tickets1.innerHTML = "";
 });
 
 closee2.addEventListener("click", function () {
@@ -327,6 +284,246 @@ document.addEventListener("visibilitychange", function () {
     // User switched tabs or minimized the window
     // Perform actions like pausing videos, animations, etc.
   } else {
-    window.location.reload();
+   
   }
+});
+
+document.querySelector(".onNot").addEventListener("click", function () {
+  notifications.style.width = 0;
+  notifications.style.opacity = 0;
+});
+
+const outOfTicketsHolder = document.querySelector(".outOfTicketsHolder");
+const choosePaymet = document.querySelector(".choosePaymet");
+const choosePaymet2 = document.getElementsByClassName("choosePaymet")[1];
+const choosePaymet3 = document.getElementsByClassName("choosePaymet")[2];
+const numberOfTickets = document.querySelector("#numberOfTickets");
+const amount = document.querySelector("#amount");
+const typeOfTickets = document.querySelector("#typeOfTickets");
+const cancelBtn = document.getElementsByClassName("cancel-btn")[0];
+const nextBtn = document.getElementsByClassName("next-btn")[0];
+const BackBtn = document.getElementsByClassName("cancel-btn")[1];
+const BackBtn2 = document.getElementsByClassName("cancel-btn")[2];
+const contBtn = document.getElementsByClassName("next-btn")[1];
+const contBtn2 = document.getElementsByClassName("next-btn")[2];
+const contBtn3 = document.getElementsByClassName("next-btn")[3];
+const loading2 = document.getElementsByClassName("loading")[1];
+const loading3 = document.getElementsByClassName("loading")[2];
+const loading = document.querySelector(".loading");
+const fade = document.querySelector(".fade");
+const errors = document.querySelector("#errors");
+const container_error = document.querySelector(".container-error");
+contBtn2.addEventListener("click", function () {
+  verifyNumber(airtel.value);
+});
+
+function verifyNumber(a) {
+  if (a == "") {
+    loaderAndremover();
+    setTimeout(callError1, 1000);
+  } else if (a.length < 10) {
+    loaderAndremover();
+    setTimeout(callError2, 1000);
+  } else if (checkTnmNumbers2() == 8) {
+    loaderAndremover();
+    setTimeout(callError3, 1000);
+  } else {
+    loaderAndremover();
+    container_error.style.display = "none";
+    choosePaymet2.style.display="none";
+    callPaymentOn();
+    document.querySelector('#newAirtel').innerHTML =a;
+  }
+}
+
+function callError1() {
+  container_error.style.display = "block";
+  errors.innerHTML = "Enter phone number.";
+}
+function callError2() {
+  container_error.style.display = "block";
+  errors.innerHTML = "Enter a valid airtel phone number.";
+}
+function callError3() {
+  container_error.style.display = "block";
+  errors.innerHTML = "Enter airtel number.";
+}
+
+function loaderAndremover() {
+  loaderAndFade();
+  setTimeout(() => {
+    removeLoaderAndFade();
+  }, 1700);
+}
+
+function removeLoaderAndFade2() {
+  loading.style.display = "block";
+}
+function removeLoaderAndFade2Off() {
+  loading.style.display = "none";
+}
+function removeLoaderAndFade() {
+  loading2.style.display = "none";
+}
+
+function loaderAndFade2() {
+  loading.style.display = "block";
+}
+function loaderAndFade() {
+  loading2.style.display = "block";
+}
+
+cancelBtn.addEventListener("click", function () {
+  callOutOfticketsHolderOff();
+});
+
+function callOutOfticketsHolderOff() {
+  outOfTicketsHolder.style.display = "none";
+  leaderboard_hider.style.width = "0";
+}
+function callPaymentOff() {
+  choosePaymet.style.display = "none";
+  leaderboard_hider.style.width = "0";
+}
+function callPaymentOn(tkts, amt, typ) {
+  choosePaymet.style.display = "block";
+  leaderboard_hider.style.width = "100%";
+  amount.innerHTML = amt;
+  numberOfTickets.innerHTML = tkts;
+  typeOfTickets.innerHTML = typ;
+}
+
+function callOutOfticketsHolderOn() {
+  outOfTicketsHolder.style.display = "block";
+  leaderboard_hider.style.width = "100%";
+}
+
+nextBtn.addEventListener("click", function () {
+  callOutOfticketsHolderOff();
+  buyTickets();
+});
+
+BackBtn.addEventListener("click", function () {
+  callPaymentOff();
+  buyTickets();
+});
+
+document
+  .getElementsByClassName("price_box")[0]
+  .addEventListener("click", function () {
+    buyTicketsOff();
+    callPaymentOn(1, "100", "STANDARD TICKETS");
+  });
+document
+  .getElementsByClassName("price_box")[1]
+  .addEventListener("click", function () {
+    buyTicketsOff();
+    callPaymentOn(3, "1000", "EPIC TICKETS");
+  });
+document
+  .getElementsByClassName("price_box")[2]
+  .addEventListener("click", function () {
+    if (checkTnmNumbers() == 8) {
+      buyTicketsOff();
+      leaderboard_hider.style.width = "100%";
+      choosePaymet2.style.display = "block";
+      airtel.focus();
+    } else {
+      buyTicketsOff();
+      callPaymentOn(5, "1500", "LEGENDARY TICKETS");
+    }
+  });
+
+BackBtn2.addEventListener("click", function () {
+  choosePaymet2.style.display = "none";
+  leaderboard_hider.style.width = "0";
+});
+
+document
+  .getElementsByClassName("next-btn")[1]
+  .addEventListener("click", function () {
+    removeLoaderAndFade2();
+    setTimeout(callPaymentOff, 2000);
+    setTimeout(removeLoaderAndFade2Off, 2000);
+    setTimeout(callChoosePaymet3on, 2100);
+    processPayment(numberOfTickets.innerHTML, amount.innerHTML);
+    document.getElementsByClassName("next-btn")[1].disabled;
+    document.getElementsByClassName("next-btn")[1].style.cursor = "not-allowed";
+    document.getElementsByClassName("next-btn")[1].style.background = "gray";
+  });
+
+function callChoosePaymet3on() {
+  callCountDown();
+  leaderboard_hider.style.width = "100%";
+  choosePaymet3.style.display = "block";
+  loading3.style.display = "block";
+}
+function callChoosePaymet3off() {
+  leaderboard_hider.style.width = "0%";
+  choosePaymet3.style.display = "none";
+  loading3.style.display = "none";
+}
+
+function processPayment(ticketb, amountb) {
+  const amountX = amountb;
+  const ticketX = ticketb;
+  const numberX = document.body.getAttribute("data-number");
+  const data = {
+    amountX,
+    ticketX,
+    numberX,
+    id,
+  };
+  const jsonData = JSON.stringify(data);
+  var xhr = new XMLHttpRequest();
+  const csrfToken7 = document.querySelector("#csrf_token7").value;
+  xhr.open("POST", "/processPayment");
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.setRequestHeader("X-CSRFToken", csrfToken7);
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      console.log(xhr.responseText);
+      notifications.style.width = "40%";
+      notifications.style.opacity = "1";
+      document.querySelector("#notText").innerHTML = xhr.responseText;
+      fetchTicketData(id);
+    } else {
+      console.log("Request failed. Returned status of " + xhr.status);
+    }
+  };
+  xhr.send(jsonData);
+}
+
+function checkTnmNumbers() {
+  const firstNum = document.body.getAttribute("data-number");
+  const extracted = firstNum.slice(-9);
+  const sliced = extracted.slice(0, 1);
+  return sliced;
+}
+function checkTnmNumbers2() {
+  const firstNum = airtel.value;
+  const extracted = firstNum.slice(-9);
+  const sliced = extracted.slice(0, 1);
+  return sliced;
+}
+
+function callCountDown() {
+  let count = 17;
+  const countdown = setInterval(() => {
+    document.querySelector("#countDown").innerHTML = count;
+    count--;
+    if (count < 0) {
+      callChoosePaymet3off();
+      document.getElementsByClassName("next-btn")[1].disabled = false;
+      document.getElementsByClassName("next-btn")[1].style.cursor = "pointer";
+      document.getElementsByClassName("next-btn")[1].style.background =
+        "orange";
+      clearInterval(countdown);
+    }
+  }, 1000);
+}
+
+contBtn3.addEventListener("click", function () {
+  loaderAndremover();
+  setTimeout(callChoosePaymet3off, 500);
 });

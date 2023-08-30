@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect
 import json
 from django.http import HttpResponse, JsonResponse
-from topApp.models import Player, Comments, TypingDetails, TypingDetailsHistory
+from topApp.models import Player, Comments, TypingDetails, TypingDetailsHistory, Tickets, TicketPurchase
 from django.core.exceptions import ObjectDoesNotExist
 import random
 from baseApp.models import EndEvent, NextEvent
@@ -10,9 +10,17 @@ import base64
 import os
 from topApp.otp import *
 from twilio.rest import Client
+import http.client
+import time 
+from django.db import transaction
+
+
 
 def resetPassword(request):
     return render(request, 'resetPassword.html')
+
+def testAPI(request):
+    return render(request, 'testAPI.html')
 
 def ttd_user_login(request):
     return render(request, 'ttd_user_login.html')
@@ -134,7 +142,7 @@ def id_gen():
     nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9','0']
     random.shuffle(nums)
     nums2 = "".join(nums)
-    nums3 = nums2[:9]
+    nums3 = nums2[:4]
     nums4 = int(nums3)
     return nums4
 
@@ -223,10 +231,11 @@ def v_player(request):
                 width = user_data['main_width']
                 height = user_data['main_height']
                 deviceInfo = user_data['deviceInfo']
-                ttd_id = id_gen()
-                
+                remaining_number = number[4:]
+                generated_id = id_gen()
+                ttd_id = int(f"{remaining_number}{generated_id}")
                 try:
-                    if Player.objects.filter(username=username).exists():
+                    if Player.objects.filter(username=username, number =number).exists():
                         return HttpResponse("not success")
                     else:
                         player_data = Player.objects.create(
@@ -242,6 +251,9 @@ def v_player(request):
                             v_code=0
                         )
                         player_data.save()
+                        
+                        Tickets.objects.create(tickets_id =ttd_id)
+                        Tickets.save()
                         return HttpResponse("saved")
                 except ObjectDoesNotExist:
                     return HttpResponse("Error: Player does not exist")
@@ -425,3 +437,151 @@ def getNextEvents(request):
         return JsonResponse({"next_events": list(next_events.values())})
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=500)
+    
+
+
+def get_ticket_data(request):
+    user_id = request.GET.get('user_id')  
+    try:
+        user_tickets = Tickets.objects.get(tickets_id=user_id)  
+        data = {
+            'tickets_available': user_tickets.tickets_available,
+            'tickets_used': user_tickets.tickets_used,
+        }
+        return JsonResponse(data)
+    except Tickets.DoesNotExist:
+        return JsonResponse({'error': 'User not found'}, status=404)
+
+def updateTickets(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        ticket_id = data['id']
+       
+        try:
+            ticketA = Tickets.objects.filter(tickets_id=ticket_id)  
+            ticket = ticketA.first()
+            if ticket.tickets_available >= 1:
+                ticket.tickets_available -= 1
+                ticket.tickets_used += 1
+                ticket.save()
+                return HttpResponse('updated')
+            else:
+                return HttpResponse('No available tickets')  
+        except Tickets.DoesNotExist:
+            return HttpResponse('Ticket not found')  
+    
+    return HttpResponse('Invalid request method')  
+
+
+def create_multipart_data(boundary, fields):
+    lines = []
+    for field_name, field_value in fields.items():
+        lines.append('--' + boundary)
+        lines.append('Content-Disposition: form-data; name=' + field_name)
+        lines.append('Content-Type: text/plain')
+        lines.append('')
+        lines.append(field_value)
+    lines.append('--' + boundary + '--')
+    return '\r\n'.join(lines).encode('utf-8')
+
+
+def processPayment(request):
+    try:
+        if request.method == 'POST':
+            paymentDetails = json.loads(request.body)
+            amount = paymentDetails['amountX']
+            number = paymentDetails['numberX']
+            ticketss = paymentDetails['ticketX']
+            id = paymentDetails['id']
+            tickets = int(ticketss)
+
+
+            print(paymentDetails)
+
+            boundary = 'wL36Yn8afVp8Ag7AmP8qZ0SA4n1v9T'
+            fields = {
+                'airtel': '1',
+                'phone': number,
+                'amount': amount,
+                'token': 'UOavDtqLpVp1ZfYEujpjRpEKLplxoY8P24k143qlruchAtrwAvDOVcbj1QtZbCMf'
+            }
+
+            headers = {
+                'Authorization': 'Bearer UOavDtqLpVp1ZfYEujpjRpEKLplxoY8P24k143qlruchAtrwAvDOVcbj1QtZbCMf',
+                'Content-type': 'multipart/form-data; boundary=' + boundary
+            }
+
+            conn = http.client.HTTPSConnection("api-gateway.ctechpay.com")
+            payload = create_multipart_data(boundary, fields)  # You need to define create_multipart_data
+
+            conn.request("POST", "/airtel/access/", payload, headers)
+            res = conn.getresponse()
+            data = res.read()
+            try:
+                nested_json_str = data.decode("utf-8")
+                response_json = json.loads(nested_json_str)            
+
+                if 'data' in response_json and 'transaction' in response_json['data']:
+                    transaction_id = response_json['data']['transaction']['id']
+                    time.sleep(17)
+                    verify_result = verifyPayment(transaction_id, tickets, id, amount)
+                    return HttpResponse(verify_result)
+                else:
+                    return HttpResponse("Transaction ID not found in the response")
+            except json.JSONDecodeError:
+                return HttpResponse("Error decoding JSON response")
+            except KeyError:
+                return HttpResponse("Key not found in JSON response")
+            except Exception as e:
+                time.sleep(15)
+                return HttpResponse("Request Failed, json")
+
+    except Exception as e:
+        time.sleep(15)
+        return HttpResponse("Request Failed, Check your internet conection")
+
+
+
+def verifyPayment(trans_id, quantity, ticketId, amt):
+
+
+    conn = http.client.HTTPSConnection("api-gateway.ctechpay.com")
+    payload = ''
+    headers = {
+        'token': 'UOavDtqLpVp1ZfYEujpjRpEKLplxoY8P24k143qlruchAtrwAvDOVcbj1QtZbCMf'
+    }
+    try:
+        conn.request("GET", f"/airtel/access/status/?trans_id={trans_id}", payload, headers)
+        res = conn.getresponse()
+        data = res.read()
+
+        response_json = json.loads(data.decode("utf-8"))
+
+        if 'transaction_status' in response_json:
+            transaction_status = response_json['transaction_status']
+            messagesg = response_json['message']
+            if transaction_status == "TS":
+                ticketPurchase = TicketPurchase.objects.create(tickets_id=int(ticketId), tickets_purchased=quantity , amount= int(amt), message = messagesg)
+                
+                with transaction.atomic():
+                    print('pass2')
+                    getTicket = Tickets.objects.filter(tickets_id=ticketId) 
+                    ticket = getTicket.first()
+                    ticket.tickets_available = ticket.tickets_available + quantity
+                    ticket.save()
+                    ticketPurchase.save()
+                    return messagesg
+            elif transaction_status == 'TF':
+                ticketPurchase2 = TicketPurchase.objects.create(tickets_id=int(ticketId), tickets_purchased=quantity, amount= int(amt), message = messagesg)
+                ticketPurchase2.save()
+                return messagesg
+            else:
+                return "Timeout user didn't put password"
+        else:
+            return "Transaction status not found in the response"
+    except Exception as e:
+        return f"An error occurred: {str(e)}"
+
+
+
+

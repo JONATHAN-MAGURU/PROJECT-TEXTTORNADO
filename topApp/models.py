@@ -44,4 +44,17 @@ class TypingDetailsHistory(models.Model):
     typo_id2 = models.IntegerField(default=0)
     date  = models.DateTimeField(default=timezone.now, blank=True)
     
+
+
+class Tickets(models.Model):
+    tickets_available = models.IntegerField(default=1)
+    tickets_id = models.IntegerField(default=0)
+    tickets_used = models.IntegerField(default=0)
+
     
+class TicketPurchase(models.Model):
+    tickets_id = models.IntegerField(default=0)
+    tickets_purchased = models.IntegerField(default=0)
+    amount = models.IntegerField(default=0)
+    purchase_date = models.DateTimeField(auto_now_add=True)
+    message = models.CharField(max_length=255, default='') 

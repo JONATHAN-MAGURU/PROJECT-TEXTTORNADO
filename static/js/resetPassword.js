@@ -94,7 +94,7 @@ window.addEventListener("load", function () {
 
 save.addEventListener("click", function () {
   verifyPasswords(password.value);
-  resetPassword(password.value, number.value);
+  resetPassword(password.value, extractNumber());
 });
 
 function verifyPasswords(a) {

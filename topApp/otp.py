@@ -20,9 +20,9 @@ class MessageHandler:
                      .verifications \
                      .create(self.phone_number, channel='sms')
 
-            print("OTP message sent successfully:", verification.status)
+            print("OTP message sent successfully")
         except Exception as e:
-            print("Error sending OTP message:", e)
+            print("Error sending OTP message")
 
 
 

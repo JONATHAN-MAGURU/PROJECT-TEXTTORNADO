@@ -15,7 +15,7 @@ class Player(models.Model):
     player_id = models.IntegerField()
     v_code = models.IntegerField()
     os = models.CharField(max_length=100)
-    amount_of_comments =models.IntegerField(default=0)
+    account = models.CharField(max_length=20, default='new')
     profile_pic = models.ImageField(default="user_default_pic_x6puuUx.jpg", null=True, blank= True )
     date  = models.DateTimeField(default=timezone.now, blank=True)
 

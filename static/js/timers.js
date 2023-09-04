@@ -39,7 +39,6 @@ function startCountdown(totalMilliseconds) {
 
     if (totalMilliseconds < 0) {
       clearInterval(timer);
-      document.getElementById("timer").innerHTML = "Time's up!";
     }
   }, 5);
 }

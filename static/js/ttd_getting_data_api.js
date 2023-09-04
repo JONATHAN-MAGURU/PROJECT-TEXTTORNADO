@@ -30,7 +30,6 @@ save_data.addEventListener("submit", function (e) {
         let newWidth = img.width;
         let newHeight = img.height;
 
-        // Calculate new dimensions while maintaining aspect ratio
         if (img.width > maxWidth) {
           newWidth = maxWidth;
           newHeight = (img.height * maxWidth) / img.width;
@@ -45,9 +44,7 @@ save_data.addEventListener("submit", function (e) {
         canvas.height = newHeight;
         const ctx = canvas.getContext("2d");
         ctx.drawImage(img, 0, 0, newWidth, newHeight);
-
-        // Convert the resized image to base64
-        const resizedImageBase64 = canvas.toDataURL("image/jpeg", 1); // Adjust quality if needed
+        const resizedImageBase64 = canvas.toDataURL("image/jpeg", 1);
 
         const data = {
           firstname2,
@@ -109,7 +106,6 @@ send_comment.addEventListener("submit", function (e) {
   });
   XHR4.send(json_data4);
   comm.value = "";
-  comment_b.style.maxHeight = 0;
 });
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -130,7 +126,7 @@ document.addEventListener("DOMContentLoaded", function () {
             commentBody.innerHTML += temp;
           } else {
             var temp =
-              '<div class="comment_holder"><p style="color:dodgerblue"><i style="color:slateblue" class="fa fa-user-circle"></i> <small>' +
+              '<div class="comment_holder"><p style="color:gray"><i style="color:gray; font-size:170%" class="fa fa-user-circle"></i> <small>' +
               response.comments[key].username2 +
               '</small></p><p> <small style="color:font-size:80%; text-align:justify;">' +
               response.comments[key].comment +
@@ -152,32 +148,38 @@ document.addEventListener("DOMContentLoaded", function () {
     id,
   };
   const json_dat = JSON.stringify(dat);
-  setInterval(function () {
-    var xhr1 = new XMLHttpRequest();
-    const csrfToken7 = document.querySelector("#csrf_token7").value;
-    xhr1.open("POST", "/get_my_data");
-    xhr1.setRequestHeader("Content-Type", "application/json");
-    xhr1.setRequestHeader("X-CSRFToken", csrfToken7);
-    xhr1.onload = function () {
-      if (xhr1.status === 200) {
-        var response = JSON.parse(xhr1.responseText);
-        var dat_body = document.querySelector(".user_d");
-        dat_body.innerHTML = "";
-        for (var key in response.mydata) {
-          var temp =
-            "<p>" +
-            response.mydata[key].username +
-            " " +
-            response.mydata[key].lastname +
-            "</p>";
-          dat_body.innerHTML += temp;
+  var xhr1 = new XMLHttpRequest();
+  const csrfToken7 = document.querySelector("#csrf_token7").value;
+  xhr1.open("POST", "/get_my_data");
+  xhr1.setRequestHeader("Content-Type", "application/json");
+  xhr1.setRequestHeader("X-CSRFToken", csrfToken7);
+  xhr1.onload = function () {
+    if (xhr1.status === 200) {
+      var response = JSON.parse(xhr1.responseText);
+      var dat_body = document.querySelector(".user_d");
+      dat_body.innerHTML = "";
+      for (var key in response.mydata) {
+        if (response.mydata[key].account == "new") {
+          setTimeout(function () {
+            document.querySelector(".welcomeUserHolder").style.display =
+              "block";
+            document.querySelector(".bodyCover").style.width = "100%";
+          }, 4000);
         }
-      } else {
-        console.log("Request failed. Returned status of " + xhr1.status);
+
+        var temp =
+          "<p>" +
+          response.mydata[key].username +
+          " " +
+          response.mydata[key].lastname +
+          "</p>";
+        dat_body.innerHTML += temp;
       }
-    };
-    xhr1.send(json_dat);
-  }, 4000);
+    } else {
+      console.log("Request failed. Returned status of " + xhr1.status);
+    }
+  };
+  xhr1.send(json_dat);
 });
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -310,3 +312,35 @@ function fetchTicketData(userId) {
 window.onload = function () {
   fetchTicketData(id);
 };
+
+document
+  .getElementsByClassName("cancel-btn2")[0]
+  .addEventListener("click", function () {
+    setOld();
+  });
+document
+  .getElementsByClassName("next-btn2")[0]
+  .addEventListener("click", function () {
+    setOld();
+  });
+
+function setOld() {
+  const dat = {
+    username,
+    id,
+  };
+  const json_dat = JSON.stringify(dat);
+  var xhr1 = new XMLHttpRequest();
+  const csrfToken = document.querySelector("#csrf_token14").value;
+  xhr1.open("POST", "/setToOld");
+  xhr1.setRequestHeader("Content-Type", "application/json");
+  xhr1.setRequestHeader("X-CSRFToken", csrfToken);
+  xhr1.onload = function () {
+    if (xhr1.status === 200) {
+      console.log("set to old");
+    } else {
+      console.log("something went wrong");
+    }
+  };
+  xhr1.send(json_dat);
+}

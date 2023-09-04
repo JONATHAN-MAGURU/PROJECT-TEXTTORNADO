@@ -27,4 +27,5 @@ urlpatterns = [
     path('get_ticket_data/', views.get_ticket_data, name='get_ticket_data'),
     path('updateTickets', views.updateTickets, name='updateTickets'),
     path('processPayment', views.processPayment, name='processPayment'),
+    path('setToOld', views.setToOld, name='setToOld'),
 ]

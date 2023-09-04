@@ -22,7 +22,7 @@ class MessageHandler:
 
             print("OTP message sent successfully")
         except Exception as e:
-            print("Error sending OTP message")
+            print(f"Error sending OTP message {e}")
 
 
 

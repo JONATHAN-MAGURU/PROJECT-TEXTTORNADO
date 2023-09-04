@@ -80,7 +80,7 @@ def typing_tests(request):
         get_all_paragraphs = Typing_testing.objects.all().values()
         amount_of_paragraphs = len(get_all_paragraphs)
         if len(count) > 40 :
-            if len(count) <= 80 :
+            if len(count) <= 180 :
                 if amount_of_paragraphs < 10 :
                     paragraphs = Typing_testing.objects.create(test = textarea, test_id =id)
                     paragraphs.save()
@@ -88,7 +88,7 @@ def typing_tests(request):
                 else:
                     return HttpResponse('YOU HAVE REACHED MAXMUM AMOUT OF PARAGRAPHS..')
             else:
-                return HttpResponse('TEST PARAGRAPH SHOULD NOT EXCEED 80 WORDS.')
+                return HttpResponse('TEST PARAGRAPH SHOULD NOT EXCEED 180 WORDS.')
         else:
             return HttpResponse('TEST PARAGRAPH SHOULD BE GREATER THAN 40 WORDS.')
     else:

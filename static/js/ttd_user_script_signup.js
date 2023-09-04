@@ -307,7 +307,7 @@ verify.addEventListener("click", function () {
 
 resend.addEventListener("click", function () {
   loaderAndremover();
-  sendOtp();
+  requestOtp();
   callErrorContainerOff();
   code.value = "";
 });

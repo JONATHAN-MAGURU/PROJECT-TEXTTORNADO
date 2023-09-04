@@ -131,6 +131,6 @@ MEDIA_URL = '/images/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 
-account_sid = "ACc5fd06bf85228bcfe79745a255734daa"
-auth_token = "52afd69a2fa47de47ff02174164bb5c1"
-messaging_service_sid="VA9143bb066c59ab757a121b96dd0f4589"
+account_sid = "AC67bdb3f90a48d59848fa7c1b762174e6"
+auth_token = "9c37f56583c1a8ff948a528fd70635f6"
+messaging_service_sid="VA007d4093c170cc596f70c8b0dd3c855a"

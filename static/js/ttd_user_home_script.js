@@ -17,7 +17,7 @@ const options_logout = document.getElementsByClassName("options_logout")[0];
 const leaderboard_hider =
   document.getElementsByClassName("leaderboard_hider")[0];
 const main_container = document.getElementsByClassName("main_container")[0];
-const settings_box = document.getElementsByClassName("settings_box")[0];
+const history = document.getElementsByClassName("history")[0];
 const settings_box2 = document.getElementsByClassName("settings_box")[1];
 const settings_box3 = document.getElementsByClassName("settings_box")[2];
 const settings_box4 = document.getElementsByClassName("settings_box")[3];
@@ -47,48 +47,58 @@ const change_pass = document.getElementsByClassName("change_pass")[0];
 const manage_close1 = document.getElementsByClassName("manage_close")[0];
 const manage_close2 = document.getElementsByClassName("manage_close")[1];
 const manage_close3 = document.getElementsByClassName("manage_close")[2];
-const write_comment = document.getElementsByClassName("write_comment")[0];
-const comment_b = document.getElementsByClassName("write_coment_holder")[0];
 const open_comm = document.getElementById("open_comm");
 const options_comments = document.getElementsByClassName("options_comments")[0];
 const comment_body = document.getElementsByClassName("comment_body")[0];
-const leaderboard = (document.getElementsByClassName(
-  "leaderboard_container"
-)[0].style.height = opt - 140 + "px");
-
 const notifications = document.querySelector(".notifications");
-
 const airtel = document.querySelector("#airtel");
-
 const userImage = document.getElementsByClassName("ico")[0];
-window.addEventListener("load", function () {
-  userImage.width = 300;
+const outOfTicketsHolder = document.querySelector(".outOfTicketsHolder");
+const choosePaymet = document.querySelector(".choosePaymet");
+const choosePaymet2 = document.getElementsByClassName("choosePaymet")[1];
+const choosePaymet3 = document.getElementsByClassName("choosePaymet")[2];
+const numberOfTickets = document.querySelector("#numberOfTickets");
+const amount = document.querySelector("#amount");
+const typeOfTickets = document.querySelector("#typeOfTickets");
+const cancelBtn = document.getElementsByClassName("cancel-btn")[0];
+const nextBtn = document.getElementsByClassName("next-btn")[0];
+const BackBtn = document.getElementsByClassName("cancel-btn")[1];
+const BackBtn2 = document.getElementsByClassName("cancel-btn")[2];
+const contBtn = document.getElementsByClassName("next-btn")[1];
+const contBtn2 = document.getElementsByClassName("next-btn")[2];
+const contBtn3 = document.getElementsByClassName("next-btn")[3];
+const loading2 = document.getElementsByClassName("loading")[1];
+const loading3 = document.getElementsByClassName("loading")[2];
+const loading = document.querySelector(".loading");
+const fade = document.querySelector(".fade");
+const errors = document.querySelector("#errors");
+const container_error = document.querySelector(".container-error");
+const icom = document.querySelector(".icom");
+
+document.addEventListener("load", function () {
+  userImage.width = 100;
+  userImage.height = 100;
+  icom.width = 3000;
+  icom.height = 3000;
 });
 
-main_container.style.height = opt - 120 + "px";
-settings_container.style.height = opt - 150 + "px";
-settings_container2.style.height = opt - 150 + "px";
-settings_container3.style.height = opt - 150 + "px";
-settings_container4.style.height = opt - 150 + "px";
-
 open_comm.addEventListener("click", function () {
-  options_comments.style.height = opt - 160 + "px";
+  options_comments.style.display = "block";
   comment_body.style.maxHeight = opt - 200 + "px";
   options.style.display = "none";
   options_player.style.height = "0";
   options_player.style.border = "none";
   leaderboard_hider.style.width = "0";
   options_logout.style.width = "0";
-  options_notf.style.height = 0;
+  options_notf.style.display = "none";
 });
 
 close_comm.addEventListener("click", function () {
-  options_comments.style.height = 0;
-  t_overview.innerHTML = "";
+  options_comments.style.display = "none";
 });
 
-settings_box.addEventListener("click", function () {
-  settings_container.style.width = "27%";
+history.addEventListener("click", function () {
+  settings_container.style.width = "29%";
   settings_container2.style.width = 0;
   settings_container3.style.width = 0;
   settings_container4.style.width = 0;
@@ -114,6 +124,14 @@ settings_box4.addEventListener("click", function () {
   settings_container2.style.width = 0;
   settings_container3.style.width = 0;
 });
+
+window.addEventListener("load", function () {
+  setTimeout(clearCover, 1000);
+});
+
+function clearCover() {
+  document.querySelector(".bodyCover").style.width = "0%";
+}
 
 setInterval(function () {
   var xhr = new XMLHttpRequest();
@@ -151,7 +169,7 @@ buy_tokens.addEventListener("click", function () {
 function buyTickets() {
   options.style.display = "block";
   leaderboard_hider.style.width = "100%";
-  options_notf.style.height = 0;
+  options_notf.style.display = "none";
   options_player.style.height = 0;
   options_player.style.border = "none";
   options_logout.style.width = 0;
@@ -159,7 +177,7 @@ function buyTickets() {
   settings_container2.style.width = 0;
   settings_container3.style.width = 0;
   settings_container4.style.width = 0;
-  options_comments.style.height = 0;
+  options_comments.style.display = "none";
 }
 function buyTicketsOff() {
   options.style.display = "none";
@@ -167,25 +185,25 @@ function buyTicketsOff() {
 }
 
 notf.addEventListener("click", function () {
-  options_notf.style.height = opt - 110 + "px";
+  options_notf.style.display = "block";
   options.style.display = "none";
   options_player.style.height = "0";
   leaderboard_hider.style.width = "0";
   options_player.style.border = "none";
   options_logout.style.width = "0";
-  options_comments.style.height = 0;
+  options_comments.style.display = "none";
 });
 
 logout.addEventListener("click", function () {
   options_logout.style.width = "20%";
   log_out_hider.style.width = "100%";
-  options_notf.style.height = "0";
-  options_comments.style.height = 0;
+  options_notf.style.display = "none";
+  options_comments.style.display = "none";
   options.style.display = "none";
   leaderboard_hider.style.width = "0";
   options_player.style.height = 0;
   options_player.style.border = "none";
-  options_comments.style.height = 0;
+  options_comments.style.display = "none";
 });
 
 options_logout_1_1.addEventListener("click", function () {
@@ -198,9 +216,9 @@ function openManageAccount() {
   options_player.style.border = "1px solid #21262d";
   options.style.display = "none";
   options_logout.style.width = "0";
-  options_notf.style.height = "0";
+  options_notf.style.display = "none";
   leaderboard_hider.style.width = "0";
-  options_comments.style.height = 0;
+  options_comments.style.display = "none";
 }
 
 closee1.addEventListener("click", function () {
@@ -227,7 +245,7 @@ closee11.addEventListener("click", function () {
   ask_holder.style.width = "0%";
 });
 
-for (x = 14; x <= 28; x += 2) {
+for (x = 8; x <= 28; x += 2) {
   fontss.innerHTML += "<option>" + x + "px" + "</option>";
 }
 
@@ -260,10 +278,6 @@ manage_close2.addEventListener("click", function () {
   change_pass.style.opacity = 0;
 });
 
-write_comment.addEventListener("click", function () {
-  comment_b.style.maxHeight = "300px";
-});
-
 document
   .getElementsByClassName("cont_btn")[0]
   .addEventListener("click", function () {
@@ -273,7 +287,6 @@ document
     start.disabled = false;
     start.style.cursor = "pointer";
     start.style.outline = "1px solid orange";
-
     tryAgainBtn.disabled = false;
     tryAgainBtn.style.cursor = "pointer";
     tryAgainBtn.style.color = "orange";
@@ -281,10 +294,9 @@ document
 
 document.addEventListener("visibilitychange", function () {
   if (document.visibilityState === "hidden") {
-    // User switched tabs or minimized the window
-    // Perform actions like pausing videos, animations, etc.
+    console.log("is here");
   } else {
-   
+    console.log("is gone");
   }
 });
 
@@ -293,26 +305,6 @@ document.querySelector(".onNot").addEventListener("click", function () {
   notifications.style.opacity = 0;
 });
 
-const outOfTicketsHolder = document.querySelector(".outOfTicketsHolder");
-const choosePaymet = document.querySelector(".choosePaymet");
-const choosePaymet2 = document.getElementsByClassName("choosePaymet")[1];
-const choosePaymet3 = document.getElementsByClassName("choosePaymet")[2];
-const numberOfTickets = document.querySelector("#numberOfTickets");
-const amount = document.querySelector("#amount");
-const typeOfTickets = document.querySelector("#typeOfTickets");
-const cancelBtn = document.getElementsByClassName("cancel-btn")[0];
-const nextBtn = document.getElementsByClassName("next-btn")[0];
-const BackBtn = document.getElementsByClassName("cancel-btn")[1];
-const BackBtn2 = document.getElementsByClassName("cancel-btn")[2];
-const contBtn = document.getElementsByClassName("next-btn")[1];
-const contBtn2 = document.getElementsByClassName("next-btn")[2];
-const contBtn3 = document.getElementsByClassName("next-btn")[3];
-const loading2 = document.getElementsByClassName("loading")[1];
-const loading3 = document.getElementsByClassName("loading")[2];
-const loading = document.querySelector(".loading");
-const fade = document.querySelector(".fade");
-const errors = document.querySelector("#errors");
-const container_error = document.querySelector(".container-error");
 contBtn2.addEventListener("click", function () {
   verifyNumber(airtel.value);
 });
@@ -329,21 +321,28 @@ function verifyNumber(a) {
     setTimeout(callError3, 1000);
   } else {
     loaderAndremover();
-    container_error.style.display = "none";
-    choosePaymet2.style.display="none";
-    callPaymentOn();
-    document.querySelector('#newAirtel').innerHTML =a;
+    setTimeout(verifyNumberAirtel(a), 1200);
   }
+}
+
+function verifyNumberAirtel(a) {
+  container_error.style.display = "none";
+  choosePaymet2.style.display = "none";
+  document.querySelector("#newAirtel").innerHTML = extractNumber(a);
+  choosePaymet.style.display = "block";
+  leaderboard_hider.style.width = "100%";
 }
 
 function callError1() {
   container_error.style.display = "block";
   errors.innerHTML = "Enter phone number.";
 }
+
 function callError2() {
   container_error.style.display = "block";
   errors.innerHTML = "Enter a valid airtel phone number.";
 }
+
 function callError3() {
   container_error.style.display = "block";
   errors.innerHTML = "Enter airtel number.";
@@ -359,9 +358,11 @@ function loaderAndremover() {
 function removeLoaderAndFade2() {
   loading.style.display = "block";
 }
+
 function removeLoaderAndFade2Off() {
   loading.style.display = "none";
 }
+
 function removeLoaderAndFade() {
   loading2.style.display = "none";
 }
@@ -369,6 +370,7 @@ function removeLoaderAndFade() {
 function loaderAndFade2() {
   loading.style.display = "block";
 }
+
 function loaderAndFade() {
   loading2.style.display = "block";
 }
@@ -381,10 +383,12 @@ function callOutOfticketsHolderOff() {
   outOfTicketsHolder.style.display = "none";
   leaderboard_hider.style.width = "0";
 }
+
 function callPaymentOff() {
   choosePaymet.style.display = "none";
   leaderboard_hider.style.width = "0";
 }
+
 function callPaymentOn(tkts, amt, typ) {
   choosePaymet.style.display = "block";
   leaderboard_hider.style.width = "100%";
@@ -411,31 +415,82 @@ BackBtn.addEventListener("click", function () {
 document
   .getElementsByClassName("price_box")[0]
   .addEventListener("click", function () {
-    buyTicketsOff();
-    callPaymentOn(1, "100", "STANDARD TICKETS");
-  });
-document
-  .getElementsByClassName("price_box")[1]
-  .addEventListener("click", function () {
-    buyTicketsOff();
-    callPaymentOn(3, "1000", "EPIC TICKETS");
-  });
-document
-  .getElementsByClassName("price_box")[2]
-  .addEventListener("click", function () {
+    document.querySelector("#newAirtel").innerHTML = "";
+    amount.innerHTML = "";
+    numberOfTickets.innerHTML = "";
+    typeOfTickets.innerHTML = "";
+    airtel.value = "";
     if (checkTnmNumbers() == 8) {
       buyTicketsOff();
       leaderboard_hider.style.width = "100%";
       choosePaymet2.style.display = "block";
+      amount.innerHTML = "500";
+      numberOfTickets.innerHTML = 1;
+      typeOfTickets.innerHTML = "STANDARD TICKETS";
       airtel.focus();
     } else {
       buyTicketsOff();
-      callPaymentOn(5, "1500", "LEGENDARY TICKETS");
+      callPaymentOn(1, "500", "STANDARD TICKETS");
+      document.querySelector("#newAirtel").innerHTML =
+        document.body.getAttribute("data-number");
+    }
+  });
+
+document
+  .getElementsByClassName("price_box")[1]
+  .addEventListener("click", function () {
+    document.querySelector("#newAirtel").innerHTML = "";
+    amount.innerHTML = "";
+    numberOfTickets.innerHTML = "";
+    typeOfTickets.innerHTML = "";
+    airtel.value = "";
+    if (checkTnmNumbers() == 8) {
+      buyTicketsOff();
+      leaderboard_hider.style.width = "100%";
+      choosePaymet2.style.display = "block";
+      amount.innerHTML = "1000";
+      numberOfTickets.innerHTML = 3;
+      typeOfTickets.innerHTML = "EPIC TICKETS";
+      airtel.focus();
+    } else {
+      buyTicketsOff();
+      callPaymentOn(3, "1000", "EPIC TICKETS");
+      document.querySelector("#newAirtel").innerHTML =
+        document.body.getAttribute("data-number");
+    }
+  });
+
+document
+  .getElementsByClassName("price_box")[2]
+  .addEventListener("click", function () {
+    document.querySelector("#newAirtel").innerHTML = "";
+    amount.innerHTML = "";
+    numberOfTickets.innerHTML = "";
+    typeOfTickets.innerHTML = "";
+    airtel.value = "";
+    if (checkTnmNumbers() == 8) {
+      buyTicketsOff();
+      leaderboard_hider.style.width = "100%";
+      choosePaymet2.style.display = "block";
+      amount.innerHTML = "100";
+      numberOfTickets.innerHTML = 5;
+      typeOfTickets.innerHTML = "LEGENDARY TICKETS";
+      airtel.focus();
+    } else {
+      buyTicketsOff();
+      callPaymentOn(5, "100", "LEGENDARY TICKETS");
+      document.querySelector("#newAirtel").innerHTML =
+        document.body.getAttribute("data-number");
     }
   });
 
 BackBtn2.addEventListener("click", function () {
   choosePaymet2.style.display = "none";
+  document.querySelector("#newAirtel").innerHTML = "";
+  amount.innerHTML = "";
+  numberOfTickets.innerHTML = "";
+  typeOfTickets.innerHTML = "";
+  airtel.value = "";
   leaderboard_hider.style.width = "0";
 });
 
@@ -458,6 +513,7 @@ function callChoosePaymet3on() {
   choosePaymet3.style.display = "block";
   loading3.style.display = "block";
 }
+
 function callChoosePaymet3off() {
   leaderboard_hider.style.width = "0%";
   choosePaymet3.style.display = "none";
@@ -467,7 +523,7 @@ function callChoosePaymet3off() {
 function processPayment(ticketb, amountb) {
   const amountX = amountb;
   const ticketX = ticketb;
-  const numberX = document.body.getAttribute("data-number");
+  const numberX = document.querySelector("#newAirtel").innerHTML;
   const data = {
     amountX,
     ticketX,
@@ -476,10 +532,10 @@ function processPayment(ticketb, amountb) {
   };
   const jsonData = JSON.stringify(data);
   var xhr = new XMLHttpRequest();
-  const csrfToken7 = document.querySelector("#csrf_token7").value;
+  const csrfToken = document.querySelector("#csrf_token13").value;
   xhr.open("POST", "/processPayment");
   xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.setRequestHeader("X-CSRFToken", csrfToken7);
+  xhr.setRequestHeader("X-CSRFToken", csrfToken);
   xhr.onload = function () {
     if (xhr.status === 200) {
       console.log(xhr.responseText);
@@ -487,11 +543,21 @@ function processPayment(ticketb, amountb) {
       notifications.style.opacity = "1";
       document.querySelector("#notText").innerHTML = xhr.responseText;
       fetchTicketData(id);
+      setTimeout(callNotOff, 15000);
+      document.querySelector("#newAirtel").innerHTML = "";
+      amount.innerHTML = "";
+      numberOfTickets.innerHTML = "";
+      typeOfTickets.innerHTML = "";
+      airtel.value = "";
     } else {
       console.log("Request failed. Returned status of " + xhr.status);
     }
   };
   xhr.send(jsonData);
+}
+
+function callNotOff() {
+  notifications.style.width = "0%";
 }
 
 function checkTnmNumbers() {
@@ -500,6 +566,7 @@ function checkTnmNumbers() {
   const sliced = extracted.slice(0, 1);
   return sliced;
 }
+
 function checkTnmNumbers2() {
   const firstNum = airtel.value;
   const extracted = firstNum.slice(-9);
@@ -508,7 +575,7 @@ function checkTnmNumbers2() {
 }
 
 function callCountDown() {
-  let count = 17;
+  let count = 20;
   const countdown = setInterval(() => {
     document.querySelector("#countDown").innerHTML = count;
     count--;
@@ -527,3 +594,83 @@ contBtn3.addEventListener("click", function () {
   loaderAndremover();
   setTimeout(callChoosePaymet3off, 500);
 });
+
+function extractNumber(k) {
+  const firstNum = k;
+  const extracted = firstNum.slice(-9);
+  const finalNumber = "+265" + extracted;
+  return finalNumber;
+}
+
+const timerMainBox1 = document.getElementsByClassName("timerMainBox")[0];
+const timerMainBox2 = document.getElementsByClassName("timerMainBox")[1];
+const timerMainBox3 = document.getElementsByClassName("timerMainBox")[2];
+const mored = document.getElementsByClassName("mored")[0];
+const loader2 = document.getElementsByClassName("loader2")[1];
+
+let isToggled = false;
+
+document.querySelector(".moreD").addEventListener("click", function () {
+  if (!isToggled) {
+    timerMainBox1.style.display = "none";
+    timerMainBox2.style.display = "none";
+    mored.style.height = "100%";
+    mored.style.opacity = "1";
+    document.querySelector(".moreD").innerHTML = "less details";
+  } else {
+    mored.style.height = "0";
+    mored.style.opacity = "0";
+    document.querySelector(".moreD").innerHTML = "more details";
+    setTimeout(bringTimerTwo, 800);
+  }
+
+  isToggled = !isToggled;
+});
+
+function bringTimerTwo() {
+  timerMainBox1.style.display = "block";
+  timerMainBox2.style.display = "block";
+}
+
+document.querySelector(".subscribe").addEventListener("click", function () {
+  callLoader2On();
+  document.querySelector(".subscribe").disabled;
+  document.querySelector(".subscribe").style.background ="gray";
+  document.querySelector(".subscribe").style.cursor ="not-allowed";
+
+  setTimeout(subscription, 1500)
+});
+
+function callLoader2On() {
+  loader2.style.display = "block";
+  setTimeout(callLoader2off, 2000);
+}
+
+function callLoader2off() {
+  loader2.style.display = "none";
+  document.querySelector(".subscribe").disabled = false;
+  document.querySelector(".subscribe").style.background ="#ed143d";
+  document.querySelector(".subscribe").style.cursor ="pointer";
+}
+
+
+function subscription(){
+  document.querySelector("#newAirtel").innerHTML = "";
+  amount.innerHTML = "";
+  numberOfTickets.innerHTML = "";
+  typeOfTickets.innerHTML = "";
+  airtel.value = "";
+  if (checkTnmNumbers() == 8) {
+    leaderboard_hider.style.width = "100%";
+    choosePaymet2.style.display = "block";
+    amount.innerHTML = "15989";
+    numberOfTickets.innerHTML = 100;
+    typeOfTickets.innerHTML = "TEXTORNADO PASS";
+    airtel.focus();
+  } else {
+    buyTicketsOff();
+    callPaymentOn(100, "15989", "TEXTORNADO PASS");
+    document.querySelector("#newAirtel").innerHTML =
+      document.body.getAttribute("data-number");
+  }
+}

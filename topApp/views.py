@@ -557,14 +557,14 @@ def processPayment(request):
             res = conn.getresponse()
             data = res.read()
             print(data)
+
             try:
                 nested_json_str = data.decode("utf-8")
                 response_json = json.loads(nested_json_str)
-                print(response_json)
 
                 if "data" in response_json and "transaction" in response_json["data"]:
                     transaction_id = response_json["data"]["transaction"]["id"]
-                    time.sleep(20)
+                    time.sleep(15)
                     verify_result = verifyPayment(transaction_id, tickets, id, amount)
                     return HttpResponse(verify_result)
                 else:

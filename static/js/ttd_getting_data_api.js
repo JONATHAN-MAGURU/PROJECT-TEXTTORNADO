@@ -164,7 +164,7 @@ document.addEventListener("DOMContentLoaded", function () {
             document.querySelector(".welcomeUserHolder").style.display =
               "block";
             document.querySelector(".bodyCover").style.width = "100%";
-          }, 4000);
+          }, 8000);
         }
 
         var temp =
@@ -204,22 +204,41 @@ document.addEventListener("DOMContentLoaded", function () {
         let x = 1;
         for (var key in response.results) {
           if (response.results[key].play_id == id) {
-            var temp =
-              '<div class="userBox" style="border: 1px solid orange; box-shadow:1px 1px 20px black;"><div style="color:white;" class="rankLB">' +
-              x++ +
-              '</div><div class="firstnameLB" style="color:white;"><img style="width:35px;height:35px; border-radius:50%;" src="' +
-              response.results[key].profile_pic +
-              '">&nbsp;&nbsp; <div style="margin-top:6.5px">' +
-              response.results[key].username +
-              '</div></div><div  style="color:white;" class="wpmLB">' +
-              response.results[key].wpm +
-              '</div><div style="color:white;" class="charLB">' +
-              response.results[key].cpm +
-              '</div> <div style="color:white;" class="mistLB">' +
-              response.results[key].mistakes +
-              "</div></div>";
+            if (x % 2 == 0) {
+              var temp =
+                '<div class="userBox" style="border: 1px solid orange; box-shadow:1px 1px 20px black;"><div style="color:white;" class="rankLB">' +
+                x++ +
+                '</div><div class="firstnameLB" style="color:white;"><img style="width:35px;height:35px; border-radius:50%;" src="' +
+                response.results[key].profile_pic +
+                '">&nbsp;&nbsp; <div style="margin-top:6.5px">' +
+                response.results[key].username +
+                '</div></div><div  style="color:white;" class="wpmLB">' +
+                response.results[key].wpm +
+                '</div><div style="color:white;" class="charLB">' +
+                response.results[key].cpm +
+                '</div> <div style="color:white;" class="mistLB">' +
+                response.results[key].mistakes +
+                "</div></div>";
 
-            res_Body.innerHTML += temp;
+              res_Body.innerHTML += temp;
+            } else {
+              var temp =
+                '<div class="userBox" style="border: 1px solid #ed143d; background:transparent; box-shadow:1px 1px 20px black;"><div style="color:white;" class="rankLB">' +
+                x++ +
+                '</div><div class="firstnameLB" style="color:white;"><img style="width:35px;height:35px; border-radius:50%;" src="' +
+                response.results[key].profile_pic +
+                '">&nbsp;&nbsp; <div style="margin-top:6.5px">' +
+                response.results[key].username +
+                '</div></div><div  style="color:white;" class="wpmLB">' +
+                response.results[key].wpm +
+                '</div><div style="color:white;" class="charLB">' +
+                response.results[key].cpm +
+                '</div> <div style="color:white;" class="mistLB">' +
+                response.results[key].mistakes +
+                "</div></div>";
+
+              res_Body.innerHTML += temp;
+            }
           } else {
             if (x % 2 == 0) {
               var temp =
@@ -344,3 +363,75 @@ function setOld() {
   };
   xhr1.send(json_dat);
 }
+
+function showWinner() {
+  var xhr3 = new XMLHttpRequest();
+  xhr3.open("GET", "/get_test_details");
+  xhr3.onload = function () {
+    if (xhr3.status === 200) {
+      var response = JSON.parse(xhr3.responseText);
+      var WinnerBody = document.querySelector(".winnerOutput");
+      var x = 1;
+      for (var key in response.results) {
+        if (x < 2) {
+          var temp =
+            ' <div class="winnerOutput"><div class="winerImg"> <img src="' +
+            response.results[key].profile_pic +
+            '" alt="image" style="width: 120px; height: 120px; border-radius: 50%"/></div><p style="color: gray; text-align: center; font-size: 90%">' +
+            response.results[key].username +
+            '</p><div class="winnerDetailsHolder"><div class="winnerDetailsA"><p class="centered">RANK</p><p class="centered">WPM</p><p class="centered">CPM</p><p class="centered">MISTAKES</p></div><div class="winnerDetailsB">  <p class="centered">' +
+            x +
+            '</p> <p class="centered">' +
+            response.results[key].wpm +
+            '</p><p class="centered">' +
+            response.results[key].cpm +
+            '</p><p class="centered">' +
+            response.results[key].mistakes +
+            "</p> </div></div>";
+          WinnerBody.innerHTML += temp;
+          x++;
+        }
+      }
+    }
+  };
+  xhr3.send();
+}
+
+window.addEventListener("load", function () {
+  showWinner();
+});
+function showLooser() {
+  var xhr3 = new XMLHttpRequest();
+  xhr3.open("GET", "/get_test_details");
+  xhr3.onload = function () {
+    if (xhr3.status === 200) {
+      var response = JSON.parse(xhr3.responseText);
+      var WinnerBody = document.querySelector(".looserOutput");
+      var x = 1;
+      for (var key in response.results) {
+        if (response.results[key].play_id == id) {
+          var temp =
+            ' <div class="winnerOutput"><div class="winerImg"> <img src="' +
+            response.results[key].profile_pic +
+            '" alt="image" style="width: 120px; height: 120px; border-radius: 50%"/></div><p style="color: gray; text-align: center; font-size: 90%">' +
+            response.results[key].username +
+            '</p><div class="winnerDetailsHolder"><div class="winnerDetailsA"><p class="centered">RANK</p><p class="centered">WPM</p><p class="centered">CPM</p><p class="centered">MISTAKES</p></div><div class="winnerDetailsB">  <p class="centered">' +
+            x++ +
+            '</p> <p class="centered">' +
+            response.results[key].wpm +
+            '</p><p class="centered">' +
+            response.results[key].cpm +
+            '</p><p class="centered">' +
+            response.results[key].mistakes +
+            "</p> </div></div>";
+          WinnerBody.innerHTML += temp;
+        }
+      }
+    }
+  };
+  xhr3.send();
+}
+
+window.addEventListener("load", function () {
+  showLooser();
+});

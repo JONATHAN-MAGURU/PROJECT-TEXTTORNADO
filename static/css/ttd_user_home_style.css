@@ -130,6 +130,7 @@
     overflow-y: scroll;
     display: flex;
     border-radius: 3px;
+    padding: 6px;
     flex-direction: column;
     justify-content: start;
     background-color: transparent;
@@ -173,12 +174,27 @@
   .container_A_2_2 {
     width: 100%;
     height: auto;
+    padding: 2px;
+    display:none;
     margin-top: 10px;
     background-color: #161b22;
     border: 1px solid #21262d;
     border-radius: 4px;
     transition: 0.2s;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 3px 2px 40px rgba(0, 0, 0, 0.2);
+    flex-direction: column;
+  }
+  .loader3Holder {
+    width: 100%;
+    height: auto;
+    padding: 60px;
+    display: block;
+    margin-top: 20px;
+    background-color: #161b22;
+    border: 1px solid #21262d;
+    border-radius: 4px;
+    transition: 0.2s;
+    box-shadow: 3px 2px 40px rgba(0, 0, 0, 0.2);
     flex-direction: column;
   }
   .event_d {
@@ -781,26 +797,26 @@
     position: absolute;
     left: 15px;
     color: orange;
-    top: 20px;
+    top: 25px;
   }
 
   .tickett3 {
     position: absolute;
     top: 20px;
-    left: 25px;
+    left: 30px;
     color: #ed143d;
   }
 
   .tickett4 {
     position: absolute;
     left: 35px;
-    top: 20px;
+    top: 35px;
     color: orange;
   }
 
   .tickett5 {
     position: absolute;
-    top: 20px;
+    top:40px;
     left: 45px;
     color: yellowgreen;
   }
@@ -1059,7 +1075,7 @@
     animation-duration: 8s;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
-    animation-delay: 0.5s;
+    animation-delay: 0.9s;
     display: inline-block;
   }
 
@@ -1104,12 +1120,12 @@
   }
 
   .wrapper {
-    border-radius: 4px;
+    border-radius: 2px;
     background-color: #0d1117;
   }
 
   .wrapper .input-field {
-    opacity: 0.9;
+    opacity: 0;
     z-index: -999;
     position: absolute;
   }
@@ -1429,12 +1445,14 @@
     box-shadow: 1px 1px 4px #000000;
     position: absolute;
   }
+
   .cont_holder {
     display: flex;
     justify-content: center;
     padding: 8px;
     flex-direction: row;
   }
+
   .cont_btn {
     width: 80px;
     text-align: center;
@@ -1445,6 +1463,7 @@
     transition: 0.6s;
     border-radius: 5px;
   }
+
   .cont_btn:hover {
     outline: 1px solid orange;
   }
@@ -1453,7 +1472,7 @@
     position: fixed;
     width: 43%;
     background-color: #161b22;
-    border-radius: 6px;
+    border-radius: 5px;
     height: auto;
     background-image: url("/images/cover.jpg");
     background-size: cover;
@@ -1462,12 +1481,12 @@
     left: 49.5%;
     top: 12%;
     color: #ffffff;
-    font-size: 90%;
+    font-size: 100%;
     overflow-y: visible;
     margin: auto;
     display: none;
     transition: 1s;
-    box-shadow: 14px 14px 50px #000000;
+    box-shadow: 14px 14px 500px #000000;
     border: 1px solid #21262d;
   }
   .tips1 {
@@ -1568,11 +1587,31 @@
     display: none;
     left: 4px;
     height: 20px;
-    animation: spin 0.7s linear infinite;
+    animation: spin 0.9s linear infinite;
   }
 
-
   @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  .loader3 {
+    border: 4px solid #ed143d;
+    border-top: 4px solid transparent;
+    border-radius: 50%;
+    width: 28px;
+    margin: auto;
+    z-index: 800;
+    display: block;
+    left: 4px;
+    height: 28px;
+    animation: spin2 0.9s linear infinite;
+  }
+
+  @keyframes spin2 {
     0% {
       transform: rotate(0deg);
     }
@@ -1609,7 +1648,7 @@
     height: auto;
     overflow-y: scroll;
     scroll-behavior: smooth;
-    display: block;
+    display: none;
   }
   .userBox {
     color: white;
@@ -1875,6 +1914,24 @@
   .cancel-btn2:hover {
     background-color: #151b25;
   }
+  .cancel-btnn:hover {
+    background-color: #151b25;
+  }
+  .cancel-btnn {
+    border: 1px solid #21262d;
+    background-color: #0d1117;
+    width: auto;
+    padding: 10px;
+    transition: 0.5s;
+    opacity: 1;
+    color: white;
+    text-align: center;
+    margin-right: 6px;
+    width: 36%;
+    border-radius: 4px;
+    font-weight: 550;
+    cursor: pointer;
+  }
   .cancel-btn2 {
     border: 1px solid #21262d;
     background-color: #0d1117;
@@ -2011,8 +2068,8 @@
     position: fixed;
     z-index: 1000;
     background-color: #141516;
-    border: 2px solid #21262d;
-    box-shadow: 15px 15px 150px #000000;
+    border: 1px solid #21262d;
+    box-shadow: 15px 15px 50px #000000;
     transition: 0.1s;
     right: 0;
     overflow: hidden;
@@ -2028,7 +2085,7 @@
   }
 
   .notificationsBody {
-    padding: 5px;
+    padding: 8px;
     display: flex;
     border-radius: 2px;
     justify-content: space-between;
@@ -2083,9 +2140,7 @@
     width: 100%;
     text-align: center;
     border-bottom: 1px solid #21262d;
-
     padding: 8px;
-    height: 8vh;
   }
   .welcomeUserB {
     width: 100%;
@@ -2101,12 +2156,35 @@
   }
   .welcomeUserF {
     width: 100%;
+    border-top: 1px solid #21262d;
     padding: 10px;
     display: flex;
     height: 8vh;
     justify-content: end;
     height: auto;
   }
+
+  .eventEndBody {
+    width: 100%;
+    color: white;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-y: scroll;
+    line-height: 22px;
+    max-height: 50vh;
+    justify-content: space-around;
+    display: flex;
+    flex-direction: row;
+    text-align: justify;
+    font-size: 100%;
+    text-shadow: 1px 1px 10px black;
+  }
+
+  .eventEndDivision {
+    width: 45%;
+    background-color: transparent;
+  }
+
   @keyframes blink {
     50% {
       opacity: 0;
@@ -2121,5 +2199,72 @@
     color: gray;
     text-align: justify;
     overflow: hidden;
+  }
+
+  .winerImg {
+    width: 120px;
+    height: 120px;
+    background-color: #0d1117;
+    border-radius: 50%;
+    margin: auto;
+  }
+  .ruleAndpic {
+    display: flex;
+    padding: 10px;
+    flex-direction: row;
+  }
+
+  .winnerDetailsHolder {
+    width: 100%;
+    border: 1px solid #21262d;
+    display: flex;
+    margin: 10px auto;
+    flex-direction: column;
+    border-radius: 8px;
+    box-shadow: 2px 2px 20px #000000;
+  }
+  .winnerDetailsA {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    letter-spacing: 2px;
+    font-size: 90%;
+    padding: 10px;
+    background-color: #000000;
+    color: orange;
+    opacity: 0.9;
+  }
+  .winnerDetailsB {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    justify-content: space-between;
+    text-align: center;
+    background-color: transparent;
+  }
+  .centered {
+    text-align: center;
+    width: 25%;
+  }
+  .winnerText {
+    text-align: center;
+    background: #ed143d;
+    letter-spacing: 2px;
+    padding: 8px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+  }
+  .checking {
+    margin: auto;
+    color: gray;
+    overflow: visible;
+    width: auto;
+    text-align: center;
+  }
+
+  .fa {
+    font-family: "Font Awesome 5 Free";
   }
 }

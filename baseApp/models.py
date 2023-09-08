@@ -24,6 +24,14 @@ class Frontend(models.Model):
     FrontendId = models.IntegerField(default=5747)
 
 
+class Leaderboard(models.Model):
+    leaderBoardId = models.IntegerField(default=5747)
+
+
+class TypingArea(models.Model):
+    typingAreaId = models.IntegerField(default=5747)
+
+
 class EndEvent(models.Model):
     endEvent = models.IntegerField(default=0)
     endEventId = models.IntegerField(default=5747)

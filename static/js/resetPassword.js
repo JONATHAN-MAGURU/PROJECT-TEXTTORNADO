@@ -83,13 +83,13 @@ function callBackPartOne() {
 notYou.addEventListener("click", function () {
   loaderAndremover();
   setTimeout(callBackPartOne, 1000);
-  number.value = " ";
+  number.value = "";
   number.focus();
 });
 
 window.addEventListener("load", function () {
   number.focus();
-  number.value = " ";
+  number.value = "";
 });
 
 save.addEventListener("click", function () {
@@ -345,6 +345,6 @@ async function resetPassword(pw, pn) {
   }
 }
 
-cancel.addEventListener('click', function(){
+cancel.addEventListener("click", function () {
   window.location.href = "http://127.0.0.1:8000/";
-})
+});

@@ -23,9 +23,16 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
     />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+
     <link rel="stylesheet" href="{% static 'css/loader.css' %}" />
     <link rel="stylesheet" href="{% static 'css/ttd_user_home_style.css' %}" />
     <link rel="stylesheet" href="{% static 'css/tablet_home.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/spinner.css' %}" />
     <link
       rel="stylesheet"
       href="{% static 'css/ttd_user_home_style_mobile.css' %}"
@@ -73,6 +80,20 @@
           </div>
         </div>
       </div>
+
+      <div class="outOfTicketsHolder">
+        <div class="outOfTicketsHead">
+          <h2>You can't start now.</h2>
+          <p style="line-height: 25px">
+            Typing event is almost over, for that your are not allowed to take a
+            typing test.
+          </p>
+        </div>
+        <div class="outOfTicketsBody">
+          <div class="cancel-btnn">Cancel</div>
+        </div>
+      </div>
+
       <div class="choosePaymet">
         <div class="loading">
           <img
@@ -210,6 +231,125 @@
           </div>
           <div class="partB">
             <!--rules here-->
+            <div class="ruleAndpic">
+              <div style="margin-right: 5px">
+                <img
+                  src="/images/right-arrow.png"
+                  style="width: 15px; height: 15px"
+                />
+              </div>
+              <p>
+                Your goal is to type the given text as quick and accurately as
+                possible.
+              </p>
+            </div>
+            <div class="ruleAndpic">
+              <div style="margin-right: 5px">
+                <img
+                  src="/images/right-arrow.png"
+                  style="width: 15px; height: 15px"
+                />
+              </div>
+              <p>Each challenge has a set time limit of 60 seconds.</p>
+            </div>
+
+            <div class="ruleAndpic">
+              <div style="margin-right: 5px">
+                <img
+                  src="/images/right-arrow.png"
+                  style="width: 15px; height: 15px; margin: 1px"
+                />
+              </div>
+
+              <p>
+                Your score will be based on your Words Per Minute(WPM) typing
+                speed. Accurancy is also important, so try to minimize mistakes.
+                If you exceeds more than 15 mistakes your typing results will
+                not be processed
+              </p>
+            </div>
+
+            <div class="ruleAndpic">
+              <div style="margin-right: 5px">
+                <img
+                  src="/images/right-arrow.png"
+                  style="width: 15px; height: 15px; margin: 1px"
+                />
+              </div>
+              <p>
+                There will be sets of events where you will be required to type
+                the text as shown in the typing area, including punctuations and
+                spaces.
+              </p>
+            </div>
+
+            <div class="ruleAndpic">
+              <div style="margin-right: 5px">
+                <img
+                  src="/images/right-arrow.png"
+                  style="width: 15px; height: 15px"
+                />
+              </div>
+              <p>
+                After tyiping the texts check the leaderboard to see how you
+                rank against other players.
+              </p>
+            </div>
+
+            <div class="ruleAndpic">
+              <div style="margin-right: 5px">
+                <img
+                  src="/images/right-arrow.png"
+                  style="width: 15px; height: 15px"
+                />
+              </div>
+              <p>
+                Correctly typed words will turn yellowgreen, and mistakes will
+                be highlighted to red. So type carefully as each incorrect
+                keystrokes or typo deductes points from your score.
+              </p>
+            </div>
+
+            <div class="ruleAndpic">
+              <div style="margin-right: 5px">
+                <img
+                  src="/images/right-arrow.png"
+                  style="width: 15px; height: 15px"
+                />
+              </div>
+              <p>
+                We'll track your progress over time. Use this information to see
+                how you're improving by hecking on history section.
+              </p>
+            </div>
+
+            <div class="ruleAndpic">
+              <div style="margin-right: 5px">
+                <img
+                  src="/images/right-arrow.png"
+                  style="width: 15px; height: 15px"
+                />
+              </div>
+              <p>
+                If you encounter technical issues or have feedback, contact our
+                support team at capsualcode@gmail.com or use support section
+                provided.
+              </p>
+            </div>
+            <div class="ruleAndpic">
+              <div style="margin-right: 5px">
+                <img
+                  src="/images/right-arrow.png"
+                  style="width: 15px; height: 15px"
+                />
+              </div>
+              <p>
+                We take your privacy seriously. Read our privacy policy to
+                understand how your data is handled. Most significantly, have
+                fun and challenge yourself to become a better typist and win
+                rewards at the end of every event.
+              </p>
+            </div>
           </div>
         </div>
         <div class="welcomeUserF">
@@ -218,8 +358,102 @@
           <button class="next-btn2">continue</button>
         </div>
       </div>
+
+      <div class="welcomeUserHolder">
+        <div class="welcomeUserH">
+          <h3 style="letter-spacing: 3px; color: orange">
+            EVENT DRAWS TO AN END !!!
+          </h3>
+        </div>
+        <div class="eventEndBody">
+          <div class="eventEndDivision">
+            <br />
+            <h5 class="winnerText">WINNERS THIS WEEK EVENT</h5>
+            <p style="color: gray; text-align: center; font-size: 90%">
+              BASED ON LEADERBOARD HIGH RANK
+            </p>
+            <br />
+            <div class="winnerOutput">
+              <!--<div class="winerImg">
+                <img
+                  src="/images/user_default_pic_x6puuUx.jpg"
+                  alt="image"
+                  style="width: 120px; height: 120px; border-radius: 50%"
+                />
+              </div>
+              <p style="color: gray; text-align: center; font-size: 90%">
+                eclipse
+              </p>
+
+              <div class="winnerDetailsHolder">
+                <div class="winnerDetailsA">
+                  <p class="centered">RANK</p>
+                  <p class="centered">WPM</p>
+                  <p class="centered">CPM</p>
+                  <p class="centered">MISTAKES</p>
+                </div>
+                <div class="winnerDetailsB">
+                  <p class="centered">1</p>
+                  <p class="centered">89</p>
+                  <p class="centered">211</p>
+                  <p class="centered">2</p>
+                </div>
+              </div>-->
+            </div>
+          </div>
+          <div class="eventEndDivision">
+            <br />
+            <h5 class="winnerText">YOUR POSITION</h5>
+            <p style="color: gray; text-align: center; font-size: 90%">
+              BASED ON LEADERBOARD HIGH RANK
+            </p>
+            <br />
+            <div class="looserOutput">
+              <!--  <div class="winerImg">
+                <img
+                  src="/images/user_default_pic_x6puuUx.jpg"
+                  alt="image"
+                  style="width: 120px; height: 120px; border-radius: 50%"
+                />
+              </div>
+              <p style="color: gray; text-align: center; font-size: 90%">
+                eclipse
+              </p>
+
+              <div class="winnerDetailsHolder">
+                <div class="winnerDetailsA">
+                  <p class="centered">RANK</p>
+                  <p class="centered">WPM</p>
+                  <p class="centered">CPM</p>
+                  <p class="centered">MISTAKES</p>
+                </div>
+                <div class="winnerDetailsB">
+                  <p class="centered">1</p>
+                  <p class="centered">89</p>
+                  <p class="centered">211</p>
+                  <p class="centered">2</p>
+                </div>
+              </div>-->
+            </div>
+          </div>
+        </div>
+        <div class="welcomeUserH"></div>
+      </div>
+
+      <div class="spinnerContainer">
+        <br />
+        <br />
+        <br />
+        <div class="spinner"></div>
+        <br />
+        <div class="checking">
+          <h5 id="checking">please wait...</h5>
+        </div>
+      </div>
+
       <div class="leaderboard_hider"></div>
       <div class="bodyCover"></div>
+
       <div class="notifications">
         <div class="notificationsBody">
           <p id="notText" style="width: 90%; padding: 10px"></p>
@@ -259,7 +493,7 @@
             <div class="mistLB2" style="color: orange">MISTAKE</div>
           </div>
         </div>
-        <div class="loader2"></div>
+        <div class="loader3"></div>
         <div class="leaderboardBody"></div>
       </div>
       <div class="container_head">
@@ -271,7 +505,7 @@
             <p>
               <i
                 style="font-size: 130%; color: yellowgreen; cursor: pointer"
-                class="fa fa-ticket tickettss"
+                class="fas fa-ticket-alt tickettss"
               ></i>
               <span id="ticket-avail"> </span>
             </p>
@@ -295,20 +529,25 @@
           </div>
         </div>
         <div class="header_box header_box2">
+          <i class="fas fa-cog"></i>
+          <i class="fas fa-history history"></i>
+          <i class="fas fa-expand" id="fullscreenButton"></i>
           <div class="user_avator player_name">
             <div class="pic" onclick="openManageAccount()">
               {% for x in player_d%}
               <img class="pic" src="/images/{{x.profile_pic}}" />
               {% endfor %}
             </div>
-            <div class="user_name displayNone displayNon2" onclick="openManageAccount()">
+            <div
+              class="user_name displayNone displayNon2"
+              onclick="openManageAccount()"
+            >
               {% for x in player_d%}
               <p>{{x.username}}</p>
               {% endfor %}
             </div>
           </div>
-          <img src="/images/settings2.png"  class="displayNone"/>
-          <img src="/images/history.png"/ class="history displayNone">
+
           <div class="log_out logout displayNone">LOGOUT</div>
         </div>
       </div>
@@ -346,6 +585,11 @@
             </div>
           </div>
           <div class="container_A_2">
+            <div class="loader3Holder">
+              <div class="loader3"></div>
+              <br>
+              <h5 id="textttt" style="text-align:center; color:gray"></h5>
+            </div>
             <div class="container_A_2_2">
               <div class="container_A_2_1">
                 <button
@@ -417,23 +661,23 @@
           </div>
           <div class="timerBody">
             <div class="timerSubBox">
-              <p style="font-size: 170%; color: white" id="days">00</p>
+              <p style="font-size: 170%; color: orange" id="days">00</p>
               <p style="font-size: 80%">DAYS</p>
             </div>
             <div class="timerSubBox">
-              <p style="font-size: 170%; color: white" id="hours">00</p>
+              <p style="font-size: 170%; color: orange" id="hours">00</p>
               <p style="font-size: 80%">HOURS</p>
             </div>
             <div class="timerSubBox">
-              <p style="font-size: 170%; color: white" id="mins">00</p>
+              <p style="font-size: 170%; color: orange" id="mins">00</p>
               <p style="font-size: 80%">MINUTES</p>
             </div>
             <div class="timerSubBox">
-              <p style="font-size: 170%; color: white" id="seconds">00</p>
+              <p style="font-size: 170%; color: orange" id="seconds">00</p>
               <p style="font-size: 80%">SECONDS</p>
             </div>
             <div class="timerSubBox">
-              <p style="font-size: 170%; color: white" id="milliseconds">00</p>
+              <p style="font-size: 170%; color: orange" id="milliseconds">00</p>
               <p style="font-size: 80%">MS</p>
             </div>
           </div>
@@ -459,23 +703,25 @@
           </div>
           <div class="timerBody">
             <div class="timerSubBox">
-              <p style="font-size: 170%; color: white" id="days2">00</p>
+              <p style="font-size: 170%; color: orange" id="days2">00</p>
               <p style="font-size: 80%">DAYS</p>
             </div>
             <div class="timerSubBox">
-              <p style="font-size: 170%; color: white" id="hours2">00</p>
+              <p style="font-size: 170%; color: orange" id="hours2">00</p>
               <p style="font-size: 80%">HOURS</p>
             </div>
             <div class="timerSubBox">
-              <p style="font-size: 170%; color: white" id="mins2">00</p>
+              <p style="font-size: 170%; color: orange" id="mins2">00</p>
               <p style="font-size: 80%">MINUTES</p>
             </div>
             <div class="timerSubBox">
-              <p style="font-size: 170%; color: white" id="seconds2">00</p>
+              <p style="font-size: 170%; color: orange" id="seconds2">00</p>
               <p style="font-size: 80%">SECONDS</p>
             </div>
             <div class="timerSubBox">
-              <p style="font-size: 170%; color: white" id="milliseconds2">00</p>
+              <p style="font-size: 170%; color: orange" id="milliseconds2">
+                00
+              </p>
               <p style="font-size: 80%">MS</p>
             </div>
           </div>
@@ -501,34 +747,33 @@
             <h5 id="texttt"></h5>
             <br />
           </div>
-         
+
           <div class="mored">
             <div class="token_holder_2">
               <i
                 style="font-size: 1000%; cursor: pointer"
-                class="fa fa-ticket tickett1 tickettss"
+                class="fas fa-ticket-alt tickett1 tickettss"
               ></i>
               <i
                 style="font-size: 1000%; cursor: pointer"
-                class="fa fa-ticket tickett2 tickettss"
+                class="fas fa-ticket-alt tickett2 tickettss"
               ></i>
               <i
                 style="font-size: 1000%; cursor: pointer"
-                class="fa fa-ticket tickett3 tickettss"
+                class="fas fa-ticket-alt tickett3 tickettss"
               ></i>
               <i
                 style="font-size: 1000%; cursor: pointer"
-                class="fa fa-ticket tickett4 tickettss"
+                class="fas fa-ticket-alt tickett4 tickettss"
               ></i>
               <i
                 style="font-size: 1000%; cursor: pointer"
-                class="fa fa-ticket tickett5 tickettss"
+                class="fas fa-ticket-alt tickett5 tickettss"
               ></i>
-              
             </div>
-            <br>
-            <br>
-            <br>
+            <br />
+            <br />
+            <br />
             <p>
               With our exclusive subscription package, the
               <span style="color: #ed143d">TextTornado Pass</span>," you gain
@@ -562,7 +807,10 @@
             <button class="cancel-btn2 moreD" style="opacity: 0.9">
               more details
             </button>
-            <button class="next-btn2 subscribe" style="opacity: 0.9; background: #ed143d">
+            <button
+              class="next-btn2 subscribe"
+              style="opacity: 0.9; background: #ed143d"
+            >
               Subscribe
             </button>
           </div>
@@ -612,7 +860,7 @@
           <div class="options_header_box">
             <i
               style="font-size: 150%; color: orange; cursor: pointer"
-              class="fa fa-ticket"
+              class="fas fa-ticket-alt"
             ></i>
             &nbsp;STORE
           </div>
@@ -655,7 +903,7 @@
               <div class="token_holder_2">
                 <i
                   style="font-size: 1000%; cursor: pointer"
-                  class="fa fa-ticket tickett1 tickettss"
+                  class="fas fa-ticket-alt tickett1 tickettss"
                 ></i>
               </div>
               <div class="star_holder">
@@ -682,15 +930,15 @@
               <div class="token_holder_2">
                 <i
                   style="font-size: 1000%; cursor: pointer"
-                  class="fa fa-ticket tickett1 tickettss"
+                  class="fas fa-ticket-alt tickett1 tickettss"
                 ></i>
                 <i
                   style="font-size: 1000%; cursor: pointer"
-                  class="fa fa-ticket tickett2 tickettss"
+                  class="fas fa-ticket-alt tickett2 tickettss"
                 ></i>
                 <i
                   style="font-size: 1000%; cursor: pointer"
-                  class="fa fa-ticket tickett3 tickettss"
+                  class="fas fa-ticket-alt tickett3 tickettss"
                 ></i>
               </div>
               <div class="star_holder">
@@ -730,23 +978,23 @@
               <div class="token_holder_2">
                 <i
                   style="font-size: 1000%; cursor: pointer"
-                  class="fa fa-ticket tickett1 tickettss"
+                  class="fas fa-ticket-alt tickett1 tickettss"
                 ></i>
                 <i
                   style="font-size: 1000%; cursor: pointer"
-                  class="fa fa-ticket tickett2 tickettss"
+                  class="fas fa-ticket-alt tickett2 tickettss"
                 ></i>
                 <i
                   style="font-size: 1000%; cursor: pointer"
-                  class="fa fa-ticket tickett3 tickettss"
+                  class="fas fa-ticket-alt tickett3 tickettss"
                 ></i>
                 <i
                   style="font-size: 1000%; cursor: pointer"
-                  class="fa fa-ticket tickett4 tickettss"
+                  class="fas fa-ticket-alt tickett4 tickettss"
                 ></i>
                 <i
                   style="font-size: 1000%; cursor: pointer"
-                  class="fa fa-ticket tickett5 tickettss"
+                  class="fas fa-ticket-alt tickett5 tickettss"
                 ></i>
               </div>
               <div class="star_holder">

@@ -76,12 +76,15 @@ document
   });
 
 const textEl = document.getElementById("texttt");
+const textEl2 = document.getElementById("textttt");
 const speedEl = 2;
 const text = "SUBSCRIBE TEXTTORNADO PASS";
+const text2 = "NO EVENT, WAIT NEXT EVENT";
 let idx = 1;
-let speed = 300 / speedEl;
+let speed = 400 / speedEl;
 
 writeText();
+writeText2();
 
 function writeText() {
   textEl.innerText = text.slice(0, idx);
@@ -89,10 +92,22 @@ function writeText() {
   idx++;
 
   if (idx > text.length) {
-    idx = 1;
+    idx = 2;
   }
 
   setTimeout(writeText, speed);
+}
+
+function writeText2() {
+  textEl2.innerText = text2.slice(0, idx);
+
+  idx++;
+
+  if (idx > text2.length) {
+    idx = 3;
+  }
+
+  setTimeout(writeText2, speed);
 }
 
 document.querySelector(".callRules").addEventListener("click", function () {

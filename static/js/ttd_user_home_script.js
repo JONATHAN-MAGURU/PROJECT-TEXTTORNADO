@@ -54,6 +54,8 @@ const notifications = document.querySelector(".notifications");
 const airtel = document.querySelector("#airtel");
 const userImage = document.getElementsByClassName("ico")[0];
 const outOfTicketsHolder = document.querySelector(".outOfTicketsHolder");
+const outOfTicketsHolder2 =
+  document.getElementsByClassName("outOfTicketsHolder")[1];
 const choosePaymet = document.querySelector(".choosePaymet");
 const choosePaymet2 = document.getElementsByClassName("choosePaymet")[1];
 const choosePaymet3 = document.getElementsByClassName("choosePaymet")[2];
@@ -74,7 +76,7 @@ const fade = document.querySelector(".fade");
 const errors = document.querySelector("#errors");
 const container_error = document.querySelector(".container-error");
 const icom = document.querySelector(".icom");
-
+const leaderboardBody = document.querySelector(".leaderboardBody");
 document.addEventListener("load", function () {
   userImage.width = 100;
   userImage.height = 100;
@@ -296,7 +298,7 @@ document.addEventListener("visibilitychange", function () {
   if (document.visibilityState === "hidden") {
     console.log("is here");
   } else {
-    console.log("is gone");
+    location.reload();
   }
 });
 
@@ -383,6 +385,10 @@ function callOutOfticketsHolderOff() {
   outOfTicketsHolder.style.display = "none";
   leaderboard_hider.style.width = "0";
 }
+function callOutOfticketsHolderOff2() {
+  outOfTicketsHolder2.style.display = "none";
+  leaderboard_hider.style.width = "0";
+}
 
 function callPaymentOff() {
   choosePaymet.style.display = "none";
@@ -399,6 +405,10 @@ function callPaymentOn(tkts, amt, typ) {
 
 function callOutOfticketsHolderOn() {
   outOfTicketsHolder.style.display = "block";
+  leaderboard_hider.style.width = "100%";
+}
+function callOutOfticketsHolderOn2() {
+  outOfTicketsHolder2.style.display = "block";
   leaderboard_hider.style.width = "100%";
 }
 
@@ -606,7 +616,8 @@ const timerMainBox1 = document.getElementsByClassName("timerMainBox")[0];
 const timerMainBox2 = document.getElementsByClassName("timerMainBox")[1];
 const timerMainBox3 = document.getElementsByClassName("timerMainBox")[2];
 const mored = document.getElementsByClassName("mored")[0];
-const loader2 = document.getElementsByClassName("loader2")[1];
+const loader2 = document.getElementsByClassName("loader2")[0];
+const loader3 = document.getElementsByClassName("loader3")[0];
 
 let isToggled = false;
 
@@ -635,10 +646,10 @@ function bringTimerTwo() {
 document.querySelector(".subscribe").addEventListener("click", function () {
   callLoader2On();
   document.querySelector(".subscribe").disabled;
-  document.querySelector(".subscribe").style.background ="gray";
-  document.querySelector(".subscribe").style.cursor ="not-allowed";
+  document.querySelector(".subscribe").style.background = "gray";
+  document.querySelector(".subscribe").style.cursor = "not-allowed";
 
-  setTimeout(subscription, 1500)
+  setTimeout(subscription, 1500);
 });
 
 function callLoader2On() {
@@ -649,12 +660,11 @@ function callLoader2On() {
 function callLoader2off() {
   loader2.style.display = "none";
   document.querySelector(".subscribe").disabled = false;
-  document.querySelector(".subscribe").style.background ="#ed143d";
-  document.querySelector(".subscribe").style.cursor ="pointer";
+  document.querySelector(".subscribe").style.background = "#ed143d";
+  document.querySelector(".subscribe").style.cursor = "pointer";
 }
 
-
-function subscription(){
+function subscription() {
   document.querySelector("#newAirtel").innerHTML = "";
   amount.innerHTML = "";
   numberOfTickets.innerHTML = "";
@@ -674,3 +684,54 @@ function subscription(){
       document.body.getAttribute("data-number");
   }
 }
+
+function callNotification() {
+  notifications.style.width = "40%";
+  notifications.style.opacity = "1";
+  document.querySelector("#notText").innerHTML =
+    "Typing event is almost over, in the last two minutes you are not allowed to take the typing test.";
+}
+
+setInterval(function () {
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", "/getLeaderBoardCode");
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      var response = JSON.parse(xhr.responseText);
+      for (var key in response.codes) {
+        if (response.codes[key].leaderBoardId == 5747) {
+          loader3.style.display = "none";
+          leaderboardBody.style.display = "block";
+        } else {
+          loader3.style.display = "block";
+          leaderboardBody.style.display = "none";
+        }
+      }
+    } else {
+      console.log("Request failed.  Returned status of " + xhr.status);
+    }
+  };
+  xhr.send();
+}, 2000);
+
+setInterval(function () {
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", "/getTypingAreaCode");
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      var response = JSON.parse(xhr.responseText);
+      for (var key in response.codes) {
+        if (response.codes[key].typingAreaId == 5747) {
+          document.querySelector(".loader3Holder").style.display = "none";
+          document.querySelector(".container_A_2_2").style.display = "block";
+        } else {
+          document.querySelector(".loader3Holder").style.display = "block";
+          document.querySelector(".container_A_2_2").style.display = "none";
+        }
+      }
+    } else {
+      console.log("Request failed.  Returned status of " + xhr.status);
+    }
+  };
+  xhr.send();
+}, 2000);

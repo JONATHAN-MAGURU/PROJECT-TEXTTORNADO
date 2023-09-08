@@ -69,7 +69,6 @@ function loadParagraph() {
 
   inpField.addEventListener("keydown", function () {
     inpField.focus();
-
     if (!hasStartedTyping) {
       updateTickets();
       hasStartedTyping = true;
@@ -79,6 +78,13 @@ function loadParagraph() {
   typingText.addEventListener("click", function () {
     if (document.getElementById("ticket-avail").innerHTML == 0) {
       callOutOfticketsHolderOn();
+    } else if (
+      document.getElementById("days").innerHTML == 0 &&
+      document.getElementById("hours").innerHTML == 0 &&
+      document.getElementById("mins").innerHTML < 2
+    ) {
+      callOutOfticketsHolderOn2();
+      setTimeout(callNotification, 5000);
     } else {
       callBack();
       inpField.focus();
@@ -109,6 +115,13 @@ back.addEventListener("click", function () {
 start.addEventListener("click", function () {
   if (document.getElementById("ticket-avail").innerHTML == 0) {
     callOutOfticketsHolderOn();
+  } else if (
+    document.getElementById("days").innerHTML == 0 &&
+    document.getElementById("hours").innerHTML == 0 &&
+    document.getElementById("mins").innerHTML < 2
+  ) {
+    callOutOfticketsHolderOn2();
+    setTimeout(callNotification, 5000);
   } else {
     start.disabled = true;
     start.style.cursor = "not-allowed";
@@ -287,22 +300,38 @@ function accurencyLoader(totalWords, finalWpm, misTakes) {
   }
 }
 
+let isRequestPending = false;
+
 function updateTickets() {
+  if (isRequestPending) {
+    console.log("An ongoing request is already in progress.");
+    return;
+  }
+
+  isRequestPending = true;
+
   const firstIdOb = { id };
-  console.log(firstIdOb);
   const jsonData = JSON.stringify(firstIdOb);
   const XHR3 = new XMLHttpRequest();
   const csrfToken = document.querySelector("#csrf_token5").value;
   XHR3.open("POST", "/updateTickets", true);
   XHR3.setRequestHeader("Content-Type", "application/json");
   XHR3.setRequestHeader("X-CSRFToken", csrfToken);
+
   XHR3.addEventListener("load", function () {
     if (XHR3.status === 200 && XHR3.readyState === 4) {
       console.log(XHR3.responseText);
       fetchTicketData(id);
     } else {
-      console.log("something went wrong");
+      console.log("Something went wrong");
     }
+
+    isRequestPending = false;
   });
+
   XHR3.send(jsonData);
 }
+
+document.querySelector(".cancel-btnn").addEventListener("click", function () {
+  callOutOfticketsHolderOff2();
+});

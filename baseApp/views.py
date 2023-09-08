@@ -6,40 +6,53 @@ from datetime import timedelta
 
 from datetime import date
 import json
-from baseApp.models import Admins_details, Aunthaticate, Typing_testing, Variant_paragraphs, Frontend,EndEvent,NextEvent
+from baseApp.models import (
+    Admins_details,
+    Leaderboard,
+    Aunthaticate,
+    Typing_testing,
+    Variant_paragraphs,
+    Frontend,
+    EndEvent,
+    NextEvent,
+    TypingArea,
+)
 from topApp.models import Player
 from topApp.views import id_gen
 import random
 
 
 def ttd_admin_login(request):
-    return render(request, 'ttd_admin_login.html')
+    return render(request, "ttd_admin_login.html")
 
 
 def ttd_admin_signin(request):
-    return render(request, 'ttd_admin_signin.html')
+    return render(request, "ttd_admin_signin.html")
 
 
 def ttd_admin_homepage(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        details = Admins_details.objects.filter(
-            emails=username, passw=password)
+    if request.method == "POST":
+        username = request.POST["username"]
+        password = request.POST["password"]
+        details = Admins_details.objects.filter(emails=username, passw=password)
         if details.exists():
             date1 = datetime.now()
             admin_details = details.values()
             admin_details2 = Admins_details.objects.all().values()
             amount_of_admins = len(admin_details2)
-            return render(request, 'ttd_admin_homepage.html', {
-                'admin_details': admin_details,
-                'admin_details2': admin_details2,
-                'date1': date1,
-                'amount_of_admins': amount_of_admins
-            })
+            return render(
+                request,
+                "ttd_admin_homepage.html",
+                {
+                    "admin_details": admin_details,
+                    "admin_details2": admin_details2,
+                    "date1": date1,
+                    "amount_of_admins": amount_of_admins,
+                },
+            )
         else:
             return HttpResponse("Failed to connect")
-    return redirect('ttd_admin_login')
+    return redirect("ttd_admin_login")
 
 
 def paragraph():
@@ -56,43 +69,50 @@ def paragraph():
                 vp.save()
         else:
             vp = Variant_paragraphs.objects.create(
-                variant_p=joinedParagraph, variant_id=paragraph.test_id)
+                variant_p=joinedParagraph, variant_id=paragraph.test_id
+            )
 
 
 def get_paragraph(request):
     paragraphs = Variant_paragraphs.objects.all()
     return JsonResponse({"paragraphs": list(paragraphs.values())})
 
+
 def get_typing_tests(request):
     typing_testing = Typing_testing.objects.all()
     return JsonResponse({"Typing_testings": list(typing_testing.values())})
+
 
 def get_typing_variants(request):
     variant_paragraphs = Variant_paragraphs.objects.all()
     return JsonResponse({"variant_paragraphs": list(variant_paragraphs.values())})
 
+
 def typing_tests(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         tests = json.loads(request.body)
-        textarea = tests['textarea2']
+        textarea = tests["textarea2"]
         id = id_gen()
         count = textarea.split()
         get_all_paragraphs = Typing_testing.objects.all().values()
         amount_of_paragraphs = len(get_all_paragraphs)
-        if len(count) > 40 :
-            if len(count) <= 180 :
-                if amount_of_paragraphs < 10 :
-                    paragraphs = Typing_testing.objects.create(test = textarea, test_id =id)
+        if len(count) > 40:
+            if len(count) <= 180:
+                if amount_of_paragraphs < 10:
+                    paragraphs = Typing_testing.objects.create(
+                        test=textarea, test_id=id
+                    )
                     paragraphs.save()
-                    return HttpResponse('SAVED SUSSESSIFULLY....')
+                    return HttpResponse("SAVED SUSSESSIFULLY....")
                 else:
-                    return HttpResponse('YOU HAVE REACHED MAXMUM AMOUT OF PARAGRAPHS..')
+                    return HttpResponse("YOU HAVE REACHED MAXMUM AMOUT OF PARAGRAPHS..")
             else:
-                return HttpResponse('TEST PARAGRAPH SHOULD NOT EXCEED 180 WORDS.')
+                return HttpResponse("TEST PARAGRAPH SHOULD NOT EXCEED 180 WORDS.")
         else:
-            return HttpResponse('TEST PARAGRAPH SHOULD BE GREATER THAN 40 WORDS.')
+            return HttpResponse("TEST PARAGRAPH SHOULD BE GREATER THAN 40 WORDS.")
     else:
-        return HttpResponse('SOMETHING WENT WRONG..')
+        return HttpResponse("SOMETHING WENT WRONG..")
+
 
 def delete_paragraphs(request):
     if request.method == "POST":
@@ -102,7 +122,8 @@ def delete_paragraphs(request):
             Typing_testing.objects.filter(test_id=paragraph_id).delete()
             Variant_paragraphs.objects.filter(variant_id=paragraph_id).delete()
         return HttpResponse("DELETED SUCCESSIFULLY")
-    
+
+
 def delete_variants(request):
     if request.method == "POST":
         data = json.loads(request.body)
@@ -110,53 +131,68 @@ def delete_variants(request):
         for paragraph_id in checked_array:
             Variant_paragraphs.objects.filter(variant_id=paragraph_id).delete()
         return HttpResponse("VARIANTS DELETED SUCCESSIFULLY")
-    
+
+
 def editing_tests(request):
-     if request.method == 'POST':
+    if request.method == "POST":
         textToedit = json.loads(request.body)
-        toEditId = textToedit['toEditId']
-        toEditText = textToedit['toEditText']
-        paraDetails = Typing_testing.objects.filter(test_id = toEditId)
+        toEditId = textToedit["toEditId"]
+        toEditText = textToedit["toEditText"]
+        paraDetails = Typing_testing.objects.filter(test_id=toEditId)
         if paraDetails.exists():
-            getParagraphToEdit = Typing_testing.objects.get(test_id = toEditId)
+            getParagraphToEdit = Typing_testing.objects.get(test_id=toEditId)
             getParagraphToEdit.test = toEditText
             getParagraphToEdit.save()
             return HttpResponse("UPDATED SUCCESSIFULLY...")
         else:
             return HttpResponse("UPDATE FAILED...")
-     else:
-         return("something went wrong")
+    else:
+        return "something went wrong"
+
 
 def getUsers(request):
     user = Player.objects.all()
     return JsonResponse({"user": list(user.values())})
 
+
 def getFontendCodes(request):
     codes = Frontend.objects.all()
     return JsonResponse({"codes": list(codes.values())})
+
+
+def getLeaderBoardCode(request):
+    codes = Leaderboard.objects.all()
+    return JsonResponse({"codes": list(codes.values())})
+
+def getTypingAreaCode(request):
+    codes = TypingArea.objects.all()
+    return JsonResponse({"codes": list(codes.values())})
+
 
 def getStartTimerOneCodes(request):
     codes = EndEvent.objects.all()
     return JsonResponse({"codes": list(codes.values())})
 
+
 def getSearch(request):
-     if request.method == 'POST':
+    if request.method == "POST":
         player = json.loads(request.body)
-        username = player['toSearch']
-        getPlayer = Player.objects.filter(username = username)
+        username = player["toSearch"]
+        getPlayer = Player.objects.filter(username=username)
 
         if getPlayer.exists():
             results = getPlayer.values()
-            return JsonResponse({"searchResults" : list(results)})
+            return JsonResponse({"searchResults": list(results)})
         else:
-            return JsonResponse({"error" : list("error")})
-        
+            return JsonResponse({"error": list("error")})
+
+
 def setEventEnd(request):
     if request.method == "POST":
         try:
             data = json.loads(request.body)
             ms = data.get("ms")
-            
+
             if ms is not None:
                 try:
                     event = EndEvent.objects.get(endEventId=85747)
@@ -173,8 +209,9 @@ def setEventEnd(request):
             return HttpResponse(f"An error occurred: {str(e)}", status=500)
     else:
         return HttpResponse("Method not allowed.", status=405)
-    
-'''def update_end_event():
+
+
+"""def update_end_event():
     while True:
         try:
             event = EndEvent.objects.get(endEventId=5747)
@@ -187,7 +224,7 @@ def setEventEnd(request):
         time.sleep(2)
 
 update_end_event()
-    '''
+    """
 
 
 def subtract_until_zero(number, subtract_by):
@@ -200,10 +237,8 @@ def subtract_until_zero(number, subtract_by):
         if number < 0:
             number = 0
 
-        time.sleep(1)  
+        time.sleep(1)
     print("Number has reached 0!")
-
-
 
 
 def setEventNext(request):
@@ -211,7 +246,7 @@ def setEventNext(request):
         try:
             data = json.loads(request.body)
             ms = data.get("ms")
-            
+
             if ms is not None:
                 try:
                     event = NextEvent.objects.get(nextEventId=5747)
@@ -229,11 +264,11 @@ def setEventNext(request):
     else:
         return HttpResponse("Method not allowed.", status=405)
 
-    
+
 def getPlayerData(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         player = json.loads(request.body)
-        playerId = player.get('userId')
+        playerId = player.get("userId")
         getPlayer = Player.objects.filter(player_id=playerId)
 
         if getPlayer.exists():
@@ -243,43 +278,83 @@ def getPlayerData(request):
             return JsonResponse({"error": "Player not found"}, status=400)
 
 
-def startFrontend(request):
-     if request.method == 'POST':
+def startLeaderBoard(request):
+    if request.method == "POST":
         code = json.loads(request.body)
-        code1 = code['firstId']
+        code1 = code["firstId"]
+        if code1 == 85747:
+            getCode = Leaderboard.objects.get(leaderBoardId=5747)
+            getCode.leaderBoardId = code1
+            getCode.save()
+            return HttpResponse("UPDATED SUCCESSIFULLY...")
+        elif code1 == 5747:
+            getCode = Leaderboard.objects.get(leaderBoardId=85747)
+            getCode.leaderBoardId = code1
+            getCode.save()
+            return HttpResponse("UPDATED SUCCESSIFULLY...")
+        else:
+            return HttpResponse("UPDATE FAILED...")
+    else:
+        return HttpResponse("something went wrong")
+
+
+def startTypingArea(request):
+    if request.method == "POST":
+        code = json.loads(request.body)
+        code1 = code["firstId"]
+        if code1 == 85747:
+            getCode = TypingArea.objects.get(typingAreaId=5747)
+            getCode.typingAreaId = code1
+            getCode.save()
+            return HttpResponse("UPDATED SUCCESSIFULLY...")
+        elif code1 == 5747:
+            getCode = TypingArea.objects.get(typingAreaId=85747)
+            getCode.typingAreaId = code1
+            getCode.save()
+            return HttpResponse("UPDATED SUCCESSIFULLY...")
+        else:
+            return HttpResponse("UPDATE FAILED...")
+    else:
+        return HttpResponse("something went wrong")
+
+
+def startFrontend(request):
+    if request.method == "POST":
+        code = json.loads(request.body)
+        code1 = code["firstId"]
         print(code1)
         if code1 == 85747:
-            getCode= Frontend.objects.get(FrontendId = 5747)
+            getCode = Frontend.objects.get(FrontendId=5747)
             getCode.FrontendId = code1
             getCode.save()
             return HttpResponse("UPDATED SUCCESSIFULLY...")
         elif code1 == 5747:
-            getCode= Frontend.objects.get(FrontendId = 85747)
+            getCode = Frontend.objects.get(FrontendId=85747)
             getCode.FrontendId = code1
             getCode.save()
             return HttpResponse("UPDATED SUCCESSIFULLY...")
         else:
             return HttpResponse("UPDATE FAILED...")
-     else:
-         return("something went wrong")
-     
+    else:
+        return HttpResponse("something went wrong")
+
 
 def startTimerOne(request):
-     if request.method == 'POST':
+    if request.method == "POST":
         code = json.loads(request.body)
-        code1 = code['firstId']
+        code1 = code["firstId"]
         if code1 == 85747:
-            getCode = EndEvent.objects.get(endEventId = 5747)
+            getCode = EndEvent.objects.get(endEventId=5747)
             getCode.endEventId = code1
             getCode.save()
             subtract_until_zero(getCode.endEvent, 1000)
             return HttpResponse("UPDATED SUCCESSIFULLY...")
         elif code1 == 5747:
-            getCode= EndEvent.objects.get(endEventId = 85747)
+            getCode = EndEvent.objects.get(endEventId=85747)
             getCode.endEventId = code1
             getCode.save()
             return HttpResponse("UPDATED SUCCESSIFULLY...")
         else:
             return HttpResponse("UPDATE FAILED...")
-     else:
-         return("something went wrong")
+    else:
+        return HttpResponse("something went wrong")

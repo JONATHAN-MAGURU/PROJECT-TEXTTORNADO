@@ -1,4 +1,6 @@
 const frontend = document.getElementById("frontend");
+const leaderboardToggle = document.getElementById("leaderboard");
+const typingArea = document.getElementById("typingArea");
 const minsSlider = document.getElementById("minsSlider");
 const maxmumInput = document.getElementById("maxmum");
 const minmumInput = document.getElementById("minmum");
@@ -46,7 +48,7 @@ setInterval(function () {
     }
   };
   xhr.send();
-}, 1000);
+}, 2000);
 
 maxmumInput.addEventListener("change", function () {
   minsSlider.max = maxmumInput.value;
@@ -216,4 +218,86 @@ setInterval(function () {
     }
   };
   xhr.send();
-}, 2000);
+}, 3000);
+
+
+leaderboardToggle.addEventListener("change", function () {
+  const firstId = leaderboardToggle.checked ? 5747 : 85747;
+  const firstIdOb = { firstId };
+  const jsonData = JSON.stringify(firstIdOb);
+  const XHR3 = new XMLHttpRequest();
+  const csrfToken = document.querySelector("#csrf_token11").value;
+  XHR3.open("POST", "/startLeaderBoard", true);
+  XHR3.setRequestHeader("Content-Type", "application/json");
+  XHR3.setRequestHeader("X-CSRFToken", csrfToken);
+  XHR3.addEventListener("load", function () {
+    if (XHR3.status === 200 && XHR3.readyState === 4) {
+      console.log(XHR3.responseText);
+    } else {
+      console.log("something went wrong");
+    }
+  });
+  XHR3.send(jsonData);
+});
+
+setInterval(function () {
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", "/getLeaderBoardCode");
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      var response = JSON.parse(xhr.responseText);
+      for (var key in response.codes) {
+        if (response.codes[key].leaderBoardId == 85747) {
+          leaderboardToggle.checked = false;
+        } else {
+          leaderboardToggle.checked = true;
+        }
+      }
+    } else {
+      console.log("Request failed.  Returned status of " + xhr.status);
+    }
+  };
+  xhr.send();
+}, 3000);
+
+
+
+
+typingArea.addEventListener("change", function () {
+  const firstId = typingArea.checked ? 5747 : 85747;
+  const firstIdOb = { firstId };
+  const jsonData = JSON.stringify(firstIdOb);
+  const XHR3 = new XMLHttpRequest();
+  const csrfToken = document.querySelector("#csrf_token11").value;
+  XHR3.open("POST", "/startTypingArea", true);
+  XHR3.setRequestHeader("Content-Type", "application/json");
+  XHR3.setRequestHeader("X-CSRFToken", csrfToken);
+  XHR3.addEventListener("load", function () {
+    if (XHR3.status === 200 && XHR3.readyState === 4) {
+      console.log(XHR3.responseText);
+    } else {
+      console.log("something went wrong");
+    }
+  });
+  XHR3.send(jsonData);
+});
+
+setInterval(function () {
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", "/getTypingAreaCode");
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      var response = JSON.parse(xhr.responseText);
+      for (var key in response.codes) {
+        if (response.codes[key].typingAreaId == 85747) {
+          typingArea.checked = false;
+        } else {
+          typingArea.checked = true;
+        }
+      }
+    } else {
+      console.log("Request failed.  Returned status of " + xhr.status);
+    }
+  };
+  xhr.send();
+}, 3000);

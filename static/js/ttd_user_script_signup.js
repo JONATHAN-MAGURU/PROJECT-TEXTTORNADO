@@ -287,7 +287,7 @@ function sendUserData() {
   };
   const jsonData = JSON.stringify(dataObj);
   send_data(jsonData);
-  window.location.href = "http://127.0.0.1:8000/";
+  window.location.href = "http://192.168.1.198:8000/";
 }
 
 fourthNext.addEventListener("click", function () {

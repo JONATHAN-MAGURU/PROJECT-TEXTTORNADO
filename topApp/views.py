@@ -6,6 +6,7 @@ from topApp.models import (
     Comments,
     TypingDetails,
     TypingDetailsHistory,
+    LeaderboardHistory,
     Tickets,
     TicketPurchase,
 )
@@ -374,6 +375,20 @@ def setToOld(request):
         return HttpResponse("an error occured")
 
 
+def setToseen(request):
+    if request.method == "POST":
+        seralize = json.loads(request.body)
+        ttd_id = seralize["id"]
+        mydata = Player.objects.filter(player_id=ttd_id)
+        if mydata.exists():
+            mydata2 = mydata.first()
+            mydata2.results = "seen"
+            mydata2.save()
+            return HttpResponse("updated to seen")
+    else:
+        return HttpResponse("an error occured")
+
+
 def typing_details(request):
     try:
         if request.method == "POST":
@@ -441,6 +456,29 @@ def get_test_details(request):
         print("Something went wrong with get_test_details function")
 
 
+def leaderBoardHistory(request):
+    try:
+        results = LeaderboardHistory.objects.all().order_by("-wpm")
+        results_data = list(results.values())
+
+        images_data = {}
+        player_ids = set(result["play_id"] for result in results_data)
+        for player_id in player_ids:
+            player = Player.objects.get(player_id=player_id)
+            images_data[player_id] = (
+                player.profile_pic.url if player.profile_pic else None
+            )
+
+        final_results = []
+        for result in results_data:
+            player_id = result["play_id"]
+            result["profile_pic"] = images_data.get(player_id)
+            final_results.append(result)
+        return JsonResponse({"results": final_results})
+    except:
+        print("Something went wrong with get_test_details function")
+
+
 def user_history():
     typing_details = TypingDetails.objects.all()
     for typing_detail in typing_details:
@@ -468,12 +506,28 @@ def get_history(request):
         return JsonResponse({"error": str(e)}, status=500)
 
 
+from django.http import JsonResponse
+
+
 def getEndEvents(request):
-    try:
-        end_events = EndEvent.objects.all()
-        return JsonResponse({"end_events": list(end_events.values())})
-    except Exception as e:
-        return JsonResponse({"error": str(e)}, status=500)
+    userid = request.GET.get("id")
+    player = Player.objects.filter(player_id=userid)
+    if player.exists():
+        try:
+            end_events = EndEvent.objects.all()
+
+            player_data = player.values("results")
+
+            response_data = {
+                "end_events": list(end_events.values()),
+                "player_data": list(player_data),
+            }
+
+            return JsonResponse(response_data)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+    else:
+        return JsonResponse({"error": "Player not found"}, status=404)
 
 
 def getNextEvents(request):
@@ -630,3 +684,67 @@ def verifyPayment(trans_id, quantity, ticketId, amt):
             return "Transaction status not found in the response"
     except Exception as e:
         return f"An error occurred: {str(e)}"
+
+
+def transferData():
+    LeaderboardHistory.objects.all().delete()
+    time.sleep(5)
+    typing_details = TypingDetails.objects.values().order_by("-wpm")
+
+    rank = 1
+
+    for typing_detail in typing_details:
+        wpm = typing_detail["wpm"]
+        cpm = typing_detail["cpm"]
+        mistakes = typing_detail["mistakes"]
+        play_id = typing_detail["play_id"]
+        username = typing_detail["username"]
+        typo_id = typing_detail["typo_id"]
+        date = typing_detail["date"]
+
+        leaderboard_entry = LeaderboardHistory.objects.create(
+            rank=rank,
+            wpm=wpm,
+            cpm=cpm,
+            mistakes=mistakes,
+            play_id=play_id,
+            username=username,
+            typo_id=typo_id,
+            date=date,
+        )
+        rank += 1
+        TypingDetails.objects.filter(id=typing_detail["id"]).delete()
+
+
+
+def update_user_status(request):
+    try:
+        data = json.loads(request.body)
+        user_id = data.get('userId')
+        status = data.get('status')
+        player = Player.objects.filter(player_id=user_id).first()
+        if player:
+            player.statuss = status
+            player.save()  
+            response_data = {'message': f'User status updated to {status}'}
+            return JsonResponse(response_data, status=200)
+        else:
+            return JsonResponse({'error': 'Player not found'}, status=404)
+    
+    except json.JSONDecodeError:
+        return JsonResponse({'error': 'Invalid JSON data'}, status=400)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+    
+
+
+def count_online_players(request):
+    try:
+        online_players_count = Player.objects.filter(statuss="online").count()
+        
+        response_text = str(online_players_count)
+        
+        return HttpResponse(response_text, content_type='text/plain', status=200)
+    
+    except Exception as e:
+        return HttpResponse('0', content_type='text/plain', status=200)

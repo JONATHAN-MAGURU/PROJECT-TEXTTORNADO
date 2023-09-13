@@ -508,7 +508,7 @@ document
             '"><span class="checkmark3"></span></label>' +
             '<img style="width:30px;height:30px; border-radius:50%;" src="/images/' +
             response.searchResults[key].profile_pic +
-            '">&nbsp;' + // Corrected this line
+            '">&nbsp;' + 
             response.searchResults[key].username +
             '<p style="display:none">' +
             response.searchResults[key].player_id +
@@ -578,6 +578,10 @@ document.getElementById("viewDetails").addEventListener("click", function () {
       var response = JSON.parse(XHR3.responseText);
       userRes.innerHTML = "";
       for (var key in response.playerResults) {
+        var temp0 =
+          '<div class="userText"> <p>STATUS</p>' +
+          response.playerResults[key].statuss +
+          "</div>";
         var temp =
           '<div class="userText"> <p>USERNAME</p>' +
           response.playerResults[key].username +
@@ -615,6 +619,7 @@ document.getElementById("viewDetails").addEventListener("click", function () {
           response.playerResults[key].height +
           "</div>";
 
+        userRes.innerHTML += temp0;
         userRes.innerHTML += temp;
         userRes.innerHTML += temp1;
         userRes.innerHTML += temp2;

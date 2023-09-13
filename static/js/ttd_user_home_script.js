@@ -135,6 +135,10 @@ function clearCover() {
   document.querySelector(".bodyCover").style.width = "0%";
 }
 
+function reloadPage(){
+  window.location.reload();
+}
+
 setInterval(function () {
   var xhr = new XMLHttpRequest();
   xhr.open("GET", "/getFontendCodes");
@@ -150,6 +154,7 @@ setInterval(function () {
           loader.style.height = "100vh";
           loader.style.opacity = "1";
           main_body.style.display = "none";
+         setTimeout(reloadPage,6000);
         }
       }
     } else {
@@ -434,13 +439,13 @@ document
       buyTicketsOff();
       leaderboard_hider.style.width = "100%";
       choosePaymet2.style.display = "block";
-      amount.innerHTML = "500";
+      amount.innerHTML = "50";
       numberOfTickets.innerHTML = 1;
       typeOfTickets.innerHTML = "STANDARD TICKETS";
       airtel.focus();
     } else {
       buyTicketsOff();
-      callPaymentOn(1, "500", "STANDARD TICKETS");
+      callPaymentOn(1, "50", "STANDARD TICKETS");
       document.querySelector("#newAirtel").innerHTML =
         document.body.getAttribute("data-number");
     }
@@ -458,13 +463,13 @@ document
       buyTicketsOff();
       leaderboard_hider.style.width = "100%";
       choosePaymet2.style.display = "block";
-      amount.innerHTML = "1000";
+      amount.innerHTML = "100";
       numberOfTickets.innerHTML = 3;
       typeOfTickets.innerHTML = "EPIC TICKETS";
       airtel.focus();
     } else {
       buyTicketsOff();
-      callPaymentOn(3, "1000", "EPIC TICKETS");
+      callPaymentOn(3, "100", "EPIC TICKETS");
       document.querySelector("#newAirtel").innerHTML =
         document.body.getAttribute("data-number");
     }
@@ -482,13 +487,13 @@ document
       buyTicketsOff();
       leaderboard_hider.style.width = "100%";
       choosePaymet2.style.display = "block";
-      amount.innerHTML = "100";
+      amount.innerHTML = "150";
       numberOfTickets.innerHTML = 5;
       typeOfTickets.innerHTML = "LEGENDARY TICKETS";
       airtel.focus();
     } else {
       buyTicketsOff();
-      callPaymentOn(5, "100", "LEGENDARY TICKETS");
+      callPaymentOn(5, "150", "LEGENDARY TICKETS");
       document.querySelector("#newAirtel").innerHTML =
         document.body.getAttribute("data-number");
     }
@@ -735,3 +740,5 @@ setInterval(function () {
   };
   xhr.send();
 }, 2000);
+
+

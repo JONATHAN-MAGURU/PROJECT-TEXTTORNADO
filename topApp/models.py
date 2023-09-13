@@ -7,6 +7,7 @@ class Player(models.Model):
     firstname = models.CharField(max_length=100, default='')
     lastname = models.CharField(max_length=100, default='')
     mail = models.CharField(max_length=255, default='')
+    statuss = models.CharField(max_length=25, default='')
     username = models.CharField(max_length=100)
     password = models.CharField(max_length=100)
     number =  models.CharField(max_length=100)
@@ -16,6 +17,7 @@ class Player(models.Model):
     v_code = models.IntegerField()
     os = models.CharField(max_length=100)
     account = models.CharField(max_length=20, default='new')
+    results = models.CharField(max_length=20, default='seen')
     profile_pic = models.ImageField(default="user_default_pic_x6puuUx.jpg", null=True, blank= True )
     date  = models.DateTimeField(default=timezone.now, blank=True)
 
@@ -26,6 +28,16 @@ class Comments(models.Model):
    
 
 class TypingDetails(models.Model):
+    wpm = models.IntegerField()
+    cpm = models.IntegerField()
+    mistakes = models.IntegerField()
+    play_id = models.CharField(max_length=10)
+    username = models.CharField(max_length=255)
+    typo_id = models.IntegerField(default=0)
+    date = models.DateTimeField(default=timezone.now, blank=True)
+
+class LeaderboardHistory(models.Model):
+    rank = models.IntegerField()
     wpm = models.IntegerField()
     cpm = models.IntegerField()
     mistakes = models.IntegerField()

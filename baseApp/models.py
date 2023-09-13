@@ -7,6 +7,7 @@ class Admins_details(models.Model):
     passw = models.CharField(max_length=100)
     position = models.CharField(max_length=100)
     emails = models.CharField(max_length=100)
+    admin_id = models.IntegerField(default=57473172877);
     
 
 class Aunthaticate(models.Model):
@@ -40,3 +41,13 @@ class NextEvent(models.Model):
    nextEvent = models.IntegerField(default=0)
    nextEventId = models.IntegerField(default=5747)
 
+class Event1(models.Model):
+    name = models.CharField(max_length=50)
+    type = models.CharField(max_length=50)
+    eventId = models.IntegerField(default=0)
+
+class Event2(models.Model):
+    name = models.CharField(max_length=50)
+    type = models.CharField(max_length=50)
+    eventId = models.IntegerField(default=0)
+    

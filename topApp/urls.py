@@ -28,4 +28,8 @@ urlpatterns = [
     path('updateTickets', views.updateTickets, name='updateTickets'),
     path('processPayment', views.processPayment, name='processPayment'),
     path('setToOld', views.setToOld, name='setToOld'),
+    path('setToseen', views.setToseen, name='setToseen'),
+    path('leaderBoardHistory', views.leaderBoardHistory, name='leaderBoardHistory'),
+    path('update_user_status', views.update_user_status, name='update_user_status'),
+    path('count_online_players', views.count_online_players, name='count_online_players'),
 ]

@@ -9,6 +9,8 @@ from baseApp.models import (
     EndEvent,
     NextEvent,
     TypingArea,
+    Event1,
+    Event2,
 )
 
 
@@ -21,3 +23,5 @@ admin.site.register(EndEvent)
 admin.site.register(NextEvent)
 admin.site.register(Leaderboard)
 admin.site.register(TypingArea)
+admin.site.register(Event1)
+admin.site.register(Event2)

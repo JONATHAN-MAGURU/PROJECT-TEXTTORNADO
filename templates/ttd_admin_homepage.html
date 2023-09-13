@@ -55,7 +55,7 @@
           </li>
           <li onclick="open_res()">
             <i style="color: #ebe2e2; font-size: 100%" class="fa fa-cubes"></i>
-            &nbsp; &nbsp; Results
+            &nbsp; &nbsp; Events
           </li>
           <li onclick="open_mail()">
             <i
@@ -275,7 +275,7 @@
           >
             <div class="container_A_2_box_1">
               <p><small>online</small></p>
-              <h4 style="color: yellowgreen">&nbsp; 0</h4>
+              <h4 style="color: yellowgreen" id="online">&nbsp; 0</h4>
               <p><small>{{date1}}</small></p>
             </div>
             <div class="container_A_2_box_2">
@@ -424,7 +424,6 @@
           <th>ID</th>
           <th>FIRSTNAME</th>
           <th>LASTNAME</th>
-          <th>PASSWORD</th>
           <th>POSITION</th>
           <th>EMAIL</th>
         </tr>
@@ -433,7 +432,7 @@
           <td>{{x.id}}</td>
           <td>{{x.firstname}}</td>
           <td>{{x.lastname}}</td>
-          <td>{{x.passw}}</td>
+
           <td>{{x.position}}</td>
           <td>{{x.emails}}</td>
         </tr>
@@ -714,6 +713,8 @@
             <input type="hidden" id="csrf_token6" value="{{ csrf_token }}" />
             <input type="hidden" id="csrf_token7" value="{{ csrf_token }}" />
             <input type="hidden" id="csrf_token11" value="{{ csrf_token }}" />
+            <input type="hidden" id="csrf_token12" value="{{ csrf_token }}" />
+            <input type="hidden" id="csrf_token19" value="{{ csrf_token }}" />
             <textarea
               id="textarea"
               cols="30"
@@ -785,12 +786,52 @@
     </div>
     <div class="nav_options" id="res">
       <div class="nav_options_menu_header">
-        <p>RESULTS</p>
+        <p>EVENTS</p>
+        <h5 style="color:red" id="eventWarn"></h5>
         <i
           style="color: #000000; font-size: 150%"
           class="fa fa-close msg"
           onclick="close_option_res()"
         ></i>
+      </div>
+
+      <div class="eventMainHolder">
+        <div class="eventHolder">
+          <div class="box2">
+            <div class="switch-toggle">
+              <br />
+              <h4 style="text-align: center">EVENT 1</h4>
+              <br />
+              <input type="checkbox" id="event1" />
+              <label for="event1"></label>
+            </div>
+          </div>
+          <div class="desc">
+            <p>NAME : Vocab Vault Showdown</p>
+            <p>TYPE : Word Jumble</p>
+          </div>
+        </div>
+
+        <div class="eventHolder">
+          <div class="box2">
+            <div class="switch-toggle">
+              <br />
+              <h4 style="text-align: center">EVENT 2</h4>
+              <br />
+              <input type="checkbox" id="event2" />
+              <label for="event2"></label>
+            </div>
+          </div>
+          <div class="desc">
+            <p>NAME : Advanced LexiLympics</p>
+            <p>TYPE : Multilingual Marvel</p>
+          </div>
+        </div>
+        <div class="eventHolder"></div>
+        <div class="eventHolder"></div>
+        <div class="eventHolder"></div>
+        <div class="eventHolder"></div>
+  
       </div>
     </div>
 

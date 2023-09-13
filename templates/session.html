@@ -361,20 +361,20 @@
 
       <div class="welcomeUserHolder">
         <div class="welcomeUserH">
-          <h3 style="letter-spacing: 3px; color: orange">
+          <h3 style="letter-spacing: 3px; color: orange" id="toAnEnd">
             EVENT DRAWS TO AN END !!!
           </h3>
         </div>
         <div class="eventEndBody">
           <div class="eventEndDivision">
             <br />
-            <h5 class="winnerText">WINNERS THIS WEEK EVENT</h5>
+            <h5 class="winnerText">WINNER OF LAST EVENT</h5>
             <p style="color: gray; text-align: center; font-size: 90%">
               BASED ON LEADERBOARD HIGH RANK
             </p>
             <br />
             <div class="winnerOutput">
-              <!--<div class="winerImg">
+              <div class="winerImg">
                 <img
                   src="/images/user_default_pic_x6puuUx.jpg"
                   alt="image"
@@ -382,7 +382,7 @@
                 />
               </div>
               <p style="color: gray; text-align: center; font-size: 90%">
-                eclipse
+                XXX-XXX
               </p>
 
               <div class="winnerDetailsHolder">
@@ -393,23 +393,41 @@
                   <p class="centered">MISTAKES</p>
                 </div>
                 <div class="winnerDetailsB">
-                  <p class="centered">1</p>
-                  <p class="centered">89</p>
-                  <p class="centered">211</p>
-                  <p class="centered">2</p>
+                  <p class="centered">XX</p>
+                  <p class="centered">XX</p>
+                  <p class="centered">XX</p>
+                  <p class="centered">XX</p>
                 </div>
-              </div>-->
+              </div>
             </div>
           </div>
           <div class="eventEndDivision">
             <br />
-            <h5 class="winnerText">YOUR POSITION</h5>
-            <p style="color: gray; text-align: center; font-size: 90%">
-              BASED ON LEADERBOARD HIGH RANK
+            <h5 class="loosertext" id="winnerRemark">
+              YOU DIDN'T PARTICIPATE LAST EVENT
+            </h5>
+            <p
+              style="color: gray; text-align: center; font-size: 90%"
+              id="winnerRemark2"
+            >
+              "Hey there! <br />Have you considered joining our upcoming events?
+              It's not just about the excitement of competing; it's an
+              opportunity to shine and possibly walk away with fantastic
+              gadgets! 🎁 That's right, we offer a range of gadgets as prizes
+              for our top performers. Whether it's a smartphone, a tablet, or
+              other cool tech gadgets, there are valuable rewards up for grabs.
+              Participating is your chance to prove your skills, climb the
+              leaderboard, and secure your spot among the winners. The thrill of
+              victory is just a few clicks away, and with the right effort, you
+              could be the proud owner of some fantastic tech. So, why wait?
+              Dive into the action, compete with enthusiasm, and who knows, that
+              next gadget might just be yours! Join us in our upcoming events
+              and let's make it a memorable experience together. See you at the
+              top!"
             </p>
             <br />
             <div class="looserOutput">
-              <!--  <div class="winerImg">
+              <div class="winerImg">
                 <img
                   src="/images/user_default_pic_x6puuUx.jpg"
                   alt="image"
@@ -417,7 +435,7 @@
                 />
               </div>
               <p style="color: gray; text-align: center; font-size: 90%">
-                eclipse
+                XXX-XXX
               </p>
 
               <div class="winnerDetailsHolder">
@@ -428,18 +446,40 @@
                   <p class="centered">MISTAKES</p>
                 </div>
                 <div class="winnerDetailsB">
-                  <p class="centered">1</p>
-                  <p class="centered">89</p>
-                  <p class="centered">211</p>
-                  <p class="centered">2</p>
+                  <p class="centered">XX</p>
+                  <p class="centered">XX</p>
+                  <p class="centered">XX</p>
+                  <p class="centered">XX</p>
                 </div>
-              </div>-->
+              </div>
             </div>
           </div>
         </div>
-        <div class="welcomeUserH"></div>
+
+        <div class="welcomeUserF">
+          <button class="setseen">continue</button>
+        </div>
       </div>
 
+      <div class="welcomeUserHolder">
+        <div class="welcomeUserH">
+          <h3 style="letter-spacing: 3px; color: orange">
+            NEW EVENT HAS JUST STARTED !!!
+          </h3>
+          <p style="color: gray">
+            NAME :<span id="nameOfE"></span> &nbsp; TYPE :
+            <span id="typeOfE"></span>
+          </p>
+        </div>
+        <h4>&nbsp;Rules for "<span id="nameOfE2"></span>" Event:</h4>
+        <div class="welcomeUserB2"></div>
+        <div class="welcomeUserF">
+          <button style="background: #ed143d" class="setseen">
+            View prize
+          </button>
+          <button class="setseen">continue</button>
+        </div>
+      </div>
       <div class="spinnerContainer">
         <br />
         <br />
@@ -476,6 +516,7 @@
           ></i
           >&nbsp;TOP USERS BY WPM
         </h5>
+        <div></div>
         <div class="leaderboardHead">
           <div
             class="userBox"
@@ -504,20 +545,30 @@
           <div class="availTicketsHolder">
             <p>
               <i
-                style="font-size: 130%; color: yellowgreen; cursor: pointer"
+                style="font-size: 125%; color:#ed143d ; cursor: pointer"
                 class="fas fa-ticket-alt tickettss"
               ></i>
               <span id="ticket-avail"> </span>
             </p>
           </div>
+
+          <div class="availTicketsHolder">
+            <p>
+              <i
+                style="font-size: 125%; color: yellowgreen; cursor: pointer"
+                class="fa fa-user tickettss"
+              ></i>
+              <span id="online"> </span>
+            </p>
+          </div>
           <!--  <div class="log_out displayNone">
             <p>PRACTICE</p>
           </div>-->
+        </div>
+        <div class="header_box displayNone">
           <div class="log_out buy_tokens displayNone displayNon2">
             <p>BUY TICKETS</p>
           </div>
-        </div>
-        <div class="header_box displayNone">
           <div class="log_out notf displayNon2">
             <p>NOTIFICATIONS</p>
           </div>
@@ -529,9 +580,9 @@
           </div>
         </div>
         <div class="header_box header_box2">
-          <i class="fas fa-cog"></i>
-          <i class="fas fa-history history"></i>
-          <i class="fas fa-expand" id="fullscreenButton"></i>
+          <i class="fas fa-cog iconss"></i>
+          <i class="fas fa-history history iconss"></i>
+          <i class="fas fa-expand iconss" id="fullscreenButton"></i>
           <div class="user_avator player_name">
             <div class="pic" onclick="openManageAccount()">
               {% for x in player_d%}
@@ -587,9 +638,10 @@
           <div class="container_A_2">
             <div class="loader3Holder">
               <div class="loader3"></div>
-              <br>
-              <h5 id="textttt" style="text-align:center; color:gray"></h5>
+              <br />
+              <h5 id="textttt" style="text-align: center; color: gray"></h5>
             </div>
+
             <div class="container_A_2_2">
               <div class="container_A_2_1">
                 <button
@@ -651,6 +703,7 @@
                 </div>
               </div>
             </div>
+            <div class="callResults">LAST EVENT</div>
           </div>
         </div>
       </div>
@@ -684,11 +737,11 @@
           <div class="event_d">
             <div class="event_d2">
               <p>EVENT NAME</p>
-              <p>XXX</p>
+              <p id="eventName">XXX</p>
             </div>
             <div class="event_d2">
               <p>EVENT TYPE</p>
-              <p>XXX</p>
+              <p id="eventType">XXX</p>
             </div>
             <div class="event_d2">
               <p>DURATION</p>
@@ -840,6 +893,7 @@
             <div style="width: 85%">
               <input type="hidden" id="csrf_token5" value="{{ csrf_token }}" />
               <input type="hidden" id="csrf_token14" value="{{ csrf_token }}" />
+              <input type="hidden" id="csrf_token15" value="{{ csrf_token }}" />
               <input
                 placeholder="Send a comment."
                 class="send-inputcomme comment"
@@ -892,7 +946,7 @@
                 style="font-size: 110%; cursor: pointer"
                 class="fa fa-tag tagg"
               ></i
-              >&nbsp;&nbsp;<span style="text-align: center">MK500</span
+              >&nbsp;&nbsp;<span style="text-align: center">MK50</span
               >&nbsp;<span style="color: orange">,1 ticket</span>
               <div class="token_holder_1">
                 <p>
@@ -922,7 +976,7 @@
                 class="fa fa-tag tagg"
               ></i
               >&nbsp;&nbsp;&nbsp;&nbsp;<span style="text-align: center"
-                >MK1000</span
+                >MK100</span
               >&nbsp;<span style="color: orange">,3 tickets</span>
               <div class="token_holder_1">
                 <p>EPIC <br />TICKETS</p>
@@ -965,13 +1019,13 @@
                 class="fa fa-tag tagg"
               ></i
               >&nbsp;&nbsp;&nbsp;&nbsp;
-              <span style="text-align: center">MK1500</span>&nbsp;<span
+              <span style="text-align: center">MK150</span>&nbsp;<span
                 style="color: orange"
                 >,5 tickets</span
               >
               <div class="token_holder_1">
                 <p>
-                  LEGENGARY <br />
+                  LEGENDARY <br />
                   TICKETS
                 </p>
               </div>
@@ -1036,6 +1090,7 @@
         </div>
         <div class="manage_account_body">
           <form id="save_data">
+            <input type="hidden" id="csrf_token0" value="{{ csrf_token }}" />
             <input type="hidden" id="csrf_token4" value="{{ csrf_token }}" />
             <input type="hidden" id="csrf_token7" value="{{ csrf_token }}" />
             <input type="hidden" id="csrf_token13" value="{{ csrf_token }}" />
@@ -1346,5 +1401,6 @@
     <script src="{% static 'js/ttd_getting_data_api.js' %}"></script>
     <script src="{% static 'js/timers.js' %}"></script>
     <script src="{% static 'js/home_typos.js' %}"></script>
+    <script src="{% static 'js/events.js' %}"></script>
   </body>
 </html>

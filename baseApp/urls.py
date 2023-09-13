@@ -34,4 +34,8 @@ urlpatterns = [
     path("getLeaderBoardCode", views.getLeaderBoardCode, name="getLeaderBoardCode"),
     path("startTypingArea", views.startTypingArea, name="startTypingArea"),
     path("getTypingAreaCode", views.getTypingAreaCode, name="getTypingAreaCode"),
+    path("getEvent1Code", views.getEvent1Code, name="getEvent1Code"),
+    path("getEvent2Code", views.getEvent2Code, name="getEvent2Code"),
+    path("starEvent1", views.starEvent1, name="starEvent1"),
+    path("starEvent2", views.starEvent2, name="starEvent2"),
 ]

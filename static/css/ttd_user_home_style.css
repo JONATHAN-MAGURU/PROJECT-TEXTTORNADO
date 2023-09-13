@@ -130,7 +130,6 @@
     overflow-y: scroll;
     display: flex;
     border-radius: 3px;
-    padding: 6px;
     flex-direction: column;
     justify-content: start;
     background-color: transparent;
@@ -142,7 +141,7 @@
     display: flex;
     justify-content: space-between;
     flex-direction: row;
-    padding: 6px;
+    padding-top: 5px;
     margin-bottom: 10px;
     background-color: transparent;
   }
@@ -189,6 +188,7 @@
     height: auto;
     padding: 60px;
     display: block;
+    
     margin-top: 20px;
     background-color: #161b22;
     border: 1px solid #21262d;
@@ -314,8 +314,8 @@
     letter-spacing: 2px;
     height: 27px;
     transition: 0.4s;
-    font-size: 95%;
-    font-weight: bolder;
+    font-size: 90%;
+    font-weight:550;
     outline: 1px solid gray;
     overflow: hidden;
     background-color: #0d1117;
@@ -1122,6 +1122,7 @@
   .wrapper {
     border-radius: 2px;
     background-color: #0d1117;
+    margin: 2px;
   }
 
   .wrapper .input-field {
@@ -1863,6 +1864,8 @@
   .outOfTicketsHead {
     width: 100%;
     height: auto;
+    background-size: cover;
+    background-image: url("/images/cover.jpg");
     padding: 12px;
   }
   .outOfTicketsBody {
@@ -1893,8 +1896,43 @@
     font-weight: 550;
     cursor: pointer;
   }
+  .setseen {
+    background-color: orange;
+    width: auto;
+    padding: 10px;
+    transition: 0.5s;
+    text-align: center;
+    width: 28%;
+    opacity: 0.9;
+    margin-left: 6px;
+    border-radius: 4px;
+    color: white;
+    font-weight: 550;
+    cursor: pointer;
+  }
+  .callResults {
+    background-color: #ed143d;
+    width: auto;
+    padding: 10px;
+    transition: 0.5s;
+    text-align: center;
+    width: 28%;
+    opacity: 0.9;
+    font-weight: 650;
+    margin-left: 2px;
+    margin-top: 10px;
+    font-size: 80%;
+    border-radius: 2px;
+    color: white;
+    font-weight: 550;
+    box-shadow: 2px 2px 20px #000000;
+    cursor: pointer;
+  }
   .next-btn2:hover {
     background-color: rgba(255, 140, 0, 0.8);
+  }
+  .setseen:hover {
+    opacity: 0.8;
   }
   .next-btn {
     background-color: rgb(255, 140, 0);
@@ -2101,7 +2139,7 @@
 
   .welcomeUserHolder {
     position: fixed;
-    width: 60%;
+    width: 70%;
     background-color: #0d1117;
     border-radius: 6px;
     transform: translate(-50%, 10%);
@@ -2109,7 +2147,7 @@
     top: 10%;
     z-index: 3000;
     color: #ffffff;
-    max-height: 60vh;
+    max-height: 65vh;
     transition: 0.5s;
     font-size: 100%;
     overflow: hidden;
@@ -2154,13 +2192,22 @@
     font-size: 103%;
     text-shadow: 1px 1px 10px black;
   }
+  .welcomeUserB2 {
+    width: 100%;
+    color: white;
+    overflow-y: scroll;
+    line-height: 22px;
+    max-height: 40vh;
+    font-size: 103%;
+    text-shadow: 1px 1px 10px black;
+  }
   .welcomeUserF {
     width: 100%;
     border-top: 1px solid #21262d;
-    padding: 10px;
+    padding: 15px;
     display: flex;
-    height: 8vh;
-    justify-content: end;
+    height: auto;
+    justify-content:center;
     height: auto;
   }
 
@@ -2212,8 +2259,17 @@
     display: flex;
     padding: 10px;
     flex-direction: row;
+    color: gray;
   }
+.iconss{
+  margin-top: 8px;
+  cursor: pointer;
+  font-size: 110%;
+}
 
+.iconss:hover{
+  color: gray;
+}
   .winnerDetailsHolder {
     width: 100%;
     border: 1px solid #21262d;
@@ -2251,6 +2307,14 @@
   .winnerText {
     text-align: center;
     background: #ed143d;
+    letter-spacing: 2px;
+    padding: 8px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+  }
+  .loosertext {
+    text-align: center;
+    background:#ed143d;
     letter-spacing: 2px;
     padding: 8px;
     border-top-left-radius: 6px;

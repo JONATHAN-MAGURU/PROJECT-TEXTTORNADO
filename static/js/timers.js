@@ -2,7 +2,7 @@ const endEventHolder = document.getElementsByClassName("welcomeUserHolder")[1];
 
 document.addEventListener("DOMContentLoaded", async () => {
   try {
-    const response = await fetch("/getEndEvents");
+    const response = await fetch(`/getEndEvents?id=${id}`);
     if (response.status === 200) {
       const data = await response.json();
       if (Array.isArray(data.end_events)) {
@@ -188,29 +188,49 @@ function typeMessage() {
 }
 
 function callWinner() {
+  showLooser();
+  showWinner();
   endEventHolder.style.display = "block";
   document.querySelector(".spinner").style.display = "none";
   checking.style.display = "none";
 }
+function callWinnerOff() {
+  endEventHolder.style.display = "none";
+}
 
-document.addEventListener("DOMContentLoaded", () => {
   async function fetchAndCheckEndEvents() {
     try {
-      const response = await fetch("/getEndEvents");
+      const response = await fetch(`/getEndEvents?id=${id}`);
+
       if (response.status === 200) {
         const data = await response.json();
-        if (Array.isArray(data.end_events)) {
+
+        if (Array.isArray(data.end_events) && Array.isArray(data.player_data)) {
           const endEvents = data.end_events;
+          const playerData = data.player_data;
+
+          let userSeenNotSeenFlag = false;
+
+          playerData.forEach((player) => {
+            const userSeen = player.results;
+            if (userSeen === "not seen") {
+              userSeenNotSeenFlag = true;
+            }
+          });
+
           for (const event of endEvents) {
-            const endEvent = parseInt(event.endEvent, 10); 
-            if (!isNaN(endEvent) && endEvent < 30000) {
+            const endEvent = parseInt(event.endEvent, 10);
+            if (!isNaN(endEvent) && endEvent < 10000 && userSeenNotSeenFlag) {
               document.querySelector(".spinnerContainer").style.display =
                 "block";
-              setTimeout(typeMessage, 12000);
+              setTimeout(typeMessage, 7000);
+              clearInterval(clearFetch);
             }
           }
         } else {
-          console.log("Invalid server response.");
+          console.log(
+            "Invalid server response. 'end_events' or 'player_data' is missing."
+          );
         }
       } else {
         console.log("Request failed. Returned status of " + response.status);
@@ -220,7 +240,34 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  fetchAndCheckEndEvents();
-  setInterval(fetchAndCheckEndEvents, 12000);
+
+  const clearFetch = setInterval(fetchAndCheckEndEvents,3000)
+
+const setseen = document.querySelector(".setseen");
+const callResults = document.querySelector(".callResults");
+
+callResults.addEventListener("click", function () {
+  document.querySelector(".spinnerContainer").style.display = "block";
+  setTimeout(callWinner, 500);
+  document.querySelector('#toAnEnd').innerHTML ="LAST EVENT RESULTS"
 });
 
+setseen.addEventListener("click", function () {
+  const firstIdOb = { id };
+  const jsonData = JSON.stringify(firstIdOb);
+  const XHR3 = new XMLHttpRequest();
+  const csrfToken = document.querySelector("#csrf_token15").value;
+  XHR3.open("POST", "/setToseen", true);
+  XHR3.setRequestHeader("Content-Type", "application/json");
+  XHR3.setRequestHeader("X-CSRFToken", csrfToken);
+  XHR3.addEventListener("load", function () {
+    if (XHR3.status === 200 && XHR3.readyState === 4) {
+      callWinnerOff();
+      document.querySelector(".spinnerContainer").style.display = "none";
+    } else {
+      console.log("Something went wrong");
+    }
+  });
+
+  XHR3.send(jsonData);
+});

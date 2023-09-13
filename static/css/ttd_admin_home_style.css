@@ -353,6 +353,7 @@ li:hover {
   padding: 0;
   opacity: 1;
   top: 48px;
+  height: 85vh;
   background-color: #0d1117;
   height: 0;
   color: white;
@@ -411,7 +412,6 @@ textarea {
   width: 100%;
   font-size: 130%;
   border: none;
-  text-align: justify;
   outline: none;
 }
 
@@ -952,6 +952,23 @@ button:hover {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   padding: 8px;
 }
+.box2 {
+  width: 96%;
+  height: 130px;
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+  justify-content: center;
+  background-color: #161b22;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  padding: 8px;
+}
+
+.desc{
+  padding: 8px;
+  color: gray;
+}
 .switch-toggle2 {
   height: 50px;
 }
@@ -1223,5 +1240,22 @@ input[type="number"] {
   display: flex;
   flex-direction: row;
   letter-spacing: 2px;
+  justify-content: space-between;
+}
+
+
+.eventHolder{
+  width: 32%;
+  height: auto;
+  box-shadow: 2px 2px 20px #000000;
+  border-radius: 2px;
+  background-color: #0d1117;
+  padding: 5px;
+  margin: 5px;
+}
+.eventMainHolder{
+  width: 100%;
+  flex-wrap: wrap;
+  display: flex;
   justify-content: space-between;
 }

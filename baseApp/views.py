@@ -16,9 +16,11 @@ from baseApp.models import (
     EndEvent,
     NextEvent,
     TypingArea,
+    Event1,
+    Event2,
 )
 from topApp.models import Player
-from topApp.views import id_gen
+from topApp.views import id_gen, transferData
 import random
 
 
@@ -164,8 +166,18 @@ def getLeaderBoardCode(request):
     codes = Leaderboard.objects.all()
     return JsonResponse({"codes": list(codes.values())})
 
+
 def getTypingAreaCode(request):
     codes = TypingArea.objects.all()
+    return JsonResponse({"codes": list(codes.values())})
+
+
+def getEvent1Code(request):
+    codes = Event1.objects.all()
+    return JsonResponse({"codes": list(codes.values())})
+
+def getEvent2Code(request):
+    codes = Event2.objects.all()
     return JsonResponse({"codes": list(codes.values())})
 
 
@@ -228,17 +240,29 @@ update_end_event()
 
 
 def subtract_until_zero(number, subtract_by):
+    Player.objects.all().update(results="seen")
     event = EndEvent.objects.get(endEventId=85747)
     while number > 0:
         event.endEvent = number
         event.save()
         number -= subtract_by
-
         if number < 0:
             number = 0
-
         time.sleep(1)
+        if event.endEvent < 10000:
+            Player.objects.all().update(results="not seen")
+
     print("Number has reached 0!")
+    transferData()
+    time.sleep(3)
+    code1 = 85747
+    getCode = Leaderboard.objects.get(leaderBoardId=5747)
+    getCode.leaderBoardId = code1
+    getCode.save()
+    time.sleep(3)
+    getCode2 = TypingArea.objects.get(typingAreaId=5747)
+    getCode2.typingAreaId = code1
+    getCode2.save()
 
 
 def setEventNext(request):
@@ -353,6 +377,84 @@ def startTimerOne(request):
             getCode = EndEvent.objects.get(endEventId=85747)
             getCode.endEventId = code1
             getCode.save()
+            return HttpResponse("UPDATED SUCCESSIFULLY...")
+        else:
+            return HttpResponse("UPDATE FAILED...")
+    else:
+        return HttpResponse("something went wrong")
+
+
+def starEvent1(request):
+    if request.method == "POST":
+        code = json.loads(request.body)
+        code1 = code["firstId"]
+        if code1 == 185747:
+            getCode = Event1.objects.get(eventId=15747)
+            getCode.eventId = code1
+            getCode.save()
+
+            code3 = 85747
+            getCode4 = Leaderboard.objects.get(leaderBoardId=5747)
+            getCode4.leaderBoardId = code3
+            getCode4.save()
+            time.sleep(5)
+            getCode5 = TypingArea.objects.get(typingAreaId=5747)
+            getCode5.typingAreaId = code3
+            getCode5.save()
+
+            return HttpResponse("UPDATED SUCCESSIFULLY...")
+        elif code1 == 15747:
+            getCode = Event1.objects.get(eventId=185747)
+            getCode.eventId = code1
+            getCode.save()
+
+            code2 = 5747
+            getCode3 = Leaderboard.objects.get(leaderBoardId=85747)
+            getCode3.leaderBoardId = code2
+            getCode3.save()
+            time.sleep(5)
+            getCode2 = TypingArea.objects.get(typingAreaId=85747)
+            getCode2.typingAreaId = code2
+            getCode2.save()
+            return HttpResponse("UPDATED SUCCESSIFULLY...")
+        else:
+            return HttpResponse("UPDATE FAILED...")
+    else:
+        return HttpResponse("something went wrong")
+    
+
+def starEvent2(request):
+    if request.method == "POST":
+        code = json.loads(request.body)
+        code1 = code["firstId"]
+        if code1 == 185747:
+            getCode = Event2.objects.get(eventId=15747)
+            getCode.eventId = code1
+            getCode.save()
+
+            code3 = 85747
+            getCode4 = Leaderboard.objects.get(leaderBoardId=5747)
+            getCode4.leaderBoardId = code3
+            getCode4.save()
+            time.sleep(5)
+            getCode5 = TypingArea.objects.get(typingAreaId=5747)
+            getCode5.typingAreaId = code3
+            getCode5.save()
+
+            return HttpResponse("UPDATED SUCCESSIFULLY...")
+        elif code1 == 15747:
+            getCode = Event2.objects.get(eventId=185747)
+            getCode.eventId = code1
+            getCode.save()
+
+            code2 = 5747
+            getCode3 = Leaderboard.objects.get(leaderBoardId=85747)
+            getCode3.leaderBoardId = code2
+            getCode3.save()
+            time.sleep(5)
+            getCode2 = TypingArea.objects.get(typingAreaId=85747)
+            getCode2.typingAreaId = code2
+            getCode2.save()
             return HttpResponse("UPDATED SUCCESSIFULLY...")
         else:
             return HttpResponse("UPDATE FAILED...")

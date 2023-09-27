@@ -46,7 +46,6 @@ function startCountdown(totalMilliseconds) {
 
     if (totalMilliseconds < 0) {
       clearInterval(timer);
-      document.getElementById("timer").innerHTML = "Time's up!";
     }
   }, 5);
 }
@@ -100,7 +99,6 @@ function startCountdown2(totalMilliseconds2) {
 
     if (totalMilliseconds2 < 0) {
       clearInterval(timer3);
-      document.getElementById("timer").innerHTML = "Time's up!";
     }
   }, 5);
 }

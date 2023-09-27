@@ -11,29 +11,19 @@
 </head>
 
 <body>
+    <div class="Hidden"></div>
     <main class="main2">
-        <div class="welcoming_holder">
-            <div class="welcoming_holder_text">
-                <p id="typing-text"></p>
-            </div>
-            <div class="welcoming_holder_btn">
-                <div class="btn_create_acount">
-                    <p> <a href="{% url 'ttd_admin_signin' %}">CREATE ACCOUNT</a> </p>
-                </div>
-            </div>
-
-        </div>
         <div class="form_holder">
             <div class="ttd_admin_container">
                 <div id="header">
-                    <h4 id="header_text"></h4>
+                    <h4 id="header_text">TextTornado Admin</h4>
                 </div>
                 <form action="ttd_admin_homepage" method="POST">
                     {% csrf_token %}
                     <label for="username" id="usern"></label><br><br>
-                    <input type="email" name="username" id="username" required><br>
+                    <input type="email" name="username" id="username" placeholder="Email" required><br>
                     <label for="password" id="passw"></label><br><br>
-                    <input type="password" name="password" id="password" required> <br>
+                    <input type="password" name="password" id="password" placeholder="password" required> <br>
                     <span id="displayPassword"><input type="checkbox" id="checkbox"> <label for="checkbox"
                             id="status">show password</label></span>
                     <input type="submit" value="LOGIN">
@@ -42,7 +32,7 @@
         </div>
     </main>
     <script src="{% static 'js/ttd_user_script.js' %}"></script>
-    <script src="{% static 'js/ttd_user_script2.js' %}"></script>
+    <script src="{% static 'admin_js/ttd_admin_script.js' %}"></script>
 </body>
 
 </html>

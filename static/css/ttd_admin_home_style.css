@@ -302,17 +302,20 @@ li:hover {
 
 ::-webkit-scrollbar {
   width: 8px;
+  z-index: -999999;
   height: 5px;
-  border-radius: 50%;
 }
 
 ::-webkit-scrollbar-thumb {
   background-color: gray;
   padding: 2px;
+  z-index: -999999;
+  border-radius: 8px;
 }
 
 ::-webkit-scrollbar-track {
   background-color: transparent;
+  z-index: -999999;
 }
 
 .container_C {
@@ -351,13 +354,11 @@ li:hover {
   position: fixed;
   right: 0;
   padding: 0;
-  opacity: 1;
   top: 48px;
-  height: 85vh;
+  height: 95vh;
   background-color: #0d1117;
-  height: 0;
   color: white;
-  overflow-y: scroll;
+  overflow: hidden;
   transition: 0.3s;
 }
 
@@ -419,13 +420,13 @@ input[type="text"] {
   background-color: #161b22;
   color: white;
   box-shadow: 0px 0px 2px #000000;
-  padding: 12px;
-  border-radius: 5px;
+  padding: 10px;
+  border-radius: 3px;
   width: 100%;
-  margin-top: 8px;
-  font-size: 130%;
   border: none;
+  font-weight: bold;
   outline: none;
+  font-size: 100%;
 }
 
 input[type="text"]:focus {
@@ -638,7 +639,7 @@ button {
   border-radius: 2px;
   outline: none;
   border: none;
-  height: 28px;
+  height: auto;
   display: inline-block;
   background: #0d1117;
   transition: 0.3s;
@@ -794,7 +795,7 @@ button:hover {
 }
 
 .containerAction {
-  height: 50px;
+  max-height: 90px;
   position: fixed;
   top: 45px;
   right: 14px;
@@ -826,19 +827,19 @@ button:hover {
 }
 
 .userInfoHolder {
-  width: 36%;
+  width: 35%;
   background-color: #161b22;
-  height: 600px;
+  height: 98vh;
   border-radius: 4px;
   display: none;
   z-index: 20;
   position: fixed;
   padding: 0;
-  top: 5%;
+  top: 0.5%;
   left: 50%;
   transition: 0.3s;
   box-shadow: 0.5px 0.5px 5px #000000;
-  transform: translate(-50%, 5%);
+  transform: translate(-50%, 0.5%);
 }
 
 .userInfoHead {
@@ -849,7 +850,7 @@ button:hover {
 }
 .userInfoBody {
   padding: 12px;
-  height: 560px;
+  height: 90vh;
   width: 100%;
   overflow: scroll;
 }
@@ -965,7 +966,7 @@ button:hover {
   padding: 8px;
 }
 
-.desc{
+.desc {
   padding: 8px;
   color: gray;
 }
@@ -1243,8 +1244,7 @@ input[type="number"] {
   justify-content: space-between;
 }
 
-
-.eventHolder{
+.eventHolder {
   width: 32%;
   height: auto;
   box-shadow: 2px 2px 20px #000000;
@@ -1253,9 +1253,127 @@ input[type="number"] {
   padding: 5px;
   margin: 5px;
 }
-.eventMainHolder{
+.eventMainHolder {
   width: 100%;
   flex-wrap: wrap;
   display: flex;
   justify-content: space-between;
+}
+
+.shareTickets {
+  width: 32%;
+  height: auto;
+  box-shadow: 2px 2px 20px #000000;
+  border-radius: 2px;
+  background-color: #0d1117;
+  padding: 10px;
+  margin: 15px;
+}
+
+#gamificationStatus {
+  font-size: 110%;
+  font-weight: bolder;
+  color: yellowgreen;
+}
+
+.support_main_container {
+  width: 100%;
+  height: 90vh;
+  background-color: transparent;
+  display: flex;
+  overflow: hidden;
+  border-top: 1px solid #21262d;
+  justify-content: space-between;
+}
+
+.support_containerA {
+  width: 35%;
+  box-shadow: 1px 1px 8px #000000;
+  height: 90vh;
+  background-color: #0d1117;
+  padding: 12px;
+  overflow: scroll;
+  border-right: 1px solid #21262d;
+}
+.support_containerB {
+  width: 65%;
+  height: 90vh;
+  background-color: #161b22;
+}
+.support_containerB_1 {
+  width: 100%;
+  height: 90vh;
+  background-color:transparent;
+}
+
+.support_containerB_1_Head {
+  width: 100%;
+  max-height: 6vh;
+  padding: 8px 15px;
+  background-color:#0d1117;
+  border-bottom: 1px solid #21262d;
+  box-shadow: 2px 2px 15px #000000;
+}
+.support_containerB_1_Body {
+  width: 100%;
+  height: 75vh;
+  padding: 10px;
+  background-color:#161b22;
+  overflow-y: scroll;
+}
+.support_containerB_1_Foot {
+  width: 100%;
+  height: 9vh;
+  padding: 4px;
+  border-top: 1px solid #21262d;
+  background-color:#0d1117;
+  box-shadow: 2px 2px 15px #000000;
+}
+
+.messageHolder {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #161b22;
+  border: 1px solid #21262d;
+  width: 100%;
+  transition: 0.2s;
+  border-radius: 5px;
+  margin-bottom: 6px;
+}
+
+.messageHolder:hover {
+  background-color: #0d1117;
+  border: 1px solid orange;
+}
+.messageHead {
+  display: flex;
+  justify-content: space-between;
+}
+
+.comment_holder {
+  border-radius: 3px;
+  background-color: transparent;
+  padding: 6px;
+  height: auto;
+  font-size: 100%;
+  margin: 10px;
+  overflow: hidden;
+  max-width: 60%;
+  box-shadow: 0.5px 0.5px 3px #000000;
+  border-bottom: 1px solid #2e2f3a;
+}
+
+.comment_holder2 {
+  border-radius: 3px;
+  background-color: transparent;
+  padding: 6px;
+  background-color: #0d1117;
+  font-size: 100%;
+  height: auto;
+  overflow: hidden;
+  margin-left: 50%;
+  margin-top: 8px;
+  max-width: 65%;
+  box-shadow: 0.5px 0.5px 3px #000000;
+  border-bottom: 1px solid #2e2f3a;
 }

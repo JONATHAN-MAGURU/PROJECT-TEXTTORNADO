@@ -25,6 +25,7 @@ urlpatterns = [
     path("setEventEnd", views.setEventEnd, name="setEventEnd"),
     path("setEventNext", views.setEventNext, name="setEventNext"),
     path("startTimerOne", views.startTimerOne, name="startTimerOne"),
+    path("rewardData", views.rewardData, name="srewardData"),
     path(
         "getStartTimerOneCodes",
         views.getStartTimerOneCodes,
@@ -38,4 +39,6 @@ urlpatterns = [
     path("getEvent2Code", views.getEvent2Code, name="getEvent2Code"),
     path("starEvent1", views.starEvent1, name="starEvent1"),
     path("starEvent2", views.starEvent2, name="starEvent2"),
+    path("get_concern", views.get_concern, name="get_concern"),
+    path("get_concern3", views.get_concern3, name="get_concern3"),
 ]

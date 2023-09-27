@@ -100,18 +100,20 @@ close_comm.addEventListener("click", function () {
 });
 
 history.addEventListener("click", function () {
-  settings_container.style.width = "29%";
+  settings_container.style.width = "28.5%";
   settings_container2.style.width = 0;
   settings_container3.style.width = 0;
   settings_container4.style.width = 0;
 });
 
-settings_box2.addEventListener("click", function () {
-  settings_container2.style.width = "27%";
-  settings_container.style.width = 0;
-  settings_container3.style.width = 0;
-  settings_container4.style.width = 0;
-});
+document
+  .getElementsByClassName("customerCare")[0]
+  .addEventListener("click", function () {
+    settings_container2.style.width = "28.5%";
+    settings_container.style.width = 0;
+    settings_container3.style.width = 0;
+    settings_container4.style.width = 0;
+  });
 
 settings_box3.addEventListener("click", function () {
   settings_container3.style.width = "27%";
@@ -135,7 +137,7 @@ function clearCover() {
   document.querySelector(".bodyCover").style.width = "0%";
 }
 
-function reloadPage(){
+function reloadPage() {
   window.location.reload();
 }
 
@@ -154,7 +156,7 @@ setInterval(function () {
           loader.style.height = "100vh";
           loader.style.opacity = "1";
           main_body.style.display = "none";
-         setTimeout(reloadPage,6000);
+          setTimeout(reloadPage, 6000);
         }
       }
     } else {
@@ -260,6 +262,26 @@ fontss.addEventListener("change", function () {
   font_changer.style.fontSize = fontss.value;
 });
 
+const fontSelector = document.getElementById("fontSelector");
+const fontChanger = document.getElementById("fontChanger");
+
+fontSelector.addEventListener("change", function () {
+  const selectedFontFamily = fontSelector.value;
+  font_changer.style.fontFamily = selectedFontFamily;
+});
+
+const alignmentSelector = document.getElementById("alignmentSelector");
+
+alignmentSelector.addEventListener("change", function () {
+  const selectedAlignment = alignmentSelector.value;
+  font_changer.style.textAlign = selectedAlignment;
+});
+
+window.addEventListener("load", function () {
+  const selectedAlignment = alignmentSelector.value;
+  font_changer.style.textAlign = selectedAlignment;
+});
+
 manage_account.addEventListener("click", function () {
   manage_account_holder.style.width = "23%";
   manage_account_holder.style.border = "1px solid #21262d";
@@ -298,7 +320,7 @@ document
     tryAgainBtn.style.cursor = "pointer";
     tryAgainBtn.style.color = "orange";
   });
-
+/*
 document.addEventListener("visibilitychange", function () {
   if (document.visibilityState === "hidden") {
     console.log("is here");
@@ -306,7 +328,7 @@ document.addEventListener("visibilitychange", function () {
     location.reload();
   }
 });
-
+*/
 document.querySelector(".onNot").addEventListener("click", function () {
   notifications.style.width = 0;
   notifications.style.opacity = 0;
@@ -697,7 +719,7 @@ function callNotification() {
     "Typing event is almost over, in the last two minutes you are not allowed to take the typing test.";
 }
 
-setInterval(function () {
+const getCodesForLeaderBoard = setInterval(function () {
   var xhr = new XMLHttpRequest();
   xhr.open("GET", "/getLeaderBoardCode");
   xhr.onload = function () {
@@ -740,5 +762,3 @@ setInterval(function () {
   };
   xhr.send();
 }, 2000);
-
-

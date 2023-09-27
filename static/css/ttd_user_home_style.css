@@ -142,6 +142,8 @@
     justify-content: space-between;
     flex-direction: row;
     padding-top: 5px;
+    padding-left: 4px;
+    padding-right: 4px;
     margin-bottom: 10px;
     background-color: transparent;
   }
@@ -174,7 +176,7 @@
     width: 100%;
     height: auto;
     padding: 2px;
-    display:none;
+    display: none;
     margin-top: 10px;
     background-color: #161b22;
     border: 1px solid #21262d;
@@ -188,7 +190,7 @@
     height: auto;
     padding: 60px;
     display: block;
-    
+
     margin-top: 20px;
     background-color: #161b22;
     border: 1px solid #21262d;
@@ -222,7 +224,7 @@
     flex-direction: column;
     overflow-y: scroll;
     justify-content: space-between;
-    height: 90vh;
+    height: 89vh;
     background-color: transparent;
   }
 
@@ -268,8 +270,6 @@
     overflow: hidden;
     top: 0;
     padding: 4px;
-    background-image: url("/images/cover.jpg");
-    background-size: cover;
     left: 0;
     display: flex;
     flex-direction: row;
@@ -295,14 +295,13 @@
     text-align: center;
     border-radius: 4px;
     border: none;
-    letter-spacing: 2px;
     transition: 0.4s;
-    font-size: 80%;
+    font-size: 70%;
+    font-weight: 600;
     border: 1px solid #21262d;
     overflow: hidden;
     background-color: #0d1117;
-    font-weight: 450;
-    padding: 7px;
+    padding: 6px;
     box-shadow: 0px 0px 3px #000000;
   }
   .availTicketsHolder {
@@ -315,7 +314,7 @@
     height: 27px;
     transition: 0.4s;
     font-size: 90%;
-    font-weight:550;
+    font-weight: 550;
     outline: 1px solid gray;
     overflow: hidden;
     background-color: #0d1117;
@@ -412,16 +411,15 @@
   .settings_container {
     width: 0;
     transition: 0.3s;
-    box-shadow: 10px 10px 131px #000000;
     background-color: #161b22;
     position: fixed;
     background-image: url("/images/cover.jpg");
     background-size: cover;
     right: 0;
-    height: 92vh;
+    height: 90vh;
     top: 48px;
     overflow: hidden;
-    box-shadow: 0px 0px 3px #000000;
+    box-shadow: 2px 2px 8px #000000;
   }
 
   .send-icon {
@@ -433,10 +431,9 @@
   .test_history_header {
     width: 100%;
     padding: 8px;
-    border-bottom: 3px solid orange;
+    border-bottom: 1px solid #2e2f3a;
     font-size: 85%;
-    letter-spacing: 3px;
-    box-shadow: 0px 0px 3px #000000;
+    letter-spacing: 2px;
     background-color: transparent;
     display: flex;
     flex-direction: row;
@@ -445,7 +442,14 @@
 
   .test_history_holder {
     width: 100%;
-    height: 100%;
+    height: 80vh;
+    overflow-y: scroll;
+    padding: 10px;
+    background-color: transparent;
+  }
+  .test_history_holder2 {
+    width: 100%;
+    height: 75vh;
     overflow-y: scroll;
     padding: 10px;
     background-color: transparent;
@@ -456,11 +460,11 @@
     height: auto;
     font-size: 85%;
     letter-spacing: 2px;
-    border-right: 1px solid orange;
+    border-bottom: 1px solid #2e2f3a;
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 15px;
-    box-shadow: 0px 0px 8px #000000;
+    box-shadow: 1px 1px 20px #000000;
     background-color: transparent;
   }
 
@@ -472,55 +476,71 @@
     font-size: 85%;
   }
 
-  .issue_holder1 {
-    width: 100%;
-    text-align: center;
-    height: auto;
-    padding: 8px;
-    box-shadow: 0px 0px 1px #000000;
-    background-color: transparent;
-    font-size: 85%;
-    letter-spacing: 2px;
-  }
-
   .issue_holder2 {
-    max-width: 70%;
+    border-radius: 5px;
+    background-color: transparent;
+
+    padding: 6px;
     height: auto;
-    padding: 8px;
-    right: 5px;
-    box-shadow: 0px 0px 1px #000000;
-    background-color: #0d1117;
-    font-size: 85%;
-    position: absolute;
-    margin-top: 10px;
-    border-radius: 3px;
-    letter-spacing: 2px;
+    font-size: 90%;
+    margin: 4px;
+    overflow: hidden;
+    max-width: 75%;
+    box-shadow: 1px 1px 9px #000000;
+    border-bottom: 1px solid #2e2f3a;
   }
 
   .issue_holder3 {
-    max-width: 70%;
+    border-radius: 6px;
+    background-color: transparent;
+    padding: 6px;
+    background-color: transparent;
+    font-size: 90%;
     height: auto;
+    overflow: hidden;
+    margin-left: 100px;
+    margin-top: 8px;
+    max-width: 75%;
+    box-shadow: 1px 1px 9px #000000;
+    border-bottom: 1px solid #2e2f3a;
+  }
+  .customer {
+    border: none;
+    caret-color: white;
+    padding: 10px;
+    outline: none;
+    color: white;
+    background-color: transparent;
+    width: 98%;
+  }
+
+  .issue_holder1 {
+    width: 100%;
+    text-align: justify;
+    height: auto;
+    border-bottom: 1px solid #2e2f3a;
     padding: 8px;
-    left: 5px;
-    box-shadow: 0px 0px 1px #000000;
-    background-color: #0d1117;
-    font-size: 85%;
-    position: absolute;
-    margin-top: 30px;
-    border-radius: 3px;
+    box-shadow: 1px 1px 10px #000000;
+    border-radius: 5px;
+    color: gray;
+    background-color: transparent;
+    font-size: 90%;
+    font-weight: 610;
     letter-spacing: 2px;
   }
 
   .issue_input {
     position: absolute;
     bottom: 0;
-    box-shadow: 0px 0px 5px #000000;
+    box-shadow: 1px 1px 5px #000000;
     padding: 8px;
-    height: 60px;
+    height: auto;
+    margin: auto;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
+    border-top: 1px solid #2e2f3a;
   }
 
   .asked_q {
@@ -585,7 +605,23 @@
     padding: 6px 12px;
     border: 1px solid #21262d;
   }
-  .otherOptions {
+  .claim_box {
+    cursor: pointer;
+    width: auto;
+    text-align: center;
+    border-radius: 4px;
+    box-shadow: 1px 1px 10px #000000;
+    color: #ffffff;
+    border: none;
+    transition: 0.4s;
+    font-size: 100%;
+    background-color: #ed143d;
+    overflow: hidden;
+    padding: 6px 12px;
+    border: 1px solid #21262d;
+  }
+  .otherOptions,
+  .otherOptions2 {
     cursor: pointer;
     width: 100%;
     border-radius: 2px;
@@ -598,6 +634,9 @@
     overflow: hidden;
     padding: 8px;
     border: 1px solid #21262d;
+  }
+  .otherOptions2:hover {
+    border: 1px solid orange;
   }
   .otherOptions:hover {
     border: 1px solid orange;
@@ -657,7 +696,7 @@
 
   .closee {
     float: right;
-    padding: 10px 15px;
+    padding: 10px 10px;
     transition: 0.3s;
     border-radius: 2px;
     right: 20px;
@@ -665,7 +704,7 @@
 
   .closee5 {
     float: right;
-    padding: 10px 15px;
+    padding: 10px 10px;
     transition: 0.3s;
     border-radius: 2px;
     right: 20px;
@@ -744,7 +783,7 @@
   .token_holder {
     width: 32%;
     height: auto;
-    padding: 10px;
+    padding: 8px;
     overflow: hidden;
     transition: 0.5s;
     box-shadow: 0px 0px 3px #000000;
@@ -756,14 +795,14 @@
   .token_holder_1 {
     font-size: 100%;
     color: gray;
-    padding: 8px;
+    padding: 6px;
     text-align: center;
     letter-spacing: 2px;
   }
 
   .token_holder_2 {
     font-size: 90%;
-    padding: 15px;
+    padding: 8px;
     position: relative;
     height: auto;
     background-color: transparent;
@@ -816,7 +855,7 @@
 
   .tickett5 {
     position: absolute;
-    top:40px;
+    top: 40px;
     left: 45px;
     color: yellowgreen;
   }
@@ -825,39 +864,91 @@
     width: 25%;
     height: 90vh;
     display: none;
-    box-shadow: 0px 0px 12px #000000;
+    box-shadow: 2px 2px 20px #000000;
     background-color: #161b22;
     position: fixed;
-    border-radius: 5px;
+    border-radius: 6px;
     overflow: hidden;
     background-image: url("/images/cover.jpg");
-    box-shadow: 20px 20px 120px #000000;
     border: 1px solid #21262d;
     background-size: cover;
-    top: 47px;
+    top: 45px;
     z-index: 30;
     transition: 0.2s;
-    right: 25%;
+    right: 12%;
+  }
+  .notf_header {
+    padding: 8px;
+    display: flex;
+    max-height: 8vh;
+    color: gray;
+    flex-direction: row;
+    border-bottom: 1px solid #2e2f3a;
+    justify-content: space-between;
   }
 
-  .send-imgcomme {
-    width: 10%;
+  .notf_body {
+    padding: 9px;
+    overflow-y: scroll;
+    height: 82vh;
+  }
+  .notfH {
+    width: 100%;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    height: auto;
+    box-shadow: 1px 1px 9px #000000;
+    border-bottom: 1px solid #2e2f3a;
+
+    padding: 15px;
   }
 
+  .fa-paper-plane {
+    font-size: 170%;
+    padding: 3px 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    color: gray;
+  }
+  .fa-paper-plane:hover {
+    color: #bfbfbf;
+  }
   .send-inputcomme {
     outline: none;
     display: flex;
     border: none;
     background: transparent;
-    width: 85%;
+    width: 100%;
     height: 40px;
     border-radius: 7px;
     background: none;
+    font-size: 108%;
     padding: 10px;
     color: white;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+  }
+
+   #emoji-picker {
+    border:none;
+    border-radius: 5px;
+    height: 0;
+    display: flex;
+    justify-content: space-between;
+    transition: 0.2s;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+    z-index: 1000;
+  }
+  #emoji-picker span {
+    font-size: 28px; 
+    cursor: pointer;
+    border-radius: 2px;
+    margin: 4px;
+  }
+  #emoji-picker span:hover {
+    outline: 2px solid #2e2f3a;
   }
 
   .send-inputcomme::placeholder {
@@ -867,14 +958,12 @@
   .input-placecomme {
     display: flex;
     flex-direction: row;
-    margin-top: 15px;
+    margin-top: 10px;
     align-items: center;
     background-color: transparent;
-    border-radius: 7px;
-
     width: 100%;
     gap: 5px;
-    border: 1px solid #2e2f3a;
+    border-top: 1px solid #2e2f3a;
   }
 
   .options_comments {
@@ -889,61 +978,61 @@
     background-size: cover;
     height: 90vh;
     overflow: hidden;
-
     top: 47px;
     z-index: 30;
     border-radius: 6px;
     transition: 0.2s;
-    right: 20%;
+    right: 28%;
   }
 
   .comment_header {
     padding: 8px;
     display: flex;
+    color: gray;
     max-height: 8vh;
     flex-direction: row;
     border-bottom: 1px solid #2e2f3a;
     justify-content: space-between;
   }
   .comment_foot {
-    max-height: 12vh;
+    height: auto;
     flex-direction: row;
-    padding: 10px;
   }
 
   .comment_body {
-    padding: 9px;
+    padding: 7px;
     overflow-y: scroll;
-    height: 70vh;
+    height:75vh;
+    transition: 0.1s;
   }
 
   .comment_holder {
     border-radius: 5px;
-    background-color: #161b22;
-    opacity: 0.9;
+    background-color: transparent;
+
     padding: 6px;
     height: auto;
-    font-size: 90%;
+    font-size: 100%;
     margin: 10px;
     overflow: hidden;
     max-width: 75%;
-    border-left: 4px solid orange;
-    box-shadow: 0px 0px 2px #000000;
+    box-shadow: 1px 1px 9px #000000;
+    border-bottom: 1px solid #2e2f3a;
   }
 
   .comment_holder2 {
-    border-radius: 5px;
-    background-color: #161b22;
+    border-radius: 6px;
+    background-color: transparent;
     padding: 6px;
-    opacity: 0.9;
-    font-size: 90%;
+    background-color: #0d1117;
+    font-size: 100%;
     height: auto;
     overflow: hidden;
     margin-left: 100px;
     margin-top: 8px;
     max-width: 75%;
-    border-right: 4px solid yellowgreen;
-    box-shadow: 0px 0px 2px #000000;
+    box-shadow: 1px 1px 9px #000000;
+    border-bottom: 1px solid #2e2f3a;
   }
 
   .edit3 {
@@ -1030,7 +1119,7 @@
     position: fixed;
     overflow: hidden;
     z-index: 5;
-    top: 46px;
+    top: 0;
     height: 100vh;
   }
   .bodyCover {
@@ -1075,7 +1164,7 @@
     animation-duration: 8s;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
-    animation-delay: 0.9s;
+    animation-delay: 0.5s;
     display: inline-block;
   }
 
@@ -1145,7 +1234,6 @@
 
   .typing-text p {
     font-size: 100%;
-    text-align: justify;
     letter-spacing: 1px;
   }
 
@@ -1461,12 +1549,13 @@
     font-size: 80%;
     letter-spacing: 2px;
     cursor: pointer;
+    background-color: orange;
     transition: 0.6s;
     border-radius: 5px;
   }
 
   .cont_btn:hover {
-    outline: 1px solid orange;
+    opacity: 0.8;
   }
 
   .tips {
@@ -1625,7 +1714,7 @@
     width: 27%;
     border-radius: 5px;
     flex-direction: column;
-    height: 90vh;
+    height: 88.5vh;
     background-image: url("/images/cover.jpg");
     background-size: cover;
     position: fixed;
@@ -1661,7 +1750,8 @@
     transition: 0.2s;
     width: 98%;
     border-radius: 4px;
-    font-size: 90%;
+    font-size: 85%;
+    font-weight: 500;
     opacity: 0.9;
     border: 1px solid #21262d;
   }
@@ -1896,13 +1986,30 @@
     font-weight: 550;
     cursor: pointer;
   }
+  .next-btn3 {
+    background-color: rgb(255, 140, 0);
+    width: auto;
+    padding: 12px;
+    transition: 0.5s;
+    text-align: center;
+    width: auto;
+    margin-left: 6px;
+    box-shadow: 1px 1px 15px #000000;
+    border-radius: 4px;
+    color: white;
+    font-weight: 550;
+    cursor: pointer;
+  }
+  .next-btn3:hover {
+    opacity: 0.7;
+  }
   .setseen {
     background-color: orange;
     width: auto;
     padding: 10px;
     transition: 0.5s;
     text-align: center;
-    width: 28%;
+    width: auto;
     opacity: 0.9;
     margin-left: 6px;
     border-radius: 4px;
@@ -1912,11 +2019,10 @@
   }
   .callResults {
     background-color: #ed143d;
-    width: auto;
     padding: 10px;
     transition: 0.5s;
     text-align: center;
-    width: 28%;
+    max-width: 25%;
     opacity: 0.9;
     font-weight: 650;
     margin-left: 2px;
@@ -1970,6 +2076,25 @@
     font-weight: 550;
     cursor: pointer;
   }
+  .cancel-btnn3 {
+    border: 1px solid #21262d;
+    background-color: #0d1117;
+    width: auto;
+    padding: 10px;
+    transition: 0.5s;
+    color: white;
+    text-align: center;
+    margin-right: 6px;
+    width: auto;
+    border-radius: 4px;
+    font-weight: 550;
+    box-shadow: 1px 1px 15px #000000;
+    cursor: pointer;
+  }
+  .cancel-btnn3:hover {
+    opacity: 0.7;
+  }
+
   .cancel-btn2 {
     border: 1px solid #21262d;
     background-color: #0d1117;
@@ -2057,13 +2182,16 @@
   }
 
   .closexx {
-    width: 40px;
-    height: 40px;
+    width: 25px;
+    height: 25px;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
     cursor: pointer;
+  }
+  .closexx:hover {
+    border: 1px solid orange;
   }
 
   .linex {
@@ -2182,7 +2310,7 @@
   }
   .welcomeUserB {
     width: 100%;
-    color: white;
+    color: gray;
     display: flex;
     flex-wrap: nowrap;
     overflow-y: scroll;
@@ -2207,7 +2335,7 @@
     padding: 15px;
     display: flex;
     height: auto;
-    justify-content:center;
+    justify-content: center;
     height: auto;
   }
 
@@ -2261,15 +2389,27 @@
     flex-direction: row;
     color: gray;
   }
-.iconss{
-  margin-top: 8px;
-  cursor: pointer;
-  font-size: 110%;
-}
+  .iconss {
+    margin-top: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    color: gray;
+    font-size: 110%;
+  }
+  .iconss2 {
+    margin-top: 2px;
+    cursor: pointer;
+    transition: 0.3s;
+    color: gray;
+    font-size: 110%;
+  }
 
-.iconss:hover{
-  color: gray;
-}
+  .iconss:hover {
+    color: white;
+  }
+  .iconss2:hover {
+    color: white;
+  }
   .winnerDetailsHolder {
     width: 100%;
     border: 1px solid #21262d;
@@ -2314,7 +2454,7 @@
   }
   .loosertext {
     text-align: center;
-    background:#ed143d;
+    background: #ed143d;
     letter-spacing: 2px;
     padding: 8px;
     border-top-left-radius: 6px;
@@ -2330,5 +2470,142 @@
 
   .fa {
     font-family: "Font Awesome 5 Free";
+  }
+
+  .shareTickets {
+    position: fixed;
+    width: 50%;
+    background-image: url("/images/cover.jpg");
+    background-size: cover;
+    background-color: #161b22;
+    border-radius: 6px;
+    height: auto;
+    z-index: 50;
+    transform: translate(-50%, 15%);
+    left: 50%;
+    top: 8%;
+    color: #ffffff;
+    font-size: 90%;
+    overflow-y: visible;
+    margin: auto;
+    display: none;
+    transition: 1s;
+    border: 1px solid #21262d;
+    box-shadow: 20px 20px 100px #000000;
+    overflow: hidden;
+  }
+  .shareTicketsFoot {
+    width: 100%;
+    padding: 8px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+    background-color: #161b22;
+  }
+  .shareTicketsHead {
+    width: 100%;
+    padding: 8px;
+    display: flex;
+    justify-content: space-between;
+    background-color: #161b22;
+  }
+  .shareTicketsBody {
+    width: 100%;
+    display: flex;
+    padding: 3px;
+  }
+  .sharePart {
+    width: 100%;
+    padding: 4px;
+    justify-content: space-between;
+    display: flex;
+  }
+  #shareT,
+  #shareN {
+    padding: 10px;
+    background-color: transparent;
+    border: 1px solid gray;
+    width: 100%;
+    outline: none;
+    border-radius: 3px;
+    color: white;
+    font-weight: bold;
+  }
+  #imgTosend {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+  }
+  .sharePart1 {
+    width: 55%;
+    overflow: hidden;
+    display: block;
+  }
+  .sharePart2 {
+    width: 45%;
+    overflow: hidden;
+    display: flex;
+    display: none;
+    text-align: center;
+    justify-content: center;
+  }
+  .sharePart3 {
+    width: 45%;
+    overflow: hidden;
+    color: gray;
+    display: flex;
+    display: block;
+    text-align: center;
+    justify-content: center;
+  }
+  .claimed {
+    transition: 0.5s;
+  }
+
+  .readerBoardOptions {
+    position: absolute;
+    right: -51%;
+    top: 47px;
+    padding: 6px;
+    width: 50%;
+    height: auto;
+    color: gray;
+    background-color: #0d1117;
+    box-shadow: 2px 2px 20px #000000;
+    font-size: 90%;
+    transition: 0.3s;
+    border: 1px solid #21262d;
+    border-radius: 4px;
+    z-index: 999999;
+  }
+
+  .StickyFooter {
+    position: fixed;
+    z-index: 999999999;
+    font-size: 70%;
+    color: gray;
+    font-weight: 550;
+    width: 100%;
+    padding: 1px 15px;
+    display: flex;
+    justify-content: space-between;
+    bottom: 0;
+    left: 0;
+    box-shadow: 1px 1px 5px #000000;
+    background-color: #161b22;
+  }
+
+  @keyframes spinn {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  .rotate {
+    animation: spinn 6s linear infinite;
+    position: relative;
   }
 }

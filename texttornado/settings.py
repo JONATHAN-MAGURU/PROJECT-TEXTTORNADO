@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-(5m+z%i-bk+^2u8ooz$w-4xem8t1(d1p=upwai94rq=rs^=@mk
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'topApp',
     'baseApp',  
+    'storages',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -49,6 +51,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'texttornado.urls'
@@ -131,6 +135,28 @@ MEDIA_URL = '/images/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 
-account_sid = "ACc5fd06bf85228bcfe79745a255734daa"
-auth_token = "52afd69a2fa47de47ff02174164bb5c1"
+account_sid = "ACa4caff1b48f85640d3f2e27383a2a45d"
+auth_token = "8c7a88c6877a585bf4e3ee405e1cc188"
 messaging_service_sid="VA9143bb066c59ab757a121b96dd0f4589"
+
+
+'''
+AWS_ACCESS_KEY_ID = "AKIAQIMAVESPTX5FMKFI"
+
+AWS_SECRET_ACCESS_KEY = "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" 
+
+AWS_STORAGE_BUCKET_NAME = "texttornado-storage"
+
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+
+STATICFILES_STORAGE ="storages.backends.s3boto3.S3Boto3Storage"
+
+AWS_S3_CUSTOM_DOMAIN ='%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+'''
+
+
+CORS_ALLOWED_ORIGINS = [
+    "https://your-allowed-domain.com",
+]
+
+CORS_ALLOW_ALL_ORIGINS = False

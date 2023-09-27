@@ -12,7 +12,8 @@ const maxmumInput2 = document.getElementById("maxmum2");
 const minmumInput2 = document.getElementById("minmum2");
 const timers2 = document.getElementById("timers2");
 const startTimerOne = document.getElementById("endEvent");
-
+const actionStatus = document.querySelector("#actionStatus");
+var messageHolderArray = [];
 frontend.addEventListener("change", function () {
   const firstId = frontend.checked ? 5747 : 85747;
   const firstIdOb = { firstId };
@@ -301,7 +302,8 @@ setInterval(function () {
 
 event1.addEventListener("change", function () {
   if (leaderboardToggle.checked || typingArea.chacked) {
-    document.querySelector('#eventWarn').innerHTML = "switch off leaderboard and type area first";
+    document.querySelector("#eventWarn").innerHTML =
+      "switch off leaderboard and type area first";
   } else {
     const firstId = event1.checked ? 15747 : 185747;
     const firstIdOb = { firstId };
@@ -344,7 +346,8 @@ setInterval(function () {
 
 event2.addEventListener("change", function () {
   if (leaderboardToggle.checked || typingArea.chacked) {
-    document.querySelector('#eventWarn').innerHTML = "switch off leaderboard and type area first";
+    document.querySelector("#eventWarn").innerHTML =
+      "switch off leaderboard and type area first";
   } else {
     const firstId = event2.checked ? 15747 : 185747;
     const firstIdOb = { firstId };
@@ -385,16 +388,15 @@ setInterval(function () {
   xhr.send();
 }, 3000);
 
-
 function sendRequest() {
   const xhr = new XMLHttpRequest();
-  const url = '/count_online_players';
+  const url = "/count_online_players";
 
-  xhr.open('GET', url, true);
+  xhr.open("GET", url, true);
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4 && xhr.status === 200) {
       const onlinePlayersCount = parseInt(xhr.responseText);
-      document.querySelector('#online').innerHTML = onlinePlayersCount;
+      document.querySelector("#online").innerHTML = onlinePlayersCount;
     } else if (xhr.readyState === 4 && xhr.status !== 200) {
       console.error(`Error: Status ${xhr.status}`);
     }
@@ -402,5 +404,208 @@ function sendRequest() {
   xhr.send();
 }
 
-sendRequest(); 
-setInterval(sendRequest, 3000); 
+sendRequest();
+setInterval(sendRequest, 3000);
+
+document.addEventListener("DOMContentLoaded", function () {
+  var concernBody = document.querySelector(".support_containerA");
+  var printedSources = {};
+
+  setInterval(function () {
+    var xhr = new XMLHttpRequest();
+    const consern = { mail };
+
+    const json_data = JSON.stringify(consern);
+    const csrfToken = document.querySelector("#csrf_token512").value;
+    xhr.open("POST", "/get_concern");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.setRequestHeader("X-CSRFToken", csrfToken);
+
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        var response = JSON.parse(xhr.responseText);
+        printedSources = {};
+        concernBody.innerHTML = "";
+
+        for (var key in response.concerns) {
+          var concernDate = new Date(response.concerns[key].source_date);
+          if (response.concerns[key].reply == "no") {
+            if (response.concerns[key].source == "TextTornado Assistant") {
+              continue;
+            } else {
+              if (!printedSources[response.concerns[key].source]) {
+                var formattedDate = concernDate.toLocaleString("en-US", {
+                  month: "2-digit",
+                  day: "2-digit",
+                  year: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  hour12: true,
+                });
+
+                var temp =
+                  ' <div class="messageHolder"   data-id="' +
+                  response.concerns[key].source_id +
+                  '"><div class="messageHead"><h5> ' +
+                  response.concerns[key].source +
+                  '</h5><small style="color:orange; font-size:70%">' +
+                  formattedDate +
+                  "</small></div><p><small style='color: gray'>" +
+                  response.concerns[key].source_text +
+                  "</small></p></div>";
+                concernBody.innerHTML += temp;
+                printedSources[response.concerns[key].source] = true;
+              }
+            }
+          } else {
+            actionStatus.innerHTML = "no concerns";
+          }
+        }
+
+        const messageContainer = document.querySelector(".support_containerA");
+        const messsageHolders =
+          messageContainer.querySelectorAll(".messageHolder");
+        for (const messageHolder of messsageHolders) {
+          messageHolder.addEventListener("click", () => {
+            messageHolderArray.splice(0);
+            messageHolderArray.push(messageHolder.dataset.id);
+            getUserConcerns(messageHolderArray[0]);
+          });
+        }
+      } else {
+        actionStatus.innerHTML = xhr.status;
+      }
+    };
+
+    xhr.send(json_data);
+  }, 3000);
+});
+
+function getUserConcerns(userId) {
+  var concernBody = document.querySelector(".support_containerB_1_Body");
+  function scrollToBottom() {
+    concernBody.scrollTop = concernBody.scrollHeight;
+  }
+
+  concernBody.addEventListener("scroll", function () {
+    if (
+      concernBody.scrollTop + concernBody.clientHeight <
+      concernBody.scrollHeight - 10
+    ) {
+      isAutoScrollEnabled = false;
+    } else {
+      isAutoScrollEnabled = true;
+    }
+  });
+  var xhr = new XMLHttpRequest();
+  const consern = { userId };
+
+  const json_data = JSON.stringify(consern);
+  const csrfToken = document.querySelector("#csrf_token513").value;
+  xhr.open("POST", "/get_concern3");
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.setRequestHeader("X-CSRFToken", csrfToken);
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      var response = JSON.parse(xhr.responseText);
+      concernBody.innerHTML = "";
+      for (var key in response.concerns) {
+        if (response.concerns[key].source !== "TextTornado Assistant") {
+          var concernDate = new Date(response.concerns[key].source_date);
+
+          var formattedDate = concernDate.toLocaleString("en-US", {
+            month: "2-digit",
+            day: "2-digit",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true,
+          });
+
+          var temp =
+            '<div class="comment_holder"><h5> ' +
+            response.concerns[key].source +
+            '</h5><p style="color: gray">' +
+            response.concerns[key].source_text +
+            "</p><br><small style='color: gray'>" +
+            formattedDate +
+            "</small></div>";
+          concernBody.innerHTML += temp;
+        } else {
+          var concernDate = new Date(response.concerns[key].source_id);
+          var formattedDate = concernDate.toLocaleString("en-US", {
+            month: "2-digit",
+            day: "2-digit",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true,
+          });
+
+          var temp =
+            '<div class="comment_holder2"><h5> ' +
+            response.concerns[key].source +
+            '</h5><p style="color: gray">' +
+            response.concerns[key].source_text +
+            "</p><br><small style='color: gray'>" +
+            formattedDate +
+            "</small></div>";
+          concernBody.innerHTML += temp;
+        }
+      }
+
+    } else {
+      actionStatus.innerHTML = xhr.status;
+    }
+  };
+  xhr.send(json_data);
+}
+
+const concerns = document.querySelector(".replyConcern");
+
+
+document.querySelector(".issue_input").addEventListener("submit", function (e) {
+  e.preventDefault();
+  var concern = concerns.value;
+  var userData = messageHolderArray[0];
+
+  if (concern === "") {
+    actionStatus.innerHTML = "WRITE A REPLY...";
+  } else {
+    const consernss = {
+      userData,
+      concern,
+    };
+
+    const json_data = JSON.stringify(consernss);
+    const XHR4 = new XMLHttpRequest();
+    const csrfToken = document.querySelector("#csrf_token518").value;
+    XHR4.open("POST", "/sending_concern_response", true);
+    XHR4.setRequestHeader("Content-Type", "application/json");
+    XHR4.setRequestHeader("X-CSRFToken", csrfToken);
+
+    XHR4.addEventListener("load", function () {
+      if (XHR4.status === 200 && XHR4.readyState === 4) {
+        actionStatus.innerHTML = XHR4.responseText;
+      } else {
+        actionStatus.innerHTML = "Concern failed";
+      }
+    });
+
+    XHR4.addEventListener("error", function () {
+      actionStatus.innerHTML = "An error occurred while sending the concern.";
+    });
+
+    XHR4.addEventListener("abort", function () {
+      actionStatus.innerHTML = "The concern request was aborted.";
+    });
+
+    try {
+      XHR4.send(json_data);
+      actionStatus.innerHTML = "Sending concern...";
+      concerns.value = "";
+    } catch (error) {
+      actionStatus.innerHTML = "Error sending concern: " + error.message;
+    }
+  }
+});

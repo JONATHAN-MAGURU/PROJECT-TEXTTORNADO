@@ -1,4 +1,3 @@
-import time
 from django.shortcuts import render, HttpResponse, redirect
 from django.http import HttpResponse, JsonResponse
 from datetime import datetime, timezone
@@ -19,9 +18,10 @@ from baseApp.models import (
     Event1,
     Event2,
 )
-from topApp.models import Player
+from topApp.models import Player, Tickets, TypingDetails, Notification, Support
 from topApp.views import id_gen, transferData
 import random
+import time
 
 
 def ttd_admin_login(request):
@@ -175,6 +175,7 @@ def getTypingAreaCode(request):
 def getEvent1Code(request):
     codes = Event1.objects.all()
     return JsonResponse({"codes": list(codes.values())})
+
 
 def getEvent2Code(request):
     codes = Event2.objects.all()
@@ -421,42 +422,187 @@ def starEvent1(request):
             return HttpResponse("UPDATE FAILED...")
     else:
         return HttpResponse("something went wrong")
-    
+
 
 def starEvent2(request):
     if request.method == "POST":
-        code = json.loads(request.body)
-        code1 = code["firstId"]
-        if code1 == 185747:
-            getCode = Event2.objects.get(eventId=15747)
-            getCode.eventId = code1
-            getCode.save()
+        try:
+            code = json.loads(request.body)
+            code1 = code.get("firstId")
 
-            code3 = 85747
-            getCode4 = Leaderboard.objects.get(leaderBoardId=5747)
-            getCode4.leaderBoardId = code3
-            getCode4.save()
-            time.sleep(5)
-            getCode5 = TypingArea.objects.get(typingAreaId=5747)
-            getCode5.typingAreaId = code3
-            getCode5.save()
+            if code1 == 185747:
+                getCode = Event2.objects.get(eventId=15747)
+                getCode.eventId = code1
+                getCode.save()
 
-            return HttpResponse("UPDATED SUCCESSIFULLY...")
-        elif code1 == 15747:
-            getCode = Event2.objects.get(eventId=185747)
-            getCode.eventId = code1
-            getCode.save()
+                code3 = 85747
+                getCode4 = Leaderboard.objects.get(leaderBoardId=5747)
+                getCode4.leaderBoardId = code3
+                getCode4.save()
+                time.sleep(5)
+                getCode5 = TypingArea.objects.get(typingAreaId=5747)
+                getCode5.typingAreaId = code3
+                getCode5.save()
 
-            code2 = 5747
-            getCode3 = Leaderboard.objects.get(leaderBoardId=85747)
-            getCode3.leaderBoardId = code2
-            getCode3.save()
-            time.sleep(5)
-            getCode2 = TypingArea.objects.get(typingAreaId=85747)
-            getCode2.typingAreaId = code2
-            getCode2.save()
-            return HttpResponse("UPDATED SUCCESSIFULLY...")
-        else:
-            return HttpResponse("UPDATE FAILED...")
+                return HttpResponse("UPDATED SUCCESSFULLY...")
+            elif code1 == 15747:
+                getCode = Event2.objects.get(eventId=185747)
+                getCode.eventId = code1
+                getCode.save()
+
+                code2 = 5747
+                getCode3 = Leaderboard.objects.get(leaderBoardId=85747)
+                getCode3.leaderBoardId = code2
+                getCode3.save()
+                time.sleep(5)
+                getCode2 = TypingArea.objects.get(typingAreaId=85747)
+                getCode2.typingAreaId = code2
+                getCode2.save()
+                return HttpResponse("UPDATED SUCCESSFULLY...")
+            else:
+                return HttpResponse("UPDATE FAILED...")
+        except json.JSONDecodeError as e:
+            return HttpResponse(f"Error parsing JSON: {e}")
+        except Event2.DoesNotExist as e:
+            return HttpResponse("Event2 does not exist with the given eventId")
+        except Leaderboard.DoesNotExist as e:
+            return HttpResponse(
+                "Leaderboard does not exist with the given leaderBoardId"
+            )
+        except TypingArea.DoesNotExist as e:
+            return HttpResponse("TypingArea does not exist with the given typingAreaId")
+        except Exception as e:
+            return HttpResponse(f"An error occurred: {e}")
     else:
-        return HttpResponse("something went wrong")
+        return HttpResponse("Invalid request method")
+
+
+def generateTicket():
+    nums = ["1", "2"]
+    random.shuffle(nums)
+    nums3 = nums[1]
+    nums4 = int(nums3)
+    return nums4
+
+
+def rewardData(request):
+    if request.method == "POST":
+        try:
+            rewDat = json.loads(request.body.decode("utf-8"))
+            rewDat2 = rewDat.get("rewardDat")
+            adminId = rewDat.get("mail")
+
+            freeTicket = generateTicket()
+            admins = Admins_details.objects.filter(admin_id=adminId)
+            if admins.exists():
+                if rewDat2 == "ALL":
+                    notfTitle1 = "Textornado rewards"
+                    getTicketsDetails = Tickets.objects.all()
+                    for tickets in getTicketsDetails:
+                        if tickets.claim_tickets >= 1:
+                            pass
+                        else:
+                            tickets.claim_tickets += freeTicket
+                            tickets.save()
+                    notfDes1 = f"You have received free {freeTicket} tickets from TextTornado rewards. Claim your tickets."
+                    getUsers = Player.objects.all()
+                    for getUser in getUsers:
+                        saveNotification = Notification.objects.create(
+                            tittle=notfTitle1,
+                            description=notfDes1,
+                            notf_id=getUser.player_id,
+                        )
+                        saveNotification.save()
+                    return HttpResponse(
+                        f"SUCCESSFULLY SENT {freeTicket} TICKETS TO ALL USERS"
+                    )
+                elif rewDat2 == "LEADERBOARD":
+                    getReaderboardData = TypingDetails.objects.all()
+                    for readerboard in getReaderboardData:
+                        getTickets = Tickets.objects.filter(
+                            tickets_id=readerboard.play_id
+                        )
+                        if getTickets.exists():
+                            toReward = getTickets.first()
+                            toReward.claim_tickets += freeTicket
+                            toReward.save()
+                        else:
+                            return HttpResponse("NO ONE ON LEADERBOARD.")
+                    notfTitle2 = "Leaderboard Rewards"
+                    notfDes2 = f"You have received free {freeTicket} tickets from Leaderboard rewards. Claim your tickets."
+                    getUsers2 = TypingDetails.objects.all()
+                    for getUser in getUsers2:
+                        saveNotification = Notification.objects.create(
+                            tittle=notfTitle2,
+                            description=notfDes2,
+                            notf_id=getUser.play_id,
+                        )
+                        saveNotification.save()
+                    return HttpResponse(
+                        f"SUCCESSFULLY SENT {freeTicket} TICKETS TO USERS ON LEADERBOARD."
+                    )
+                else:
+                    getPlayers = Player.objects.filter(username=rewDat2)
+                    if getPlayers.exists():
+                        getPlayers2 = getPlayers.first()
+                        getTickets2 = Tickets.objects.filter(
+                            tickets_id=getPlayers2.player_id
+                        )
+                        if getTickets2.exists():
+                            toReward2 = getTickets2.first()
+                            toReward2.claim_tickets += freeTicket
+                            toReward2.save()
+                            saveNotification = Notification.objects.create(
+                                tittle="Accuracy  Rewards",
+                                description=f"You have received free {freeTicket} tickets from accuracy  rewards. claim your tickets",
+                                notf_id=toReward2.tickets_id,
+                            )
+                            saveNotification.save()
+                            return HttpResponse(
+                                f"SUCCESSFULLY SENT {freeTicket} TICKETS TO {str.upper(rewDat2)}"
+                            )
+                    else:
+                        return HttpResponse("INVALID GENERIC OR USERNAME.")
+            else:
+                return HttpResponse("WE CAN'T PROCESS YOUR REQUEST..")
+        except json.JSONDecodeError:
+            return HttpResponse("Invalid JSON data in the request body.")
+    else:
+        return HttpResponse("Invalid request method. Only POST requests are allowed.")
+
+
+
+def get_concern(request):
+    if request.method == "POST":
+        try:
+            request_data = json.loads(request.body)
+            userid = request_data.get("mail")
+            getAdmin = Admins_details.objects.filter( admin_id = userid)
+            if getAdmin.exists():
+                concerns = Support.objects.all().order_by("-source_date")
+                return JsonResponse({"concerns": list(concerns.values())})
+            else:
+                return HttpResponse("No concerns found.")
+        except Exception as e:
+            return HttpResponse("An error occurred while processing the request.")
+    else:
+        return HttpResponse("Bad request method. Use POST.")
+    
+
+def get_concern3(request):
+    if request.method == "POST":
+        try:
+            request_data = json.loads(request.body)
+            userid = request_data.get("userId")
+            print(userid)
+            getUserConcerns = Support.objects.filter(source_id = userid )
+            if getUserConcerns.exists():
+                concerns = getUserConcerns.all().order_by("source_date")
+                return JsonResponse({"concerns": list(concerns.values())})
+            else:
+                return HttpResponse("No concerns found.")
+        except Exception as e:
+            return HttpResponse("An error occurred while processing the request.")
+    else:
+        return HttpResponse("Bad request method. Use POST.")
+

@@ -1,1 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Web Page</title>
 
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <style>
+      /* Style for the emoji picker container */
+      #emoji-picker {
+        display: none;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+        background-color: white;
+        position: absolute;
+        z-index: 1000;
+      }
+
+      /* Style for the emoji spans (enlarged) */
+      #emoji-picker span {
+        font-size: 28px; /* Adjust the font size to make emojis larger */
+        cursor: pointer;
+        margin: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="options_comments">
+      <div class="comment_header">
+        <p>Comments</p>
+        <div class="closexx">
+          <div class="linex onex"></div>
+          <div class="linex twox"></div>
+        </div>
+      </div>
+
+      <div class="comment_body"></div>
+
+      <div class="comment_foot">
+        <form id="comment_form" class="input-placecomme">
+          <div style="width: 95%">
+            <!-- Include your CSRF tokens here -->
+            <input type="hidden" id="csrf_token5" value="{{ csrf_token }}" />
+            <!-- ... other hidden CSRF tokens ... -->
+
+            <div class="emoji-picker-container">
+              <input
+                placeholder="Send a comment with emojis."
+                class="send-inputcomme comment"
+                type="text"
+              />
+              <button
+                type="button"
+                class="emoji-button"
+                style="background: transparent; border-left: 1px solid gray"
+              >
+                <i class="far fa-smile"  ></i>
+              </button>
+            </div>
+            <div id="emoji-picker" style="display: none">
+              <!-- Emoji spans will be generated here -->
+            </div>
+          </div>
+          <div style="width: auto">
+            <button
+              type="submit"
+              style="background: transparent; border-left: 1px solid gray"
+            >
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      
+    </script>
+  </body>
+</html>

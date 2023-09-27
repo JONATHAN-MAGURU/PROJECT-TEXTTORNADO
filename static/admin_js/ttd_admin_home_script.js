@@ -667,7 +667,6 @@ function close_msg() {
 
 function open_admin() {
   admin_opt.style.width = "85%";
-  admin_opt.style.height = body_height - 60 + "px";
   nav_options_hider.style.width = "15%";
 }
 function close_option_admin() {
@@ -677,7 +676,6 @@ function close_option_admin() {
 
 function open_users() {
   user_opt.style.width = "85%";
-  user_opt.style.height = body_height - 60 + "px";
   nav_options_hider.style.width = "15%";
 }
 function close_option_users() {
@@ -687,7 +685,6 @@ function close_option_users() {
 
 function open_comp() {
   comp_opt.style.width = "85%";
-  comp_opt.style.height = body_height - 60 + "px";
   nav_options_hider.style.width = "15%";
 }
 function close_option_comp() {
@@ -697,7 +694,6 @@ function close_option_comp() {
 
 function open_test() {
   test_opt.style.width = "85%";
-  test_opt.style.height = body_height - 60 + "px";
   nav_options_hider.style.width = "15%";
 }
 function close_option_test() {
@@ -728,7 +724,6 @@ function close_option_mail() {
 
 function open_pay() {
   pay_opt.style.width = "85%";
-  pay_opt.style.height = body_height - 60 + "px";
   nav_options_hider.style.width = "15%";
 }
 function close_option_pay() {
@@ -738,7 +733,6 @@ function close_option_pay() {
 
 function open_analy() {
   analy_opt.style.width = "85%";
-  analy_opt.style.height = body_height - 60 + "px";
   nav_options_hider.style.width = "15%";
 }
 function close_option_analy() {
@@ -748,7 +742,6 @@ function close_option_analy() {
 
 function open_leader() {
   leader_opt.style.width = "85%";
-  leader_opt.style.height = body_height - 60 + "px";
   nav_options_hider.style.width = "15%";
 }
 function close_option_leader() {
@@ -758,7 +751,6 @@ function close_option_leader() {
 
 function open_game() {
   game_opt.style.width = "85%";
-  game_opt.style.height = body_height - 60 + "px";
   nav_options_hider.style.width = "15%";
 }
 function close_option_game() {
@@ -768,7 +760,6 @@ function close_option_game() {
 
 function open_secu() {
   secu_opt.style.width = "85%";
-  secu_opt.style.height = body_height - 60 + "px";
   nav_options_hider.style.width = "15%";
 }
 function close_option_secu() {
@@ -778,7 +769,6 @@ function close_option_secu() {
 
 function open_repo() {
   repo_opt.style.width = "85%";
-  repo_opt.style.height = body_height - 60 + "px";
   nav_options_hider.style.width = "15%";
 }
 function close_option_repo() {
@@ -788,7 +778,6 @@ function close_option_repo() {
 
 function open_supp() {
   supp_opt.style.width = "85%";
-  supp_opt.style.height = body_height - 60 + "px";
   nav_options_hider.style.width = "15%";
 }
 function close_option_supp() {

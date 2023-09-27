@@ -13,8 +13,9 @@
     />
     <link rel="stylesheet" href="{% static 'css/ttd_admin_home_style.css' %}" />
   </head>
-
-  <body>
+  {%for x in admin_details%}
+  <body data-email=" {{x.admin_id}}">
+    {% endfor %}
     <div class="left_side_nav" id="nav">
       <div class="brand_holder">
         <h6>TEXTTORNADO</h6>
@@ -396,14 +397,14 @@
       </div>
       <div class="container_D"></div>
     </div>
-    <div class="settings_holder" onclick="open_settings()">
+    <!-- <div class="settings_holder" onclick="open_settings()">
       <i
         style="font-size: 150%"
         class="fa fa-gear msg"
         onclick="open_settings()"
       ></i>
     </div>
-
+-->
     <div class="nav_options_hider"></div>
 
     <div class="nav_options" id="admins">
@@ -568,6 +569,21 @@
                 <input type="number" placeholder="MINMUM" id="minmum" />
                 <input
                   type="hidden"
+                  id="csrf_token518"
+                  value="{{ csrf_token }}"
+                />
+                <input
+                  type="hidden"
+                  id="csrf_token512"
+                  value="{{ csrf_token }}"
+                />
+                <input
+                  type="hidden"
+                  id="csrf_token513"
+                  value="{{ csrf_token }}"
+                />
+                <input
+                  type="hidden"
                   id="csrf_token3"
                   value="{{ csrf_token }}"
                 />
@@ -714,6 +730,7 @@
             <input type="hidden" id="csrf_token7" value="{{ csrf_token }}" />
             <input type="hidden" id="csrf_token11" value="{{ csrf_token }}" />
             <input type="hidden" id="csrf_token12" value="{{ csrf_token }}" />
+            <input type="hidden" id="csrf_token59" value="{{ csrf_token }}" />
             <input type="hidden" id="csrf_token19" value="{{ csrf_token }}" />
             <textarea
               id="textarea"
@@ -787,7 +804,7 @@
     <div class="nav_options" id="res">
       <div class="nav_options_menu_header">
         <p>EVENTS</p>
-        <h5 style="color:red" id="eventWarn"></h5>
+        <h5 style="color: red" id="eventWarn"></h5>
         <i
           style="color: #000000; font-size: 150%"
           class="fa fa-close msg"
@@ -831,7 +848,6 @@
         <div class="eventHolder"></div>
         <div class="eventHolder"></div>
         <div class="eventHolder"></div>
-  
       </div>
     </div>
 
@@ -882,11 +898,23 @@
     <div class="nav_options" id="game">
       <div class="nav_options_menu_header">
         <p>GAMIFICATION</p>
+        <p id="gamificationStatus">XXX-XXX</p>
         <i
-          style="color: #000000; font-size: 150%"
+          style="color: #ffffff; font-size: 150%"
           class="fa fa-close msg"
           onclick="close_option_game()"
         ></i>
+      </div>
+
+      <div class="shareTickets">
+        <h5 style="text-align: center">REWARD TICKETS</h5>
+        <br />
+        <form>
+          <label for="reward"></label> <br />
+          <input type="text" id="toReward" placeholder="username/generic" />
+          <br /><br />
+          <button id="rewards">&nbsp; &nbsp;Send&nbsp; &nbsp;</button>
+        </form>
       </div>
     </div>
 
@@ -915,11 +943,33 @@
     <div class="nav_options" id="supp">
       <div class="nav_options_menu_header">
         <p>SUPPORT</p>
+
+        <p id="actionStatus">xxx-xxx</p>
         <i
-          style="color: #000000; font-size: 150%"
+          style="color: #ffffff; font-size: 150%"
           class="fa fa-close msg"
           onclick="close_option_supp()"
         ></i>
+      </div>
+
+      <div class="support_main_container">
+        <div class="support_containerA"></div>
+        <div class="support_containerB">
+          <div class="support_containerB_1">
+            <div class="support_containerB_1_Head">XXX-XXX</div>
+            <div class="support_containerB_1_Body"></div>
+            <div class="support_containerB_1_Foot">
+              <form class="issue_input">
+                <input
+                  type="text"
+                  placeholder="type here.."
+                  style="font-weight: 400"
+                  class="replyConcern"
+                />
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="settings">
@@ -958,5 +1008,6 @@
     <script src="{% static 'admin_js/ttd_admin_home_script.js' %}"></script>
     <script src="{% static 'admin_js/ttd_admin_home_script2.js' %}"></script>
     <script src="{% static 'admin_js/adminTimers.js' %}"></script>
+    <script src="{% static 'admin_js/ttd1.js' %}"></script>
   </body>
 </html>

@@ -9,6 +9,8 @@ from topApp.models import (
     LeaderboardHistory,
     Tickets,
     TicketPurchase,
+    Notification,
+    Support,
 )
 from django.core.exceptions import ObjectDoesNotExist
 import random
@@ -19,9 +21,16 @@ import os
 from topApp.otp import *
 from twilio.rest import Client
 import http.client
+
+from django.shortcuts import get_object_or_404
+from django.views.decorators.csrf import csrf_exempt
+import logging
+
+logger = logging.getLogger(__name__)
+
 import time
 from django.db import transaction
-
+from codecs import encode
 import baseApp
 
 
@@ -267,6 +276,18 @@ def v_player(request):
 
                         Tickets.objects.create(tickets_id=ttd_id)
                         Tickets.save()
+                        saveNotf = Notification.objects.create(
+                            tittle="TextTornado",
+                            description=f"Hi {username}, Welcome to TextTornado, the ultimate destination for honing your typing skills while embracing competition, fun! and wining gadgets. ",
+                            notf_id=ttd_id,
+                        )
+                        saveNotf = Notification.objects.create(
+                            tittle="TextTornado Rewards",
+                            description=f"You have received 1 free from TextTornado rewards ticket as a fuel for starting your typing journey.",
+                            notf_id=ttd_id,
+                        )
+
+                        saveNotf.save()
                         return HttpResponse("saved")
                 except ObjectDoesNotExist:
                     return HttpResponse("Error: Player does not exist")
@@ -339,12 +360,103 @@ def sending_comments(request):
             username2=username, player_id2=ttd_id, comment=comment
         )
         comment2.save()
-        return HttpResponse("success")
+        return HttpResponse("comment sent.")
+    else:
+        return HttpResponse("comment failed")
+
+
+def sending_concern(request):
+    if request.method == "POST":
+        try:
+            player_concerns = json.loads(request.body)
+            username = player_concerns["username"]
+            ttd_id = player_concerns["id"]
+            concern = player_concerns["concern"]
+            txtId = id_gen()
+
+            try:
+                checkUser = Player.objects.filter(username=username, player_id=ttd_id)
+                if checkUser.exists():
+                    comment2 = Support.objects.create(
+                        source=username,
+                        source_id=ttd_id,
+                        source_text=concern,
+                        text_id=txtId,
+                    )
+                    comment2.save()
+                    return HttpResponse("concern sent.")
+            except ObjectDoesNotExist:
+                return HttpResponse("Player does not exist. Concern failed.")
+        except json.JSONDecodeError as e:
+            return HttpResponse("Error decoding JSON data: " + str(e))
+    else:
+        return HttpResponse("Invalid request method. Concern failed.")
+
+
+def sending_concern_response(request):
+    if request.method == "POST":
+        try:
+            player_concerns = json.loads(request.body)
+            username = "TextTornado Assistant"
+            ttd_id = player_concerns["userData"]
+            concern = player_concerns["concern"]
+            print(ttd_id)
+            print(concern)
+            try:
+                comment2 = Support.objects.create(
+                    source=username,
+                    source_id=ttd_id,
+                    source_text=concern,
+                )
+                comment2.save()
+                return HttpResponse("CONCERN REPLY SENT..")
+            except ObjectDoesNotExist:
+                return HttpResponse("Player does not exist. Concern failed.")
+        except json.JSONDecodeError as e:
+            return HttpResponse("Error decoding JSON data: " + str(e))
+    else:
+        return HttpResponse("Invalid request method. Concern failed.")
+
+
+def get_concern2(request):
+    if request.method == "POST":
+        try:
+            request_data = json.loads(request.body)
+            userid = request_data.get("id")
+            getConcern = Support.objects.filter(source_id=userid)
+            if getConcern.exists():
+                concerns = getConcern.all()
+                return JsonResponse({"concerns": list(concerns.values())})
+            else:
+                return HttpResponse("No concerns found.")
+        except Exception as e:
+            logger.error(f"Error in get_concern view: {str(e)}")
+            return HttpResponse("An error occurred while processing the request.")
+    else:
+        return HttpResponse("Bad request method. Use POST.")
 
 
 def get_comments(request):
     comments = Comments.objects.all()
     return JsonResponse({"comments": list(comments.values())})
+
+
+def get_notifications(request):
+    if request.method == "POST":
+        try:
+            request_data = json.loads(request.body)
+            notification_id = request_data.get("id")
+
+            notification = Notification.objects.filter(notf_id=notification_id)
+            if notification.exists():
+                return JsonResponse({"notification": list(notification.values())})
+
+        except json.JSONDecodeError:
+            return JsonResponse({"notification": "Invalid JSON data"}, status=400)
+        except Notification.DoesNotExist:
+            return JsonResponse({"notification": "No notifications"}, status=404)
+
+    return JsonResponse({"notification": "Invalid request method"}, status=405)
 
 
 def get_my_data(request):
@@ -506,9 +618,6 @@ def get_history(request):
         return JsonResponse({"error": str(e)}, status=500)
 
 
-from django.http import JsonResponse
-
-
 def getEndEvents(request):
     userid = request.GET.get("id")
     player = Player.objects.filter(player_id=userid)
@@ -572,18 +681,6 @@ def updateTickets(request):
     return HttpResponse("Invalid request method")
 
 
-def create_multipart_data(boundary, fields):
-    lines = []
-    for field_name, field_value in fields.items():
-        lines.append("--" + boundary)
-        lines.append("Content-Disposition: form-data; name=" + field_name)
-        lines.append("Content-Type: text/plain")
-        lines.append("")
-        lines.append(field_value)
-    lines.append("--" + boundary + "--")
-    return "\r\n".join(lines).encode("utf-8")
-
-
 def processPayment(request):
     try:
         if request.method == "POST":
@@ -594,24 +691,52 @@ def processPayment(request):
             id = paymentDetails["id"]
             tickets = int(ticketss)
 
-            boundary = "wL36Yn8afVp8Ag7AmP8qZ0SA4n1v9T"
-            fields = {
-                "airtel": "1",
-                "phone": number,
-                "amount": amount,
-                "token": "UOavDtqLpVp1ZfYEujpjRpEKLplxoY8P24k143qlruchAtrwAvDOVcbj1QtZbCMf",
-            }
-
-            headers = {"Content-type": "multipart/form-data; boundary=" + boundary}
-
             conn = http.client.HTTPSConnection("api-gateway.ctechpay.com")
-            payload = create_multipart_data(boundary, fields)
+            dataList = []
+            boundary = "wL36Yn8afVp8Ag7AmP8qZ0SA4n1v9T"
+            dataList.append(encode("--" + boundary))
+            dataList.append(encode("Content-Disposition: form-data; name=airtel;"))
 
+            dataList.append(encode("Content-Type: {}".format("text/plain")))
+            dataList.append(encode(""))
+
+            dataList.append(encode("1"))
+            dataList.append(encode("--" + boundary))
+            dataList.append(encode("Content-Disposition: form-data; name=phone;"))
+
+            dataList.append(encode("Content-Type: {}".format("text/plain")))
+            dataList.append(encode(""))
+
+            dataList.append(encode(str(number)))
+            dataList.append(encode("--" + boundary))
+            dataList.append(encode("Content-Disposition: form-data; name=amount;"))
+
+            dataList.append(encode("Content-Type: {}".format("text/plain")))
+            dataList.append(encode(""))
+
+            dataList.append(encode(str(amount)))
+            dataList.append(encode("--" + boundary))
+            dataList.append(encode("Content-Disposition: form-data; name=token;"))
+
+            dataList.append(encode("Content-Type: {}".format("text/plain")))
+            dataList.append(encode(""))
+
+            dataList.append(
+                encode(
+                    "UOavDtqLpVp1ZfYEujpjRpEKLplxoY8P24k143qlruchAtrwAvDOVcbj1QtZbCMf"
+                )
+            )
+            dataList.append(encode("--" + boundary + "--"))
+            dataList.append(encode(""))
+            body = b"\r\n".join(dataList)
+            payload = body
+            headers = {
+                "Content-type": "multipart/form-data; boundary={}".format(boundary)
+            }
             conn.request("POST", "/airtel/access/", payload, headers)
             res = conn.getresponse()
             data = res.read()
             print(data)
-
             try:
                 nested_json_str = data.decode("utf-8")
                 response_json = json.loads(nested_json_str)
@@ -668,7 +793,14 @@ def verifyPayment(trans_id, quantity, ticketId, amt):
                     ticket.tickets_available = ticket.tickets_available + quantity
                     ticket.save()
                     ticketPurchase.save()
-                    return messagesg
+                    saveNot = Notification.objects.create(
+                        tittle="Airtel Money",
+                        description=messagesg
+                        + f". You have received {quantity} tickets",
+                        notf_id=ticketId,
+                    )
+                    saveNot.save()
+                    return messagesg + f". You have received {quantity} tickets"
             elif transaction_status == "TF":
                 ticketPurchase2 = TicketPurchase.objects.create(
                     tickets_id=int(ticketId),
@@ -677,6 +809,10 @@ def verifyPayment(trans_id, quantity, ticketId, amt):
                     message=messagesg,
                 )
                 ticketPurchase2.save()
+                saveNot = Notification.objects.create(
+                    tittle="Airtel Money", description=messagesg, notf_id=ticketId
+                )
+                saveNot.save()
                 return messagesg
             else:
                 return "Timeout user didn't put pin"
@@ -690,9 +826,7 @@ def transferData():
     LeaderboardHistory.objects.all().delete()
     time.sleep(5)
     typing_details = TypingDetails.objects.values().order_by("-wpm")
-
     rank = 1
-
     for typing_detail in typing_details:
         wpm = typing_detail["wpm"]
         cpm = typing_detail["cpm"]
@@ -716,35 +850,147 @@ def transferData():
         TypingDetails.objects.filter(id=typing_detail["id"]).delete()
 
 
-
 def update_user_status(request):
     try:
         data = json.loads(request.body)
-        user_id = data.get('userId')
-        status = data.get('status')
+        user_id = data.get("userId")
+        status = data.get("status")
         player = Player.objects.filter(player_id=user_id).first()
         if player:
             player.statuss = status
-            player.save()  
-            response_data = {'message': f'User status updated to {status}'}
+            player.save()
+            response_data = {"message": f"User status updated to {status}"}
             return JsonResponse(response_data, status=200)
         else:
-            return JsonResponse({'error': 'Player not found'}, status=404)
-    
+            return JsonResponse({"error": "Player not found"}, status=404)
+
     except json.JSONDecodeError:
-        return JsonResponse({'error': 'Invalid JSON data'}, status=400)
+        return JsonResponse({"error": "Invalid JSON data"}, status=400)
     except Exception as e:
-        return JsonResponse({'error': str(e)}, status=500)
-    
+        return JsonResponse({"error": str(e)}, status=500)
 
 
 def count_online_players(request):
     try:
         online_players_count = Player.objects.filter(statuss="online").count()
-        
         response_text = str(online_players_count)
-        
-        return HttpResponse(response_text, content_type='text/plain', status=200)
-    
+        return HttpResponse(response_text, content_type="text/plain", status=200)
     except Exception as e:
-        return HttpResponse('0', content_type='text/plain', status=200)
+        return HttpResponse("0", content_type="text/plain", status=200)
+
+
+def shareTickets(request):
+    if request.method == "POST":
+        try:
+            shareDetails = json.loads(request.body)
+            toX = shareDetails["to"]
+            fromX = shareDetails["from"]
+            amtOft = int(shareDetails["amtOft"])
+
+            getFromDetails = Player.objects.filter(username=fromX)
+            if getFromDetails.exists():
+                getFromDetails2 = getFromDetails.first()
+                getTicketsData = Tickets.objects.filter(
+                    tickets_id=getFromDetails2.player_id
+                ).first()
+                if getTicketsData.tickets_available <= 1:
+                    return HttpResponse("We didn't process your request...")
+                elif getTicketsData.tickets_available < int(amtOft):
+                    return HttpResponse(
+                        "The specified tickets are greater than residual tickets..."
+                    )
+                else:
+                    getFromDetails3 = Player.objects.filter(number=toX)
+                    if getFromDetails3.exists():
+                        getFromDetails4 = getFromDetails3.first()
+                        getTicketsData2 = Tickets.objects.filter(
+                            tickets_id=getFromDetails4.player_id
+                        ).first()
+                        getTicketsData2.tickets_available = (
+                            getTicketsData2.tickets_available + amtOft
+                        )
+                        getTicketsData2.save()
+
+                        getTicketsDataX = Tickets.objects.filter(
+                            tickets_id=getFromDetails2.player_id
+                        ).first()
+                        getTicketsDataX.tickets_available -= amtOft
+                        getTicketsDataX.save()
+                        notfTitle1 = "Shared tickets"
+                        notfTitle2 = "Received tickets"
+                        notfDes1 = f"Successfully shared {amtOft} tickets with {getFromDetails4.username}. You now have {getTicketsDataX.tickets_available} tickets left."
+                        notfDes2 = f"You have received {amtOft} tickets from {fromX}. Now you have {getTicketsData2.tickets_available} tickets"
+                        saveNotification = Notification.objects.create(
+                            tittle=notfTitle1,
+                            description=notfDes1,
+                            notf_id=getFromDetails2.player_id,
+                        )
+
+                        saveNotification = Notification.objects.create(
+                            tittle=notfTitle2,
+                            description=notfDes2,
+                            notf_id=getFromDetails4.player_id,
+                        )
+                        saveNotification.save()
+                        return HttpResponse(notfDes1)
+                    else:
+                        return HttpResponse("We didn't process your request..")
+            else:
+                return HttpResponse("We didn't process your request..")
+        except json.JSONDecodeError as e:
+            return HttpResponse(f"Error decoding JSON: {str(e)}")
+        except KeyError as e:
+            return HttpResponse(f"KeyError: {str(e)}")
+        except Exception as e:
+            return HttpResponse(f"An error occurred: {str(e)}")
+    else:
+        return HttpResponse("We didn't process your request..")
+
+
+def claimTickets(request):
+    if request.method == "POST":
+        try:
+            claimDetails = json.loads(request.body)
+            user_id = claimDetails["id"]
+            getTicketsData = Tickets.objects.filter(tickets_id=user_id)
+            if getTicketsData.exists():
+                ticketsData = getTicketsData.first()
+                if ticketsData.claim_tickets > 0:
+                    ticketsData.tickets_available += ticketsData.claim_tickets
+                    ticketsData.claim_tickets = 0
+                    ticketsData.save()
+                    return HttpResponse("Successfully claimed")
+                else:
+                    return HttpResponse("No free tickets available")
+            else:
+                return HttpResponse("User not found")
+        except json.JSONDecodeError as e:
+            return HttpResponse(f"Error parsing JSON: {e}")
+        except Exception as e:
+            return HttpResponse(f"An error occurred: {e}")
+    else:
+        return HttpResponse("Invalid request method")
+
+
+def claimTickets2(request):
+    if request.method == "POST":
+        try:
+            claimDetails = json.loads(request.body)
+            user_id = claimDetails["id"]
+            getTicketsData = Tickets.objects.filter(tickets_id=user_id)
+            if getTicketsData.exists():
+                ticketsData = getTicketsData.first()
+                if ticketsData.claim_tickets > 0:
+                    return HttpResponse(
+                        "You have received free tickets, claim your tickets"
+                    )
+                else:
+                    return HttpResponse("No free tickets available")
+            else:
+                return HttpResponse("User not found")
+        except json.JSONDecodeError as e:
+            return HttpResponse(f"Error parsing JSON: {e}")
+        except Exception as e:
+            return HttpResponse(f"An error occurred: {e}")
+    else:
+        return HttpResponse("Invalid request method")

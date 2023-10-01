@@ -799,7 +799,7 @@ def checkSubscriptions():
             else:
                 save_notification = Notification.objects.create(
                                 tittle="TextTornado Pass",
-                                description="Your TextTornado pass subscription expired.",
+                                description="Your TextTornado pass subscription has expired.",
                                 notf_id=subData.subscriptionId,
                             )
                 save_notification.save()

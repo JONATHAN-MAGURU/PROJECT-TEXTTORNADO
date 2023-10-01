@@ -11,6 +11,10 @@ from baseApp.models import (
     TypingArea,
     Event1,
     Event2,
+    Countdown,
+    Countdown2,
+    TextBehaviour,
+    SubscriptionPrice,
 )
 
 
@@ -25,3 +29,7 @@ admin.site.register(Leaderboard)
 admin.site.register(TypingArea)
 admin.site.register(Event1)
 admin.site.register(Event2)
+admin.site.register(Countdown)
+admin.site.register(Countdown2)
+admin.site.register(TextBehaviour)
+admin.site.register(SubscriptionPrice)

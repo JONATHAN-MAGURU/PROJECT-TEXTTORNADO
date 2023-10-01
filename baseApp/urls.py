@@ -25,12 +25,14 @@ urlpatterns = [
     path("setEventEnd", views.setEventEnd, name="setEventEnd"),
     path("setEventNext", views.setEventNext, name="setEventNext"),
     path("startTimerOne", views.startTimerOne, name="startTimerOne"),
+    path("startTimerTwo", views.startTimerTwo, name="startTimerTwo"),
     path("rewardData", views.rewardData, name="srewardData"),
     path(
         "getStartTimerOneCodes",
         views.getStartTimerOneCodes,
         name="getStartTimerOneCodes",
     ),
+    path("getStartTimerTwoCodes", views.getStartTimerTwoCodes, name="getStartTimerTwoCodes"),
     path("startLeaderBoard", views.startLeaderBoard, name="startLeaderBoard"),
     path("getLeaderBoardCode", views.getLeaderBoardCode, name="getLeaderBoardCode"),
     path("startTypingArea", views.startTypingArea, name="startTypingArea"),
@@ -41,4 +43,8 @@ urlpatterns = [
     path("starEvent2", views.starEvent2, name="starEvent2"),
     path("get_concern", views.get_concern, name="get_concern"),
     path("get_concern3", views.get_concern3, name="get_concern3"),
+    path("get_remaining_time", views.get_remaining_time, name="get_remaining_time"),
+    path("get_stating_time", views.get_stating_time, name="get_stating_time"),
+    path("getSubscription", views.getSubscription, name="getSubscription"),
+    path("setSubscriptionPrice", views.setSubscriptionPrice, name="setSubscriptionPrice"),
 ]

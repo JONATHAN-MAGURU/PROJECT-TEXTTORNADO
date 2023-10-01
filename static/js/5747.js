@@ -172,11 +172,12 @@ function sendTickets() {
       document.querySelector(".shareTickets").style.display = "none";
       notifications.style.width = "40%";
       notifications.style.opacity = "1";
+      document.querySelector('.covers').style.display ="none";
       document.querySelector("#notText").innerHTML = XHR3.responseText;
       reverseAction();
       numberToShare.value = "";
       amtOfTicketsToShare.value = "";
-      options.style.opacity = "1";
+      setTimeout(closeNotBar, 5000);
     } else {
       console.log("something went wrong");
     }
@@ -186,29 +187,42 @@ function sendTickets() {
 
 const otherOptions1 = document.getElementsByClassName("otherOptions")[0];
 const otherOptions2 = document.getElementsByClassName("otherOptions")[1];
+var otherOptions3 = document.getElementsByClassName("otherOptions")[2];
 
+otherOptions3.addEventListener("click", function () {
+  options.style.display = "none";
+  leaderboard_hider.style.width = "0";
+  setTimeout(callCustomerCare, 700);
+});
+
+function callCustomerCare() {
+  settings_container2.style.width = "28.5%";
+  settings_container.style.width = 0;
+  settings_container3.style.width = 0;
+  settings_container4.style.width = 0;
+}
 otherOptions1.addEventListener("click", function () {
   document.querySelector(".shareTickets").style.display = "block";
-  options.style.opacity = "0.3";
+  document.querySelector('.covers').style.display ="block";
 });
 
 otherOptions2.addEventListener("click", function () {
   shareTickets2.style.display = "block";
-  options.style.opacity = "0.3";
+  document.querySelector('.covers').style.display ="block";
 });
 
 document.querySelector(".closeShare").addEventListener("click", function () {
   document.querySelector(".shareTickets").style.display = "none";
   ctnrerror.style.display = "none";
   errrors3.innerHTML = "";
-  options.style.opacity = "1";
+  document.querySelector('.covers').style.display ="none";
 });
 
 cancel_btnn3.addEventListener("click", function () {
   document.querySelector(".shareTickets").style.display = "none";
   ctnrerror.style.display = "none";
   errrors3.innerHTML = "";
-  options.style.opacity = "1";
+  document.querySelector('.covers').style.display ="none";
 });
 cancel_btnn4.addEventListener("click", function () {
   reverseAction();
@@ -225,14 +239,14 @@ function reverseAction() {
 
 cancel_btnn5.addEventListener("click", function () {
   shareTickets2.style.display = "none";
-  options.style.opacity = "1";
+  document.querySelector('.covers').style.display ="none";
 });
 
 document
   .getElementsByClassName("closeClaim")[0]
   .addEventListener("click", function () {
     shareTickets2.style.display = "none";
-    options.style.opacity = "1";
+    document.querySelector('.covers').style.display ="none";
   });
 
 let isRequestPending2 = false;
@@ -259,6 +273,7 @@ function claimTickets() {
       notifications.style.opacity = "1";
       document.querySelector("#notText").innerHTML = XHR3.responseText;
       fetchTicketData(id);
+      setTimeout(closeNotBar, 5000);
     } else {
       console.log("Something went wrong");
     }
@@ -274,7 +289,7 @@ claim_box.addEventListener("click", function () {
   claimTickets();
   setTimeout(disableClaimBtn, 300);
   searchFreeTickets();
-  document.querySelector(".claimed").style.animationDuration = "1s";
+  document.querySelector(".claimed").style.animationDuration = "0.5s";
 });
 
 function disableClaimBtn() {
@@ -319,6 +334,8 @@ function searchFreeTickets() {
 
 setInterval(searchFreeTickets, 6000);
 const readerBoardOptions = document.querySelector(".readerBoardOptions");
+const readerBoardOptions2 =
+  document.getElementsByClassName("readerBoardOptions")[1];
 
 let optionsVisible = false;
 document.querySelector(".fa-ellipsis-v").addEventListener("click", () => {
@@ -330,7 +347,28 @@ document.querySelector(".fa-ellipsis-v").addEventListener("click", () => {
   optionsVisible = !optionsVisible;
 });
 
-const otherOptionsA = document.getElementsByClassName("otherOptions2")[0];
+let optionsVisible2 = false;
+document
+  .getElementsByClassName("fa-ellipsis-v")[1]
+  .addEventListener("click", () => {
+    if (optionsVisible2) {
+      readerBoardOptions2.style.right = "-51%";
+    } else {
+      readerBoardOptions2.style.right = "1%";
+    }
+    optionsVisible2 = !optionsVisible2;
+  });
+
+const otherOptions = document.getElementsByClassName("otherOptions2")[0];
+const otherOptionsA = document.getElementsByClassName("otherOptions2")[1];
+const otherOptionsB = document.getElementsByClassName("otherOptions2")[2];
+const otherOptionsC = document.getElementsByClassName("otherOptions2")[3];
+const otherOptionsD = document.getElementsByClassName("otherOptions2")[4];
+
+
+otherOptions.addEventListener('click', ()=>{
+  readerBoardOptions.style.right = "-51%";
+})
 
 let optionsAVisible = false;
 let getCodesForLeaderBoardInterval;
@@ -502,45 +540,107 @@ window.addEventListener("load", checkBatteryStatus);
 
 function getUserLocation() {
   if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(function(position) {
-          const latitude = position.coords.latitude;
-          const longitude = position.coords.longitude;
-          
-          // Display the latitude and longitude
-          document.getElementById("location").textContent = `Latitude: ${latitude}, Longitude: ${longitude}`;
-          
-          fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyC3roVxhsXh-55mIXYpBeSBf-6L2Z-rUUE`)
-              .then(response => response.json())
-              .then(data => {
-                console.log(data)
-                  if (data.status === 'OK') {
-                      const addressComponents = data.results[0].address_components;
-                      const country = addressComponents.find(component => component.types.includes('country'));
-                      const city = addressComponents.find(component => component.types.includes('locality'));
-                      const district = addressComponents.find(component => component.types.includes('administrative_area_level_2'));
+    navigator.geolocation.getCurrentPosition(
+      function (position) {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
 
-                      document.getElementById("country").textContent = country ? `Country: ${country.long_name}` : "Country not found";
-                      document.getElementById("city").textContent = city ? `City: ${city.long_name}` : "City not found";
-                      document.getElementById("district").textContent = district ? `District: ${district.long_name}` : "District not found";
-                  } else {
-                      document.getElementById("country").textContent = "Location data not available";
-                      document.getElementById("city").textContent = "";
-                      document.getElementById("district").textContent = "";
-                  }
-              })
-              .catch(error => {
-                  console.error("Error fetching location details: ", error);
-                  document.getElementById("country").textContent = "Error fetching location";
-                  document.getElementById("city").textContent = "";
-                  document.getElementById("district").textContent = "";
-              });
-      }, function(error) {
-          // Handle geolocation errors
-          // ...
-      });
+        // Display the latitude and longitude
+        document.getElementById(
+          "location"
+        ).textContent = `Latitude: ${latitude}, Longitude: ${longitude}`;
+
+        fetch(
+          `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyC3roVxhsXh-55mIXYpBeSBf-6L2Z-rUUE`
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            if (data.status === "OK") {
+              const addressComponents = data.results[0].address_components;
+              const country = addressComponents.find((component) =>
+                component.types.includes("country")
+              );
+              const city = addressComponents.find((component) =>
+                component.types.includes("locality")
+              );
+              const district = addressComponents.find((component) =>
+                component.types.includes("administrative_area_level_2")
+              );
+
+              document.getElementById("country").textContent = country
+                ? `Country: ${country.long_name}`
+                : "Country not found";
+              document.getElementById("city").textContent = city
+                ? `City: ${city.long_name}`
+                : "City not found";
+              document.getElementById("district").textContent = district
+                ? `District: ${district.long_name}`
+                : "District not found";
+            } else {
+              document.getElementById("country").textContent =
+                "Location data not available";
+              document.getElementById("city").textContent = "";
+              document.getElementById("district").textContent = "";
+            }
+          })
+          .catch((error) => {
+            console.error("Error fetching location details: ", error);
+            document.getElementById("country").textContent =
+              "Error fetching location";
+            document.getElementById("city").textContent = "";
+            document.getElementById("district").textContent = "";
+          });
+      },
+      function (error) {
+        // Handle geolocation errors
+        // ...
+      }
+    );
   } else {
-      document.getElementById("location").textContent = "Geolocation is not supported by this browser.";
+    document.getElementById("location").textContent =
+      "Geolocation is not supported by this browser.";
   }
 }
-// Attach the getUserLocation function to a button click event
+
 window.addEventListener("load", getUserLocation);
+
+otherOptionsC.addEventListener("click", function () {
+  readerBoardOptions2.style.right = "-51%";
+  options_notf.style.display = "none";
+});
+
+
+otherOptionsD.addEventListener('click', function(){
+  clearNotifications();
+})
+
+function clearNotifications() {
+  const firstIdOb = { id };
+  const jsonData = JSON.stringify(firstIdOb);
+  const XHR3 = new XMLHttpRequest();
+  const csrfToken5 = document.querySelector("#csrf_token58").value;
+  XHR3.open("POST", "/clearNotification", true);
+  XHR3.setRequestHeader("Content-Type", "application/json");
+  XHR3.setRequestHeader("X-CSRFToken", csrfToken5);
+  XHR3.addEventListener("load", function () {
+    if (XHR3.status === 200 && XHR3.readyState === 4) {
+      document.querySelector(".notf_body").innerHTML= "";
+      notifications.style.width = "40%";
+      notifications.style.opacity = "1";
+      document.querySelector("#notText").innerHTML = XHR3.responseText;
+      setTimeout(closeNotBar, 5000);
+    } else {
+      notifications.style.width = "40%";
+      notifications.style.opacity = "1";
+      document.querySelector("#notText").innerHTML = XHR3.responseText;
+    }
+  });
+  XHR3.send(jsonData);
+}
+
+
+function closeNotBar(){
+  notifications.style.width = "0%";
+  notifications.style.opacity = "0";
+}

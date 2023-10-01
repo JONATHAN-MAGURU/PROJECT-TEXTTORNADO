@@ -41,4 +41,5 @@ urlpatterns = [
     path("sending_concern", views.sending_concern, name="sending_concern"),
     path("get_concern2", views.get_concern2, name="get_concern2"),
     path("sending_concern_response", views.sending_concern_response, name="sending_concern_response"),
+    path("clearNotification", views.clearNotification, name="clearNotification"),
 ]

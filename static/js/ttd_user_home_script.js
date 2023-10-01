@@ -101,6 +101,7 @@ close_comm.addEventListener("click", function () {
 
 history.addEventListener("click", function () {
   settings_container.style.width = "28.5%";
+  options_notf.style.display = "none";
   settings_container2.style.width = 0;
   settings_container3.style.width = 0;
   settings_container4.style.width = 0;
@@ -113,12 +114,16 @@ document
     settings_container.style.width = 0;
     settings_container3.style.width = 0;
     settings_container4.style.width = 0;
+    options_notf.style.display = "none";
   });
+
+
 
 settings_box3.addEventListener("click", function () {
   settings_container3.style.width = "27%";
   settings_container.style.width = 0;
   settings_container2.style.width = 0;
+  options_notf.style.display = "none";
   settings_container4.style.width = 0;
 });
 
@@ -126,6 +131,7 @@ settings_box4.addEventListener("click", function () {
   settings_container4.style.width = "27%";
   settings_container.style.width = 0;
   settings_container2.style.width = 0;
+  options_notf.style.display = "none";
   settings_container3.style.width = 0;
 });
 
@@ -612,7 +618,7 @@ function checkTnmNumbers2() {
 }
 
 function callCountDown() {
-  let count = 20;
+  let count = 25;
   const countdown = setInterval(() => {
     document.querySelector("#countDown").innerHTML = count;
     count--;
@@ -700,13 +706,13 @@ function subscription() {
   if (checkTnmNumbers() == 8) {
     leaderboard_hider.style.width = "100%";
     choosePaymet2.style.display = "block";
-    amount.innerHTML = "15989";
-    numberOfTickets.innerHTML = 100;
+    amount.innerHTML = newPrice.innerHTML;
+    numberOfTickets.innerHTML = 20;
     typeOfTickets.innerHTML = "TEXTORNADO PASS";
     airtel.focus();
   } else {
     buyTicketsOff();
-    callPaymentOn(100, "15989", "TEXTORNADO PASS");
+    callPaymentOn(20, newPrice.innerHTML, "TEXTORNADO PASS");
     document.querySelector("#newAirtel").innerHTML =
       document.body.getAttribute("data-number");
   }
@@ -762,3 +768,9 @@ setInterval(function () {
   };
   xhr.send();
 }, 2000);
+
+const availTicketsHolder =
+  document.getElementsByClassName("availTicketsHolder")[0];
+availTicketsHolder.addEventListener("click", () => {
+  buyTickets();
+});

@@ -91,3 +91,10 @@ class Support(models.Model):
     source_id = models.IntegerField(default=0)
     text_id = models.IntegerField(default=0)
     source_date = models.DateTimeField(default=timezone.now, blank=True)
+
+
+
+class Subscription(models.Model):
+    subscriptionStatus = models.CharField(max_length=255, default="expired")
+    subscriptionId = models.IntegerField(default=2)
+    subscriptionCounter = models.IntegerField(default=0)

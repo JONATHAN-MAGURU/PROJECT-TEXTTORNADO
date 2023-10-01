@@ -219,7 +219,7 @@
             </p>
           </div>
           <div class="choosePaymentBodyB">
-            <p><span id="countDown">20</span>&nbsp;<span>S</span></p>
+            <p><span id="countDown">25</span>&nbsp;<span>S</span></p>
           </div>
         </div>
         <div class="choosePaymentHead">
@@ -508,6 +508,7 @@
       </div>
 
       <div class="leaderboard_hider"></div>
+      <div class="covers"></div>
       <div class="bodyCover"></div>
 
       <div class="notifications">
@@ -527,6 +528,12 @@
 
       <div class="leaderboard_container">
         <div class="readerBoardOptions">
+          <div class="otherOptions2">
+            <p>
+              <i class="fas fa-times"></i>
+              &nbsp;&nbsp;<span> Close</span>
+            </p>
+          </div>
           <div class="otherOptions2">
             <p>
               <i class="fas fa-bolt"></i> &nbsp;&nbsp;<span id="lastEvent">
@@ -634,7 +641,7 @@
         </div>
         <div class="header_box header_box2">
           <i class="fas fa-headset customerCare iconss"></i>
-          <i class="fas fa-cog iconss"></i>
+          <!--<i class="fas fa-cog iconss"></i>-->
           <i class="fas fa-history history iconss"></i>
           <i class="fas fa-bell iconss notf"></i>
           <i class="fas fa-expand iconss" id="fullscreenButton"></i>
@@ -759,6 +766,15 @@
                     <option>Lucida Console</option>
                     <option>Garamond</option>
                     <option>Century Gothic</option>
+                    <option>Cursive</option>
+                    <option>Fantasy</option>
+                    <option>Monospace</option>
+                    <option>Sans-serif</option>
+                    <option>Serif</option>
+                    <option>Futura</option>
+                    <option>Baskerville</option>
+                    <option>Avenir</option>
+                    <option>Calibri</option>
                   </select>
                 </div>
                 <button id="reshulf">
@@ -797,7 +813,7 @@
       <div class="container_B">
         <div class="timerMainBox">
           <div class="timerHead">
-            <h3>EVENT ENDS IN</h3>
+            <h3 id="eventHasEnded">EVENT ENDS IN</h3>
           </div>
           <div class="timerBody">
             <div class="timerSubBox">
@@ -815,10 +831,6 @@
             <div class="timerSubBox">
               <p style="font-size: 170%; color: orange" id="seconds">00</p>
               <p style="font-size: 80%">SECONDS</p>
-            </div>
-            <div class="timerSubBox">
-              <p style="font-size: 170%; color: orange" id="milliseconds">00</p>
-              <p style="font-size: 80%">MS</p>
             </div>
           </div>
           <div class="event_d">
@@ -857,12 +869,6 @@
             <div class="timerSubBox">
               <p style="font-size: 170%; color: orange" id="seconds2">00</p>
               <p style="font-size: 80%">SECONDS</p>
-            </div>
-            <div class="timerSubBox">
-              <p style="font-size: 170%; color: orange" id="milliseconds2">
-                00
-              </p>
-              <p style="font-size: 80%">MS</p>
             </div>
           </div>
           <div class="event_d">
@@ -912,8 +918,6 @@
               ></i>
             </div>
             <br />
-            <br />
-            <br />
             <p>
               With our exclusive subscription package, the
               <span style="color: #ed143d">TextTornado Pass</span>," you gain
@@ -924,7 +928,11 @@
               excitement as you dive into event after event, all covered by your
               TextTornado Pass.
             </p>
-            <br />
+            <p>
+              After subscribing, you will immediately receive 20 tickets, and
+              you will continue to receive additional packs of 20 tickets with
+              each new event as long as your subscription remains active.
+            </p>
           </div>
           <span class="loader2"></span>
           <div
@@ -937,10 +945,14 @@
           >
             <p>
               <span style="color: #ed143d; font-size: 140%"
-                >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MWK15,989 <br />
-                &nbsp;&nbsp;&nbsp;17%<sup>OFF</sup>
+                >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MKW
+                <span id="newprice">XXX-XXX</span> <br />
+                &nbsp;&nbsp;&nbsp;<span id="dropBy">XXX</span>%<sup>off</sup>
               </span>
-              <strike>22,500</strike>
+              <span style="color: gray"
+                ><strike>MKW </strike
+                ><strike id="oldprice">XXX-XXX</strike></span
+              >
             </p>
           </div>
           <div class="timerBody">
@@ -963,11 +975,33 @@
         <div class="settings_box displayNone">SETTINGS</div>
       </div>
       <div class="options_notf">
+        <div class="readerBoardOptions">
+          <div class="otherOptions2">
+            <p>
+              <i class="fas fa-times"></i>
+              &nbsp;&nbsp;<span> Close</span>
+            </p>
+          </div>
+          <div class="otherOptions2">
+            <p>
+              <i class="fas fa-trash"></i>
+              &nbsp;Delete
+            </p>
+          </div>
+        </div>
         <div class="notf_header">
           <p>Notifications</p>
           <i class="fas fa-ellipsis-v iconss2" style="font-size: 140%"></i>
         </div>
-        <div class="notf_body"></div>
+        <div class="notf_body">
+          <br />
+          <br />
+          <br />
+          <p style="text-align: center; color: gray">
+            <i style="font-size: 240%" class="fas fa-bell-slash"></i> <br />
+            No notifications
+          </p>
+        </div>
       </div>
 
       <div class="options_comments">
@@ -981,7 +1015,6 @@
 
         <div class="comment_body"></div>
         <div class="comment_foot">
-          
           <div id="emoji-picker"></div>
           <form id="comment_form" class="input-placecomme">
             <button
@@ -991,13 +1024,14 @@
             >
               <i
                 class="far fa-smile iconss"
-                style="font-size: 130%; margin-top:2px;"
+                style="font-size: 130%; margin-top: 2px"
               ></i>
             </button>
             <div style="width: 90%">
               <input type="hidden" id="csrf_token5" value="{{ csrf_token }}" />
               <input type="hidden" id="csrf_token5" value="{{ csrf_token }}" />
               <input type="hidden" id="csrf_token14" value="{{ csrf_token }}" />
+              <input type="hidden" id="csrf_token58" value="{{ csrf_token }}" />
               <input
                 type="hidden"
                 id="csrf_token511"
@@ -1017,11 +1051,12 @@
               <input type="hidden" id="csrf_token00" value="{{ csrf_token }}" />
               <input type="hidden" id="csrf_token59" value="{{ csrf_token }}" />
 
-              <input
+              <textarea
+                cols="30"
+                rows="10"
                 placeholder="Send a comment."
                 class="send-inputcomme comment"
-                type="text"
-              />
+              ></textarea>
             </div>
             <div style="width: auto">
               <button
@@ -1509,7 +1544,9 @@
       </div>
       <div class="settings_container" style="overflow: hidden">
         <div class="test_history_header">
-          <p><i class="fas fa-headset"></i> &nbsp;SUPPORT/HELP/ CUSTOMER CARE</p>
+          <p>
+            <i class="fas fa-headset"></i> &nbsp;SUPPORT/HELP/ CUSTOMER CARE
+          </p>
           <i
             style="font-size: 100%; cursor: pointer"
             class="fa fa-close closee"
@@ -1646,5 +1683,6 @@
     <script src="{% static 'js/home_typos.js' %}"></script>
     <script src="{% static 'js/events.js' %}"></script>
     <script src="{% static 'js/5747.js' %}"></script>
+    <script src="{% static 'js/85747.js' %}"></script>
   </body>
 </html>

@@ -12,6 +12,7 @@ const maxmumInput2 = document.getElementById("maxmum2");
 const minmumInput2 = document.getElementById("minmum2");
 const timers2 = document.getElementById("timers2");
 const startTimerOne = document.getElementById("endEvent");
+const startTimerTwo = document.getElementById("nextEvent");
 const actionStatus = document.querySelector("#actionStatus");
 var messageHolderArray = [];
 frontend.addEventListener("change", function () {
@@ -213,6 +214,45 @@ setInterval(function () {
           startTimerOne.checked = false;
         } else {
           startTimerOne.checked = true;
+        }
+      }
+    } else {
+      console.log("Request failed.  Returned status of " + xhr.status);
+    }
+  };
+  xhr.send();
+}, 3000);
+
+startTimerTwo.addEventListener("change", function () {
+  const firstId = startTimerTwo.checked ? 5747 : 85747;
+  const firstIdOb = { firstId };
+  const jsonData = JSON.stringify(firstIdOb);
+  const XHR3 = new XMLHttpRequest();
+  const csrfToken5 = document.querySelector("#csrf_token7").value;
+  XHR3.open("POST", "/startTimerTwo", true);
+  XHR3.setRequestHeader("Content-Type", "application/json");
+  XHR3.setRequestHeader("X-CSRFToken", csrfToken5);
+  XHR3.addEventListener("load", function () {
+    if (XHR3.status === 200 && XHR3.readyState === 4) {
+      console.log(XHR3.responseText);
+    } else {
+      console.log("something went wrong");
+    }
+  });
+  XHR3.send(jsonData);
+});
+
+setInterval(function () {
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", "/getStartTimerTwoCodes");
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      var response = JSON.parse(xhr.responseText);
+      for (var key in response.codes) {
+        if (response.codes[key].nextEventId == 85747) {
+          startTimerTwo.checked = false;
+        } else {
+          startTimerTwo.checked = true;
         }
       }
     } else {

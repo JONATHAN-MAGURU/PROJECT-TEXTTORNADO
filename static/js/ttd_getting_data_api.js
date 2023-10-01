@@ -12,6 +12,7 @@ const alert2 = document.getElementById("alerts2");
 const send_comment = document.getElementById("comment_form");
 const actionStatus = document.querySelector("#actionStatus");
 
+
 save_data.addEventListener("submit", function (e) {
   e.preventDefault();
   const imageInput = document.getElementById("imageInput");
@@ -257,11 +258,10 @@ document.addEventListener("DOMContentLoaded", function () {
   xhr1.send(json_dat);
 });
 
-
-const leaderboard_status = document.querySelector('#leaderboard_status')
+const leaderboard_status = document.querySelector("#leaderboard_status");
 document.addEventListener("DOMContentLoaded", function () {
   var xhrInProgress = false;
-  leaderboard_status.innerHTML ="active";
+  leaderboard_status.innerHTML = "active";
   function updateLeaderboard() {
     if (xhrInProgress) {
       return;
@@ -575,12 +575,9 @@ document.addEventListener("DOMContentLoaded", function () {
         notificationBody.innerHTML = "";
         for (var key in response.notification) {
           if (response.notification[key].notf_id == id) {
-            // Convert the date string to a JavaScript Date object
             var notificationDate = new Date(
               response.notification[key].notification_date
             );
-
-            // Format the date and time as desired (e.g., "MM/DD/YYYY HH:MM AM/PM")
             var formattedDate = notificationDate.toLocaleString("en-US", {
               month: "2-digit",
               day: "2-digit",
@@ -728,7 +725,7 @@ document.addEventListener("DOMContentLoaded", function () {
               "</small></div>";
             concernBody.innerHTML += temp;
           } else {
-            var concernDate = new Date(response.concerns[key].source_id);
+            var concernDate = new Date(response.concerns[key].source_date);
             var formattedDate = concernDate.toLocaleString("en-US", {
               month: "2-digit",
               day: "2-digit",

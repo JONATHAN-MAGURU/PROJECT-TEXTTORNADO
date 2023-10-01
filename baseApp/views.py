@@ -1,7 +1,8 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.http import HttpResponse, JsonResponse
-from datetime import datetime, timezone
+from datetime import datetime
 from datetime import timedelta
+from django.utils import timezone
 
 from datetime import date
 import json
@@ -17,11 +18,22 @@ from baseApp.models import (
     TypingArea,
     Event1,
     Event2,
+    Countdown,
+    Countdown2,
+    TextBehaviour,
+    SubscriptionPrice,
 )
-from topApp.models import Player, Tickets, TypingDetails, Notification, Support
+from topApp.models import Player, Tickets, TypingDetails, Notification, Support, Subscription
 from topApp.views import id_gen, transferData
 import random
 import time
+from django.core.exceptions import ObjectDoesNotExist
+
+
+def getD():
+    getDate = Countdown.objects.all()
+    for g in getDate:
+        print(g.expiration_time)
 
 
 def ttd_admin_login(request):
@@ -37,6 +49,7 @@ def ttd_admin_homepage(request):
         username = request.POST["username"]
         password = request.POST["password"]
         details = Admins_details.objects.filter(emails=username, passw=password)
+        getD()
         if details.exists():
             date1 = datetime.now()
             admin_details = details.values()
@@ -57,22 +70,55 @@ def ttd_admin_homepage(request):
     return redirect("ttd_admin_login")
 
 
-def paragraph():
+def paragraph(behaviour):
     paragraphs = Typing_testing.objects.all()
-    for paragraph in paragraphs:
-        splitedParagraph = paragraph.test.split()
-        random.shuffle(splitedParagraph)
-        joinedParagraph = " ".join(splitedParagraph)
 
-        vps = Variant_paragraphs.objects.filter(variant_id=paragraph.test_id)
-        if vps.exists():
-            for vp in vps:
-                vp.variant_p = joinedParagraph
-                vp.save()
-        else:
-            vp = Variant_paragraphs.objects.create(
-                variant_p=joinedParagraph, variant_id=paragraph.test_id
-            )
+    if behaviour == "normal":
+        for paragraph in paragraphs:
+            splitedParagraph = paragraph.test.split()
+            random.shuffle(splitedParagraph)
+            joinedParagraph = " ".join(splitedParagraph)
+
+            vps = Variant_paragraphs.objects.filter(variant_id=paragraph.test_id)
+            if vps.exists():
+                for vp in vps:
+                    vp.variant_p = joinedParagraph
+                    vp.save()
+            else:
+                vp = Variant_paragraphs.objects.create(
+                    variant_p=joinedParagraph, variant_id=paragraph.test_id
+                )
+    elif behaviour == "reversed":
+        for paragraph in paragraphs:
+            reversedParagraph = shuffle_sentence(paragraph.test)
+            vps2 = Variant_paragraphs.objects.filter(variant_id=paragraph.test_id)
+            if vps2.exists():
+                for vp in vps2:
+                    vp.variant_p = reversedParagraph
+                    vp.save()
+            else:
+                vp = Variant_paragraphs.objects.create(
+                    variant_p=reversedParagraph, variant_id=paragraph.test_id
+                )
+
+
+def shuffle_word(word):
+    if len(word) <= 2:
+        return word
+
+    word_list = list(word)
+    middle_characters = word_list[1:-1]
+    random.shuffle(middle_characters)
+    shuffled_word = word_list[0] + "".join(middle_characters) + word_list[-1]
+    return shuffled_word
+
+
+def shuffle_sentence(sentence):
+    words = sentence.split()
+    random.shuffle(words)
+    shuffled_words = [shuffle_word(word) for word in words]
+    shuffled_sentence = " ".join(shuffled_words)
+    return shuffled_sentence
 
 
 def get_paragraph(request):
@@ -94,6 +140,15 @@ def typing_tests(request):
     if request.method == "POST":
         tests = json.loads(request.body)
         textarea = tests["textarea2"]
+        behaviour = tests["behaviour2"]
+
+        if behaviour == "normal" or behaviour == "reversed":
+            getBehaviour = TextBehaviour.objects.first()
+            getBehaviour.name = behaviour
+            getBehaviour.save()
+        else:
+            return HttpResponse("INVALID BEHAVIOUR...")
+
         id = id_gen()
         count = textarea.split()
         get_all_paragraphs = Typing_testing.objects.all().values()
@@ -105,7 +160,7 @@ def typing_tests(request):
                         test=textarea, test_id=id
                     )
                     paragraphs.save()
-                    return HttpResponse("SAVED SUSSESSIFULLY....")
+                    return HttpResponse("SAVED SUSSESSIFULLY...")
                 else:
                     return HttpResponse("YOU HAVE REACHED MAXMUM AMOUT OF PARAGRAPHS..")
             else:
@@ -187,6 +242,11 @@ def getStartTimerOneCodes(request):
     return JsonResponse({"codes": list(codes.values())})
 
 
+def getStartTimerTwoCodes(request):
+    codes = NextEvent.objects.all()
+    return JsonResponse({"codes": list(codes.values())})
+
+
 def getSearch(request):
     if request.method == "POST":
         player = json.loads(request.body)
@@ -202,26 +262,41 @@ def getSearch(request):
 
 def setEventEnd(request):
     if request.method == "POST":
-        try:
-            data = json.loads(request.body)
-            ms = data.get("ms")
+        data = json.loads(request.body)
+        ms = data.get("ms")
+        current_datetime = datetime.now()
+        milliseconds = int(ms) - 7200000
+        seconds = int(milliseconds) / 1000
+        time_difference = timezone.timedelta(seconds=seconds)
+        new_datetime = current_datetime + time_difference
+        formatted_datetime = new_datetime.strftime("%Y-%m-%d %H:%M:%S%z")
+        print(formatted_datetime)
+        if ms is not None:
+            Countdown.objects.all().delete()
+            Countdown.objects.create(expiration_time=formatted_datetime).save()
+            return HttpResponse(
+                f"Time set successfully.{formatted_datetime}", status=200
+            )
+        else:
+            return HttpResponse("Failed to set")
 
-            if ms is not None:
-                try:
-                    event = EndEvent.objects.get(endEventId=85747)
-                    event.endEvent = ms
-                    event.save()
-                    return HttpResponse("Event end updated successfully.", status=200)
-                except EndEvent.DoesNotExist:
-                    return HttpResponse("Failled : Switch timmer 1 off.", status=404)
-            else:
-                return HttpResponse("Invalid data format.", status=400)
-        except json.JSONDecodeError:
-            return HttpResponse("Invalid JSON data.", status=400)
-        except Exception as e:
-            return HttpResponse(f"An error occurred: {str(e)}", status=500)
-    else:
-        return HttpResponse("Method not allowed.", status=405)
+
+def get_stating_time(request):
+    countdown = Countdown2.objects.first()
+    if countdown:
+        current_time = timezone.now()
+        starting_time = (countdown.starting_time - current_time).total_seconds()
+        return JsonResponse({"starting_time": starting_time})
+    return JsonResponse({"starting_time": 0})
+
+
+def get_remaining_time(request):
+    countdown = Countdown.objects.first()
+    if countdown:
+        current_time = timezone.now()
+        remaining_time = (countdown.expiration_time - current_time).total_seconds()
+        return JsonResponse({"remaining_time": remaining_time})
+    return JsonResponse({"remaining_time": 0})
 
 
 """def update_end_event():
@@ -239,7 +314,7 @@ def setEventEnd(request):
 update_end_event()
     """
 
-
+"""
 def subtract_until_zero(number, subtract_by):
     Player.objects.all().update(results="seen")
     event = EndEvent.objects.get(endEventId=85747)
@@ -264,30 +339,93 @@ def subtract_until_zero(number, subtract_by):
     getCode2 = TypingArea.objects.get(typingAreaId=5747)
     getCode2.typingAreaId = code1
     getCode2.save()
+"""
+
+
+def checkEventNext():
+    while True:
+        countdown = Countdown2.objects.first()
+        starting_time = None
+
+        try:
+            if countdown:
+                current_time = timezone.now()
+                starting_time = (countdown.starting_time - current_time).total_seconds()
+
+                if starting_time < 10:
+                    code1 = 85747
+                    getCode = Frontend.objects.get(FrontendId=5747)
+                    getCode.FrontendId = code1
+                    getCode.save()
+
+                    break
+        except ObjectDoesNotExist:
+            pass
+        time.sleep(5)
+
+
+def checkEventEnds():
+    while True:
+        countdown = Countdown.objects.first()
+        remaining_time = None
+
+        try:
+            if countdown:
+                current_time = timezone.now()
+                remaining_time = (
+                    countdown.expiration_time - current_time
+                ).total_seconds()
+
+                if remaining_time < 16:
+                    transferData()
+                    time.sleep(2)
+                    event1 = Event1.objects.first()
+                    if event1.eventId == 15747:
+                        event1.eventId = 185747
+                        event1.save()
+                    event2 = Event2.objects.first()
+                    if event2.eventId == 15747:
+                        event2.eventId = 185747
+                        event2.save()
+                    time.sleep(1)
+                    Player.objects.all().update(results="not seen")
+                    time.sleep(1)
+                    code1 = 85747
+                    getCode = Leaderboard.objects.get(leaderBoardId=5747)
+                    getCode.leaderBoardId = code1
+                    getCode.save()
+                    time.sleep(2)
+                    getCode2 = TypingArea.objects.get(typingAreaId=5747)
+                    getCode2.typingAreaId = code1
+                    getCode2.save()
+                    time.sleep(1)
+                    getCode = EndEvent.objects.get(endEventId=5747)
+                    getCode.endEventId = code1
+                    getCode.save()
+                    break
+        except ObjectDoesNotExist:
+            pass
+        time.sleep(5)
 
 
 def setEventNext(request):
     if request.method == "POST":
-        try:
-            data = json.loads(request.body)
-            ms = data.get("ms")
-
-            if ms is not None:
-                try:
-                    event = NextEvent.objects.get(nextEventId=5747)
-                    event.nextEvent = ms
-                    event.save()
-                    return HttpResponse("Event next updated successfully.", status=200)
-                except NextEvent.DoesNotExist:
-                    return HttpResponse("Event not found.", status=404)
-            else:
-                return HttpResponse("Invalid data format.", status=400)
-        except json.JSONDecodeError:
-            return HttpResponse("Invalid JSON data.", status=400)
-        except Exception as e:
-            return HttpResponse(f"An error occurred: {str(e)}", status=500)
-    else:
-        return HttpResponse("Method not allowed.", status=405)
+        data = json.loads(request.body)
+        ms = data.get("ms")
+        current_datetime = datetime.now()
+        milliseconds = int(ms) - 7200000
+        seconds = int(milliseconds) / 1000
+        time_difference = timezone.timedelta(seconds=seconds)
+        new_datetime = current_datetime + time_difference
+        formatted_datetime = new_datetime.strftime("%Y-%m-%d %H:%M:%S%z")
+        if ms is not None:
+            Countdown2.objects.all().delete()
+            Countdown2.objects.create(starting_time=formatted_datetime).save()
+            return HttpResponse(
+                f"Time set successfully.{formatted_datetime}", status=200
+            )
+        else:
+            return HttpResponse("Failed to set")
 
 
 def getPlayerData(request):
@@ -372,12 +510,37 @@ def startTimerOne(request):
             getCode = EndEvent.objects.get(endEventId=5747)
             getCode.endEventId = code1
             getCode.save()
-            subtract_until_zero(getCode.endEvent, 1000)
+
             return HttpResponse("UPDATED SUCCESSIFULLY...")
         elif code1 == 5747:
+            checkSubscriptions()
             getCode = EndEvent.objects.get(endEventId=85747)
             getCode.endEventId = code1
             getCode.save()
+            checkEventEnds()
+            
+            return HttpResponse("UPDATED SUCCESSIFULLY...")
+        else:
+            return HttpResponse("UPDATE FAILED...")
+    else:
+        return HttpResponse("something went wrong")
+
+
+def startTimerTwo(request):
+    if request.method == "POST":
+        code = json.loads(request.body)
+        code1 = code["firstId"]
+        if code1 == 85747:
+            getCode = NextEvent.objects.get(nextEventId=5747)
+            getCode.nextEventId = code1
+            getCode.save()
+
+            return HttpResponse("UPDATED SUCCESSIFULLY...")
+        elif code1 == 5747:
+            getCode = NextEvent.objects.get(nextEventId=85747)
+            getCode.nextEventId = code1
+            getCode.save()
+            checkEventNext()
             return HttpResponse("UPDATED SUCCESSIFULLY...")
         else:
             return HttpResponse("UPDATE FAILED...")
@@ -394,21 +557,13 @@ def starEvent1(request):
             getCode.eventId = code1
             getCode.save()
 
-            code3 = 85747
-            getCode4 = Leaderboard.objects.get(leaderBoardId=5747)
-            getCode4.leaderBoardId = code3
-            getCode4.save()
-            time.sleep(5)
-            getCode5 = TypingArea.objects.get(typingAreaId=5747)
-            getCode5.typingAreaId = code3
-            getCode5.save()
-
             return HttpResponse("UPDATED SUCCESSIFULLY...")
         elif code1 == 15747:
             getCode = Event1.objects.get(eventId=185747)
             getCode.eventId = code1
             getCode.save()
 
+            Player.objects.all().update(results="seen")
             code2 = 5747
             getCode3 = Leaderboard.objects.get(leaderBoardId=85747)
             getCode3.leaderBoardId = code2
@@ -434,22 +589,14 @@ def starEvent2(request):
                 getCode = Event2.objects.get(eventId=15747)
                 getCode.eventId = code1
                 getCode.save()
-
-                code3 = 85747
-                getCode4 = Leaderboard.objects.get(leaderBoardId=5747)
-                getCode4.leaderBoardId = code3
-                getCode4.save()
-                time.sleep(5)
-                getCode5 = TypingArea.objects.get(typingAreaId=5747)
-                getCode5.typingAreaId = code3
-                getCode5.save()
-
                 return HttpResponse("UPDATED SUCCESSFULLY...")
+
             elif code1 == 15747:
                 getCode = Event2.objects.get(eventId=185747)
                 getCode.eventId = code1
                 getCode.save()
 
+                Player.objects.all().update(results="seen")
                 code2 = 5747
                 getCode3 = Leaderboard.objects.get(leaderBoardId=85747)
                 getCode3.leaderBoardId = code2
@@ -504,7 +651,7 @@ def rewardData(request):
                         else:
                             tickets.claim_tickets += freeTicket
                             tickets.save()
-                    notfDes1 = f"You have received free {freeTicket} tickets from TextTornado rewards. Claim your tickets."
+                    notfDes1 = f"You have received {freeTicket} free tickets from TextTornado rewards. Claim your tickets."
                     getUsers = Player.objects.all()
                     for getUser in getUsers:
                         saveNotification = Notification.objects.create(
@@ -529,7 +676,7 @@ def rewardData(request):
                         else:
                             return HttpResponse("NO ONE ON LEADERBOARD.")
                     notfTitle2 = "Leaderboard Rewards"
-                    notfDes2 = f"You have received free {freeTicket} tickets from Leaderboard rewards. Claim your tickets."
+                    notfDes2 = f"You have received {freeTicket} free tickets from Leaderboard rewards. Claim your tickets."
                     getUsers2 = TypingDetails.objects.all()
                     for getUser in getUsers2:
                         saveNotification = Notification.objects.create(
@@ -554,7 +701,7 @@ def rewardData(request):
                             toReward2.save()
                             saveNotification = Notification.objects.create(
                                 tittle="Accuracy  Rewards",
-                                description=f"You have received free {freeTicket} tickets from accuracy  rewards. claim your tickets",
+                                description=f"You have received {freeTicket} free tickets from accuracy  rewards. claim your tickets",
                                 notf_id=toReward2.tickets_id,
                             )
                             saveNotification.save()
@@ -571,13 +718,12 @@ def rewardData(request):
         return HttpResponse("Invalid request method. Only POST requests are allowed.")
 
 
-
 def get_concern(request):
     if request.method == "POST":
         try:
             request_data = json.loads(request.body)
             userid = request_data.get("mail")
-            getAdmin = Admins_details.objects.filter( admin_id = userid)
+            getAdmin = Admins_details.objects.filter(admin_id=userid)
             if getAdmin.exists():
                 concerns = Support.objects.all().order_by("-source_date")
                 return JsonResponse({"concerns": list(concerns.values())})
@@ -587,7 +733,7 @@ def get_concern(request):
             return HttpResponse("An error occurred while processing the request.")
     else:
         return HttpResponse("Bad request method. Use POST.")
-    
+
 
 def get_concern3(request):
     if request.method == "POST":
@@ -595,7 +741,7 @@ def get_concern3(request):
             request_data = json.loads(request.body)
             userid = request_data.get("userId")
             print(userid)
-            getUserConcerns = Support.objects.filter(source_id = userid )
+            getUserConcerns = Support.objects.filter(source_id=userid)
             if getUserConcerns.exists():
                 concerns = getUserConcerns.all().order_by("source_date")
                 return JsonResponse({"concerns": list(concerns.values())})
@@ -605,4 +751,58 @@ def get_concern3(request):
             return HttpResponse("An error occurred while processing the request.")
     else:
         return HttpResponse("Bad request method. Use POST.")
+
+
+def getSubscription(request):
+    subscriptionPrice = SubscriptionPrice.objects.all()
+    return JsonResponse({"subscriptionPrice": list(subscriptionPrice.values())})
+
+
+def setSubscriptionPrice(request):
+    if request.method == "POST":
+        subDat = json.loads(request.body)
+
+        np = subDat.get("np")
+        op = subDat.get("op")
+        db = subDat.get("db")
+
+        getData = SubscriptionPrice.objects.first()
+        if getData:
+            getData.newPrice = np
+            getData.oldPrice = op
+            getData.dropBy = db
+            getData.save()
+            return HttpResponse(" SUBSCRIPTION PRICES SUCCESSFULLY SET..")
+        else:
+            return HttpResponse("SET NO PRICE OBJECT")
+    else:
+        return HttpResponse("INVALID REQUEST")
+
+
+def checkSubscriptions():
+    getSubscriptionData = Subscription.objects.all()
+    for subData in getSubscriptionData:
+        if subData.subscriptionStatus =="active":
+            if subData.subscriptionCounter < 5:
+                getTickets = Tickets.objects.filter(tickets_id = subData.subscriptionId)
+                getTicket = getTickets.first()
+                getTicket.tickets_available += 20
+                getTicket.save()
+                subData.subscriptionCounter += 1
+                subData.save()
+                save_notification = Notification.objects.create(
+                                tittle="TextTornado Pass",
+                                description=f"You have received 20 tickets from TextTornado pass you subscribed previously. And you have used {subData.subscriptionCounter}/5 of your subscription.",
+                                notf_id=subData.subscriptionId,
+                            )
+                save_notification.save()
+            else:
+                save_notification = Notification.objects.create(
+                                tittle="TextTornado Pass",
+                                description="Your TextTornado pass subscription expired.",
+                                notf_id=subData.subscriptionId,
+                            )
+                save_notification.save()
+
+
 

@@ -14,6 +14,7 @@ body {
   color: white;
 }
 
+
 .left_side_nav {
   position: fixed;
   padding: 0;
@@ -385,6 +386,7 @@ li:hover {
 .nav_options_menu_holder {
   padding: 10px;
   letter-spacing: 2px;
+  height: 90vh;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -429,8 +431,12 @@ input[type="text"] {
   font-size: 100%;
 }
 
+
 input[type="text"]:focus {
-  outline: 1px solid orange;
+  outline: 2px solid orange;
+}
+input[type="number"]:focus {
+  outline: 2px solid orange;
 }
 
 textarea:focus {
@@ -441,7 +447,8 @@ textarea:focus {
   background-color: #161b22;
   width: 38%;
   padding: 15px;
-  height: auto;
+  overflow: scroll;
+  height: 85vh;
 }
 
 .nav_options_container_B {
@@ -449,6 +456,7 @@ textarea:focus {
   background-color: #161b22;
   padding: 15px;
   overflow: scroll;
+  height: 85vh;
 }
 
 .nav_options_container_C {
@@ -1180,10 +1188,11 @@ button:hover {
 }
 
 input[type="number"] {
-  padding: 6px;
+  padding: 10px;
   border: none;
-  background-color: transparent;
-  box-shadow: 1px 1px 10px #000000;
+  margin: 5px;
+  background-color: #0d1117;
+  box-shadow: 1px 1px 2px #000000;
   color: gray;
   border-radius: 3px;
 }

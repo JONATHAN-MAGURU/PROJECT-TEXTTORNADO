@@ -1,24 +1,11 @@
 const endEventHolder = document.getElementsByClassName("welcomeUserHolder")[1];
-
 document.addEventListener("DOMContentLoaded", async () => {
   try {
-    const response = await fetch(`/getEndEvents?id=${id}`);
+    const response = await fetch("/get_remaining_time");
     if (response.status === 200) {
       const data = await response.json();
-      if (Array.isArray(data.end_events)) {
-        const endEvents = data.end_events;
-        let totalMilliseconds = 0;
-        for (const event of endEvents) {
-          const endEvent = parseInt(event.endEvent, 10); // Convert to integer
-          if (!isNaN(endEvent)) {
-            totalMilliseconds += endEvent;
-          }
-        }
-
-        startCountdown(totalMilliseconds);
-      } else {
-        console.log("Invalid server response.");
-      }
+      const rtime = parseInt(data.remaining_time, 10);
+      startCountdown(rtime);
     } else {
       console.log("Request failed. Returned status of " + response.status);
     }
@@ -27,50 +14,41 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
-function startCountdown(totalMilliseconds) {
+function startCountdown(secondss) {
+  const startTime = Date.now();
   const timer = setInterval(() => {
-    const days = Math.floor(totalMilliseconds / (24 * 60 * 60 * 1000));
-    const hours = Math.floor((totalMilliseconds / (60 * 60 * 1000)) % 24);
-    const minutes = Math.floor((totalMilliseconds / (60 * 1000)) % 60);
-    const seconds = Math.floor((totalMilliseconds / 1000) % 60);
-    const milliseconds = Math.floor(totalMilliseconds % 1000);
-
-    updateTimerDisplay(days, hours, minutes, seconds, milliseconds);
-
-    totalMilliseconds -= 9;
-
-    if (totalMilliseconds < 0) {
+    const currentTime = Date.now();
+    const elapsedMilliseconds = currentTime - startTime;
+    const remainingMilliseconds = secondss * 1000 - elapsedMilliseconds;
+    if (remainingMilliseconds <= 0) {
       clearInterval(timer);
+      updateTimerDisplay("00", "00", "00", "00");
+      document.querySelector("#eventHasEnded").innerHTML = "EVENT HAS ENDED";
+    } else {
+      const days = Math.floor(remainingMilliseconds / (24 * 60 * 60 * 1000));
+      const hours = Math.floor((remainingMilliseconds / (60 * 60 * 1000)) % 24);
+      const minutes = Math.floor((remainingMilliseconds / (60 * 1000)) % 60);
+      const seconds = Math.floor((remainingMilliseconds / 1000) % 60);
+      updateTimerDisplay(days, hours, minutes, seconds);
     }
-  }, 4);
+  }, 1000);
 }
 
-function updateTimerDisplay(days, hours, minutes, seconds, milliseconds) {
+function updateTimerDisplay(days, hours, minutes, seconds) {
   document.getElementById("days").innerHTML = days;
   document.getElementById("hours").innerHTML = hours;
   document.getElementById("mins").innerHTML = minutes;
   document.getElementById("seconds").innerHTML = seconds;
-  document.getElementById("milliseconds").innerHTML = milliseconds;
 }
+
 
 document.addEventListener("DOMContentLoaded", async () => {
   try {
-    const response = await fetch("/getNextEvents");
+    const response = await fetch("/get_stating_time");
     if (response.status === 200) {
       const data = await response.json();
-      if (Array.isArray(data.next_events)) {
-        const nextEvents = data.next_events;
-        let totalMilliseconds = 0;
-        for (const event of nextEvents) {
-          const nextEvent = parseInt(event.nextEvent, 10);
-          if (!isNaN(nextEvent)) {
-            totalMilliseconds += nextEvent;
-          }
-        }
-        startCountdown2(totalMilliseconds);
-      } else {
-        console.log("Invalid server response.");
-      }
+      const stime = parseInt(data.starting_time, 10);
+      startCountdown2(stime);
     } else {
       console.log("Request failed. Returned status of " + response.status);
     }
@@ -79,62 +57,55 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
-function startCountdown2(totalMilliseconds2) {
-  const startTime = Date.now();
 
-  const timer3 = setInterval(function () {
+
+
+function startCountdown2(secondss2) {
+  const startTime = Date.now();
+  const timer = setInterval(() => {
     const currentTime = Date.now();
     const elapsedMilliseconds = currentTime - startTime;
-    const remainingMilliseconds = totalMilliseconds2 - elapsedMilliseconds;
-
+    const remainingMilliseconds = secondss2 * 1000 - elapsedMilliseconds;
     if (remainingMilliseconds <= 0) {
-      clearInterval(timer3);
+      clearInterval(timer);
+      updateTimerDisplay2("00", "00", "00", "00");
     } else {
-      const days2 = Math.floor(remainingMilliseconds / (24 * 60 * 60 * 1000));
-      const hours2 = Math.floor(
-        (remainingMilliseconds / (60 * 60 * 1000)) % 24
-      );
-      const minutes2 = Math.floor((remainingMilliseconds / (60 * 1000)) % 60);
-      const seconds2 = Math.floor((remainingMilliseconds / 1000) % 60);
-      const milliseconds2 = Math.floor(remainingMilliseconds % 1000);
-
-      updateTimerDisplay2(days2, hours2, minutes2, seconds2, milliseconds2);
+      const days = Math.floor(remainingMilliseconds / (24 * 60 * 60 * 1000));
+      const hours = Math.floor((remainingMilliseconds / (60 * 60 * 1000)) % 24);
+      const minutes = Math.floor((remainingMilliseconds / (60 * 1000)) % 60);
+      const seconds = Math.floor((remainingMilliseconds / 1000) % 60);
+      updateTimerDisplay2(days, hours, minutes, seconds);
     }
-  }, 5); // Update every 1000 milliseconds (1 second)
+  }, 1000);
 }
 
-function updateTimerDisplay2(days2, hours2, minutes2, seconds2, milliseconds2) {
+function updateTimerDisplay2(days2, hours2, minutes2, seconds2) {
   document.getElementById("days2").innerHTML = days2;
   document.getElementById("hours2").innerHTML = hours2;
   document.getElementById("mins2").innerHTML = minutes2;
   document.getElementById("seconds2").innerHTML = seconds2;
-  document.getElementById("milliseconds2").innerHTML = milliseconds2;
 }
 
 const fullscreenButton = document.getElementById("fullscreenButton");
 
-// Function to toggle fullscreen
 function toggleFullscreen() {
-  const element = document.documentElement; // Get the document element (usually the <html> element)
-
+  const element = document.documentElement;
   if (
     !document.fullscreenElement &&
     !document.mozFullScreenElement &&
     !document.webkitFullscreenElement &&
     !document.msFullscreenElement
   ) {
-    // Enter fullscreen if not already in fullscreen mode
     if (element.requestFullscreen) {
-      element.requestFullscreen(); // Standard way to enter fullscreen
+      element.requestFullscreen();
     } else if (element.mozRequestFullScreen) {
-      element.mozRequestFullScreen(); // Firefox
+      element.mozRequestFullScreen();
     } else if (element.webkitRequestFullscreen) {
-      element.webkitRequestFullscreen(); // Chrome, Safari, and Opera
+      element.webkitRequestFullscreen();
     } else if (element.msRequestFullscreen) {
-      element.msRequestFullscreen(); // IE/Edge
+      element.msRequestFullscreen();
     }
   } else {
-    // Exit fullscreen if already in fullscreen mode
     if (document.exitFullscreen) {
       document.exitFullscreen();
     } else if (document.mozCancelFullScreen) {
@@ -155,10 +126,9 @@ const checking = document.querySelector("#checking");
 const messages = [
   "Establishing secure connection...",
   "event has ended...",
-  "Checking user timer...",
   "Verifying timers data...",
   "Synchronizing timers with server time...",
-  "If Timer 1 is still running, is due to a synchronization issue with your browser...",
+  "If timer 1 is still running, is due to a synchronization issue with your browser...",
   "Processing leaderboard scores...",
   "Verifying the winner...",
   "Displaying results...",
@@ -198,50 +168,28 @@ function callWinnerOff() {
   endEventHolder.style.display = "none";
 }
 
-  async function fetchAndCheckEndEvents() {
-    try {
-      const response = await fetch(`/getEndEvents?id=${id}`);
+async function fetchAndCheckEndEvents() {
+  try {
+    const response = await fetch(`/getEndEvents?id=${id}`);
 
-      if (response.status === 200) {
-        const data = await response.json();
-
-        if (Array.isArray(data.end_events) && Array.isArray(data.player_data)) {
-          const endEvents = data.end_events;
-          const playerData = data.player_data;
-
-          let userSeenNotSeenFlag = false;
-
-          playerData.forEach((player) => {
-            const userSeen = player.results;
-            if (userSeen === "not seen") {
-              userSeenNotSeenFlag = true;
-            }
-          });
-
-          for (const event of endEvents) {
-            const endEvent = parseInt(event.endEvent, 10);
-            if (!isNaN(endEvent) && endEvent < 10000 && userSeenNotSeenFlag) {
-              document.querySelector(".spinnerContainer").style.display =
-                "block";
-              setTimeout(typeMessage, 7000);
-              clearInterval(clearFetch);
-            }
-          }
-        } else {
-          console.log(
-            "Invalid server response. 'end_events' or 'player_data' is missing."
-          );
-        }
-      } else {
-        console.log("Request failed. Returned status of " + response.status);
+    if (response.status === 200) {
+      const data = await response.json();
+      const seenStatus = data.response_data.seen_status;
+      const rtime = parseInt(data.response_data.remaining_time, 10);
+      if (rtime < 10 && seenStatus !== "seen") {
+        document.querySelector(".spinnerContainer").style.display = "block";
+        setTimeout(typeMessage, 7000);
+        clearInterval(clearFetch);
       }
-    } catch (error) {
-      console.error("An error occurred:", error);
+    } else {
+      console.log("Request failed. Returned status of " + response.status);
     }
+  } catch (error) {
+    console.error("An error occurred:", error);
   }
+}
 
-
-  const clearFetch = setInterval(fetchAndCheckEndEvents,3000)
+const clearFetch = setInterval(fetchAndCheckEndEvents, 5000);
 
 const setseen = document.querySelector(".setseen");
 const callResults = document.querySelector(".callResults");
@@ -249,7 +197,7 @@ const callResults = document.querySelector(".callResults");
 callResults.addEventListener("click", function () {
   document.querySelector(".spinnerContainer").style.display = "block";
   setTimeout(callWinner, 500);
-  document.querySelector('#toAnEnd').innerHTML ="LAST EVENT RESULTS"
+  document.querySelector("#toAnEnd").innerHTML = "LAST EVENT RESULTS";
 });
 
 setseen.addEventListener("click", function () {

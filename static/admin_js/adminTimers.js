@@ -1,81 +1,52 @@
-async function processEndEvents() {
+document.addEventListener("DOMContentLoaded", async () => {
   try {
-    const response = await fetch("/getEndEvents");
+    const response = await fetch("/get_remaining_time");
     if (response.status === 200) {
       const data = await response.json();
-      if (Array.isArray(data.end_events)) {
-        const endEvents = data.end_events;
-        let totalMilliseconds = 0;
-        for (const event of endEvents) {
-          const endEvent = parseInt(event.endEvent, 10);
-          if (!isNaN(endEvent)) {
-            totalMilliseconds += endEvent;
-          }
-        }
-
-        startCountdown(totalMilliseconds);
-      } else {
-        console.log("Invalid server response.");
-      }
+      const rtime = parseInt(data.remaining_time, 10);
+      startCountdown(rtime);
     } else {
       console.log("Request failed. Returned status of " + response.status);
     }
   } catch (error) {
     console.error("An error occurred:", error);
   }
-}
-
-document.addEventListener("DOMContentLoaded", async () => {
-  processEndEvents();
 });
 
-// Now you can also call processEndEvents() from other places in your code:
-// For example, you can call it in response to user actions or other events.
-
-function startCountdown(totalMilliseconds) {
+function startCountdown(secondss) {
+  const startTime = Date.now();
   const timer = setInterval(() => {
-    const days = Math.floor(totalMilliseconds / (24 * 60 * 60 * 1000));
-    const hours = Math.floor((totalMilliseconds / (60 * 60 * 1000)) % 24);
-    const minutes = Math.floor((totalMilliseconds / (60 * 1000)) % 60);
-    const seconds = Math.floor((totalMilliseconds / 1000) % 60);
-    const milliseconds = Math.floor(totalMilliseconds % 1000);
-
-    updateTimerDisplay(days, hours, minutes, seconds, milliseconds);
-
-    totalMilliseconds -= 8;
-
-    if (totalMilliseconds < 0) {
+    const currentTime = Date.now();
+    const elapsedMilliseconds = currentTime - startTime;
+    const remainingMilliseconds = secondss * 1000 - elapsedMilliseconds;
+    if (remainingMilliseconds <= 0) {
       clearInterval(timer);
+      updateTimerDisplay("00", "00", "00", "00");
+      document.querySelector("#eventHasEnded").innerHTML = "EVENT HAS ENDED";
+    } else {
+      const days = Math.floor(remainingMilliseconds / (24 * 60 * 60 * 1000));
+      const hours = Math.floor((remainingMilliseconds / (60 * 60 * 1000)) % 24);
+      const minutes = Math.floor((remainingMilliseconds / (60 * 1000)) % 60);
+      const seconds = Math.floor((remainingMilliseconds / 1000) % 60);
+      updateTimerDisplay(days, hours, minutes, seconds);
     }
-  }, 5);
+  }, 1000);
 }
 
-function updateTimerDisplay(days, hours, minutes, seconds, milliseconds) {
+function updateTimerDisplay(days, hours, minutes, seconds) {
   document.getElementById("days").innerHTML = days;
   document.getElementById("hours").innerHTML = hours;
   document.getElementById("mins").innerHTML = minutes;
   document.getElementById("seconds").innerHTML = seconds;
-  document.getElementById("milliseconds").innerHTML = milliseconds;
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
   try {
-    const response = await fetch("/getNextEvents");
+    const response = await fetch("/get_stating_time");
     if (response.status === 200) {
       const data = await response.json();
-      if (Array.isArray(data.next_events)) {
-        const nextEvents = data.next_events;
-        let totalMilliseconds = 0;
-        for (const event of nextEvents) {
-          const nextEvent = parseInt(event.nextEvent, 10); // Convert to integer
-          if (!isNaN(nextEvent)) {
-            totalMilliseconds += nextEvent;
-          }
-        }
-        startCountdown2(totalMilliseconds);
-      } else {
-        console.log("Invalid server response.");
-      }
+      const stime = parseInt(data.starting_time, 10);
+      startCountdown2(stime);
     } else {
       console.log("Request failed. Returned status of " + response.status);
     }
@@ -84,29 +55,28 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
-function startCountdown2(totalMilliseconds2) {
-  const timer3 = setInterval(function () {
-    // Calculate the remaining days, hours, minutes, seconds, and milliseconds
-    const days2 = Math.floor(totalMilliseconds2 / (24 * 60 * 60 * 1000));
-    const hours2 = Math.floor((totalMilliseconds2 / (60 * 60 * 1000)) % 24);
-    const minutes2 = Math.floor((totalMilliseconds2 / (60 * 1000)) % 60);
-    const seconds2 = Math.floor((totalMilliseconds2 / 1000) % 60);
-    const milliseconds2 = Math.floor(totalMilliseconds2 % 1000);
-
-    updateTimerDisplay2(days2, hours2, minutes2, seconds2, milliseconds2);
-
-    totalMilliseconds2 -= 8;
-
-    if (totalMilliseconds2 < 0) {
-      clearInterval(timer3);
+function startCountdown2(secondss2) {
+  const startTime = Date.now();
+  const timer = setInterval(() => {
+    const currentTime = Date.now();
+    const elapsedMilliseconds = currentTime - startTime;
+    const remainingMilliseconds = secondss2 * 1000 - elapsedMilliseconds;
+    if (remainingMilliseconds <= 0) {
+      clearInterval(timer);
+      updateTimerDisplay2("00", "00", "00", "00");
+    } else {
+      const days = Math.floor(remainingMilliseconds / (24 * 60 * 60 * 1000));
+      const hours = Math.floor((remainingMilliseconds / (60 * 60 * 1000)) % 24);
+      const minutes = Math.floor((remainingMilliseconds / (60 * 1000)) % 60);
+      const seconds = Math.floor((remainingMilliseconds / 1000) % 60);
+      updateTimerDisplay2(days, hours, minutes, seconds);
     }
-  }, 5);
+  }, 1000);
 }
 
-function updateTimerDisplay2(days2, hours2, minutes2, seconds2, milliseconds2) {
+function updateTimerDisplay2(days2, hours2, minutes2, seconds2) {
   document.getElementById("days2").innerHTML = days2;
   document.getElementById("hours2").innerHTML = hours2;
   document.getElementById("mins2").innerHTML = minutes2;
   document.getElementById("seconds2").innerHTML = seconds2;
-  document.getElementById("milliseconds2").innerHTML = milliseconds2;
 }

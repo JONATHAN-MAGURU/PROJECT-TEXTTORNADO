@@ -27,18 +27,7 @@ const notifications = document.getElementsByClassName("notifications")[0];
 const messages = document.getElementsByClassName("messages")[0];
 const notff_hider = document.getElementById("notff");
 const msgg_hider = document.getElementById("msgg");
-document.getElementsByClassName("nav_options_container_A")[0].style.height =
-  body_height - 180 + "px";
-document.getElementsByClassName("nav_options_container_B")[0].style.height =
-  body_height - 180 + "px";
-document.getElementsByClassName("nav_options_container_A")[0].style.width =
-  "29%";
-document.getElementsByClassName("nav_options_container_B")[0].style.width =
-  "70%";
-document.getElementsByClassName("nav_options_container_A")[1].style.height =
-  body_height - 180 + "px";
-document.getElementsByClassName("nav_options_container_B")[1].style.height =
-  body_height - 180 + "px";
+const behaviour = document.querySelector('#behaviour')
 const textarea = document.getElementById("textarea");
 const typing_test = document.getElementById("typing_test");
 const delete_ps = document.getElementsByClassName("delete");
@@ -87,7 +76,8 @@ const textareaUpdate = setInterval(() => {
 typing_test.addEventListener("submit", function (event) {
   event.preventDefault();
   let textarea2 = textarea.value;
-  const typing_words = { textarea2 };
+  let behaviour2 = behaviour.value;
+  const typing_words = { textarea2, behaviour2 };
   const json_data_4 = JSON.stringify(typing_words);
   const XHR3 = new XMLHttpRequest();
   const csrfToken3 = document.querySelector("#csrf_token2").value;

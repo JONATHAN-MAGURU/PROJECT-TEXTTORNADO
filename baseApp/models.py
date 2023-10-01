@@ -34,11 +34,9 @@ class TypingArea(models.Model):
 
 
 class EndEvent(models.Model):
-    endEvent = models.IntegerField(default=0)
     endEventId = models.IntegerField(default=5747)
 
 class NextEvent(models.Model):
-   nextEvent = models.IntegerField(default=0)
    nextEventId = models.IntegerField(default=5747)
 
 class Event1(models.Model):
@@ -51,3 +49,20 @@ class Event2(models.Model):
     type = models.CharField(max_length=50)
     eventId = models.IntegerField(default=0)
     
+
+
+class Countdown(models.Model):
+    expiration_time = models.DateTimeField()
+
+class Countdown2(models.Model):
+    starting_time = models.DateTimeField()
+
+class TextBehaviour(models.Model):
+    name = models.CharField(max_length=50, default="normal")
+
+
+
+class SubscriptionPrice(models.Model):
+    newPrice = models.IntegerField(default=14999)
+    oldPrice = models.IntegerField(default=22969)
+    dropBy = models.IntegerField(default=17)

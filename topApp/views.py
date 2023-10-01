@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect
 import json
 from django.http import HttpResponse, JsonResponse
+from django.utils import timezone
 from topApp.models import (
     Player,
     Comments,
@@ -11,10 +12,11 @@ from topApp.models import (
     TicketPurchase,
     Notification,
     Support,
+    Subscription,
 )
 from django.core.exceptions import ObjectDoesNotExist
 import random
-from baseApp.models import EndEvent, NextEvent
+from baseApp.models import EndEvent, NextEvent, Countdown, TextBehaviour
 from django.core.files.base import ContentFile
 import base64
 import os
@@ -58,7 +60,8 @@ def session(request):
         players = Player.objects.filter(username=username, password=password)
         if players.exists():
             player_details = players.values()
-            baseApp.views.paragraph()
+            textBehaviour = TextBehaviour.objects.first()
+            baseApp.views.paragraph(textBehaviour.name)
             return render(request, "session.html", {"player_d": player_details})
         else:
             return render(
@@ -450,7 +453,8 @@ def get_notifications(request):
             notification = Notification.objects.filter(notf_id=notification_id)
             if notification.exists():
                 return JsonResponse({"notification": list(notification.values())})
-
+            else:
+                return HttpResponse("No notifications")
         except json.JSONDecodeError:
             return JsonResponse({"notification": "Invalid JSON data"}, status=400)
         except Notification.DoesNotExist:
@@ -619,24 +623,24 @@ def get_history(request):
 
 
 def getEndEvents(request):
-    userid = request.GET.get("id")
-    player = Player.objects.filter(player_id=userid)
-    if player.exists():
-        try:
-            end_events = EndEvent.objects.all()
+    try:
+        user_id = request.GET.get("id")
+        player = Player.objects.filter(player_id=user_id).first()
+        countdown = Countdown.objects.first()
 
-            player_data = player.values("results")
+        remaining_time = None
+        if countdown:
+            current_time = timezone.now()
+            remaining_time = (countdown.expiration_time - current_time).total_seconds()
+        response_data = {
+            "remaining_time": remaining_time,
+            "seen_status": player.results if player else None,
+        }
 
-            response_data = {
-                "end_events": list(end_events.values()),
-                "player_data": list(player_data),
-            }
-
-            return JsonResponse(response_data)
-        except Exception as e:
-            return JsonResponse({"error": str(e)}, status=500)
-    else:
-        return JsonResponse({"error": "Player not found"}, status=404)
+        return JsonResponse({"response_data": response_data})
+    except Exception as e:
+        error_message = str(e)
+        return JsonResponse({"error": error_message}, status=500)
 
 
 def getNextEvents(request):
@@ -800,6 +804,40 @@ def verifyPayment(trans_id, quantity, ticketId, amt):
                         notf_id=ticketId,
                     )
                     saveNot.save()
+                    if quantity == 20:
+                        print("is greater than 20")
+                        getSubscriptionData = Subscription.objects.filter(
+                            subscriptionId=ticketId
+                        )
+                        if getSubscriptionData.exists():
+                            subData = getSubscriptionData.first()
+                            subData.subscriptionCounter = 1
+                            subData.subscriptionStatus = "active"
+                            subData.save()
+
+                            save_notification = Notification.objects.create(
+                                tittle="TextTornado Pass",
+                                description="You have successfully subscribed TextTornado pass, enjoy the ultimate typing.",
+                                notf_id=ticketId,
+                            )
+                            save_notification.save()
+                        else:
+                            createSubscription = Subscription.objects.create(
+                                subscriptionId = ticketId,
+                                subscriptionStatus = "active",
+                                subscriptionCounter = 1,
+
+
+                            )
+                            createSubscription.save()
+                            save_notification = Notification.objects.create(
+                                tittle="TextTornado Pass",
+                                description="You have successfully subscribed TextTornado pass, enjoy the ultimate typing.",
+                                notf_id=ticketId,
+                            )
+                            save_notification.save()
+                    else:
+                        pass
                     return messagesg + f". You have received {quantity} tickets"
             elif transaction_status == "TF":
                 ticketPurchase2 = TicketPurchase.objects.create(
@@ -815,7 +853,7 @@ def verifyPayment(trans_id, quantity, ticketId, amt):
                 saveNot.save()
                 return messagesg
             else:
-                return "Timeout user didn't put pin"
+                return "Timeout user didn't put pin or payment failed"
         else:
             return "Transaction status not found in the response"
     except Exception as e:
@@ -824,7 +862,7 @@ def verifyPayment(trans_id, quantity, ticketId, amt):
 
 def transferData():
     LeaderboardHistory.objects.all().delete()
-    time.sleep(5)
+    time.sleep(3)
     typing_details = TypingDetails.objects.values().order_by("-wpm")
     rank = 1
     for typing_detail in typing_details:
@@ -994,3 +1032,16 @@ def claimTickets2(request):
             return HttpResponse(f"An error occurred: {e}")
     else:
         return HttpResponse("Invalid request method")
+
+
+def clearNotification(request):
+    if request.method == "POST":
+        getDat = json.loads(request.body)
+        notId = getDat["id"]
+
+        checkNot = Notification.objects.filter(notf_id=notId)
+        if checkNot.exists():
+            checkNot.delete()
+            return HttpResponse("notifications deleted succesifully..")
+        else:
+            return HttpResponse("You dont have notifications..")

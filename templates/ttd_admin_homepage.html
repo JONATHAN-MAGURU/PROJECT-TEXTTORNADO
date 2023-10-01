@@ -61,9 +61,9 @@
           <li onclick="open_mail()">
             <i
               style="color: #ebe2e2; font-size: 100%"
-              class="fa fa-envelope-o"
+              class="fa fa-bookmark"
             ></i>
-            &nbsp; &nbsp; Emails
+            &nbsp; &nbsp; Subscriptions
           </li>
           <li onclick="open_pay()">
             <i style="color: #ebe2e2; font-size: 100%" class="fa fa-money"></i>
@@ -299,7 +299,7 @@
         <div class="container_C_1">
           <div class="timerMainBox">
             <div class="timerHead">
-              <h3>EVENT ENDS IN</h3>
+              <h3 id="eventHasEnded">EVENT ENDS IN</h3>
             </div>
             <div class="timerBody">
               <div class="timerSubBox">
@@ -317,12 +317,6 @@
               <div class="timerSubBox">
                 <p style="font-size: 200%; color: orange" id="seconds">00</p>
                 <p style="font-size: 90%">SECONDS</p>
-              </div>
-              <div class="timerSubBox">
-                <p style="font-size: 200%; color: orange" id="milliseconds">
-                  00
-                </p>
-                <p style="font-size: 90%">MS</p>
               </div>
             </div>
             <div class="event_d">
@@ -366,12 +360,6 @@
               <div class="timerSubBox">
                 <p style="font-size: 200%; color: orange" id="seconds2">00</p>
                 <p style="font-size: 90%">SECONDS</p>
-              </div>
-              <div class="timerSubBox">
-                <p style="font-size: 200%; color: orange" id="milliseconds2">
-                  00
-                </p>
-                <p style="font-size: 90%">MS</p>
               </div>
             </div>
             <div class="event_d">
@@ -731,6 +719,7 @@
             <input type="hidden" id="csrf_token11" value="{{ csrf_token }}" />
             <input type="hidden" id="csrf_token12" value="{{ csrf_token }}" />
             <input type="hidden" id="csrf_token59" value="{{ csrf_token }}" />
+            <input type="hidden" id="csrf_token239" value="{{ csrf_token }}" />
             <input type="hidden" id="csrf_token19" value="{{ csrf_token }}" />
             <textarea
               id="textarea"
@@ -740,6 +729,8 @@
               required
             ></textarea>
             <br />
+            <br />
+            <input type="text" id="behaviour" placeholder="Text behaviour.." />
             <br />
             <p style="color: yellowgreen" id="savedStatus"></p>
             <br />
@@ -853,12 +844,26 @@
 
     <div class="nav_options" id="mail">
       <div class="nav_options_menu_header">
-        <p>EMAILS</p>
+        <p>SUBSCRIPTIONS</p>
+        <p id="substatus"></p>
         <i
-          style="color: #000000; font-size: 150%"
+          style="color: white; font-size: 150%"
           class="fa fa-close msg"
           onclick="close_option_mail()"
         ></i>
+      </div>
+      <div class="nav_options_menu_holder">
+        <div class="nav_options_container_A">
+          <h4 style="text-align:center">Set Subscription</h4>
+          <br>
+            <form style="display:flex; flex-wrap:wrap; justify-content:space-between"  >
+              <input type="number" id="newprice" placeholder="New price.."> <br><br>
+              <input type="number" id="oldprice" placeholder="Old price.."> <br><br>
+              <input type="number" id="dropBy" placeholder="Drop by.."> <br><br>
+              <input type="submit" id="subscriptions" value="Save"> <br><br>
+            </form>
+        </div>
+        <div class="nav_options_container_B"></div>
       </div>
     </div>
 

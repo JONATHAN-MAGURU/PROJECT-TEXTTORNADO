@@ -13,10 +13,11 @@ from topApp.models import (
     Notification,
     Support,
     Subscription,
+   
 )
 from django.core.exceptions import ObjectDoesNotExist
 import random
-from baseApp.models import EndEvent, NextEvent, Countdown, TextBehaviour
+from baseApp.models import EndEvent, NextEvent, Countdown, TextBehaviour, TicketPrice,  WinnerAndLooserMessage
 from django.core.files.base import ContentFile
 import base64
 import os
@@ -403,8 +404,6 @@ def sending_concern_response(request):
             username = "TextTornado Assistant"
             ttd_id = player_concerns["userData"]
             concern = player_concerns["concern"]
-            print(ttd_id)
-            print(concern)
             try:
                 comment2 = Support.objects.create(
                     source=username,
@@ -574,23 +573,65 @@ def get_test_details(request):
 
 def leaderBoardHistory(request):
     try:
-        results = LeaderboardHistory.objects.all().order_by("-wpm")
-        results_data = list(results.values())
+        if request.method == "POST":
+            res_dat = json.loads(request.body)
+            userID = res_dat.get("id")
 
-        images_data = {}
-        player_ids = set(result["play_id"] for result in results_data)
-        for player_id in player_ids:
-            player = Player.objects.get(player_id=player_id)
-            images_data[player_id] = (
-                player.profile_pic.url if player.profile_pic else None
-            )
+            getPlayer = Player.objects.filter(player_id = userID)
+            if getPlayer.exists():
+                results = LeaderboardHistory.objects.all().order_by("-wpm")[:2]  
+                results_data = list(results.values())
+                
+                images_data = {}
+                player_ids = set(result["play_id"] for result in results_data)
+                for player_id in player_ids:
+                    player = Player.objects.get(player_id=player_id)
+                    images_data[player_id] = (
+                        player.profile_pic.url if player.profile_pic else None
+                    )
 
-        final_results = []
-        for result in results_data:
-            player_id = result["play_id"]
-            result["profile_pic"] = images_data.get(player_id)
-            final_results.append(result)
-        return JsonResponse({"results": final_results})
+                final_results = []
+                for result in results_data:
+                    player_id = result["play_id"]
+                    result["profile_pic"] = images_data.get(player_id)
+                    final_results.append(result)
+                return JsonResponse({"results": final_results})
+    except:
+        print("Something went wrong with get_test_details function")
+
+def leaderBoardHistory2(request):
+    try:
+        if request.method == "POST":
+            res_dat = json.loads(request.body)
+            userID = res_dat.get("id")
+
+            getPlayer = Player.objects.filter(player_id = userID)
+            if getPlayer.exists():
+                results = LeaderboardHistory.objects.filter(play_id = userID)
+                if results.exists():
+                    user_res = results.first()
+                    if user_res.rank <= 2:
+                        getMessages =  WinnerAndLooserMessage.objects.filter(messageId = "winner")
+                        messageTouser = getMessages.first()
+                        return HttpResponse(f"{messageTouser.messagesx}")
+                    else:
+                        results_data = list(results.values())
+                        
+                        images_data = {}
+                        player_ids = set(result["play_id"] for result in results_data)
+                        for player_id in player_ids:
+                            player = Player.objects.get(player_id=player_id)
+                            images_data[player_id] = (
+                                player.profile_pic.url if player.profile_pic else None
+                            )
+
+                        final_results = []
+                        for result in results_data:
+                            player_id = result["play_id"]
+                            result["profile_pic"] = images_data.get(player_id)
+                            final_results.append(result)
+                            print("hjhjsds dfdf")
+                        return JsonResponse({"results": final_results})
     except:
         print("Something went wrong with get_test_details function")
 
@@ -740,7 +781,6 @@ def processPayment(request):
             conn.request("POST", "/airtel/access/", payload, headers)
             res = conn.getresponse()
             data = res.read()
-            print(data)
             try:
                 nested_json_str = data.decode("utf-8")
                 response_json = json.loads(nested_json_str)
@@ -805,7 +845,6 @@ def verifyPayment(trans_id, quantity, ticketId, amt):
                     )
                     saveNot.save()
                     if quantity == 20:
-                        print("is greater than 20")
                         getSubscriptionData = Subscription.objects.filter(
                             subscriptionId=ticketId
                         )
@@ -813,6 +852,7 @@ def verifyPayment(trans_id, quantity, ticketId, amt):
                             subData = getSubscriptionData.first()
                             subData.subscriptionCounter = 1
                             subData.subscriptionStatus = "active"
+                            subData.subscriptionTimes += 1
                             subData.save()
 
                             save_notification = Notification.objects.create(
@@ -823,11 +863,10 @@ def verifyPayment(trans_id, quantity, ticketId, amt):
                             save_notification.save()
                         else:
                             createSubscription = Subscription.objects.create(
-                                subscriptionId = ticketId,
-                                subscriptionStatus = "active",
-                                subscriptionCounter = 1,
-
-
+                                subscriptionId=ticketId,
+                                subscriptionStatus="active",
+                                subscriptionCounter=1,
+                                subscriptionTimes=1,
                             )
                             createSubscription.save()
                             save_notification = Notification.objects.create(
@@ -853,7 +892,7 @@ def verifyPayment(trans_id, quantity, ticketId, amt):
                 saveNot.save()
                 return messagesg
             else:
-                return "Timeout user didn't put pin or payment failed"
+                return "Timeout payment failed. Kindly Try again."
         else:
             return "Transaction status not found in the response"
     except Exception as e:
@@ -1045,3 +1084,11 @@ def clearNotification(request):
             return HttpResponse("notifications deleted succesifully..")
         else:
             return HttpResponse("You dont have notifications..")
+
+
+def getTicketsPrices2(request):
+    try:
+        ticketPrice = TicketPrice.objects.all()
+        return JsonResponse({"ticketPrice": list(ticketPrice.values())})
+    except Exception as e:
+        return HttpResponse("An error occurred while processing the request.")

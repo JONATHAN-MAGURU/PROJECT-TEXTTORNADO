@@ -593,7 +593,6 @@ function getUserConcerns(userId) {
           concernBody.innerHTML += temp;
         }
       }
-
     } else {
       actionStatus.innerHTML = xhr.status;
     }
@@ -602,7 +601,6 @@ function getUserConcerns(userId) {
 }
 
 const concerns = document.querySelector(".replyConcern");
-
 
 document.querySelector(".issue_input").addEventListener("submit", function (e) {
   e.preventDefault();
@@ -649,3 +647,334 @@ document.querySelector(".issue_input").addEventListener("submit", function (e) {
     }
   }
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  subsubscriber();
+});
+
+function subsubscriber() {
+  var subscribersBody = document.getElementsByClassName("holdSubscriptions")[0];
+  var xhr = new XMLHttpRequest();
+  const subscriber = { mail };
+
+  const json_data = JSON.stringify(subscriber);
+  const csrfToken = document.querySelector("#csrf_token612").value;
+  xhr.open("POST", "/get_subscribers");
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.setRequestHeader("X-CSRFToken", csrfToken);
+
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      var response = JSON.parse(xhr.responseText);
+      subscribersBody.innerHTML = "";
+
+      for (var key in response.subscriber) {
+        var subscriberDate = new Date(
+          response.subscriber[key].subscriptionDate
+        );
+
+        var formattedDate = subscriberDate.toLocaleString("en-US", {
+          month: "2-digit",
+          day: "2-digit",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: true,
+        });
+
+        var temp =
+          '<div class="subscriberHolder"><p>' +
+          response.subscriber[key].subscriptionId +
+          "</p><p>" +
+          response.subscriber[key].subscriptionStatus +
+          "</p><p>" +
+          response.subscriber[key].subscriptionCounter +
+          "/5</p><p>" +
+          response.subscriber[key].subscriptionTimes +
+          "</p><p>" +
+          formattedDate +
+          "</p></div>";
+
+        subscribersBody.innerHTML += temp;
+      }
+    }
+  };
+  xhr.send(json_data);
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  getTicketsPrices();
+});
+
+function getTicketsPrices() {
+  const TicketspriceContainer = document.querySelector(
+    ".TicketspriceContainer"
+  );
+  var xhr = new XMLHttpRequest();
+  const subscriber = { mail };
+
+  const json_data = JSON.stringify(subscriber);
+  const csrfToken = document.querySelector("#csrf_token615").value;
+  xhr.open("POST", "/getTicketsPrices");
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.setRequestHeader("X-CSRFToken", csrfToken);
+
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      var response = JSON.parse(xhr.responseText);
+      TicketspriceContainer.innerHTML = "";
+
+      for (var key in response.ticketPrice) {
+        var temp =
+          '<div class="ticketPriceHolder"><p>' +
+          response.ticketPrice[key].type +
+          "</p><p>" +
+          response.ticketPrice[key].newPrice +
+          "</p><p>" +
+          response.ticketPrice[key].oldPrice +
+          "</p><p>" +
+          response.ticketPrice[key].dropBy +
+          "</p><p>" +
+          response.ticketPrice[key].amount +
+          "</p></div>";
+
+        TicketspriceContainer.innerHTML += temp;
+      }
+    }
+  };
+  xhr.send(json_data);
+}
+const ticktType = document.querySelector("#tktType");
+const ticketstatus2 = document.querySelector("#ticketstatus2");
+const newprice2 = document.querySelector("#newprice2");
+const oldprice2 = document.querySelector("#oldprice2");
+const totalTickets2 = document.querySelector("#totalTickets2");
+const saveticketsPrice = document.querySelector("#saveTicketsPrice");
+
+saveticketsPrice.addEventListener("click", (e) => {
+  e.preventDefault();
+  if (
+    newprice2.value == "" ||
+    oldprice2.value == "" ||
+    totalTickets2.value == ""
+  ) {
+    ticketstatus2.innerHTML = "PLEASE FILL ALL FIELDS";
+  } else {
+    saveTicketsPrice();
+  }
+});
+
+function saveTicketsPrice() {
+  const np = newprice2.value;
+  const op = oldprice2.value;
+  const amt = totalTickets2.value;
+  const typ = ticktType.value;
+
+  const ticketData = { np, op, amt, typ, mail };
+  const jsonData = JSON.stringify(ticketData);
+  const XHR3 = new XMLHttpRequest();
+  const csrfToken = document.querySelector("#csrf_token2440").value;
+  XHR3.open("POST", "/setTicketsPrice", true);
+  XHR3.setRequestHeader("Content-Type", "application/json");
+  XHR3.setRequestHeader("X-CSRFToken", csrfToken);
+
+  XHR3.addEventListener("load", function () {
+    if (XHR3.status === 200 && XHR3.readyState === 4) {
+      getTicketsPrices();
+      ticketstatus2.innerHTML = XHR3.responseText;
+    } else {
+      ticketstatus2.innerHTML = "CAN'T PROCESS REQUEST";
+    }
+  });
+  XHR3.send(jsonData);
+}
+
+function getTickets() {
+  const TicketspriceContainer = document.querySelector(".HoldTicketsData");
+  var xhr = new XMLHttpRequest();
+  const subscriber = { mail };
+
+  const json_data = JSON.stringify(subscriber);
+  const csrfToken = document.querySelector("#csrf_token615").value;
+  xhr.open("POST", "/getTickets");
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.setRequestHeader("X-CSRFToken", csrfToken);
+
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      var response = JSON.parse(xhr.responseText);
+      TicketspriceContainer.innerHTML = "";
+
+      for (var key in response.ticket) {
+        var temp =
+          '<div class="ticketPriceHolder"><p>' +
+          response.ticket[key].tickets_id +
+          "</p><p>" +
+          response.ticket[key].tickets_available +
+          "</p><p>" +
+          response.ticket[key].tickets_used +
+          "</p><p>" +
+          response.ticket[key].claim_tickets +
+          "</p></div>";
+
+        TicketspriceContainer.innerHTML += temp;
+      }
+    }
+  };
+  xhr.send(json_data);
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  getTickets();
+});
+
+function getTicketsSearch(userName) {
+  const TicketspriceContainer = document.querySelector(".HoldTicketsData");
+  var xhr = new XMLHttpRequest();
+  const subscriber = { mail, userName };
+
+  const json_data = JSON.stringify(subscriber);
+  const csrfToken = document.querySelector("#csrf_token619").value;
+  xhr.open("POST", "/getTicketsSeach");
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.setRequestHeader("X-CSRFToken", csrfToken);
+
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      TicketspriceContainer.innerHTML = "";
+      if (xhr.responseText == "NO PLAYER WITH SUCH NAME") {
+        ticketstatus2.innerHTML = "NO PLAYER WITH SUCH NAME";
+      } else {
+        var response = JSON.parse(xhr.responseText);
+        ticketstatus2.innerHTML = "";
+        for (var key in response.ticket) {
+          var temp =
+            '<div class="ticketPriceHolder"><p>' +
+            response.ticket[key].tickets_id +
+            "</p><p>" +
+            response.ticket[key].tickets_available +
+            "</p><p>" +
+            response.ticket[key].tickets_used +
+            "</p><p>" +
+            response.ticket[key].claim_tickets +
+            "</p></div>";
+
+          TicketspriceContainer.innerHTML += temp;
+        }
+      }
+    }
+  };
+  xhr.send(json_data);
+}
+
+const search2 = document.querySelector("#search2");
+const search22 = document.querySelector("#search22");
+search2.addEventListener("submit", (e) => {
+  e.preventDefault();
+  if (search22.value == "") {
+    ticketstatus2.innerHTML = "PLEASE ENTER USERNAME TO SEARCH";
+  } else {
+    getTicketsSearch(search22.value);
+  }
+});
+
+const search223 = document.querySelector("#search223");
+const search23 = document.querySelector("#search23");
+search23.addEventListener("submit", (e) => {
+  e.preventDefault();
+  if (search223.value == "") {
+    ticketstatus2.innerHTML = "PLEASE ENTER USERNAME TO SEARCH";
+  } else {
+    subsubscriberSerch(search223.value);
+  }
+});
+
+function subsubscriberSerch(tosearch) {
+  var subscribersBody = document.getElementsByClassName("holdSubscriptions")[0];
+  var xhr = new XMLHttpRequest();
+  const subscriber = { tosearch, mail };
+
+  const json_data = JSON.stringify(subscriber);
+  const csrfToken = document.querySelector("#csrf_token6122").value;
+  xhr.open("POST", "/subsubscriberSerch");
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.setRequestHeader("X-CSRFToken", csrfToken);
+
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      if (xhr.responseText == "NO PLAYER WITH SUCH NAME") {
+        substatus.innerHTML = xhr.responseText;
+      } else if (xhr.responseText == "NO SUBSCRIPTION WITH THAT NAME") {
+        substatus.innerHTML = xhr.responseText;
+      } else {
+        var response = JSON.parse(xhr.responseText);
+        substatus.innerHTML = "";
+        subscribersBody.innerHTML = "";
+        for (var key in response.subcr) {
+          var subscriberDate = new Date(response.subcr[key].subscriptionDate);
+
+          var formattedDate = subscriberDate.toLocaleString("en-US", {
+            month: "2-digit",
+            day: "2-digit",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true,
+          });
+
+          var temp =
+            '<div class="subscriberHolder"><p>' +
+            response.subcr[key].subscriptionId +
+            "</p><p>" +
+            response.subcr[key].subscriptionStatus +
+            "</p><p>" +
+            response.subcr[key].subscriptionCounter +
+            "/5</p><p>" +
+            response.subcr[key].subscriptionTimes +
+            "</p><p>" +
+            formattedDate +
+            "</p></div>";
+
+          subscribersBody.innerHTML += temp;
+        }
+      }
+    }
+  };
+  xhr.send(json_data);
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  getSubScrPrices();
+});
+
+function getSubScrPrices() {
+  const TicketspriceContainer = document.querySelector(".TicketsubbContainer");
+  var xhr = new XMLHttpRequest();
+  const subscriber = { mail };
+
+  const json_data = JSON.stringify(subscriber);
+  const csrfToken = document.querySelector("#csrf_token6615").value;
+  xhr.open("POST", "/getTicketsubscriPrices");
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.setRequestHeader("X-CSRFToken", csrfToken);
+
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      var response = JSON.parse(xhr.responseText);
+      TicketspriceContainer.innerHTML = "";
+      for (var key in response.subticketPrice) {
+        var temp =
+          '<div class="ticketPriceHolder"><p>' +
+          response.subticketPrice[key].newPrice +
+          "</p><p>" +
+          response.subticketPrice[key].oldPrice +
+          "</p><p>" +
+          response.subticketPrice[key].dropBy +
+          "</p></div>";
+
+        TicketspriceContainer.innerHTML += temp;
+      }
+    }
+  };
+  xhr.send(json_data);
+}

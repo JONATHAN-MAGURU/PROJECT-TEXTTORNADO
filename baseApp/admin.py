@@ -15,6 +15,8 @@ from baseApp.models import (
     Countdown2,
     TextBehaviour,
     SubscriptionPrice,
+    TicketPrice,
+    WinnerAndLooserMessage,
 )
 
 
@@ -33,3 +35,5 @@ admin.site.register(Countdown)
 admin.site.register(Countdown2)
 admin.site.register(TextBehaviour)
 admin.site.register(SubscriptionPrice)
+admin.site.register(TicketPrice)
+admin.site.register(WinnerAndLooserMessage)

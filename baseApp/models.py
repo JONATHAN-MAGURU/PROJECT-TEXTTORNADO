@@ -66,3 +66,18 @@ class SubscriptionPrice(models.Model):
     newPrice = models.IntegerField(default=14999)
     oldPrice = models.IntegerField(default=22969)
     dropBy = models.IntegerField(default=17)
+
+class TicketPrice(models.Model):
+    type =  models.CharField(max_length=200)
+    amount = models.IntegerField(default=0)
+    newPrice = models.IntegerField(default=0)
+    oldPrice = models.IntegerField(default=0)
+    dropBy = models.IntegerField(default=0)
+
+
+
+
+
+class WinnerAndLooserMessage(models.Model):
+    messagesx = models.CharField(max_length=1000)
+    messageId = models.CharField(max_length=20)

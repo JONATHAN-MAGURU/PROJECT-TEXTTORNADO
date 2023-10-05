@@ -97,4 +97,6 @@ class Support(models.Model):
 class Subscription(models.Model):
     subscriptionStatus = models.CharField(max_length=255, default="expired")
     subscriptionId = models.IntegerField(default=2)
+    subscriptionTimes = models.IntegerField(default=0)
     subscriptionCounter = models.IntegerField(default=0)
+    subscriptionDate = models.DateTimeField(default=timezone.now, blank=True)

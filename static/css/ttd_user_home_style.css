@@ -348,7 +348,7 @@
   }
 
   ::-webkit-scrollbar {
-    width: 6px;
+    width: 8px;
     height: 5px;
     border-radius: 50%;
   }
@@ -603,6 +603,7 @@
     font-size: 100%;
     overflow: hidden;
     padding: 6px 12px;
+    box-shadow: 0.8px 0.8px 8px #000000;
     border: 1px solid #21262d;
   }
   .claim_box {
@@ -658,7 +659,7 @@
   }
 
   .options {
-    width: 75%;
+    width: 65%;
     height: auto;
     display: none;
     box-shadow: 0.5px 0.5px 20px #000000;
@@ -793,23 +794,19 @@
   }
 
   .token_holder_1 {
-    font-size: 100%;
+    font-size: 90%;
     color: gray;
     padding: 6px;
     text-align: center;
-    letter-spacing: 2px;
   }
 
   .token_holder_2 {
-    font-size: 90%;
-    padding: 8px;
+    padding: 15px;
     position: relative;
-    height: auto;
     background-color: transparent;
     width: 100%;
-    height: 160px;
+    height: 20vh;
     text-align: center;
-    letter-spacing: 3px;
   }
 
   .star_holder {
@@ -827,8 +824,8 @@
 
   .tickett1 {
     position: absolute;
-    left: 5px;
-    top: 20px;
+    left: 0px;
+    top: 0px;
     color: yellowgreen;
   }
 
@@ -836,28 +833,46 @@
     position: absolute;
     left: 15px;
     color: orange;
-    top: 25px;
+    top: 5px;
   }
 
   .tickett3 {
     position: absolute;
-    top: 20px;
+    top: 10px;
     left: 30px;
     color: #ed143d;
   }
 
   .tickett4 {
     position: absolute;
-    left: 35px;
-    top: 35px;
+    left: 45px;
+    top: 15px;
     color: orange;
   }
 
   .tickett5 {
     position: absolute;
-    top: 40px;
-    left: 45px;
+    top: 20px;
+    left: 60px;
     color: yellowgreen;
+  }
+  .tickett6 {
+    position: absolute;
+    top: 25px;
+    left: 80px;
+    color: orangered;
+  }
+  .tickett7 {
+    position: absolute;
+    top: 30px;
+    left: 100px;
+    color: white;
+  }
+  .tickett8 {
+    position: absolute;
+    top: 35px;
+    left: 120px;
+    color: slateblue;
   }
 
   .options_notf {
@@ -925,12 +940,12 @@
     padding: 10px;
     color: white;
     text-overflow: ellipsis;
-    
+
     overflow: hidden;
   }
 
-   #emoji-picker {
-    border:none;
+  #emoji-picker {
+    border: none;
     border-radius: 5px;
     height: 0;
     display: flex;
@@ -941,7 +956,7 @@
     z-index: 1000;
   }
   #emoji-picker span {
-    font-size: 28px; 
+    font-size: 28px;
     cursor: pointer;
     border-radius: 2px;
     margin: 4px;
@@ -1001,7 +1016,7 @@
   .comment_body {
     padding: 7px;
     overflow-y: scroll;
-    height:75vh;
+    height: 75vh;
     transition: 0.1s;
   }
 
@@ -1019,7 +1034,7 @@
     border-bottom: 1px solid #2e2f3a;
   }
 
-  textarea{
+  textarea {
     resize: none;
   }
   .comment_holder2 {
@@ -2016,43 +2031,50 @@
   .next-btn3:hover {
     opacity: 0.7;
   }
-  .setseen {
-    background-color: orange;
+  .setseen,
+  .setseen6 {
+    background-color: transparent;
     width: auto;
     padding: 10px;
-    transition: 0.5s;
     text-align: center;
     width: auto;
-    opacity: 0.9;
+    opacity: 1;
     margin-left: 6px;
-    border-radius: 4px;
+    border-radius: 3px;
     color: white;
-    font-weight: 550;
+    transition: 0.8s;
+    font-weight: 600;
     cursor: pointer;
+    border: 1px solid #2e2f3a;
+    box-shadow: 1px 1px 20px #000000;
+  }
+
+  .setseen6:hover {
+    outline: 2px solid #ed143d;
+  }
+  .setseen:hover {
+    outline: 2px solid #ed143d;
   }
   .callResults {
     background-color: #ed143d;
     padding: 10px;
     transition: 0.5s;
     text-align: center;
-    max-width: 25%;
-    opacity: 0.9;
-    font-weight: 650;
+    max-width: 20%;
+    font-weight: 600;
     margin-left: 2px;
     margin-top: 10px;
-    font-size: 80%;
-    border-radius: 2px;
+    font-size: 70%;
+    border-radius: 3px;
     color: white;
-    font-weight: 550;
-    box-shadow: 2px 2px 20px #000000;
+    font-weight: 600;
+    box-shadow: 1px 1px 20px #000000;
     cursor: pointer;
   }
   .next-btn2:hover {
     background-color: rgba(255, 140, 0, 0.8);
   }
-  .setseen:hover {
-    opacity: 0.8;
-  }
+
   .next-btn {
     background-color: rgb(255, 140, 0);
     width: auto;
@@ -2345,7 +2367,7 @@
   .welcomeUserF {
     width: 100%;
     border-top: 1px solid #21262d;
-    padding: 15px;
+    padding: 10px;
     display: flex;
     height: auto;
     justify-content: center;
@@ -2357,9 +2379,8 @@
     color: white;
     display: flex;
     flex-wrap: nowrap;
-    overflow-y: scroll;
-    line-height: 22px;
-    max-height: 50vh;
+    overflow: hidden;
+    max-height: 45vh;
     justify-content: space-around;
     display: flex;
     flex-direction: row;
@@ -2379,9 +2400,9 @@
     }
   }
   .mored {
-    font-weight: 490;
-    padding: 2px;
+    font-weight: 550;
     height: 0;
+    font-size: 90%;
     opacity: 0;
     transition: 0.8s;
     color: gray;
@@ -2427,7 +2448,7 @@
     width: 100%;
     border: 1px solid #21262d;
     display: flex;
-    margin: 10px auto;
+    margin: 8px auto;
     flex-direction: column;
     border-radius: 8px;
     box-shadow: 2px 2px 20px #000000;
@@ -2438,17 +2459,17 @@
     flex-direction: row;
     justify-content: space-between;
     letter-spacing: 2px;
-    font-size: 90%;
-    padding: 10px;
+    font-size: 80%;
+    font-weight: 600;
+    padding: 6px;
     background-color: #000000;
-    color: orange;
-    opacity: 0.9;
+    color: gray;
   }
   .winnerDetailsB {
     width: 100%;
     display: flex;
     flex-direction: row;
-    padding: 10px;
+    padding: 6px;
     justify-content: space-between;
     text-align: center;
     background-color: transparent;
@@ -2457,21 +2478,35 @@
     text-align: center;
     width: 25%;
   }
+
+  .winnerOutputMain {
+    border-right: 1px solid #2e2f3a;
+    max-height: 33.5vh;
+    overflow: scroll;
+  }
+
+  .looserOutputMain {
+    max-height: 33vh;
+  }
+  #winnerRemark2 {
+    max-height: 37vh;
+    overflow: scroll;
+  }
   .winnerText {
     text-align: center;
     background: #ed143d;
     letter-spacing: 2px;
     padding: 8px;
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
   }
   .loosertext {
     text-align: center;
-    background: #ed143d;
+    background: #161b22;
     letter-spacing: 2px;
     padding: 8px;
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
   }
   .checking {
     margin: auto;
@@ -2620,5 +2655,22 @@
   .rotate {
     animation: spinn 6s linear infinite;
     position: relative;
+  }
+
+  .save {
+    padding: 5px;
+    background-color: slateblue;
+    border-radius: 2px;
+    font-size: 50%;
+    font-weight: 550;
+    margin: 2px;
+    color: white;
+  }
+  .save2 {
+    padding: 5px;
+    background-color: slateblue;
+    border-radius: 2px;
+    font-size: 90%;
+    color: white;
   }
 }

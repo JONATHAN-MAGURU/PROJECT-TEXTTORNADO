@@ -47,4 +47,11 @@ urlpatterns = [
     path("get_stating_time", views.get_stating_time, name="get_stating_time"),
     path("getSubscription", views.getSubscription, name="getSubscription"),
     path("setSubscriptionPrice", views.setSubscriptionPrice, name="setSubscriptionPrice"),
+    path("get_subscribers", views.get_subscribers, name="get_subscribers"),
+    path("getTicketsPrices", views.getTicketsPrices, name="getTicketsPrices"),
+    path("setTicketsPrice", views.setTicketsPrice, name="setTicketsPrice"),
+    path("getTickets", views.getTickets, name="getTickets"),
+    path("getTicketsSeach", views.getTicketsSeach, name="getTicketsSeach"),
+    path("subsubscriberSerch", views.subsubscriberSerch, name="subsubscriberSerch"),
+    path("getTicketsubscriPrices", views.getTicketsubscriPrices, name="getTicketsubscriPrices"),
 ]

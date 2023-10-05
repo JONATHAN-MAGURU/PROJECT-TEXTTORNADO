@@ -12,7 +12,6 @@ const alert2 = document.getElementById("alerts2");
 const send_comment = document.getElementById("comment_form");
 const actionStatus = document.querySelector("#actionStatus");
 
-
 save_data.addEventListener("submit", function (e) {
   e.preventDefault();
   const imageInput = document.getElementById("imageInput");
@@ -286,7 +285,7 @@ document.addEventListener("DOMContentLoaded", function () {
           if (response.results[key].play_id == id) {
             if (x % 2 == 0) {
               var temp =
-                '<div class="userBox" style="border: 1px solid orange; box-shadow:1px 1px 20px black;"><div style="color:white;" class="rankLB">' +
+                '<div class="userBox" style="border: 2px solid orange; box-shadow:1px 1px 20px black;"><div style="color:white;" class="rankLB">' +
                 x++ +
                 '</div><div class="firstnameLB" style="color:white;"><img style="width:35px;height:35px; border-radius:50%;" src="' +
                 response.results[key].profile_pic +
@@ -303,7 +302,7 @@ document.addEventListener("DOMContentLoaded", function () {
               res_Body.innerHTML += temp;
             } else {
               var temp =
-                '<div class="userBox" style="border: 1px solid #ed143d; background:transparent; box-shadow:1px 1px 20px black;"><div style="color:white;" class="rankLB">' +
+                '<div class="userBox" style="border: 2px solid #ed143d; background:transparent; box-shadow:1px 1px 20px black;"><div style="color:white;" class="rankLB">' +
                 x++ +
                 '</div><div class="firstnameLB" style="color:white;"><img style="width:35px;height:35px; border-radius:50%;" src="' +
                 response.results[key].profile_pic +
@@ -457,20 +456,66 @@ function setOld() {
 }
 
 function showWinner() {
-  document.querySelector(".winnerOutput").innerHTML = "";
+  document.querySelector(".winnerOutputMain").innerHTML = "";
   var xhr3 = new XMLHttpRequest();
-  xhr3.open("GET", "/leaderBoardHistory");
+  xhr3.open("POST", "/leaderBoardHistory");
+  const csrfToken5 = document.querySelector("#csrf_token775").value;
+  const dat = { id };
+  const jsonDat = JSON.stringify(dat);
+  xhr3.setRequestHeader("Content-Type", "application/json");
+  xhr3.setRequestHeader("X-CSRFToken", csrfToken5);
   xhr3.onload = function () {
     if (xhr3.status === 200) {
       var response = JSON.parse(xhr3.responseText);
-      var WinnerBody = document.querySelector(".winnerOutput");
-      var x = 1;
+      var WinnerBody = document.querySelector(".winnerOutputMain");
       for (var key in response.results) {
-        if (x < 2) {
+        var temp =
+          ' <div class="winnerOutput"><div class="winerImg"> <img src="' +
+          response.results[key].profile_pic +
+          '" alt="image" style="width: 120px; height: 120px; border-radius: 50%"/></div><p style="color: gray; text-align: center; font-weight:600">' +
+          response.results[key].username +
+          '</p><div class="winnerDetailsHolder"><div class="winnerDetailsA"><p class="centered">RANK</p><p class="centered">WPM</p><p class="centered">CPM</p><p class="centered">MISTAKES</p></div><div class="winnerDetailsB">  <p class="centered">' +
+          response.results[key].rank +
+          '</p> <p class="centered">' +
+          response.results[key].wpm +
+          '</p><p class="centered">' +
+          response.results[key].cpm +
+          '</p><p class="centered">' +
+          response.results[key].mistakes +
+          "</p> </div></div>";
+        WinnerBody.innerHTML += temp;
+
+        x++;
+      }
+    }
+  };
+  xhr3.send(jsonDat);
+}
+
+function showLooser() {
+  document.querySelector(".looserOutputMain").innerHTML = "";
+  var xhr3 = new XMLHttpRequest();
+
+  xhr3.open("POST", "/leaderBoardHistory2");
+  const csrfToken5 = document.querySelector("#csrf_token7775").value;
+  const dat = { id };
+  const jsonDat = JSON.stringify(dat);
+  xhr3.setRequestHeader("Content-Type", "application/json");
+  xhr3.setRequestHeader("X-CSRFToken", csrfToken5);
+  xhr3.onload = function () {
+    if (xhr3.status === 200) {
+      const contentType = xhr3.getResponseHeader("Content-Type");
+      if (contentType && contentType.includes("application/json")) {
+        var response = JSON.parse(xhr3.responseText);
+        var WinnerBody = document.querySelector(".looserOutputMain");
+        for (var key in response.results) {
+          document.querySelector("#winnerRemark").innerHTML = "YOUR RESULTS";
+          document.querySelector("#winnerRemark2").innerHTML =
+            "WE ARE SORRY TO ANNOUNCE THAT YOU DIDN'T MAKE IT";
           var temp =
             ' <div class="winnerOutput"><div class="winerImg"> <img src="' +
             response.results[key].profile_pic +
-            '" alt="image" style="width: 120px; height: 120px; border-radius: 50%"/></div><p style="color: gray; text-align: center; font-size: 90%">' +
+            '" alt="image" style="width: 120px; height: 120px; border-radius: 50%"/></div><p style="color: gray; text-align: center; font-weight:600">' +
             response.results[key].username +
             '</p><div class="winnerDetailsHolder"><div class="winnerDetailsA"><p class="centered">RANK</p><p class="centered">WPM</p><p class="centered">CPM</p><p class="centered">MISTAKES</p></div><div class="winnerDetailsB">  <p class="centered">' +
             response.results[key].rank +
@@ -482,55 +527,15 @@ function showWinner() {
             response.results[key].mistakes +
             "</p> </div></div>";
           WinnerBody.innerHTML += temp;
-
-          x++;
         }
+      } else {
+        document.querySelector("#winnerRemark").innerHTML =
+          "LEARN MORE HOW TO GET YOUR PRIZE";
+        document.querySelector("#winnerRemark2").innerHTML = xhr3.responseText;
       }
     }
   };
-  xhr3.send();
-}
-
-function showLooser() {
-  document.querySelector(".looserOutput").innerHTML = "";
-  var xhr3 = new XMLHttpRequest();
-  xhr3.open("GET", "/leaderBoardHistory");
-  xhr3.onload = function () {
-    if (xhr3.status === 200) {
-      var response = JSON.parse(xhr3.responseText);
-      var WinnerBody = document.querySelector(".looserOutput");
-      for (var key in response.results) {
-        if (response.results[key].play_id == id) {
-          if (response.results[key].rank == 1) {
-            document.querySelector("#winnerRemark").innerHTML =
-              "LEARN MORE HOW TO GET YOUR PRIZE";
-            document.querySelector("#winnerRemark2").innerHTML =
-              "We're thrilled to announce that you've emerged victorious in our recent event! Your outstanding performance has earned you a well-deserved prize: a fantastic gadget! 📱 To ensure you receive your prize smoothly, our team will be giving you a call shortly. During this call, we'll discuss the details of how to arrange the delivery of your gadget. We want to make sure it reaches you securely and on time. Keep an eye on your phone; our call will be coming your way soon. We're excited to connect with you and make the process as seamless as possible. Once again, congratulations on your impressive win, and thank you for being a part of our event. Enjoy your new gadget, and may it bring you endless joy and utility! Stay tuned for more exciting events and opportunities in the future. You could be our next winner! <br>Best regards, texttornado Team";
-          } else {
-            document.querySelector("#winnerRemark").innerHTML = "YOUR RESULTS";
-            document.querySelector("#winnerRemark2").innerHTML =
-              "WE ARE SORRY TO ANNOUNCE THAT YOU DIDN'T MAKE IT";
-            var temp =
-              ' <div class="winnerOutput"><div class="winerImg"> <img src="' +
-              response.results[key].profile_pic +
-              '" alt="image" style="width: 120px; height: 120px; border-radius: 50%"/></div><p style="color: gray; text-align: center; font-size: 90%">' +
-              response.results[key].username +
-              '</p><div class="winnerDetailsHolder"><div class="winnerDetailsA"><p class="centered">RANK</p><p class="centered">WPM</p><p class="centered">CPM</p><p class="centered">MISTAKES</p></div><div class="winnerDetailsB">  <p class="centered">' +
-              response.results[key].rank +
-              '</p> <p class="centered">' +
-              response.results[key].wpm +
-              '</p><p class="centered">' +
-              response.results[key].cpm +
-              '</p><p class="centered">' +
-              response.results[key].mistakes +
-              "</p> </div></div>";
-            WinnerBody.innerHTML += temp;
-          }
-        }
-      }
-    }
-  };
-  xhr3.send();
+  xhr3.send(jsonDat);
 }
 
 document.addEventListener("DOMContentLoaded", function () {

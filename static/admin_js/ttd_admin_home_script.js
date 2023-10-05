@@ -839,7 +839,7 @@ var myChart = new Chart(ctx, {
     datasets: [
       {
         label: "Number of People",
-        data: [12, 15, 5, 9, 5, 7, 6, 9, 5, 10, 12, 3],
+        data: [122, 125, 25, 92, 25, 27, 62, 92, 52, 102, 212, 23],
         backgroundColor: "rgba(106, 90, 205, 0.6)",
         borderColor: "rgba(106, 90, 205, 1)",
         borderWidth: 2,

@@ -30,6 +30,7 @@ urlpatterns = [
     path("setToOld", views.setToOld, name="setToOld"),
     path("setToseen", views.setToseen, name="setToseen"),
     path("leaderBoardHistory", views.leaderBoardHistory, name="leaderBoardHistory"),
+    path("leaderBoardHistory2", views.leaderBoardHistory2, name="leaderBoardHistory2"),
     path("update_user_status", views.update_user_status, name="update_user_status"),
     path(
         "count_online_players", views.count_online_players, name="count_online_players"
@@ -42,4 +43,5 @@ urlpatterns = [
     path("get_concern2", views.get_concern2, name="get_concern2"),
     path("sending_concern_response", views.sending_concern_response, name="sending_concern_response"),
     path("clearNotification", views.clearNotification, name="clearNotification"),
+    path("getTicketsPrices2", views.getTicketsPrices2, name="getTicketsPrices2"),
 ]

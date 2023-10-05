@@ -289,9 +289,7 @@
         </div>
       </div>
       <div class="container_B" onclick="close_settings()">
-        <div class="container_B__box">
-          <h5>test taken</h5>
-        </div>
+        <div class="container_B__box"></div>
         <div class="container_B__box"></div>
         <div class="container_B__box"></div>
       </div>
@@ -401,7 +399,7 @@
         <form action="">
           <input type="search" placeholder=" search" />
         </form>
-        <p>CURRENT ADMINS : <strong>{{amount_of_admins}}</strong></p>
+        <p>ADMINS : <strong>{{amount_of_admins}}</strong></p>
         <i
           style="color: #ffffff; font-size: 150%"
           class="fa fa-close msg"
@@ -562,6 +560,31 @@
                 />
                 <input
                   type="hidden"
+                  id="csrf_token6122"
+                  value="{{ csrf_token }}"
+                />
+                <input
+                  type="hidden"
+                  id="csrf_token619"
+                  value="{{ csrf_token }}"
+                />
+                <input
+                  type="hidden"
+                  id="csrf_token2440"
+                  value="{{ csrf_token }}"
+                />
+                <input
+                  type="hidden"
+                  id="csrf_token612"
+                  value="{{ csrf_token }}"
+                />
+                <input
+                  type="hidden"
+                  id="csrf_token615"
+                  value="{{ csrf_token }}"
+                />
+                <input
+                  type="hidden"
                   id="csrf_token512"
                   value="{{ csrf_token }}"
                 />
@@ -627,6 +650,11 @@
                 <input
                   type="hidden"
                   id="csrf_token4"
+                  value="{{ csrf_token }}"
+                />
+                <input
+                  type="hidden"
+                  id="csrf_token6615"
                   value="{{ csrf_token }}"
                 />
               </div>
@@ -797,7 +825,7 @@
         <p>EVENTS</p>
         <h5 style="color: red" id="eventWarn"></h5>
         <i
-          style="color: #000000; font-size: 150%"
+          style="color: #ffffff; font-size: 150%"
           class="fa fa-close msg"
           onclick="close_option_res()"
         ></i>
@@ -854,27 +882,122 @@
       </div>
       <div class="nav_options_menu_holder">
         <div class="nav_options_container_A">
-          <h4 style="text-align:center">Set Subscription</h4>
-          <br>
-            <form style="display:flex; flex-wrap:wrap; justify-content:space-between"  >
-              <input type="number" id="newprice" placeholder="New price.."> <br><br>
-              <input type="number" id="oldprice" placeholder="Old price.."> <br><br>
-              <input type="number" id="dropBy" placeholder="Drop by.."> <br><br>
-              <input type="submit" id="subscriptions" value="Save"> <br><br>
-            </form>
+          <h4 style="text-align: center">Set Subscription</h4>
+          <br />
+          <form
+            style="
+              display: flex;
+              flex-wrap: wrap;
+              justify-content: space-between;
+            "
+          >
+            <input type="number" id="newprice" placeholder="New price.." />
+            <br /><br />
+            <input type="number" id="oldprice" placeholder="Old price.." />
+            <br /><br />
+            <input type="submit" id="subscriptions" value="Save" /> <br /><br />
+          </form>
+          <br />
+          <hr />
+          <h4 style="text-align: center">CURRENT PRICES</h4>
+
+          <br />
+          <div class="ticketPriceHolder" style="color: white">
+            <p>NEW P</p>
+            <p>OLD P</p>
+            <p>DB</p>
+          </div>
+          <div class="TicketsubbContainer"></div>
         </div>
-        <div class="nav_options_container_B"></div>
+
+        <div class="nav_options_container_B" style="overflow: hidden">
+          <div class="searchTickts">
+            <form id="search23">
+              <input type="search" placeholder="search..." id="search223" />
+            </form>
+          </div>
+          <button onclick="subsubscriber()">refresh</button>
+          <br />
+          <div class="ticketPriceHolder" style="color: white">
+            <p>TICKETS ID</p>
+            <p>STATUS</p>
+            <p>USED</p>
+            <p>COUNTER</p>
+            <p>DATE RENEWED</p>
+          </div>
+          <div class="holdSubscriptions"></div>
+        </div>
       </div>
     </div>
 
     <div class="nav_options" id="pay">
       <div class="nav_options_menu_header">
         <p>PAYMENTS</p>
+        <p id="ticketstatus2"></p>
         <i
-          style="color: #000000; font-size: 150%"
+          style="color: #ffffff; font-size: 150%"
           class="fa fa-close msg"
           onclick="close_option_pay()"
         ></i>
+      </div>
+      <div class="nav_options_menu_holder">
+        <div class="nav_options_container_A">
+          <h4 style="text-align: center">SET TICKETS PRICE</h4>
+          <br />
+          <form>
+            <div
+              style="
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+              "
+            >
+              <select id="tktType">
+                <option>STAN</option>
+                <option>EPIC</option>
+                <option>LEGE</option>
+              </select>
+              <input type="number" id="totalTickets2" placeholder="Tickets.." />
+              <br /><br />
+              <input type="number" id="newprice2" placeholder="New price.." />
+              <br /><br />
+              <input type="number" id="oldprice2" placeholder="Old price.." />
+              <br /><br />
+            </div>
+            <br />
+            <input type="submit" id="saveTicketsPrice" value="Save" />
+            <br /><br />
+          </form>
+
+          <hr />
+          <h4 style="text-align: center">CURRENT PRICES</h4>
+
+          <br />
+          <div class="ticketPriceHolder" style="color: white">
+            <p>TYPE</p>
+            <p>NEW P</p>
+            <p>OLD P</p>
+            <p>DB</p>
+            <p>TKS</p>
+          </div>
+          <div class="TicketspriceContainer"></div>
+        </div>
+        <div class="nav_options_container_B" style="overflow: hidden">
+          <div class="searchTickts">
+            <form id="search2">
+              <input type="search" placeholder="search..." id="search22" />
+            </form>
+            <button>Purchase History</button>
+            <button onclick="getTickets()">refresh</button>
+          </div>
+          <div class="ticketPriceHolder" style="color: white">
+            <p>TICKET ID</p>
+            <p>TICKETS AVAIL</p>
+            <p>TICKETS USED</p>
+            <p>CLAIM</p>
+          </div>
+          <div class="HoldTicketsData"></div>
+        </div>
       </div>
     </div>
 
@@ -882,7 +1005,7 @@
       <div class="nav_options_menu_header">
         <p>LEADERBOARD</p>
         <i
-          style="color: #000000; font-size: 150%"
+          style="color: #ffffff; font-size: 150%"
           class="fa fa-close msg"
           onclick="close_option_leader()"
         ></i>
@@ -893,7 +1016,7 @@
       <div class="nav_options_menu_header">
         <p>ANALYSIS</p>
         <i
-          style="color: #000000; font-size: 150%"
+          style="color: #ffffff; font-size: 150%"
           class="fa fa-close msg"
           onclick="close_option_analy()"
         ></i>
@@ -927,7 +1050,7 @@
       <div class="nav_options_menu_header">
         <p>SECURITY</p>
         <i
-          style="color: #000000; font-size: 150%"
+          style="color: #ffffff; font-size: 150%"
           class="fa fa-close msg"
           onclick="close_option_secu()"
         ></i>
@@ -938,7 +1061,7 @@
       <div class="nav_options_menu_header">
         <p>REPORTS</p>
         <i
-          style="color: #000000; font-size: 150%"
+          style="color: #ffffff; font-size: 150%"
           class="fa fa-close msg"
           onclick="close_option_repo()"
         ></i>
@@ -981,7 +1104,7 @@
       <div class="settings_header">
         <p>
           SETTINGS<i
-            style="color: #000000; float: right; font-size: 150%"
+            style="color: #ffffff; float: right; font-size: 150%"
             class="fa fa-remove msg"
             onclick="close_settings()"
           ></i>
@@ -994,7 +1117,7 @@
       <div class="nav_options_menu_header">
         <p>MESSAGES</p>
         <i
-          style="color: #000000; font-size: 150%"
+          style="color: #ffffff; font-size: 150%"
           class="fa fa-close msg"
           onclick="close_msg()"
         ></i>
@@ -1004,7 +1127,7 @@
       <div class="nav_options_menu_header">
         <p>NOTIFICATIONS</p>
         <i
-          style="color: #000000; font-size: 150%"
+          style="color: #ffffff; font-size: 150%"
           class="fa fa-close msg"
           onclick="close_notf()"
         ></i>

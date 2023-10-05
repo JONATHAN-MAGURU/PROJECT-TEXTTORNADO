@@ -22,18 +22,20 @@ from baseApp.models import (
     Countdown2,
     TextBehaviour,
     SubscriptionPrice,
+    TicketPrice,
 )
-from topApp.models import Player, Tickets, TypingDetails, Notification, Support, Subscription
+from topApp.models import (
+    Player,
+    Tickets,
+    TypingDetails,
+    Notification,
+    Support,
+    Subscription,
+)
 from topApp.views import id_gen, transferData
 import random
 import time
 from django.core.exceptions import ObjectDoesNotExist
-
-
-def getD():
-    getDate = Countdown.objects.all()
-    for g in getDate:
-        print(g.expiration_time)
 
 
 def ttd_admin_login(request):
@@ -49,7 +51,7 @@ def ttd_admin_homepage(request):
         username = request.POST["username"]
         password = request.POST["password"]
         details = Admins_details.objects.filter(emails=username, passw=password)
-        getD()
+
         if details.exists():
             date1 = datetime.now()
             admin_details = details.values()
@@ -270,7 +272,7 @@ def setEventEnd(request):
         time_difference = timezone.timedelta(seconds=seconds)
         new_datetime = current_datetime + time_difference
         formatted_datetime = new_datetime.strftime("%Y-%m-%d %H:%M:%S%z")
-        print(formatted_datetime)
+
         if ms is not None:
             Countdown.objects.all().delete()
             Countdown.objects.create(expiration_time=formatted_datetime).save()
@@ -297,49 +299,6 @@ def get_remaining_time(request):
         remaining_time = (countdown.expiration_time - current_time).total_seconds()
         return JsonResponse({"remaining_time": remaining_time})
     return JsonResponse({"remaining_time": 0})
-
-
-"""def update_end_event():
-    while True:
-        try:
-            event = EndEvent.objects.get(endEventId=5747)
-            new_end_time = event.endEvent - timedelta(milliseconds=500)
-            EndEvent.objects.filter(endEventId=5747).update(endEvent=new_end_time)
-            print("EndEvent updated:", new_end_time)
-        except EndEvent.DoesNotExist:
-            print("EndEvent not found")
-        
-        time.sleep(2)
-
-update_end_event()
-    """
-
-"""
-def subtract_until_zero(number, subtract_by):
-    Player.objects.all().update(results="seen")
-    event = EndEvent.objects.get(endEventId=85747)
-    while number > 0:
-        event.endEvent = number
-        event.save()
-        number -= subtract_by
-        if number < 0:
-            number = 0
-        time.sleep(1)
-        if event.endEvent < 10000:
-            Player.objects.all().update(results="not seen")
-
-    print("Number has reached 0!")
-    transferData()
-    time.sleep(3)
-    code1 = 85747
-    getCode = Leaderboard.objects.get(leaderBoardId=5747)
-    getCode.leaderBoardId = code1
-    getCode.save()
-    time.sleep(3)
-    getCode2 = TypingArea.objects.get(typingAreaId=5747)
-    getCode2.typingAreaId = code1
-    getCode2.save()
-"""
 
 
 def checkEventNext():
@@ -485,7 +444,7 @@ def startFrontend(request):
     if request.method == "POST":
         code = json.loads(request.body)
         code1 = code["firstId"]
-        print(code1)
+
         if code1 == 85747:
             getCode = Frontend.objects.get(FrontendId=5747)
             getCode.FrontendId = code1
@@ -518,7 +477,7 @@ def startTimerOne(request):
             getCode.endEventId = code1
             getCode.save()
             checkEventEnds()
-            
+
             return HttpResponse("UPDATED SUCCESSIFULLY...")
         else:
             return HttpResponse("UPDATE FAILED...")
@@ -740,7 +699,6 @@ def get_concern3(request):
         try:
             request_data = json.loads(request.body)
             userid = request_data.get("userId")
-            print(userid)
             getUserConcerns = Support.objects.filter(source_id=userid)
             if getUserConcerns.exists():
                 concerns = getUserConcerns.all().order_by("source_date")
@@ -758,51 +716,200 @@ def getSubscription(request):
     return JsonResponse({"subscriptionPrice": list(subscriptionPrice.values())})
 
 
+def setTicketsPrice(request):
+    if request.method == "POST":
+        subDat = json.loads(request.body)
+
+        np = subDat.get("np")
+        op = subDat.get("op")
+        amt = subDat.get("amt")
+        typ = subDat.get("typ")
+        mail = subDat.get("mail")
+        p1 = int(op) - int(np)
+        p2 = p1 / int(op)
+        p3 = p2 * 100
+
+        getAdmins = Admins_details.objects.filter(admin_id=mail)
+        if getAdmins.exists():
+            getTicketDat = TicketPrice.objects.filter(type=typ)
+            if getTicketDat.exists():
+                dataX = getTicketDat.first()
+                dataX.newPrice = np
+                dataX.oldPrice = op
+                dataX.dropBy = p3
+                dataX.amount = amt
+                dataX.save()
+                return HttpResponse("TICKETS PRICE SUCCESSFULLY SET..")
+            else:
+                return HttpResponse("NO PRICE OBJECT")
+        else:
+            return HttpResponse("INVALID REQUEST")
+
+
 def setSubscriptionPrice(request):
     if request.method == "POST":
         subDat = json.loads(request.body)
 
         np = subDat.get("np")
         op = subDat.get("op")
-        db = subDat.get("db")
-
-        getData = SubscriptionPrice.objects.first()
-        if getData:
-            getData.newPrice = np
-            getData.oldPrice = op
-            getData.dropBy = db
-            getData.save()
-            return HttpResponse(" SUBSCRIPTION PRICES SUCCESSFULLY SET..")
+        mail = subDat.get("mail")
+        p1 = int(op) - int(np)
+        p2 = p1 / int(op)
+        p3 = p2 * 100
+        getAdmins = Admins_details.objects.filter(admin_id=mail)
+        if getAdmins.exists():
+            getData = SubscriptionPrice.objects.first()
+            if getData:
+                getData.newPrice = np
+                getData.oldPrice = op
+                getData.dropBy = p3
+                getData.save()
+                return HttpResponse(" SUBSCRIPTION PRICES SUCCESSFULLY SET..")
+            else:
+                return HttpResponse("NO PRICE OBJECT")
         else:
-            return HttpResponse("SET NO PRICE OBJECT")
-    else:
-        return HttpResponse("INVALID REQUEST")
+            return HttpResponse("INVALID REQUEST")
 
 
 def checkSubscriptions():
     getSubscriptionData = Subscription.objects.all()
     for subData in getSubscriptionData:
-        if subData.subscriptionStatus =="active":
+        if subData.subscriptionStatus == "active":
             if subData.subscriptionCounter < 5:
-                getTickets = Tickets.objects.filter(tickets_id = subData.subscriptionId)
+                getTickets = Tickets.objects.filter(tickets_id=subData.subscriptionId)
                 getTicket = getTickets.first()
                 getTicket.tickets_available += 20
                 getTicket.save()
                 subData.subscriptionCounter += 1
                 subData.save()
                 save_notification = Notification.objects.create(
-                                tittle="TextTornado Pass",
-                                description=f"You have received 20 tickets from TextTornado pass you subscribed previously. And you have used {subData.subscriptionCounter}/5 of your subscription.",
-                                notf_id=subData.subscriptionId,
-                            )
+                    tittle="TextTornado Pass",
+                    description=f"You have received 20 tickets as part of your prior subscription to the TextTornado Pass. And you have used {subData.subscriptionCounter}/5 of your subscription.",
+                    notf_id=subData.subscriptionId,
+                )
                 save_notification.save()
             else:
                 save_notification = Notification.objects.create(
-                                tittle="TextTornado Pass",
-                                description="Your TextTornado pass subscription has expired.",
-                                notf_id=subData.subscriptionId,
-                            )
+                    tittle="TextTornado Pass",
+                    description="Your TextTornado Pass subscription has lapsed. To resume receiving 20 tickets at the commencement of each event, kindly subscribe again..",
+                    notf_id=subData.subscriptionId,
+                )
                 save_notification.save()
+                subData.subscriptionStatus = "expired"
+                subData.save()
 
 
+def get_subscribers(request):
+    if request.method == "POST":
+        try:
+            request_data = json.loads(request.body)
+            userid = request_data.get("mail")
+            getAdmin = Admins_details.objects.filter(admin_id=userid)
+            if getAdmin.exists():
+                subscriber = Subscription.objects.all().order_by("-subscriptionDate")
+                return JsonResponse({"subscriber": list(subscriber.values())})
+            else:
+                return HttpResponse("Bad request.")
+        except Exception as e:
+            return HttpResponse("An error occurred while processing the request.")
+    else:
+        return HttpResponse("Bad request method. Use POST.")
 
+
+def getTicketsPrices(request):
+    if request.method == "POST":
+        try:
+            request_data = json.loads(request.body)
+            userid = request_data.get("mail")
+            getAdmin = Admins_details.objects.filter(admin_id=userid)
+            if getAdmin.exists():
+                ticketPrice = TicketPrice.objects.all()
+                return JsonResponse({"ticketPrice": list(ticketPrice.values())})
+            else:
+                return HttpResponse("Bad request.")
+        except Exception as e:
+            return HttpResponse("An error occurred while processing the request.")
+    else:
+        return HttpResponse("Bad request method. Use POST.")
+    
+def getTicketsubscriPrices(request):
+    if request.method == "POST":
+        try:
+            request_data = json.loads(request.body)
+            userid = request_data.get("mail")
+            getAdmin = Admins_details.objects.filter(admin_id=userid)
+            if getAdmin.exists():
+                 subticketPrice =SubscriptionPrice.objects.all()
+                 return JsonResponse({"subticketPrice": list(subticketPrice.values())})
+            else:
+                return HttpResponse("Bad request.")
+        except Exception as e:
+            return HttpResponse("An error occurred while processing the request.")
+    else:
+        return HttpResponse("Bad request method. Use POST.")
+
+
+def getTickets(request):
+    if request.method == "POST":
+        try:
+            request_data = json.loads(request.body)
+            userid = request_data.get("mail")
+            getAdmin = Admins_details.objects.filter(admin_id=userid)
+            if getAdmin.exists():
+                ticket = Tickets.objects.all().order_by("-tickets_available")
+                return JsonResponse({"ticket": list(ticket.values())})
+            else:
+                return HttpResponse("Bad request.")
+        except Exception as e:
+            return HttpResponse(f"An error occurred while processing the request. {e}")
+    else:
+        return HttpResponse("Bad request method. Use POST.")
+
+
+def getTicketsSeach(request):
+    if request.method == "POST":
+        try:
+            request_data = json.loads(request.body)
+            userid = request_data.get("mail")
+            userName = request_data.get("userName")
+            getAdmin = Admins_details.objects.filter(admin_id=userid)
+            if getAdmin.exists():
+                getPrayerDat = Player.objects.filter(username=userName)
+                if getPrayerDat.exists():
+                    data = getPrayerDat.first()
+                    ticket = Tickets.objects.filter(tickets_id=data.player_id)
+                    return JsonResponse({"ticket": list(ticket.values())})
+                else:
+                    return HttpResponse("NO PLAYER WITH SUCH NAME")
+            else:
+                return HttpResponse("Bad request.")
+        except Exception as e:
+            return HttpResponse(f"An error occurred while processing the request. {e}")
+    else:
+        return HttpResponse("Bad request method. Use POST.")
+
+def subsubscriberSerch(request):
+    if request.method == "POST":
+        try:
+            request_data = json.loads(request.body)
+            userid = request_data.get("mail")
+            userName = request_data.get("tosearch")
+            getAdmin = Admins_details.objects.filter(admin_id=userid)
+            if getAdmin.exists():
+                getPrayerDat = Player.objects.filter(username=userName)
+                if getPrayerDat.exists():
+                     data = getPrayerDat.first()
+                     subcr = Subscription.objects.filter(subscriptionId=data.player_id)
+                     if subcr.exists():
+                         
+                        return JsonResponse({"subcr": list(subcr.values())})
+                     else:
+                         return HttpResponse("NO SUBSCRIPTION WITH THAT NAME")
+                else:
+                    return HttpResponse("NO PLAYER WITH SUCH NAME")
+            else:
+                return HttpResponse("Bad request.")
+        except Exception as e:
+            return HttpResponse(f"An error occurred while processing the request. {e}")
+    else:
+        return HttpResponse("Bad request method. Use POST.")

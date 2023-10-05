@@ -77,6 +77,8 @@ const errors = document.querySelector("#errors");
 const container_error = document.querySelector(".container-error");
 const icom = document.querySelector(".icom");
 const leaderboardBody = document.querySelector(".leaderboardBody");
+
+
 document.addEventListener("load", function () {
   userImage.width = 100;
   userImage.height = 100;
@@ -467,13 +469,13 @@ document
       buyTicketsOff();
       leaderboard_hider.style.width = "100%";
       choosePaymet2.style.display = "block";
-      amount.innerHTML = "50";
-      numberOfTickets.innerHTML = 1;
+      amount.innerHTML = stdnew.innerHTML;
+      numberOfTickets.innerHTML = stdTks.innerHTML;
       typeOfTickets.innerHTML = "STANDARD TICKETS";
       airtel.focus();
     } else {
       buyTicketsOff();
-      callPaymentOn(1, "50", "STANDARD TICKETS");
+      callPaymentOn(stdTks.innerHTML, stdnew.innerHTML, "STANDARD TICKETS");
       document.querySelector("#newAirtel").innerHTML =
         document.body.getAttribute("data-number");
     }
@@ -491,13 +493,13 @@ document
       buyTicketsOff();
       leaderboard_hider.style.width = "100%";
       choosePaymet2.style.display = "block";
-      amount.innerHTML = "100";
-      numberOfTickets.innerHTML = 3;
+      amount.innerHTML = epnew.innerHTML;
+      numberOfTickets.innerHTML = epTks.innerHTML;
       typeOfTickets.innerHTML = "EPIC TICKETS";
       airtel.focus();
     } else {
       buyTicketsOff();
-      callPaymentOn(3, "100", "EPIC TICKETS");
+      callPaymentOn(epTks.innerHTML, epnew.innerHTML, "EPIC TICKETS");
       document.querySelector("#newAirtel").innerHTML =
         document.body.getAttribute("data-number");
     }
@@ -515,13 +517,13 @@ document
       buyTicketsOff();
       leaderboard_hider.style.width = "100%";
       choosePaymet2.style.display = "block";
-      amount.innerHTML = "150";
-      numberOfTickets.innerHTML = 5;
+      amount.innerHTML = legnew.innerHTML;
+      numberOfTickets.innerHTML = legTks.innerHTML;
       typeOfTickets.innerHTML = "LEGENDARY TICKETS";
       airtel.focus();
     } else {
       buyTicketsOff();
-      callPaymentOn(5, "150", "LEGENDARY TICKETS");
+      callPaymentOn(legTks.innerHTML, legnew.innerHTML, "LEGENDARY TICKETS");
       document.querySelector("#newAirtel").innerHTML =
         document.body.getAttribute("data-number");
     }
@@ -722,7 +724,7 @@ function callNotification() {
   notifications.style.width = "40%";
   notifications.style.opacity = "1";
   document.querySelector("#notText").innerHTML =
-    "Typing event is almost over, in the last two minutes you are not allowed to take the typing test.";
+    "The typing event is nearing its conclusion, and during the final two minutes, participants are kindly requested to refrain from taking the typing test.";
 }
 
 const getCodesForLeaderBoard = setInterval(function () {

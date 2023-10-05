@@ -24,6 +24,7 @@ function startCountdown(secondss) {
       clearInterval(timer);
       updateTimerDisplay("00", "00", "00", "00");
       document.querySelector("#eventHasEnded").innerHTML = "EVENT HAS ENDED";
+      document.querySelector("#eventHasEnded").style.color ="gray"
     } else {
       const days = Math.floor(remainingMilliseconds / (24 * 60 * 60 * 1000));
       const hours = Math.floor((remainingMilliseconds / (60 * 60 * 1000)) % 24);
@@ -124,13 +125,12 @@ fullscreenButton.addEventListener("click", () => {
 
 const checking = document.querySelector("#checking");
 const messages = [
-  "Establishing secure connection...",
+  "establishing secure connection...",
   "event has ended...",
-  "Verifying timers data...",
+  "verifying timers data...",
   "Synchronizing timers with server time...",
-  "If timer 1 is still running, is due to a synchronization issue with your browser...",
   "Processing leaderboard scores...",
-  "Verifying the winner...",
+  "processed successfully...",
   "Displaying results...",
 ];
 

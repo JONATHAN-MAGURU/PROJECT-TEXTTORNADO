@@ -37,18 +37,19 @@
               border-radius: 50%;
               margin: auto;
               border: 1px solid #415c81;
-              background-color: white;
+              background-color: #161b22;
             "
           />
         </div>
-        <h1>Sign in to TextTornado</h1>
+        <h1>Log in to TextTornado</h1>
+        <br>
         <div class="container-error">
           {% if message %}
           <i class="fas fa-exclamation-triangle" style="color: red"></i> &nbsp;
           <span style="padding: 10px" id="err">{{ message }}</span>
           {% endif %}
         </div>
-        <form action="session" method="POST" id="form2">
+        <form action="amargerdon_e1" method="POST" id="form2">
           {% csrf_token %}
           <label for="username">Username</label> <br />
           <input type="text" id="username" name="username" /> <br />
@@ -56,7 +57,7 @@
           <label for="username">password</label>
 
           <input type="password" id="password" name="password" /> <br />
-          <input type="submit" value="Sign in" id="form" />
+          <input type="submit" value="Log in" id="form" />
           <label class="link-color"
             ><a href="{% url 'resetPassword'%}" class="link-color"
               >Forgot password?</a
@@ -75,8 +76,8 @@
       </div>
     </div>
     <footer>
-      <p class="link-color">Terms</p>
-      <p class="link-color">Privacy</p>
+      <p class="link-color2">Terms of use</p> |
+      <p class="link-color2">Privacy policy</p> |
       <p style="color: grey; font-size: 80%">contant TextTernado Support</p>
     </footer>
     <div class="sub-footer">

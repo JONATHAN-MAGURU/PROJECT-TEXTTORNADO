@@ -3,11 +3,58 @@ const eventType = document.querySelector("#eventType");
 const nameOfE = document.querySelector("#nameOfE");
 const nameOfE2 = document.querySelector("#nameOfE2");
 const typeOfE = document.querySelector("#typeOfE");
-const setseen3 = document.getElementsByClassName("setseen")[2];
+const setseen2 = document.getElementsByClassName("setseen")[1];
+const setseen3 = document.getElementsByClassName("setseen")[4];
+const setseen4 = document.getElementsByClassName("setseen")[2];
+const setseen5 = document.getElementsByClassName("setseen")[3];
+const setseen6 = document.getElementsByClassName("setseen6")[0];
+let isClicked = false;
+const eventRules = document.querySelector(".eventRules");
+const eventPrizes = document.querySelector(".eventPrizes");
 
-setseen3.addEventListener("click", function () {
+const termsLink = document.getElementById("termsLink");
+const linkPolicy = document.getElementById("linkPolicy");
+const toPolicy = document.getElementsByClassName("cancel-btn2")[1];
+function redirectToTerms() {
+  window.location.href = termsLink.href;
+}
+function redirectTopolicy() {
+  window.location.href = linkPolicy.href;
+}
+
+setseen4.addEventListener("click", function (event) {
+  redirectToTerms();
+});
+
+toPolicy.addEventListener("click", function () {
+  redirectTopolicy();
+});
+setseen2.addEventListener("click", () => {
+  if (isClicked) {
+    eventPrizes.style.display = "block";
+    setseen2.innerHTML = "event rules";
+    eventRules.style.display = "none";
+  } else {
+    setseen2.innerHTML = "view prize";
+    eventRules.style.display = "block";
+    eventPrizes.style.display = "none";
+  }
+  isClicked = !isClicked;
+});
+
+setseen3.addEventListener("click", () => {
   welcomeUserHolder3.style.display = "none";
-  document.querySelector(".bodyCover").style.width = "0%";
+  document.querySelector(".bodyCover2").style.width = "0%";
+});
+setseen5.addEventListener("click", () => {
+  welcomeUserHolder3.style.display = "none";
+  document.querySelector(".bodyCover2").style.width = "0%";
+  setTimeout(customerCare, 800);
+});
+setseen6.addEventListener("click", () => {
+  document.querySelector(".spinnerContainer").style.display = "none";
+  callWinnerOff();
+  setTimeout(customerCare, 800);
 });
 
 const welcomeUserHolder3 =
@@ -55,7 +102,7 @@ const output = document.getElementsByClassName("welcomeUserB2")[0];
 
 function callEvent(arryofRules) {
   welcomeUserHolder3.style.display = "block";
-  document.querySelector(".bodyCover").style.width = "100%";
+  document.querySelector(".bodyCover2").style.width = "100%";
   for (const xx of arryofRules) {
     var tempp =
       '<div class="ruleAndpic"><div style="margin-right: 5px"><img src="/images/right-arrow.png" style="width: 15px; height: 15px"/></div><p>' +
@@ -217,13 +264,14 @@ window.addEventListener("beforeunload", async function () {
 
 function sendRequest() {
   const xhr = new XMLHttpRequest();
-  const url = '/count_online_players';
+  const url = "/count_online_players";
 
-  xhr.open('GET', url, true);
+  xhr.open("GET", url, true);
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4 && xhr.status === 200) {
       const onlinePlayersCount = parseInt(xhr.responseText);
-      document.querySelector('#online').innerHTML = onlinePlayersCount;
+      document.querySelector("#online").innerHTML = onlinePlayersCount;
+      document.querySelector(".online").innerHTML = onlinePlayersCount;
     } else if (xhr.readyState === 4 && xhr.status !== 200) {
       console.error(`Error: Status ${xhr.status}`);
     }
@@ -231,5 +279,70 @@ function sendRequest() {
   xhr.send();
 }
 
-sendRequest(); 
-setInterval(sendRequest, 3000); 
+sendRequest();
+setInterval(sendRequest, 3000);
+
+document.addEventListener("DOMContentLoaded", () => {
+  getRewards();
+  getQuest();
+});
+
+function getRewards() {
+  const viewPrize1 = document.getElementsByClassName("viewPrize1")[0];
+  var xhr = new XMLHttpRequest();
+  const mtry = { id };
+
+  const json_data = JSON.stringify(mtry);
+  const csrfToken = document.querySelector("#csrf_token66").value;
+  xhr.open("POST", "/getPrizes");
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.setRequestHeader("X-CSRFToken", csrfToken);
+
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      var response = JSON.parse(xhr.responseText);
+      viewPrize1.innerHTML = "";
+      for (var key in response.monetary) {
+        var temp =
+          '<div class="viewPrizeA"> <h4><i class="fa fa-trophy tickettss tpy"></i>&nbsp;' +
+          response.monetary[key].title +
+          "</h4><ul><li>" +
+          response.monetary[key].des1 +
+          "</li><li>" +
+          response.monetary[key].des2 +
+          "</li></ul></div>";
+
+        viewPrize1.innerHTML += temp;
+      }
+    }
+  };
+  xhr.send(json_data);
+}
+
+function getQuest() {
+  const viewPrize1 = document.getElementsByClassName("viewPrize1")[1];
+  var xhr = new XMLHttpRequest();
+  const mtry = { id };
+  const json_data = JSON.stringify(mtry);
+  const csrfToken = document.querySelector("#csrf_token67").value;
+  xhr.open("POST", "/getQuest");
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.setRequestHeader("X-CSRFToken", csrfToken);
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      var response = JSON.parse(xhr.responseText);
+      viewPrize1.innerHTML = "";
+      for (var key in response.quest) {
+        var temp =
+          '<div class="viewPrizeA quest"><div class="questText"><p>' +
+          response.quest[key].des2 +
+          '</p></div><div class="questImag"><img id="QuestImg" src="/images/' +
+          response.quest[key].pic +
+          '"></div></div>';
+
+        viewPrize1.innerHTML += temp;
+      }
+    }
+  };
+  xhr.send(json_data);
+}

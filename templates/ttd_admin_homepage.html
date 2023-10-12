@@ -560,6 +560,11 @@
                 />
                 <input
                   type="hidden"
+                  id="csrf_token24460"
+                  value="{{ csrf_token }}"
+                />
+                <input
+                  type="hidden"
                   id="csrf_token6122"
                   value="{{ csrf_token }}"
                 />
@@ -749,6 +754,7 @@
             <input type="hidden" id="csrf_token59" value="{{ csrf_token }}" />
             <input type="hidden" id="csrf_token239" value="{{ csrf_token }}" />
             <input type="hidden" id="csrf_token19" value="{{ csrf_token }}" />
+            <input type="hidden" id="csrf_token66" value="{{ csrf_token }}" />
             <textarea
               id="textarea"
               cols="30"
@@ -1004,11 +1010,65 @@
     <div class="nav_options" id="leader">
       <div class="nav_options_menu_header">
         <p>LEADERBOARD</p>
+        <p id="limStatus"></p>
         <i
           style="color: #ffffff; font-size: 150%"
           class="fa fa-close msg"
           onclick="close_option_leader()"
         ></i>
+      </div>
+      <div class="nav_options_menu_holder">
+        <div class="nav_options_container_A">
+          <h4 style="text-align: center">SET LIMITATIONS</h4>
+          <br />
+          <form>
+            <div
+              style="
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+              "
+            >
+              <select id="limitName">
+                <option>LEADERBOARD</option>
+                <option>WINNERS</option>
+              </select>
+              <input type="number" id="limiter" placeholder="Limiter.." />
+              <br /><br />
+            </div>
+            <br />
+            <input type="submit" id="saveLimiter" value="Save" />
+            <br /><br />
+          </form>
+
+          <hr />
+          <h4 style="text-align: center">CURRENT LIMITATIONS</h4>
+
+          <br />
+          <div class="ticketPriceHolder" style="color: white">
+            <p>NAME</p>
+            <p>LIMITER</p>
+          </div>
+          <div class="limitationsContainer"></div>
+        </div>
+        <div class="nav_options_container_B" style="overflow: hidden">
+          <div class="searchTickts">
+            <form id="search2">
+              <input type="search" placeholder="search..." id="search22" />
+            </form>
+            <button>Leaderbord History</button>
+
+            <button onclick="getTickets()">refresh</button>
+          </div>
+          <div class="ticketPriceHolder" style="color: white">
+            <p>LANK</p>
+            <p>USERNAME</p>
+            <p>WPM</p>
+            <p>CPM</p>
+            <p>MISTAKES</p>
+          </div>
+          <div class="HoldTicketsData"></div>
+        </div>
       </div>
     </div>
 

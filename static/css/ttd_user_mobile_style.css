@@ -4,7 +4,7 @@
     margin: auto;
     display: flex;
     flex-direction: column;
-    height:auto;
+    height: auto;
     padding: 6px;
     justify-content: start;
   }
@@ -28,6 +28,14 @@
     padding: 6px;
     outline: 1px solid rgba(255, 0, 0, 0.6);
     margin: auto;
+  }
+
+  .link-color2 {
+    color: gray;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 80%;
+    font-weight: 600;
   }
   .container-logo {
     text-align: center;
@@ -89,7 +97,7 @@
     padding-top: 8px;
     width: 96%;
     margin: auto;
-    
+
     justify-content: space-evenly;
   }
   .sub-footer {

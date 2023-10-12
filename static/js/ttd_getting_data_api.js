@@ -4,7 +4,6 @@ const save_data = document.getElementById("save_data");
 const firstname = document.getElementsByClassName("edit1")[0];
 const lastname = document.getElementsByClassName("edit1")[1];
 const email = document.getElementsByClassName("edit1")[2];
-const usern = document.getElementsByClassName("edit1")[3];
 const element = document.getElementsByClassName("alerts")[0];
 const comm = document.getElementsByClassName("comment")[0];
 const concerns = document.getElementsByClassName("customer")[0];
@@ -18,7 +17,6 @@ save_data.addEventListener("submit", function (e) {
   var firstname2 = firstname.value;
   var lastname2 = lastname.value;
   var mail = email.value;
-  var usern2 = usern.value;
 
   const selectedImage = imageInput.files[0];
 
@@ -51,10 +49,9 @@ save_data.addEventListener("submit", function (e) {
         const data = {
           firstname2,
           lastname2,
-          mail,
           username,
+          mail,
           id,
-          usern2,
           resizedImageBase64,
         };
 
@@ -238,7 +235,7 @@ document.addEventListener("DOMContentLoaded", function () {
           setTimeout(function () {
             document.querySelector(".welcomeUserHolder").style.display =
               "block";
-            document.querySelector(".bodyCover").style.width = "100%";
+            document.querySelector(".bodyCover2").style.width = "100%";
           }, 8000);
         }
 
@@ -413,7 +410,9 @@ function fetchTicketData(userId) {
     .then((response) => response.json())
     .then((data) => {
       const ticketInfoDiv = document.getElementById("ticket-avail");
+      const ticketInfoDiv2 = document.querySelector(".ticket-avail");
       ticketInfoDiv.innerHTML = `${data.tickets_available}`;
+      ticketInfoDiv2.innerHTML = `${data.tickets_available}`;
     })
     .catch((error) => {
       (actionStatus.innerHTML = "Error fetching ticket data:"), error;
@@ -447,7 +446,9 @@ function setOld() {
   xhr1.setRequestHeader("X-CSRFToken", csrfToken);
   xhr1.onload = function () {
     if (xhr1.status === 200) {
-      console.log("set to old");
+      document.querySelector(".welcomeUserHolder").style.width = 0;
+      document.querySelector(".welcomeUserHolder").style.display = "none";
+      document.querySelector(".bodyCover2").style.width = "0%";
     } else {
       console.log("something went wrong");
     }
@@ -564,7 +565,6 @@ document.addEventListener("DOMContentLoaded", function () {
       isAutoScrollEnabled = true;
     }
   });
-
   setInterval(function () {
     var xhr = new XMLHttpRequest();
     var url = "/get_notifications";
@@ -574,43 +574,58 @@ document.addEventListener("DOMContentLoaded", function () {
     xhr.open("POST", url);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.setRequestHeader("X-CSRFToken", csrfToken);
+
     xhr.onload = function () {
       if (xhr.status === 200) {
-        var response = JSON.parse(xhr.responseText);
-        notificationBody.innerHTML = "";
-        for (var key in response.notification) {
-          if (response.notification[key].notf_id == id) {
-            var notificationDate = new Date(
-              response.notification[key].notification_date
-            );
-            var formattedDate = notificationDate.toLocaleString("en-US", {
-              month: "2-digit",
-              day: "2-digit",
-              year: "numeric",
-              hour: "2-digit",
-              minute: "2-digit",
-              hour12: true,
-            });
+        var contentType = xhr.getResponseHeader("Content-Type");
 
-            var temp =
-              '<div class="notfH"><h5>' +
-              response.notification[key].tittle +
-              '</h5><p style="color:gray">' +
-              response.notification[key].description +
-              '</p><br><p style="color:gray; font-size:80%">' +
-              formattedDate +
-              "</p></div>";
+        if (contentType && contentType.includes("application/json")) {
+          try {
+            var response = JSON.parse(xhr.responseText);
+            notificationBody.innerHTML = "";
+            for (var key in response.notification) {
+              if (response.notification[key].notf_id == id) {
+                var notificationDate = new Date(
+                  response.notification[key].notification_date
+                );
+                var formattedDate = notificationDate.toLocaleString("en-US", {
+                  month: "2-digit",
+                  day: "2-digit",
+                  year: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  hour12: true,
+                });
 
-            notificationBody.innerHTML += temp;
+                var temp =
+                  '<div class="notfH"><h5>' +
+                  response.notification[key].tittle +
+                  '</h5><p style="color:gray">' +
+                  response.notification[key].description +
+                  '</p><br><p style="color:gray; font-size:80%">' +
+                  formattedDate +
+                  "</p></div>";
+
+                notificationBody.innerHTML += temp;
+              }
+            }
+            if (isAutoScrollEnabled) {
+              scrollToBottom();
+            }
+          } catch (error) {
+            console.log("Error parsing JSON response: " + error);
           }
-        }
-        if (isAutoScrollEnabled) {
-          scrollToBottom();
+        } else if (contentType) {
         }
       } else {
-        console.log("Request failed.  Returned status of " + xhr.status);
+        console.log("Request failed. Returned status of " + xhr.status);
       }
     };
+
+    xhr.onerror = function () {
+      console.log("Network error occurred.");
+    };
+
     xhr.send(dat2);
   }, 8000);
 });

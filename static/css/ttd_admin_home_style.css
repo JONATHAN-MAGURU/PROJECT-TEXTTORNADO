@@ -299,14 +299,19 @@ li:hover {
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
   z-index: -999999;
   height: 5px;
+  transition: 0.9s;
+  cursor: pointer;
+}
+
+::-webkit-scrollbar:hover{
+  width: 8PX;
 }
 
 ::-webkit-scrollbar-thumb {
   background-color: gray;
-  padding: 2px;
   z-index: -999999;
   border-radius: 8px;
 }

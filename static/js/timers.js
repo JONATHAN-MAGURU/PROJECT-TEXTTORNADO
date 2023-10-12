@@ -24,7 +24,7 @@ function startCountdown(secondss) {
       clearInterval(timer);
       updateTimerDisplay("00", "00", "00", "00");
       document.querySelector("#eventHasEnded").innerHTML = "EVENT HAS ENDED";
-      document.querySelector("#eventHasEnded").style.color ="gray"
+      document.querySelector("#eventHasEnded").style.color = "gray";
     } else {
       const days = Math.floor(remainingMilliseconds / (24 * 60 * 60 * 1000));
       const hours = Math.floor((remainingMilliseconds / (60 * 60 * 1000)) % 24);
@@ -42,7 +42,6 @@ function updateTimerDisplay(days, hours, minutes, seconds) {
   document.getElementById("seconds").innerHTML = seconds;
 }
 
-
 document.addEventListener("DOMContentLoaded", async () => {
   try {
     const response = await fetch("/get_stating_time");
@@ -57,9 +56,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error("An error occurred:", error);
   }
 });
-
-
-
 
 function startCountdown2(secondss2) {
   const startTime = Date.now();
@@ -148,7 +144,7 @@ function typeMessage() {
     if (currentCharacterIndex === currentMessage.length) {
       currentMessageIndex++;
       currentCharacterIndex = 0;
-      setTimeout(typeMessage, 3400);
+      setTimeout(typeMessage, 3100);
     } else {
       setTimeout(typeMessage, 80);
     }
@@ -178,7 +174,7 @@ async function fetchAndCheckEndEvents() {
       const rtime = parseInt(data.response_data.remaining_time, 10);
       if (rtime < 10 && seenStatus !== "seen") {
         document.querySelector(".spinnerContainer").style.display = "block";
-        setTimeout(typeMessage, 7000);
+        setTimeout(typeMessage, 6000);
         clearInterval(clearFetch);
       }
     } else {
@@ -218,4 +214,27 @@ setseen.addEventListener("click", function () {
   });
 
   XHR3.send(jsonData);
+});
+
+async function fetchAndCheckEndEvents2() {
+  try {
+    const response = await fetch(`/getEndEvents?id=${id}`);
+
+    if (response.status === 200) {
+      const data = await response.json();
+      const seenStatus = data.response_data.seen_status;
+      const rtime = parseInt(data.response_data.remaining_time, 10);
+      if (rtime >= 5 && rtime <= 3600) {
+        callResults.style.display = "none";
+      }
+    } else {
+      console.log("Request failed. Returned status of " + response.status);
+    }
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  fetchAndCheckEndEvents2();
 });

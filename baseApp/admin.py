@@ -17,6 +17,9 @@ from baseApp.models import (
     SubscriptionPrice,
     TicketPrice,
     WinnerAndLooserMessage,
+    ControlResults,
+    Monetary,
+    Quest,
 )
 
 
@@ -37,3 +40,6 @@ admin.site.register(TextBehaviour)
 admin.site.register(SubscriptionPrice)
 admin.site.register(TicketPrice)
 admin.site.register(WinnerAndLooserMessage)
+admin.site.register(ControlResults)
+admin.site.register(Monetary)
+admin.site.register(Quest)

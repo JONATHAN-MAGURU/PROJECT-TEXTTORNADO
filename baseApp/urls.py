@@ -54,4 +54,6 @@ urlpatterns = [
     path("getTicketsSeach", views.getTicketsSeach, name="getTicketsSeach"),
     path("subsubscriberSerch", views.subsubscriberSerch, name="subsubscriberSerch"),
     path("getTicketsubscriPrices", views.getTicketsubscriPrices, name="getTicketsubscriPrices"),
+    path("setLimitation", views.setLimitation, name="setLimitation"),
+    path("getLimitations", views.getLimitations, name="getLimitations"),
 ]

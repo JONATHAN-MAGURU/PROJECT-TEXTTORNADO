@@ -1,4 +1,4 @@
-@media screen and (min-width: 901px) {
+@media screen and (min-width: 701px) {
   * {
     border: 0;
     box-sizing: border-box;
@@ -20,6 +20,10 @@
     display: none;
   }
 
+  .displayNonePC {
+    display: none;
+  }
+
   h2 {
     font-size: 22px;
     font-weight: 450;
@@ -36,7 +40,7 @@
     flex-direction: row;
     justify-content: space-between;
     padding: 10px;
-    overflow-y: scroll;
+    overflow-y: hidden;
     background-color: transparent;
   }
 
@@ -266,7 +270,7 @@
     height: 48px;
     margin-bottom: 20px;
     position: fixed;
-    z-index: 5000px;
+    z-index: 999999999;
     overflow: hidden;
     top: 0;
     padding: 4px;
@@ -311,14 +315,15 @@
     border-radius: 2px;
     border: none;
     letter-spacing: 2px;
-    height: 27px;
+    height: 26px;
+    margin-top: 4px;
     transition: 0.4s;
     font-size: 90%;
     font-weight: 550;
     outline: 1px solid gray;
     overflow: hidden;
     background-color: #0d1117;
-    padding: 3px;
+    padding: 2px;
     box-shadow: 0px 0px 3px #000000;
   }
 
@@ -659,17 +664,16 @@
   }
 
   .options {
-    width: 65%;
+    width: 67%;
     height: auto;
     display: none;
-    box-shadow: 0.5px 0.5px 20px #000000;
+    box-shadow: 2px 2px 20px #000000;
     border-radius: 8px;
     background-color: #161b22;
     border: 1px solid #21262d;
     background-image: url("/images/cover.jpg");
     background-size: cover;
     position: fixed;
-    overflow: scroll;
     z-index: 20;
     transition: 0.2s;
     right: 4px;
@@ -808,6 +812,14 @@
     height: 20vh;
     text-align: center;
   }
+  .ticket_holder_2 {
+    padding: 8px;
+    position: relative;
+    background-color: transparent;
+    width: 100%;
+    height: 20vh;
+    text-align: center;
+  }
 
   .star_holder {
     padding: 10px;
@@ -831,7 +843,7 @@
 
   .tickett2 {
     position: absolute;
-    left: 15px;
+    left: 10px;
     color: orange;
     top: 5px;
   }
@@ -839,13 +851,13 @@
   .tickett3 {
     position: absolute;
     top: 10px;
-    left: 30px;
+    left: 20px;
     color: #ed143d;
   }
 
   .tickett4 {
     position: absolute;
-    left: 45px;
+    left: 30px;
     top: 15px;
     color: orange;
   }
@@ -853,7 +865,7 @@
   .tickett5 {
     position: absolute;
     top: 20px;
-    left: 60px;
+    left: 40px;
     color: yellowgreen;
   }
   .tickett6 {
@@ -975,7 +987,6 @@
     margin-top: 10px;
     align-items: center;
     background-color: transparent;
-    width: 100%;
     gap: 5px;
     border-top: 1px solid #2e2f3a;
   }
@@ -1068,16 +1079,27 @@
     outline: 1px solid orange;
   }
 
+  .logoIcon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+  }
+  .logoText {
+    cursor: pointer;
+    padding-top: 10px;
+    transform: translate(-7px);
+  }
   .options_player {
     width: 20%;
-    height: 0;
-    box-shadow: 0.5px 0.5px 8px #000000;
+    max-height:65vh;
+    box-shadow: 2px 2px 10px #000000;
     border: none;
     background-color: #161b22;
     position: fixed;
     overflow: hidden;
-    top: 50px;
-    transition: 0.2s;
+    top: -60vh;
+    transition: 0.4s;
+    border-radius: 4px;
     right: 10%;
   }
 
@@ -1152,6 +1174,16 @@
   }
   .bodyCover {
     width: 100%;
+    background-color: #000000;
+    opacity: 0.8;
+    position: fixed;
+    overflow: hidden;
+    z-index: 999999999;
+    top: 0;
+    height: 100vh;
+  }
+  .bodyCover2 {
+    width:0%;
     background-color: #000000;
     opacity: 0.8;
     position: fixed;
@@ -1396,19 +1428,24 @@
 
   .manage_account {
     padding: 10px;
-    width: 100%;
-    height: auto;
+    width: auto;
     cursor: pointer;
-    text-align: center;
+    background-color: transparent;
+    outline:1px solid #2e2f3a;
+    border: none;
+    transition: 0.5s;
     font-size: 90%;
-    box-shadow: 0px 0px 3px #000000;
-    letter-spacing: 2px;
+    color:white;
+    box-shadow: 1px 1px 10px #000000;
     margin-top: 5px;
     border-radius: 3px;
   }
 
   .manage_account:hover {
-    outline: 1px solid orange;
+    background-color: gray;
+    border: 2px solid #ed143d;
+    box-shadow: 2px 2px 15px #000000;
+
   }
 
   .manage_account_holder {
@@ -2001,15 +2038,16 @@
     padding: 10px;
   }
   .next-btn2 {
-    background-color: rgb(255, 140, 0);
+    background-color: #ed143d;
     width: auto;
     padding: 10px;
     transition: 0.5s;
     text-align: center;
-    opacity: 0;
-    width: 36%;
+    opacity: 1;
+    width:auto;
     margin-left: 6px;
     border-radius: 4px;
+    box-shadow: 1px 1px 5px #000000;
     color: white;
     font-weight: 550;
     cursor: pointer;
@@ -2046,7 +2084,7 @@
     font-weight: 600;
     cursor: pointer;
     border: 1px solid #2e2f3a;
-    box-shadow: 1px 1px 20px #000000;
+    box-shadow: 1px 1px 10px #000000;
   }
 
   .setseen6:hover {
@@ -2055,21 +2093,31 @@
   .setseen:hover {
     outline: 2px solid #ed143d;
   }
+  .downBtns{
+    display: flex;
+    padding: 8px;
+    justify-content: space-between;
+  }
   .callResults {
-    background-color: #ed143d;
+    background-color:transparent;
+    border: 1px solid #21262d;
     padding: 10px;
     transition: 0.5s;
     text-align: center;
     max-width: 20%;
-    font-weight: 600;
+    font-weight: 550;
     margin-left: 2px;
     margin-top: 10px;
     font-size: 70%;
     border-radius: 3px;
     color: white;
-    font-weight: 600;
-    box-shadow: 1px 1px 20px #000000;
+    box-shadow: 1px 1px 10px #000000;
     cursor: pointer;
+  }
+  .callResults:hover{
+    background-color: gray;
+    outline: 2px solid #ed143d;
+    box-shadow: 2px 2px 20px #000000;
   }
   .next-btn2:hover {
     background-color: rgba(255, 140, 0, 0.8);
@@ -2127,20 +2175,21 @@
     cursor: pointer;
   }
   .cancel-btnn3:hover {
-    opacity: 0.7;
+   background-color: gray;
   }
 
   .cancel-btn2 {
     border: 1px solid #21262d;
-    background-color: #0d1117;
+    background-color:transparent;
     width: auto;
     padding: 10px;
     transition: 0.5s;
-    opacity: 0;
+    box-shadow: 1px 1px 5px #000000;
+    opacity: 1;
     color: white;
     text-align: center;
     margin-right: 6px;
-    width: 36%;
+    width: auto;
     border-radius: 4px;
     font-weight: 550;
     cursor: pointer;
@@ -2294,12 +2343,6 @@
     border-left: 4px solid yellowgreen;
   }
 
-  .rules::after {
-    content: "|";
-    animation: blink 0.7s infinite;
-    color: #ffffff;
-  }
-
   .welcomeUserHolder {
     position: fixed;
     width: 70%;
@@ -2318,11 +2361,10 @@
     display: none;
     flex-direction: column;
     justify-content: space-between;
-    transition: 1s;
     background-image: url("/images/cover.jpg");
     background-size: cover;
     background-repeat: no-repeat;
-    box-shadow: 14px 14px 100px #000000;
+    box-shadow: 5px 5px 100px #000000;
     border: 1px solid #21262d;
   }
 
@@ -2342,6 +2384,7 @@
     text-align: center;
     border-bottom: 1px solid #21262d;
     padding: 8px;
+    background-color: #0d1117;
   }
   .welcomeUserB {
     width: 100%;
@@ -2372,6 +2415,7 @@
     height: auto;
     justify-content: center;
     height: auto;
+    background-color: #0d1117;
   }
 
   .eventEndBody {
@@ -2419,7 +2463,9 @@
   }
   .ruleAndpic {
     display: flex;
-    padding: 10px;
+    padding:8px;
+    font-size: 85%;
+    font-weight: 600;
     flex-direction: row;
     color: gray;
   }
@@ -2481,7 +2527,7 @@
 
   .winnerOutputMain {
     border-right: 1px solid #2e2f3a;
-    max-height: 33.5vh;
+    max-height: 32.7vh;
     overflow: scroll;
   }
 
@@ -2544,10 +2590,10 @@
   }
   .shareTicketsFoot {
     width: 100%;
-    padding: 8px;
+    padding: 6px;
     display: flex;
     justify-content: space-between;
-    flex-direction: row-reverse;
+    flex-direction: row;
     background-color: #161b22;
   }
   .shareTicketsHead {
@@ -2564,7 +2610,7 @@
   }
   .sharePart {
     width: 100%;
-    padding: 8px;
+    padding: 4px;
     justify-content: space-between;
     display: flex;
   }
@@ -2585,7 +2631,7 @@
     border-radius: 50%;
   }
   .sharePart1 {
-    width: 55%;
+    width: 48%;
     overflow: hidden;
     display: block;
   }
@@ -2598,7 +2644,7 @@
     justify-content: center;
   }
   .sharePart3 {
-    width: 45%;
+    width: 53%;
     overflow: hidden;
     color: gray;
     display: flex;
@@ -2632,9 +2678,9 @@
     z-index: 999999999;
     font-size: 70%;
     color: gray;
-    font-weight: 550;
+    font-weight: 500;
     width: 100%;
-    padding: 1px 15px;
+    padding: 0.5px 15px;
     display: flex;
     justify-content: space-between;
     bottom: 0;
@@ -2673,4 +2719,58 @@
     font-size: 90%;
     color: white;
   }
+  .viewPrize1{
+    width: 100%;
+    padding: 4px;
+    border-radius: 3px;
+    box-shadow: 1px 1px 8px #000000;
+    color: gray;
+    font-size: 80%;
+    height: 34vh;
+    overflow-y: scroll;
+    font-weight: 600;
+    margin: 4px;
+  }
+  .monetary{
+    width: 48%;
+  }
+  .tpy{
+    color: #ed143d;
+  }
+li{
+  padding-left: 15px;
+}
+
+.quest{
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+}
+.questImag{
+  width: 47%;
+}
+
+#QuestImg{
+  width: 150px;
+  height: auto;
+}
+.questText{
+  width:50%;
+}
+  .HolderQuest{
+
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    justify-content: space-evenly;
+  }
+  .viewPrizeA{
+    width: 98%;
+    padding: 8px;
+    border-radius: 3px;
+    border: 1px solid #2e2f3a;
+    overflow-y: scroll;
+    margin-bottom: 15px;
+  }
+  
 }

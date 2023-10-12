@@ -1,6 +1,7 @@
 const amtOfTicketsToShare = document.querySelector("#shareT");
 const numberToShare = document.querySelector("#shareN");
 const checkTickets = document.querySelector("#ticket-avail");
+const checkTickets2 = document.querySelector(".ticket-avail");
 const next_btn3 = document.querySelector(".next-btn3");
 const next_btn4 = document.getElementsByClassName("next-btn3")[1];
 const cancel_btnn3 = document.getElementsByClassName("cancel-btnn3")[0];
@@ -14,6 +15,7 @@ const sharePart1 = document.getElementsByClassName("sharePart1")[0];
 const sharePart3 = document.getElementsByClassName("sharePart2")[0];
 const shareTickets2 = document.getElementsByClassName("shareTickets")[1];
 const claim_box = document.querySelector(".claim_box");
+const claimText = document.querySelector("#claimText");
 amtOfTicketsToShare.addEventListener("focus", function () {
   amtOfTicketsToShare.style.border = "1px solid orange";
 });
@@ -24,7 +26,6 @@ numberToShare.addEventListener("focus", function () {
 
 next_btn3.addEventListener("click", function () {
   const checkTicketsInt = parseInt(checkTickets.innerHTML, 10);
-  console.log(checkTicketsInt);
   if (amtOfTicketsToShare.value == "" || numberToShare == "") {
     ctnrerror.style.display = "block";
     errrors3.innerHTML = "Fill all the fields below..";
@@ -172,7 +173,7 @@ function sendTickets() {
       document.querySelector(".shareTickets").style.display = "none";
       notifications.style.width = "40%";
       notifications.style.opacity = "1";
-      document.querySelector('.covers').style.display ="none";
+      document.querySelector(".covers").style.display = "none";
       document.querySelector("#notText").innerHTML = XHR3.responseText;
       reverseAction();
       numberToShare.value = "";
@@ -203,26 +204,26 @@ function callCustomerCare() {
 }
 otherOptions1.addEventListener("click", function () {
   document.querySelector(".shareTickets").style.display = "block";
-  document.querySelector('.covers').style.display ="block";
+  document.querySelector(".covers").style.display = "block";
 });
 
 otherOptions2.addEventListener("click", function () {
   shareTickets2.style.display = "block";
-  document.querySelector('.covers').style.display ="block";
+  document.querySelector(".covers").style.display = "block";
 });
 
 document.querySelector(".closeShare").addEventListener("click", function () {
   document.querySelector(".shareTickets").style.display = "none";
   ctnrerror.style.display = "none";
   errrors3.innerHTML = "";
-  document.querySelector('.covers').style.display ="none";
+  document.querySelector(".covers").style.display = "none";
 });
 
 cancel_btnn3.addEventListener("click", function () {
   document.querySelector(".shareTickets").style.display = "none";
   ctnrerror.style.display = "none";
   errrors3.innerHTML = "";
-  document.querySelector('.covers').style.display ="none";
+  document.querySelector(".covers").style.display = "none";
 });
 cancel_btnn4.addEventListener("click", function () {
   reverseAction();
@@ -239,14 +240,14 @@ function reverseAction() {
 
 cancel_btnn5.addEventListener("click", function () {
   shareTickets2.style.display = "none";
-  document.querySelector('.covers').style.display ="none";
+  document.querySelector(".covers").style.display = "none";
 });
 
 document
   .getElementsByClassName("closeClaim")[0]
   .addEventListener("click", function () {
     shareTickets2.style.display = "none";
-    document.querySelector('.covers').style.display ="none";
+    document.querySelector(".covers").style.display = "none";
   });
 
 let isRequestPending2 = false;
@@ -285,6 +286,14 @@ function claimTickets() {
 }
 
 claim_box.addEventListener("click", function () {
+  callLoader_On2();
+  claimTickets();
+  setTimeout(disableClaimBtn, 300);
+  searchFreeTickets();
+  document.querySelector(".claimed").style.animationDuration = "0.5s";
+});
+
+claimText.addEventListener("click", function () {
   callLoader_On2();
   claimTickets();
   setTimeout(disableClaimBtn, 300);
@@ -365,10 +374,9 @@ const otherOptionsB = document.getElementsByClassName("otherOptions2")[2];
 const otherOptionsC = document.getElementsByClassName("otherOptions2")[3];
 const otherOptionsD = document.getElementsByClassName("otherOptions2")[4];
 
-
-otherOptions.addEventListener('click', ()=>{
+otherOptions.addEventListener("click", () => {
   readerBoardOptions.style.right = "-51%";
-})
+});
 
 let optionsAVisible = false;
 let getCodesForLeaderBoardInterval;
@@ -401,7 +409,12 @@ function updateLeaderboard2() {
   xhrInProgress2 = true;
 
   var xhr3 = new XMLHttpRequest();
-  xhr3.open("GET", "/leaderBoardHistory");
+  xhr3.open("POST", "/leaderBoardHistory3", true);
+  const csrfToken = document.querySelector("#csrf_token509").value;
+  xhr3.setRequestHeader("Content-Type", "application/json");
+  xhr3.setRequestHeader("X-CSRFToken", csrfToken);
+  const firstIdOb = { id };
+  const jsonData = JSON.stringify(firstIdOb);
   xhr3.onload = function () {
     xhrInProgress2 = false;
 
@@ -488,7 +501,7 @@ function updateLeaderboard2() {
       console.log("Request failed. Returned status of " + xhr3.status);
     }
   };
-  xhr3.send();
+  xhr3.send(jsonData);
 }
 
 function displayKeyName(event) {
@@ -610,10 +623,9 @@ otherOptionsC.addEventListener("click", function () {
   options_notf.style.display = "none";
 });
 
-
-otherOptionsD.addEventListener('click', function(){
+otherOptionsD.addEventListener("click", function () {
   clearNotifications();
-})
+});
 
 function clearNotifications() {
   const firstIdOb = { id };
@@ -625,7 +637,7 @@ function clearNotifications() {
   XHR3.setRequestHeader("X-CSRFToken", csrfToken5);
   XHR3.addEventListener("load", function () {
     if (XHR3.status === 200 && XHR3.readyState === 4) {
-      document.querySelector(".notf_body").innerHTML= "";
+      document.querySelector(".notf_body").innerHTML = "";
       notifications.style.width = "40%";
       notifications.style.opacity = "1";
       document.querySelector("#notText").innerHTML = XHR3.responseText;
@@ -639,8 +651,7 @@ function clearNotifications() {
   XHR3.send(jsonData);
 }
 
-
-function closeNotBar(){
+function closeNotBar() {
   notifications.style.width = "0%";
   notifications.style.opacity = "0";
 }

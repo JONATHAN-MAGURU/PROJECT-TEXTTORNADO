@@ -90,8 +90,7 @@ open_comm.addEventListener("click", function () {
   options_comments.style.display = "block";
   comment_body.style.maxHeight = opt - 200 + "px";
   options.style.display = "none";
-  options_player.style.height = "0";
-  options_player.style.border = "none";
+  options_player.style.top ="-50vh";
   leaderboard_hider.style.width = "0";
   options_logout.style.width = "0";
   options_notf.style.display = "none";
@@ -112,14 +111,16 @@ history.addEventListener("click", function () {
 document
   .getElementsByClassName("customerCare")[0]
   .addEventListener("click", function () {
-    settings_container2.style.width = "28.5%";
-    settings_container.style.width = 0;
-    settings_container3.style.width = 0;
-    settings_container4.style.width = 0;
-    options_notf.style.display = "none";
+   customerCare();
   });
 
-
+function customerCare(){
+  settings_container2.style.width = "28.5%";
+  settings_container.style.width = 0;
+  settings_container3.style.width = 0;
+  settings_container4.style.width = 0;
+  options_notf.style.display = "none";
+}
 
 settings_box3.addEventListener("click", function () {
   settings_container3.style.width = "27%";
@@ -187,8 +188,7 @@ function buyTickets() {
   options.style.display = "block";
   leaderboard_hider.style.width = "100%";
   options_notf.style.display = "none";
-  options_player.style.height = 0;
-  options_player.style.border = "none";
+  options_player.style.top ="-50vh";
   options_logout.style.width = 0;
   settings_container.style.width = 0;
   settings_container2.style.width = 0;
@@ -204,9 +204,8 @@ function buyTicketsOff() {
 notf.addEventListener("click", function () {
   options_notf.style.display = "block";
   options.style.display = "none";
-  options_player.style.height = "0";
+  options_player.style.top ="-50vh";
   leaderboard_hider.style.width = "0";
-  options_player.style.border = "none";
   options_logout.style.width = "0";
   options_comments.style.display = "none";
 });
@@ -218,8 +217,7 @@ logout.addEventListener("click", function () {
   options_comments.style.display = "none";
   options.style.display = "none";
   leaderboard_hider.style.width = "0";
-  options_player.style.height = 0;
-  options_player.style.border = "none";
+  options_player.style.top ="-50vh";
   options_comments.style.display = "none";
 });
 
@@ -229,8 +227,7 @@ options_logout_1_1.addEventListener("click", function () {
 });
 
 function openManageAccount() {
-  options_player.style.height = "370px";
-  options_player.style.border = "1px solid #21262d";
+  options_player.style.top = "7vh";
   options.style.display = "none";
   options_logout.style.width = "0";
   options_notf.style.display = "none";
@@ -300,8 +297,7 @@ changee.addEventListener("click", function () {
 });
 
 manage_close3.addEventListener("click", function () {
-  options_player.style.height = "0";
-  options_player.style.border = "none";
+  options_player.style.top ="-50vh";
   manage_account_holder.style.width = "0";
   manage_account_holder.style.border = "none";
 });

@@ -57,6 +57,7 @@ h1 {
 h2 {
   font-size: 20px;
   font-weight: 450;
+  padding: 5px;
   text-align: center;
   border-bottom: 1px solid #21262d;
   margin-bottom: 15px;
@@ -67,6 +68,7 @@ form {
   background-color: #161b22;
   display: flex;
   border: 1px solid #21262d;
+  font-weight: 600;
   padding: 15px;
   width: 65%;
   border-radius: 6px;
@@ -77,6 +79,7 @@ input {
   border-radius: 4px;
   margin-top: 5px;
   outline: none;
+  font-weight: 600;
   border: none;
   color: #ffffff;
   border: 1px solid #21262d;

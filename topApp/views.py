@@ -13,11 +13,20 @@ from topApp.models import (
     Notification,
     Support,
     Subscription,
-   
 )
 from django.core.exceptions import ObjectDoesNotExist
 import random
-from baseApp.models import EndEvent, NextEvent, Countdown, TextBehaviour, TicketPrice,  WinnerAndLooserMessage
+from baseApp.models import (
+    EndEvent,
+    NextEvent,
+    Countdown,
+    TextBehaviour,
+    TicketPrice,
+    WinnerAndLooserMessage,
+    ControlResults,
+    Monetary,
+    Quest,
+)
 from django.core.files.base import ContentFile
 import base64
 import os
@@ -41,19 +50,25 @@ def resetPassword(request):
     return render(request, "resetPassword.html")
 
 
-def testAPI(request):
-    return render(request, "testAPI.html")
+def terms(request):
+    return render(request, "terms.html")
+
+def policy(request):
+    return render(request, "policy.html")
 
 
 def ttd_user_login(request):
     return render(request, "ttd_user_login.html")
+
+def aunth(request):
+    return render(request, "aunth.html")
 
 
 def ttd_user_signin(request):
     return render(request, "ttd_user_signin.html")
 
 
-def session(request):
+def amargerdon_e1(request):
     if request.method == "POST":
         username = request.POST.get("username")
         password = request.POST.get("password")
@@ -63,7 +78,7 @@ def session(request):
             player_details = players.values()
             textBehaviour = TextBehaviour.objects.first()
             baseApp.views.paragraph(textBehaviour.name)
-            return render(request, "session.html", {"player_d": player_details})
+            return render(request, "amargerdon_e1.html", {"player_d": player_details})
         else:
             return render(
                 request,
@@ -71,7 +86,7 @@ def session(request):
                 {"message": "Incorect username or password."},
             )
 
-    return render(request, "ttd_user_login.html")
+    return redirect("ttd_user_login") 
 
 
 def verifyPhoneNumber(request):
@@ -308,7 +323,6 @@ def second_player_data(request):
         try:
             player_d = json.loads(request.body)
             username = player_d["username"]
-            username2 = player_d["usern2"]
             firstname = player_d["firstname2"]
             lastname = player_d["lastname2"]
             email = player_d["mail"]
@@ -321,7 +335,7 @@ def second_player_data(request):
                     username=username, player_id=player_id
                 )
 
-                player_data2.username = username2
+                player_data2.username = username
                 player_data2.firstname = firstname
                 player_data2.lastname = lastname
                 player_data2.mail = email
@@ -550,38 +564,41 @@ def typing_details(request):
 
 def get_test_details(request):
     try:
-        results = TypingDetails.objects.all().order_by("-wpm")
-        results_data = list(results.values())
+        getLims = ControlResults.objects.filter(limiter_name="LEADERBOARD")
+        if getLims.exists():
+            getLimit = getLims.first()
+            results = TypingDetails.objects.all().order_by("-wpm")[: getLimit.limiter]
+            results_data = list(results.values())
 
-        images_data = {}
-        player_ids = set(result["play_id"] for result in results_data)
-        for player_id in player_ids:
-            player = Player.objects.get(player_id=player_id)
-            images_data[player_id] = (
-                player.profile_pic.url if player.profile_pic else None
-            )
+            images_data = {}
+            player_ids = set(result["play_id"] for result in results_data)
+            for player_id in player_ids:
+                player = Player.objects.get(player_id=player_id)
+                images_data[player_id] = (
+                    player.profile_pic.url if player.profile_pic else None
+                )
 
-        final_results = []
-        for result in results_data:
-            player_id = result["play_id"]
-            result["profile_pic"] = images_data.get(player_id)
-            final_results.append(result)
-        return JsonResponse({"results": final_results})
+            final_results = []
+            for result in results_data:
+                player_id = result["play_id"]
+                result["profile_pic"] = images_data.get(player_id)
+                final_results.append(result)
+            return JsonResponse({"results": final_results})
     except:
         print("Something went wrong with get_test_details function")
 
 
-def leaderBoardHistory(request):
+def leaderBoardHistory3(request):
     try:
         if request.method == "POST":
             res_dat = json.loads(request.body)
             userID = res_dat.get("id")
 
-            getPlayer = Player.objects.filter(player_id = userID)
+            getPlayer = Player.objects.filter(player_id=userID)
             if getPlayer.exists():
-                results = LeaderboardHistory.objects.all().order_by("-wpm")[:2]  
+                results = LeaderboardHistory.objects.all().order_by("-wpm")
                 results_data = list(results.values())
-                
+
                 images_data = {}
                 player_ids = set(result["play_id"] for result in results_data)
                 for player_id in player_ids:
@@ -599,24 +616,64 @@ def leaderBoardHistory(request):
     except:
         print("Something went wrong with get_test_details function")
 
-def leaderBoardHistory2(request):
+
+def leaderBoardHistory(request):
     try:
         if request.method == "POST":
             res_dat = json.loads(request.body)
             userID = res_dat.get("id")
 
-            getPlayer = Player.objects.filter(player_id = userID)
+            getPlayer = Player.objects.filter(player_id=userID)
             if getPlayer.exists():
-                results = LeaderboardHistory.objects.filter(play_id = userID)
+                getLims = ControlResults.objects.filter(limiter_name="WINNERS")
+                getLimiter = getLims.first()
+                results = LeaderboardHistory.objects.all().order_by("-wpm")[
+                    : getLimiter.limiter
+                ]
+                results_data = list(results.values())
+
+                images_data = {}
+                player_ids = set(result["play_id"] for result in results_data)
+                for player_id in player_ids:
+                    player = Player.objects.get(player_id=player_id)
+                    images_data[player_id] = (
+                        player.profile_pic.url if player.profile_pic else None
+                    )
+
+                final_results = []
+                for result in results_data:
+                    player_id = result["play_id"]
+                    result["profile_pic"] = images_data.get(player_id)
+                    final_results.append(result)
+                return JsonResponse({"results": final_results})
+            else:
+                return HttpResponse("well well!!!")
+    except:
+        print("Something went wrong with get_test_details function")
+
+
+def leaderBoardHistory2(request):
+    try:
+        if request.method == "POST":
+            res_dat = json.loads(request.body)
+            userID = res_dat.get("id")
+            nonPartcipantMessage = ""
+            getPlayer = Player.objects.filter(player_id=userID)
+            if getPlayer.exists():
+                results = LeaderboardHistory.objects.filter(play_id=userID)
                 if results.exists():
                     user_res = results.first()
-                    if user_res.rank <= 2:
-                        getMessages =  WinnerAndLooserMessage.objects.filter(messageId = "winner")
+                    getLims = ControlResults.objects.filter(limiter_name="WINNERS")
+                    getLimiter = getLims.first()
+                    if user_res.rank <= getLimiter.limiter:
+                        getMessages = WinnerAndLooserMessage.objects.filter(
+                            messageId="winner"
+                        )
                         messageTouser = getMessages.first()
                         return HttpResponse(f"{messageTouser.messagesx}")
                     else:
                         results_data = list(results.values())
-                        
+
                         images_data = {}
                         player_ids = set(result["play_id"] for result in results_data)
                         for player_id in player_ids:
@@ -632,6 +689,12 @@ def leaderBoardHistory2(request):
                             final_results.append(result)
                             print("hjhjsds dfdf")
                         return JsonResponse({"results": final_results})
+                else:
+                    getMessagess = WinnerAndLooserMessage.objects.filter(
+                            messageId="nonp"
+                        )
+                    messageTouserr = getMessagess.first()
+                    return HttpResponse(f"{messageTouserr.messagesx}")
     except:
         print("Something went wrong with get_test_details function")
 
@@ -1092,3 +1155,38 @@ def getTicketsPrices2(request):
         return JsonResponse({"ticketPrice": list(ticketPrice.values())})
     except Exception as e:
         return HttpResponse("An error occurred while processing the request.")
+
+
+def getPrizes(request):
+    if request.method == "POST":
+        try:
+            request_data = json.loads(request.body)
+            userid = request_data.get("id")
+            getPlayer = Player.objects.filter(player_id=userid)
+            if getPlayer.exists():
+                monetary= Monetary.objects.all()
+                return JsonResponse({"monetary": list(monetary.values())})
+            else:
+                return HttpResponse("Bad request.")
+        except Exception as e:
+            return HttpResponse(f"An error occurred while processing the request. {e}")
+    else:
+        return HttpResponse("Bad request method. Use POST.")
+    
+
+
+def getQuest(request):
+    if request.method == "POST":
+        try:
+            request_data = json.loads(request.body)
+            userid = request_data.get("id")
+            getPlayer = Player.objects.filter(player_id=userid)
+            if getPlayer.exists():
+                quest= Quest.objects.all()
+                return JsonResponse({"quest": list(quest.values())})
+            else:
+                return HttpResponse("Bad request.")
+        except Exception as e:
+            return HttpResponse(f"An error occurred while processing the request. {e}")
+    else:
+        return HttpResponse("Bad request method. Use POST.")

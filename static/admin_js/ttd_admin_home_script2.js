@@ -978,3 +978,71 @@ function getSubScrPrices() {
   };
   xhr.send(json_data);
 }
+
+const limiter = document.querySelector("#limiter");
+const saveLimiter = document.querySelector("#saveLimiter");
+const limitName = document.querySelector("#limitName");
+const limStatus = document.querySelector("#limStatus");
+saveLimiter.addEventListener("click", (e) => {
+  e.preventDefault();
+  if (limiter.value == "") {
+    limStatus.innerHTML = "PLEASE FILL ALL FIELDS";
+  } else {
+    saveLimitation();
+  }
+});
+
+function saveLimitation() {
+  const lim = limiter.value;
+  const lname = limitName.value;
+  const limiterData = { lim, lname, mail };
+  const jsonData = JSON.stringify(limiterData);
+  const XHR3 = new XMLHttpRequest();
+  const csrfToken = document.querySelector("#csrf_token24460").value;
+  XHR3.open("POST", "/setLimitation", true);
+  XHR3.setRequestHeader("Content-Type", "application/json");
+  XHR3.setRequestHeader("X-CSRFToken", csrfToken);
+
+  XHR3.addEventListener("load", function () {
+    if (XHR3.status === 200 && XHR3.readyState === 4) {
+      limStatus.innerHTML = XHR3.responseText;
+      getLimitations();
+    } else {
+      limStatus.innerHTML = "CAN'T PROCESS REQUEST";
+    }
+  });
+  XHR3.send(jsonData);
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  getLimitations();
+});
+function getLimitations() {
+  const limContainer = document.querySelector(".limitationsContainer");
+  var xhr = new XMLHttpRequest();
+  const subscriber = { mail };
+
+  const json_data = JSON.stringify(subscriber);
+  const csrfToken = document.querySelector("#csrf_token66").value;
+  xhr.open("POST", "/getLimitations");
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.setRequestHeader("X-CSRFToken", csrfToken);
+
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      var response = JSON.parse(xhr.responseText);
+      limContainer.innerHTML = "";
+      for (var key in response.limresults) {
+        var temp =
+          '<div class="ticketPriceHolder"><p>' +
+          response.limresults[key].limiter_name +
+          "</p><p>" +
+          response.limresults[key].limiter +
+          "</p></div>";
+
+        limContainer.innerHTML += temp;
+      }
+    }
+  };
+  xhr.send(json_data);
+}

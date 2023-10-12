@@ -26,23 +26,25 @@
     <div class="container">
       <div class="loading">
         <img
-          src="images/loading.gif"
+          src="/images/loading.gif"
           style="width: 40px; height: 40px; border-radius: 50%"
         />
       </div>
       <div>
         <br />
         <div class="container-logo">
-          <img src="images/logo.png" alt="logo" id="logo" />
+          <img src="/images/logo.png" alt="logo" id="logo" />
         </div>
-        <h1>Text<span style="color: rgb(255, 140, 0)">Tornado</span></h1>
+        <h1>Sign up to Text<span style="color: rgb(255, 140, 0)">Tornado</span></h1>
+        <br>
         <div class="container-error">
           <i class="fas fa-exclamation-triangle" style="color:red"></i> &nbsp;
           <span id="error"></span>
         </div>
         <form id="form">
           <div class="firstForm">
-            <h2>Create your account in 4 steps.</h2>
+            <h2 style="font-size:110%; font-weight:600">Create your account in 4 steps</h2>
+            <br>
             <input type="hidden" id="csrf_token" value="{{ csrf_token }}" />
             <label for="firstname">Firstname</label> <br />
             <input type="text" id="firstname" /> <br />
@@ -127,14 +129,14 @@
         <div class="container-new-acc">
           <span>Already have account?</span>
           <span><a href="{% url 'ttd_user_login'%}" class="link-color"
-            >Sign In</a
+            >Log In</a
           ></span><span>.</span>
         </div>
       </div>
     </div>
     <footer>
-      <p class="link-color">Terms</p>
-      <p class="link-color">Privacy</p>
+      <p class="link-color">Terms of use</p>
+      <p class="link-color">Privacy policy</p>
       <p style="color: grey; font-size: 80%">contant TextTernado Support</p>
     </footer>
     <div class="sub-footer">

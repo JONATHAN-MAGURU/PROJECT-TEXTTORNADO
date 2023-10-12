@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-(5m+z%i-bk+^2u8ooz$w-4xem8t1(d1p=upwai94rq=rs^=@mk
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.1.198']
 
 # Application definition
 
@@ -156,7 +156,8 @@ AWS_S3_CUSTOM_DOMAIN ='%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
 
 CORS_ALLOWED_ORIGINS = [
-    "https://your-allowed-domain.com",
+    "https://texttornado.com",
+    "https://capsulcode.tech",
 ]
 
 CORS_ALLOW_ALL_ORIGINS = False

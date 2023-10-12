@@ -23,6 +23,7 @@ from baseApp.models import (
     TextBehaviour,
     SubscriptionPrice,
     TicketPrice,
+    ControlResults,
 )
 from topApp.models import (
     Player,
@@ -771,6 +772,27 @@ def setSubscriptionPrice(request):
             return HttpResponse("INVALID REQUEST")
 
 
+def setLimitation(request):
+    if request.method == "POST":
+        subDat = json.loads(request.body)
+        mail = subDat.get("mail")
+        limiter = subDat.get("lim")
+        limiterName = subDat.get("lname")
+
+        getAdmins = Admins_details.objects.filter(admin_id=mail)
+        if getAdmins.exists():
+            getLimitations = ControlResults.objects.filter(limiter_name=limiterName)
+            if getLimitations.exists():
+                limiterData = getLimitations.first()
+                limiterData.limiter = limiter
+                limiterData.save()
+                return HttpResponse("SAVED SUCCESSFULLY..")
+            else:
+                return HttpResponse("NO LIMITATION")
+        else:
+            return HttpResponse("bBAD REQUEST..")
+
+
 def checkSubscriptions():
     getSubscriptionData = Subscription.objects.all()
     for subData in getSubscriptionData:
@@ -831,7 +853,8 @@ def getTicketsPrices(request):
             return HttpResponse("An error occurred while processing the request.")
     else:
         return HttpResponse("Bad request method. Use POST.")
-    
+
+
 def getTicketsubscriPrices(request):
     if request.method == "POST":
         try:
@@ -839,8 +862,24 @@ def getTicketsubscriPrices(request):
             userid = request_data.get("mail")
             getAdmin = Admins_details.objects.filter(admin_id=userid)
             if getAdmin.exists():
-                 subticketPrice =SubscriptionPrice.objects.all()
-                 return JsonResponse({"subticketPrice": list(subticketPrice.values())})
+                subticketPrice = SubscriptionPrice.objects.all()
+                return JsonResponse({"subticketPrice": list(subticketPrice.values())})
+            else:
+                return HttpResponse("Bad request.")
+        except Exception as e:
+            return HttpResponse("An error occurred while processing the request.")
+    else:
+        return HttpResponse("Bad request method. Use POST.")
+    
+def getLimitations(request):
+    if request.method == "POST":
+        try:
+            request_data = json.loads(request.body)
+            userid = request_data.get("mail")
+            getAdmin = Admins_details.objects.filter(admin_id=userid)
+            if getAdmin.exists():
+                limresults= ControlResults.objects.all()
+                return JsonResponse({"limresults": list(limresults.values())})
             else:
                 return HttpResponse("Bad request.")
         except Exception as e:
@@ -888,6 +927,7 @@ def getTicketsSeach(request):
     else:
         return HttpResponse("Bad request method. Use POST.")
 
+
 def subsubscriberSerch(request):
     if request.method == "POST":
         try:
@@ -898,13 +938,12 @@ def subsubscriberSerch(request):
             if getAdmin.exists():
                 getPrayerDat = Player.objects.filter(username=userName)
                 if getPrayerDat.exists():
-                     data = getPrayerDat.first()
-                     subcr = Subscription.objects.filter(subscriptionId=data.player_id)
-                     if subcr.exists():
-                         
+                    data = getPrayerDat.first()
+                    subcr = Subscription.objects.filter(subscriptionId=data.player_id)
+                    if subcr.exists():
                         return JsonResponse({"subcr": list(subcr.values())})
-                     else:
-                         return HttpResponse("NO SUBSCRIPTION WITH THAT NAME")
+                    else:
+                        return HttpResponse("NO SUBSCRIPTION WITH THAT NAME")
                 else:
                     return HttpResponse("NO PLAYER WITH SUCH NAME")
             else:

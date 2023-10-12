@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/aunth.css' %}" />
+    <title>Join TextTornado</title>
+    <link
+    rel="icon"
+    type="image/x-icon"
+    href="{% static 'images/favicon.ico' %}"
+  />
+  </head>
+  <body>
+    <div class="header">
+      <h4>Text<span style="color:orange">Tornado</span></h4>
+    </div>
+    <div class="main_container">
+      <div class="container">
+        <div class="getStarted2">
+          <h1 class="intro">Join texttornado</h1>
+          <h1 id="toTypeText1"></h1>
+          <h1 id="toTypeText2"></h1>
+        </div>
+      </div>
+      <div class="containerB">
+        <br />
+        <br />
+        <br />
+        <br />
+        <div class="getStarted">
+          <h1>Get started</h1>
+          <br />
+          <button id="login">
+            <a
+              href="{% url 'ttd_user_login' %}"
+              id="createAccountLink"
+              class="link-color"
+              >Log in</a
+            >
+          </button>
+          &nbsp;
+          <button id="signup">
+            <a
+              href="{% url 'ttd_user_signin' %}"
+              id="createAccountLink2"
+              class="link-color"
+              >Sign up</a
+            >
+          </button>
+        </div>
+        <br />
+        <br />
+        <div class="getStarted">
+          <h5><a href="https://www.capsulcode.tech/"> Capsulcode Tech</a></h5>
+          <br />
+          <p><span>Terms of use</span> | <span>privacy policy</span></p>
+        </div>
+      </div>
+    </div>
+    <script src="{% static 'js/543544.js' %}"></script>
+  </body>
+</html>

@@ -75,9 +75,23 @@ class TicketPrice(models.Model):
     dropBy = models.IntegerField(default=0)
 
 
-
-
-
 class WinnerAndLooserMessage(models.Model):
     messagesx = models.CharField(max_length=1000)
     messageId = models.CharField(max_length=20)
+
+
+class ControlResults(models.Model):
+    limiter_name = models.CharField(max_length=255, default='')
+    limiter = models.IntegerField(default=0)
+
+
+
+
+class Monetary(models.Model):
+    title =  models.CharField(max_length=255, default='')
+    des1 =  models.CharField(max_length=255, default='')
+    des2 =  models.CharField(max_length=255, default='')
+
+class Quest(models.Model):
+    des2 =  models.CharField(max_length=255, default='')
+    pic = models.ImageField(default="Gadget-PNG-Pic.png", null=True, blank=True)

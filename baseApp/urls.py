@@ -27,6 +27,8 @@ urlpatterns = [
     path("startTimerOne", views.startTimerOne, name="startTimerOne"),
     path("startTimerTwo", views.startTimerTwo, name="startTimerTwo"),
     path("rewardData", views.rewardData, name="srewardData"),
+    path("getParterns", views.getParterns, name="getParterns"),
+    path("getParterns2", views.getParterns2, name="getParterns2"),
     path(
         "getStartTimerOneCodes",
         views.getStartTimerOneCodes,
@@ -56,4 +58,9 @@ urlpatterns = [
     path("getTicketsubscriPrices", views.getTicketsubscriPrices, name="getTicketsubscriPrices"),
     path("setLimitation", views.setLimitation, name="setLimitation"),
     path("getLimitations", views.getLimitations, name="getLimitations"),
+    path("setMonetry", views.setMonetry, name="setMonetry"),
+    path("deleteMotey", views.deleteMotey, name="deleteMotey"),
+    path("deleteQuest", views.deleteQuest, name="deleteQuest"),
+    path("setQuest", views.setQuest, name="setQuest"),
+    path("setMask", views.setMask, name="setMask"),
 ]

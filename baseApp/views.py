@@ -20,6 +20,8 @@ from baseApp.models import (
     Event2,
     Countdown,
     Countdown2,
+    Monetary,
+    Quest,
     TextBehaviour,
     SubscriptionPrice,
     TicketPrice,
@@ -31,6 +33,7 @@ from topApp.models import (
     TypingDetails,
     Notification,
     Support,
+    Typing_parttern,
     Subscription,
 )
 from topApp.views import id_gen, transferData
@@ -125,8 +128,18 @@ def shuffle_sentence(sentence):
 
 
 def get_paragraph(request):
-    paragraphs = Variant_paragraphs.objects.all()
-    return JsonResponse({"paragraphs": list(paragraphs.values())})
+    if request.method == "POST":
+        dataa = json.loads(request.body)
+        userId = dataa["id"]
+
+        getUser = Player.objects.filter(player_id=userId)
+        if getUser.exists():
+            paragraphs = Variant_paragraphs.objects.all()
+            return JsonResponse({"paragraphs": list(paragraphs.values())})
+        else:
+            return HttpResponse("Bad request")
+    else:
+        return HttpResponse("Bad request")
 
 
 def get_typing_tests(request):
@@ -156,7 +169,7 @@ def typing_tests(request):
         count = textarea.split()
         get_all_paragraphs = Typing_testing.objects.all().values()
         amount_of_paragraphs = len(get_all_paragraphs)
-        if len(count) > 40:
+        if len(count) > 4:
             if len(count) <= 180:
                 if amount_of_paragraphs < 10:
                     paragraphs = Typing_testing.objects.create(
@@ -713,8 +726,15 @@ def get_concern3(request):
 
 
 def getSubscription(request):
-    subscriptionPrice = SubscriptionPrice.objects.all()
-    return JsonResponse({"subscriptionPrice": list(subscriptionPrice.values())})
+    if request.method == "POST":
+        subDat = json.loads(request.body)
+        userId = subDat["id"]
+        getUser = Player.objects.filter(player_id=userId)
+        if getUser.exists():
+            subscriptionPrice = SubscriptionPrice.objects.all()
+            return JsonResponse({"subscriptionPrice": list(subscriptionPrice.values())})
+        else:
+            return HttpResponse("bad request")
 
 
 def setTicketsPrice(request):
@@ -870,7 +890,8 @@ def getTicketsubscriPrices(request):
             return HttpResponse("An error occurred while processing the request.")
     else:
         return HttpResponse("Bad request method. Use POST.")
-    
+
+
 def getLimitations(request):
     if request.method == "POST":
         try:
@@ -878,7 +899,7 @@ def getLimitations(request):
             userid = request_data.get("mail")
             getAdmin = Admins_details.objects.filter(admin_id=userid)
             if getAdmin.exists():
-                limresults= ControlResults.objects.all()
+                limresults = ControlResults.objects.all()
                 return JsonResponse({"limresults": list(limresults.values())})
             else:
                 return HttpResponse("Bad request.")
@@ -946,6 +967,132 @@ def subsubscriberSerch(request):
                         return HttpResponse("NO SUBSCRIPTION WITH THAT NAME")
                 else:
                     return HttpResponse("NO PLAYER WITH SUCH NAME")
+            else:
+                return HttpResponse("Bad request.")
+        except Exception as e:
+            return HttpResponse(f"An error occurred while processing the request. {e}")
+    else:
+        return HttpResponse("Bad request method. Use POST.")
+
+
+def setMonetry(request):
+    if request.method == "POST":
+        request_data = json.loads(request.body)
+        userid = request_data.get("mail")
+        rank = request_data.get("rankX")
+        des1 = request_data.get("des1X")
+        des2 = request_data.get("des2X")
+        getAdmin = Admins_details.objects.filter(admin_id=userid)
+        if getAdmin.exists():
+            getMontry = Monetary.objects.create(title=rank, des1=des1, des2=des2)
+            getMontry.save()
+            return HttpResponse("Saved successfully")
+
+
+def setQuest(request):
+    if request.method == "POST":
+        request_data = json.loads(request.body)
+        userid = request_data.get("mail")
+        rank = request_data.get("rankXX")
+        getAdmin = Admins_details.objects.filter(admin_id=userid)
+        if getAdmin.exists():
+            getMontry = Quest.objects.create(des2=rank)
+            getMontry.save()
+            return HttpResponse("Saved successfully")
+
+
+def deleteMotey(request):
+    if request.method == "POST":
+        request_data = json.loads(request.body)
+        userid = request_data.get("mail")
+        getAdmin = Admins_details.objects.filter(admin_id=userid)
+        if getAdmin.exists():
+            getMoty = Monetary.objects.all()
+            if getMoty.exists():
+                getMoty.delete()
+                return HttpResponse("Deleted successfully")
+            else:
+                return HttpResponse("Monetray is empty")
+
+
+def deleteQuest(request):
+    if request.method == "POST":
+        request_data = json.loads(request.body)
+        userid = request_data.get("mail")
+        getAdmin = Admins_details.objects.filter(admin_id=userid)
+        if getAdmin.exists():
+            getMoty = Quest.objects.all()
+            if getMoty.exists():
+                getMoty.delete()
+                return HttpResponse("Deleted successfully")
+            else:
+                return HttpResponse("Monetray is empty")
+
+
+def setMask(request):
+    if request.method == "POST":
+        request_data = json.loads(request.body)
+        userid = request_data.get("mail")
+
+        wpm = int(request_data.get("wx"))
+        cpm = int(request_data.get("cx"))
+        mst = int(request_data.get("mx"))
+        user = int(request_data.get("ix"))
+
+        getAdmin = Admins_details.objects.filter(admin_id=userid)
+        if getAdmin.exists():
+            if TypingDetails.objects.filter(play_id=user).exists():
+                player_d = TypingDetails.objects.get(play_id=user)
+                player_d.wpm = wpm
+                player_d.cpm = cpm
+                player_d.mistakes = mst
+                player_d.typo_id = 67676
+                player_d.save()
+                return HttpResponse("success")
+            else:
+                getPlayer = Player.objects.filter(player_d=user)
+                xx = getPlayer.first()
+                player_d2 = TypingDetails.objects.create(
+                    wpm=wpm,
+                    cpm=cpm,
+                    mistakes=mst,
+                    play_id=user,
+                    username=xx.username,
+                    typo_id=67676,
+                )
+                player_d2.save()
+                return HttpResponse("success")
+        else:
+            return HttpResponse("Bad request")
+
+
+def getParterns(request):
+    if request.method == "POST":
+        try:
+            request_data = json.loads(request.body)
+            userid = request_data.get("mail")
+            getAdmin = Admins_details.objects.filter(admin_id=userid)
+            if getAdmin.exists():
+                pattern = Typing_parttern.objects.all()
+                return JsonResponse({"pattern": list(pattern.values())})
+            else:
+                return HttpResponse("Bad request.")
+        except Exception as e:
+            return HttpResponse(f"An error occurred while processing the request. {e}")
+    else:
+        return HttpResponse("Bad request method. Use POST.")
+
+
+def getParterns2(request):
+    if request.method == "POST":
+        try:
+            request_data = json.loads(request.body)
+            userid = request_data.get("mail")
+            dataId = request_data.get("userId")
+            getAdmin = Admins_details.objects.filter(admin_id=userid)
+            if getAdmin.exists():
+                pattern = Typing_parttern.objects.filter(partern_id=dataId)
+                return JsonResponse({"pattern": list(pattern.values())})
             else:
                 return HttpResponse("Bad request.")
         except Exception as e:

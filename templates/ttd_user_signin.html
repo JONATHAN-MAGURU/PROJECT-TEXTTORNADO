@@ -9,14 +9,19 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{% static 'images/favicon.ico' %}"
+    />
     <link
       rel="stylesheet"
       href="{% static 'css/ttd_user_signup_style.css' %}"
     />
+    <link rel="stylesheet" href="{% static 'css/user_sign_up_mobile.css' %}" />
     <link
       rel="stylesheet"
-      href="{% static 'css/user_sign_up_mobile.css' %}"
+      href="{% static 'css/ttd_user_signup_tablet.css' %}"
     />
     <title>Signup with textornado</title>
   </head>
@@ -30,21 +35,25 @@
           style="width: 40px; height: 40px; border-radius: 50%"
         />
       </div>
-      <div>
+      <div class="partz">
         <br />
         <div class="container-logo">
           <img src="/images/logo.png" alt="logo" id="logo" />
         </div>
-        <h1>Sign up to Text<span style="color: rgb(255, 140, 0)">Tornado</span></h1>
-        <br>
+        <h1>
+          Sign up to Text<span style="color: rgb(255, 140, 0)">Tornado</span>
+        </h1>
+        <br />
         <div class="container-error">
-          <i class="fas fa-exclamation-triangle" style="color:red"></i> &nbsp;
+          <i class="fas fa-exclamation-triangle" style="color: red"></i> &nbsp;
           <span id="error"></span>
         </div>
         <form id="form">
           <div class="firstForm">
-            <h2 style="font-size:110%; font-weight:600">Create your account in 4 steps</h2>
-            <br>
+            <h2 style="font-size: 110%; font-weight: 600">
+              Create your account in 4 steps
+            </h2>
+            <br />
             <input type="hidden" id="csrf_token" value="{{ csrf_token }}" />
             <label for="firstname">Firstname</label> <br />
             <input type="text" id="firstname" /> <br />
@@ -97,7 +106,7 @@
           <div class="fourthForm">
             <span
               >Enter your phone number so TextTordo can help you if you forget
-              the password to your account</span
+              the password to your account.</span
             >
             <br />
             <input type="number" id="number" placeholder="Phone number" />
@@ -128,16 +137,34 @@
         <br />
         <div class="container-new-acc">
           <span>Already have account?</span>
-          <span><a href="{% url 'ttd_user_login'%}" class="link-color"
-            >Log In</a
-          ></span><span>.</span>
+          <span
+            ><a
+              href="{% url 'ttd_user_login'%}"
+              id="createAccountLink4"
+              class="link-color"
+              >Log In</a
+            ></span
+          ><span>.</span>
         </div>
       </div>
+      <div class="congra">
+        <p style="font-size: 700%">🎉</p>
+        <br />
+        <br />
+        <h2>
+          Congratulations! Your account has been successfully created. Use your
+          username and password to log in. And it is imperative to clarify that
+          our web application does not fall within the realm of a gambling site
+          is a skill based, for more information refer to our terms of use and
+          privacy policies.
+        </h2>
+        <button id="contbt">CONTINUE TO LOGIN</button>
+      </div>
     </div>
+    <br />
     <footer>
-      <p class="link-color">Terms of use</p>
-      <p class="link-color">Privacy policy</p>
-      <p style="color: grey; font-size: 80%">contant TextTernado Support</p>
+      <p><a class="link-color" href="{% url 'terms'%}">Terms of use</a></p>
+      <p><a class="link-color" href="{% url 'policy'%}">Privacy policy</a></p>
     </footer>
     <div class="sub-footer">
       <p>@ capsualcode 2023</p>

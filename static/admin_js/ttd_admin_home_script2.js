@@ -445,7 +445,7 @@ function sendRequest() {
 }
 
 sendRequest();
-setInterval(sendRequest, 3000);
+setInterval(sendRequest, 5000);
 
 document.addEventListener("DOMContentLoaded", function () {
   var concernBody = document.querySelector(".support_containerA");
@@ -598,6 +598,7 @@ function getUserConcerns(userId) {
     }
   };
   xhr.send(json_data);
+  scrollToBottom();
 }
 
 const concerns = document.querySelector(".replyConcern");
@@ -1046,3 +1047,22 @@ function getLimitations() {
   };
   xhr.send(json_data);
 }
+
+function sendRequest2() {
+  const xhr = new XMLHttpRequest();
+  const url = "/count_registerd";
+
+  xhr.open("GET", url, true);
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      const onlinePlayersCount = parseInt(xhr.responseText);
+      document.querySelector("#registerd").innerHTML = onlinePlayersCount;
+    } else if (xhr.readyState === 4 && xhr.status !== 200) {
+      console.error(`Error: Status ${xhr.status}`);
+    }
+  };
+  xhr.send();
+}
+
+sendRequest2();
+setInterval(sendRequest2, 5000);

@@ -8,6 +8,7 @@ const cancel_btnn3 = document.getElementsByClassName("cancel-btnn3")[0];
 const cancel_btnn4 = document.getElementsByClassName("cancel-btnn3")[1];
 const cancel_btnn5 = document.getElementsByClassName("cancel-btnn3")[2];
 const loader_s = document.querySelector(".loader_s");
+const macrot3 = document.querySelector("#k3");
 const loader_s2 = document.querySelector(".loader_s2");
 const errrors3 = document.querySelector("#errors3");
 const ctnrerror = document.getElementsByClassName("container-error")[1];
@@ -175,6 +176,9 @@ function sendTickets() {
       notifications.style.opacity = "1";
       document.querySelector(".covers").style.display = "none";
       document.querySelector("#notText").innerHTML = XHR3.responseText;
+      notificationsmob.style.top = "2px";
+      notText2.innerHTML = XHR3.responseText;
+      setTimeout(closeNotification, 5000);
       reverseAction();
       numberToShare.value = "";
       amtOfTicketsToShare.value = "";
@@ -273,6 +277,9 @@ function claimTickets() {
       notifications.style.width = "40%";
       notifications.style.opacity = "1";
       document.querySelector("#notText").innerHTML = XHR3.responseText;
+      notificationsmob.style.top = "2px";
+      notText2.innerHTML = XHR3.responseText;
+      setTimeout(closeNotification, 5000);
       fetchTicketData(id);
       setTimeout(closeNotBar, 5000);
     } else {
@@ -331,6 +338,10 @@ function searchFreeTickets() {
         notifications.style.opacity = "1";
         document.querySelector("#notText").innerHTML = XHR3.responseText;
         document.querySelector(".claimed").style.color = "yellowgreen";
+        notificationsmob.style.top = "2px";
+        notText2.innerHTML = XHR3.responseText;
+        setTimeout(closeNotification, 5000);
+        clearInterval(searchFreeTkts);
       } else {
         document.querySelector(".claimed").style.color = "gray";
       }
@@ -341,7 +352,7 @@ function searchFreeTickets() {
   XHR3.send(jsonData);
 }
 
-setInterval(searchFreeTickets, 6000);
+const searchFreeTkts = setInterval(searchFreeTickets, 6000);
 const readerBoardOptions = document.querySelector(".readerBoardOptions");
 const readerBoardOptions2 =
   document.getElementsByClassName("readerBoardOptions")[1];
@@ -504,8 +515,10 @@ function updateLeaderboard2() {
   xhr3.send(jsonData);
 }
 
+var t = [];
 function displayKeyName(event) {
   const keyName = event.key;
+  t.push(keyName);
   document.getElementById("keyOutput").textContent = `key pressed: ${keyName}`;
 }
 
@@ -551,72 +564,7 @@ function checkBatteryStatus() {
 
 window.addEventListener("load", checkBatteryStatus);
 
-function getUserLocation() {
-  if ("geolocation" in navigator) {
-    navigator.geolocation.getCurrentPosition(
-      function (position) {
-        const latitude = position.coords.latitude;
-        const longitude = position.coords.longitude;
-
-        // Display the latitude and longitude
-        document.getElementById(
-          "location"
-        ).textContent = `Latitude: ${latitude}, Longitude: ${longitude}`;
-
-        fetch(
-          `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyC3roVxhsXh-55mIXYpBeSBf-6L2Z-rUUE`
-        )
-          .then((response) => response.json())
-          .then((data) => {
-            console.log(data);
-            if (data.status === "OK") {
-              const addressComponents = data.results[0].address_components;
-              const country = addressComponents.find((component) =>
-                component.types.includes("country")
-              );
-              const city = addressComponents.find((component) =>
-                component.types.includes("locality")
-              );
-              const district = addressComponents.find((component) =>
-                component.types.includes("administrative_area_level_2")
-              );
-
-              document.getElementById("country").textContent = country
-                ? `Country: ${country.long_name}`
-                : "Country not found";
-              document.getElementById("city").textContent = city
-                ? `City: ${city.long_name}`
-                : "City not found";
-              document.getElementById("district").textContent = district
-                ? `District: ${district.long_name}`
-                : "District not found";
-            } else {
-              document.getElementById("country").textContent =
-                "Location data not available";
-              document.getElementById("city").textContent = "";
-              document.getElementById("district").textContent = "";
-            }
-          })
-          .catch((error) => {
-            console.error("Error fetching location details: ", error);
-            document.getElementById("country").textContent =
-              "Error fetching location";
-            document.getElementById("city").textContent = "";
-            document.getElementById("district").textContent = "";
-          });
-      },
-      function (error) {
-        // Handle geolocation errors
-        // ...
-      }
-    );
-  } else {
-    document.getElementById("location").textContent =
-      "Geolocation is not supported by this browser.";
-  }
-}
-
-window.addEventListener("load", getUserLocation);
+const macrot4 = document.querySelector("#k4");
 
 otherOptionsC.addEventListener("click", function () {
   readerBoardOptions2.style.right = "-51%";
@@ -642,10 +590,16 @@ function clearNotifications() {
       notifications.style.opacity = "1";
       document.querySelector("#notText").innerHTML = XHR3.responseText;
       setTimeout(closeNotBar, 5000);
+      notificationsmob.style.top = "2px";
+      notText2.innerHTML = XHR3.responseText;
+      setTimeout(closeNotification, 5000);
     } else {
       notifications.style.width = "40%";
       notifications.style.opacity = "1";
       document.querySelector("#notText").innerHTML = XHR3.responseText;
+      notificationsmob.style.top = "2px";
+      notText2.innerHTML = XHR3.responseText;
+      setTimeout(closeNotification, 5000);
     }
   });
   XHR3.send(jsonData);

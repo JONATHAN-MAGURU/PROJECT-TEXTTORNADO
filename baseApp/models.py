@@ -11,6 +11,7 @@ class Admins_details(models.Model):
     
 
 class Aunthaticate(models.Model):
+    aunth_name = models.CharField(max_length=50, default='')
     v_code = models.CharField(max_length=50)
     
 class Typing_testing(models.Model):
@@ -66,6 +67,7 @@ class SubscriptionPrice(models.Model):
     newPrice = models.IntegerField(default=14999)
     oldPrice = models.IntegerField(default=22969)
     dropBy = models.IntegerField(default=17)
+    tkts = models.IntegerField(default=20)
 
 class TicketPrice(models.Model):
     type =  models.CharField(max_length=200)

@@ -5,11 +5,19 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{% static 'images/favicon.ico' %}"
+    />
     <link rel="stylesheet" href="{% static 'css/ttd_user_style.css' %}" />
     <link
       rel="stylesheet"
       href="{% static 'css/ttd_user_mobile_style.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/ttd_user_login_tablet.css' %}"
     />
     <link
       rel="stylesheet"
@@ -42,7 +50,7 @@
           />
         </div>
         <h1>Log in to TextTornado</h1>
-        <br>
+        <br />
         <div class="container-error">
           {% if message %}
           <i class="fas fa-exclamation-triangle" style="color: red"></i> &nbsp;
@@ -75,11 +83,12 @@
         </div>
       </div>
     </div>
+    
     <footer>
-      <p class="link-color2">Terms of use</p> |
-      <p class="link-color2">Privacy policy</p> |
-      <p style="color: grey; font-size: 80%">contant TextTernado Support</p>
+      <p><a class="link-color" href="{% url 'terms'%}">Terms of use</a></p>
+      <p><a class="link-color" href="{% url 'policy'%}">Privacy policy</a></p>
     </footer>
+  
     <div class="sub-footer">
       <p>@ capsualcode 2023</p>
     </div>

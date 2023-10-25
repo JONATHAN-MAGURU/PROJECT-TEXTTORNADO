@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-(5m+z%i-bk+^2u8ooz$w-4xem8t1(d1p=upwai94rq=rs^=@mk
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.198']
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -39,21 +39,28 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'topApp',
     'baseApp',  
-    'storages',
     'corsheaders'
 ]
+
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    #'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     
 ]
+
+
+SESSION_ENGINE = "django.contrib.sessions.backends.db"  # or other session backends
+SESSION_COOKIE_AGE = 36000  # Adjust the session timeout as needed
+
 
 ROOT_URLCONF = 'texttornado.urls'
 
@@ -121,10 +128,21 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
+
+# settings.py
+
+# URL prefix for static files.
 STATIC_URL = 'static/'
+
+# Absolute filesystem path to the directory that will hold the collected static files.
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
+
+# Additional directories where Django should look for static files.
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
+    os.path.join(BASE_DIR, 'static'),
+    # Add other additional directories here if needed.
 ]
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -134,26 +152,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL = '/images/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
-
-account_sid = "ACa4caff1b48f85640d3f2e27383a2a45d"
-auth_token = "8c7a88c6877a585bf4e3ee405e1cc188"
-messaging_service_sid="VA9143bb066c59ab757a121b96dd0f4589"
-
-
-'''
-AWS_ACCESS_KEY_ID = "AKIAQIMAVESPTX5FMKFI"
-
-AWS_SECRET_ACCESS_KEY = "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" 
-
-AWS_STORAGE_BUCKET_NAME = "texttornado-storage"
-
-DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-
-STATICFILES_STORAGE ="storages.backends.s3boto3.S3Boto3Storage"
-
-AWS_S3_CUSTOM_DOMAIN ='%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-'''
-
 
 CORS_ALLOWED_ORIGINS = [
     "https://texttornado.com",

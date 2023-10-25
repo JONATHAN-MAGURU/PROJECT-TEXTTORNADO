@@ -9,6 +9,8 @@ const setseen4 = document.getElementsByClassName("setseen")[2];
 const setseen5 = document.getElementsByClassName("setseen")[3];
 const setseen6 = document.getElementsByClassName("setseen6")[0];
 let isClicked = false;
+let isClicked2 = false;
+let isClicked3 = false;
 const eventRules = document.querySelector(".eventRules");
 const eventPrizes = document.querySelector(".eventPrizes");
 
@@ -33,13 +35,35 @@ setseen2.addEventListener("click", () => {
   if (isClicked) {
     eventPrizes.style.display = "block";
     setseen2.innerHTML = "event rules";
+    document.getElementById("eventTitle").innerHTML = "EVENT REWARDS";
     eventRules.style.display = "none";
   } else {
-    setseen2.innerHTML = "view prize";
+    setseen2.innerHTML = "Monetary";
+    document.getElementById("eventTitle").innerHTML =
+      "NEW EVENT HAS JUST STARTED !!!";
     eventRules.style.display = "block";
     eventPrizes.style.display = "none";
   }
   isClicked = !isClicked;
+});
+
+document.getElementsByClassName("setseenn")[0].addEventListener("click", () => {
+  if (isClicked2) {
+    eventPrizes.style.display = "block";
+    document.getElementsByClassName("setseenn")[0].innerHTML = "event rules";
+    document.getElementById("eventTitle").innerHTML =
+      "REWARDS ARE GIVEN AT THE END OF EVENT";
+    eventRules.style.display = "none";
+    quest.style.display = "none";
+    monetary.style.display = "block";
+  } else {
+    document.getElementsByClassName("setseenn")[0].innerHTML = "Monetary";
+    document.getElementById("eventTitle").innerHTML =
+      "NEW EVENT HAS JUST STARTED !!!";
+    eventRules.style.display = "block";
+    eventPrizes.style.display = "none";
+  }
+  isClicked2 = !isClicked2;
 });
 
 setseen3.addEventListener("click", () => {
@@ -66,11 +90,7 @@ const event1RulesAndTips = [
   "Rank High, Win Big: The top performers on the leaderboard at the end of the event may be eligible for exciting prizes!",
   "In the 'Word Jumble' challenge, the objective is to type complex words that are randomly jumbled and presented to you.",
   "Your WPM is important in 'Word Jumble', but accuracy is equally crucial.",
-  "Each jumbled word challenge has a time limit.",
-  "There will be no hints or definitions provided for the jumbled words in 'Word Jumble'. Rely on your vocabulary and word-solving skills.",
-  "In the 'Technical Terminology' challenge, the objective is to test your knowledge and typing skills by typing challenging technical terms from various fields such as medicine, science, or law.",
   "Pay close attention to spelling and precision in 'Technical Terminology'. Technical terminology requires accuracy.",
-  "Brief definitions of the technical terms may be provided to help you understand the word's meaning in 'Technical Terminology'. However, the primary challenge is to spell it correctly.",
   "Scoring for each challenge is based on both words per minute (WPM) and accuracy. Your final score is a combination of these factors.",
   "Accuracy is determined by the ratio of correctly typed words to total words typed.",
   "Any violation of the rules, including cheating or unsportsmanlike conduct, will result in disqualification from the event.",
@@ -198,10 +218,8 @@ async function sendUserStatus() {
   }
 }
 
-// Trigger the function immediately after defining it to send the initial status
 sendUserStatus();
-
-// Add the event listener for visibility change
+/*
 document.addEventListener("visibilitychange", async function () {
   const onlineStatus =
     document.visibilityState === "visible" ? "online" : "offline";
@@ -211,19 +229,23 @@ document.addEventListener("visibilitychange", async function () {
     status: onlineStatus,
   };
 
-  if (document.visibilityState === "hidden") {
-    console.log(
-      `Sending user status (${onlineStatus}) to the server offline...`
-    );
-    await simulateDatabaseUpdate(false, `/update_user_status?id=${id}`, data);
-  } else {
-    console.log(
-      `Sending user status (${onlineStatus}) to the server online...`
-    );
-    await simulateDatabaseUpdate(true, `/update_user_status?id=${id}`, data);
+  try {
+    if (document.visibilityState === "hidden") {
+      console.log(
+        `Sending user status (${onlineStatus}) to the server offline...`
+      );
+      await simulateDatabaseUpdate(false, `/update_user_status?id=${id}`, data);
+    } else {
+      console.log(
+        `Sending user status (${onlineStatus}) to the server online...`
+      );
+      await simulateDatabaseUpdate(true, `/update_user_status?id=${id}`, data);
+    }
+  } catch (error) {
+    console.error("An error occurred while updating the user status:", error);
   }
 });
-
+*/
 window.addEventListener("beforeunload", async function () {
   const onlineStatus = "offline";
   const data = {
@@ -346,3 +368,21 @@ function getQuest() {
   };
   xhr.send(json_data);
 }
+
+const eventEndDivision1 =
+  document.getElementsByClassName("eventEndDivision")[0];
+const eventEndDivision2 =
+  document.getElementsByClassName("eventEndDivision")[1];
+
+document.getElementsByClassName("setseen9")[0].addEventListener("click", () => {
+  if (isClicked3) {
+    document.getElementsByClassName("setseen9")[0].innerHTML = "my results";
+    eventEndDivision1.style.display = "block";
+    eventEndDivision2.style.display = "none";
+  } else {
+    document.getElementsByClassName("setseen9")[0].innerHTML = "Winners";
+    eventEndDivision1.style.display = "none";
+    eventEndDivision2.style.display = "block";
+  }
+  isClicked3 = !isClicked3;
+});

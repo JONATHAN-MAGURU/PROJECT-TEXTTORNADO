@@ -306,8 +306,8 @@ li:hover {
   cursor: pointer;
 }
 
-::-webkit-scrollbar:hover{
-  width: 8PX;
+::-webkit-scrollbar:hover {
+  width: 8px;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -647,13 +647,13 @@ button {
   box-shadow: 0.5px 0.5px 8px #000000;
   font-size: 95%;
   color: white;
-  margin: 5px;
+  margin: 2px;
   border-radius: 2px;
   outline: none;
   border: none;
   height: auto;
   display: inline-block;
-  background:transparent;
+  background: transparent;
   transition: 0.3s;
 }
 
@@ -1430,7 +1430,13 @@ select {
   margin-bottom: 10px;
   cursor: pointer;
 }
+.ticketPriceHolder:hover{
+  border: 1px solid orange;
+}
 
+.HoldPatternData {
+  height: 65vh;
+}
 .HoldTicketsData {
   height: 65vh;
   overflow: scroll;
@@ -1441,4 +1447,54 @@ select {
   height: 65vh;
   overflow: scroll;
   padding: 3px;
+}
+
+.masked {
+  position: fixed;
+  height: 60vh;
+  width: 30%;
+  transform: translate(-50%, 10%);
+  left: 50%;
+  display: none;
+  top: 10%;
+  padding: 12px;
+  border-radius: 3px;
+  background-color: #0d1117;
+  border: 1px solid #2e2f3a;
+  box-shadow: 20px 20px 200px #000000;
+}
+
+.detaildPatternsHead {
+  width: 99%;
+  height: auto;
+  border-radius: 2px;
+  padding: 8px;
+  margin: 5px;
+  display: flex;
+  justify-content: space-between;
+  background-color: #0d1117;
+  border: 1px solid #2e2f3a;
+  box-shadow: 1px 1px 2px #000000;
+}
+.detaildPatternsBody {
+  width: 49%;
+  height: auto;
+  border-radius: 2px;
+  padding: 8px;
+  margin: 3px;
+  background-color: #0d1117;
+  border: 1px solid #2e2f3a;
+  box-shadow: 1px 1px 2px #000000;
+}
+
+.subdetailsContainers {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+
+.ptnData{
+  color: gray;
+  font-weight: 550;
 }

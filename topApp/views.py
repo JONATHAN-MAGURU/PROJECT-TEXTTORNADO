@@ -1,7 +1,9 @@
 from django.shortcuts import render, HttpResponse, redirect
 import json
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, response
 from django.utils import timezone
+from django.views.decorators.csrf import csrf_protect
+from texttornado import settings
 from topApp.models import (
     Player,
     Comments,
@@ -13,7 +15,11 @@ from topApp.models import (
     Notification,
     Support,
     Subscription,
+    Typing_parttern,
+    Typing_partterns_History,
 )
+import random
+import string
 from django.core.exceptions import ObjectDoesNotExist
 import random
 from baseApp.models import (
@@ -22,10 +28,12 @@ from baseApp.models import (
     Countdown,
     TextBehaviour,
     TicketPrice,
+    SubscriptionPrice,
     WinnerAndLooserMessage,
     ControlResults,
     Monetary,
     Quest,
+    Aunthaticate,
 )
 from django.core.files.base import ContentFile
 import base64
@@ -44,6 +52,8 @@ import time
 from django.db import transaction
 from codecs import encode
 import baseApp
+from django.contrib import messages
+from django.contrib.auth import login
 
 
 def resetPassword(request):
@@ -53,12 +63,14 @@ def resetPassword(request):
 def terms(request):
     return render(request, "terms.html")
 
+
 def policy(request):
     return render(request, "policy.html")
 
 
 def ttd_user_login(request):
     return render(request, "ttd_user_login.html")
+
 
 def aunth(request):
     return render(request, "aunth.html")
@@ -68,6 +80,7 @@ def ttd_user_signin(request):
     return render(request, "ttd_user_signin.html")
 
 
+"""
 def amargerdon_e1(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -85,8 +98,30 @@ def amargerdon_e1(request):
                 "ttd_user_login.html",
                 {"message": "Incorect username or password."},
             )
+    else:
+        return redirect("ttd_user_login")
+"""
 
-    return redirect("ttd_user_login") 
+
+def amargerdon_e1(request):
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+
+        player = Player.objects.filter(username=username, password=password).first()
+        if player:
+            login(request, player)
+            textBehaviour = TextBehaviour.objects.first()
+            baseApp.views.paragraph(textBehaviour.name)
+            return render(request, "amargerdon_e1.html", {"player_d": player})
+        else:
+            return render(
+                request,
+                "ttd_user_login.html",
+                {"message": "Incorect username or password."},
+            )
+    else:
+        return redirect("ttd_user_login")
 
 
 def verifyPhoneNumber(request):
@@ -130,9 +165,15 @@ def resetPassword2(request):
 def verifyOtp(request):
     if request.method == "POST":
         try:
-            account_sid = settings.account_sid
-            auth_token = settings.auth_token
-            messaging_service_sid = settings.messaging_service_sid
+            get_sid = Aunthaticate.objects.filter(aunth_name="account_sid").first()
+            get_aunth = Aunthaticate.objects.filter(aunth_name="auth_token").first()
+            get_messaging_service_sid = Aunthaticate.objects.filter(
+                aunth_name="messaging_service_sid"
+            ).first()
+
+            account_sid = get_sid.v_code
+            auth_token = get_aunth.v_code
+            messaging_service_sid = get_messaging_service_sid.v_code
             data = json.loads(request.body)
             number = data["number"]
             otp = data["otp"]
@@ -156,9 +197,15 @@ def verifyOtp(request):
 def verifyOtpReset(request):
     if request.method == "POST":
         try:
-            account_sid = settings.account_sid
-            auth_token = settings.auth_token
-            messaging_service_sid = settings.messaging_service_sid
+            get_sid = Aunthaticate.objects.filter(aunth_name="account_sid").first()
+            get_aunth = Aunthaticate.objects.filter(aunth_name="auth_token").first()
+            get_messaging_service_sid = Aunthaticate.objects.filter(
+                aunth_name="messaging_service_sid"
+            ).first()
+
+            account_sid = get_sid.v_code
+            auth_token = get_aunth.v_code
+            messaging_service_sid = get_messaging_service_sid.v_code
             data = json.loads(request.body)
             number = data["number"]
             otp = data["otp"]
@@ -195,6 +242,42 @@ def id_gen2():
     nums3 = nums2[:9]
     nums4 = int(nums3)
     return nums4
+
+
+def generate_random_token():
+    characters = string.ascii_letters + string.digits
+    token = "".join(random.choice(characters) for _ in range(32))
+    return token
+
+
+def davinc_amerge2(request):
+    if request.method == "POST":
+        td = json.loads(request.body)
+
+        username = td["username"]
+        ttd_id = td["id"]
+
+        k1 = td["sCa1"]
+        k2 = td["sCb1"]
+        k3 = td["sCc1"]
+        k4 = td["sCd1"]
+        k5 = td["sCe1"]
+        k6 = td["sCf1"]
+        k7 = td["sCg1"]
+        k8 = td["sCh1"]
+
+        key = k1 + k2 + k1 + k3 + k4 + k5 + k3 + k6 + k8 + k7
+
+        keyName = "test_typing_key"
+        getKeys = Aunthaticate.objects.filter(aunth_name=keyName)
+        getKey = getKeys.first()
+        if getKey.v_code == key:
+            getUser = Player.objects.filter(username=username, player_id=ttd_id)
+            if getUser:
+                getSpecificData = getUser.first()
+                if getSpecificData.statuss == "online":
+                    token = generate_random_token()
+                    return HttpResponse(token)
 
 
 def checkUsername(request):
@@ -292,9 +375,7 @@ def v_player(request):
                             v_code=0,
                         )
                         player_data.save()
-
-                        Tickets.objects.create(tickets_id=ttd_id)
-                        Tickets.save()
+                        Tickets.objects.create(tickets_id=ttd_id).save()
                         saveNotf = Notification.objects.create(
                             tittle="TextTornado",
                             description=f"Hi {username}, Welcome to TextTornado, the ultimate destination for honing your typing skills while embracing competition, fun! and wining gadgets. ",
@@ -302,12 +383,13 @@ def v_player(request):
                         )
                         saveNotf = Notification.objects.create(
                             tittle="TextTornado Rewards",
-                            description=f"You have received 1 free from TextTornado rewards ticket as a fuel for starting your typing journey.",
+                            description=f"You have received 1 free ticket from TextTornado rewards ticket as a fuel for starting your typing journey.",
                             notf_id=ttd_id,
                         )
 
                         saveNotf.save()
                         return HttpResponse("saved")
+
                 except ObjectDoesNotExist:
                     return HttpResponse("Error: Player does not exist")
             except KeyError:
@@ -327,9 +409,7 @@ def second_player_data(request):
             lastname = player_d["lastname2"]
             email = player_d["mail"]
             player_id = player_d["id"]
-            profile_pic_data = player_d["resizedImageBase64"]
-            pic_id = id_gen()
-
+            print(player_d)
             try:
                 player_data2 = Player.objects.get(
                     username=username, player_id=player_id
@@ -339,6 +419,29 @@ def second_player_data(request):
                 player_data2.firstname = firstname
                 player_data2.lastname = lastname
                 player_data2.mail = email
+                player_data2.save()
+                return HttpResponse("You have successfully updated your account")
+            except ObjectDoesNotExist:
+                return HttpResponse("Player data not found")
+        except json.JSONDecodeError:
+            return HttpResponse("Invalid JSON data")
+    else:
+        return HttpResponse("Something went wrong")
+
+
+def upload_PIC(request):
+    if request.method == "POST":
+        try:
+            player_d = json.loads(request.body)
+            username = player_d["username"]
+            player_id = player_d["id"]
+            profile_pic_data = player_d["resizedImageBase64"]
+            pic_id = id_gen()
+
+            try:
+                player_data2 = Player.objects.get(
+                    username=username, player_id=player_id
+                )
 
                 if profile_pic_data:
                     format, imgstr = profile_pic_data.split(";base64,")
@@ -357,7 +460,9 @@ def second_player_data(request):
                     player_data2.profile_pic.save(profile_pic.name, profile_pic)
 
                 player_data2.save()
-                return HttpResponse("You have successfully updated your account")
+                return HttpResponse(
+                    "You have successfully updated your profile picture"
+                )
             except ObjectDoesNotExist:
                 return HttpResponse("Player data not found")
         except json.JSONDecodeError:
@@ -381,6 +486,53 @@ def sending_comments(request):
         return HttpResponse("comment sent.")
     else:
         return HttpResponse("comment failed")
+
+
+def updatepass(request):
+    if request.method == "POST":
+        try:
+            getData = json.loads(request.body)
+            pass1 = getData.get("passone")
+            pass2 = getData.get("passtwo")
+            pass3 = getData.get("passthree")
+            username = getData.get("username")
+            userId = getData.get("id")
+            print(getData)
+            getUsers = Player.objects.filter(username=username, player_id=userId)
+            if getUsers.exists():
+                if pass1 == "" or pass2 == "" or pass3 == "":
+                    return HttpResponse("Please fill all the fields..")
+                else:
+                    if len(pass2) < 5 or len(pass3) < 5:
+                        return HttpResponse("Please set a strong password..")
+                    else:
+                        if pass2 == pass3:
+                            getUser = getUsers.first()
+                            if getUser.password != pass1:
+                                return HttpResponse(f"Incorrect old password: {pass1}.")
+                            else:
+                                if getUser.password != pass2:
+                                    getUser.password = pass2
+                                    getUser.save()
+                                    return HttpResponse(
+                                        "You have successfully changed the password."
+                                    )
+                                else:
+                                    return HttpResponse(
+                                        f"Your new pasword can not be the same as old one."
+                                    )
+                        else:
+                            return HttpResponse("Your new passwords do not match.")
+            else:
+                return HttpResponse("Invalid account")
+        except json.JSONDecodeError:
+            return HttpResponse("Invalid JSON data in the request body.")
+        except Player.DoesNotExist:
+            return HttpResponse("Player not found.")
+        except Exception as e:
+            return HttpResponse(f"An error occurred: {str(e)}")
+    else:
+        return HttpResponse("Invalid request method. Use POST method.")
 
 
 def sending_concern(request):
@@ -453,8 +605,23 @@ def get_concern2(request):
 
 
 def get_comments(request):
-    comments = Comments.objects.all()
-    return JsonResponse({"comments": list(comments.values())})
+    try:
+        if request.method == "POST":
+            request_data = json.loads(request.body)
+            userId = request_data.get("id")
+
+            try:
+                getUser = Player.objects.get(player_id=userId)
+                comments = Comments.objects.all()
+                return JsonResponse({"comments": list(comments.values())})
+            except Player.DoesNotExist:
+                return HttpResponse("User not found", status=404)
+        else:
+            return HttpResponse("Bad request", status=400)
+    except json.JSONDecodeError as e:
+        return HttpResponse("Invalid JSON data: " + str(e), status=400)
+    except Exception as e:
+        return HttpResponse("An error occurred: " + str(e), status=500)
 
 
 def get_notifications(request):
@@ -472,8 +639,8 @@ def get_notifications(request):
             return JsonResponse({"notification": "Invalid JSON data"}, status=400)
         except Notification.DoesNotExist:
             return JsonResponse({"notification": "No notifications"}, status=404)
-
-    return JsonResponse({"notification": "Invalid request method"}, status=405)
+    else:
+        return JsonResponse({"notification": "Invalid request method"}, status=405)
 
 
 def get_my_data(request):
@@ -518,42 +685,128 @@ def setToseen(request):
         return HttpResponse("an error occured")
 
 
-def typing_details(request):
+def amargerdon_e2_url01(request):
     try:
         if request.method == "POST":
             try:
                 td = json.loads(request.body)
-                wpm = td["wpm"]
-                cpm = td["cpm"]
-                mistakes = td["mistakes22"]
-                username = td["username"]
-                ttd_id = td["id"]
+                wpm = td["t22"]
+                cpm = td["tkd21"]
+                mistakes = td["tk34"]
+                username = td["serverC22ache"]
+                ttd_id = td["serverCachedt2"]
+
+                k1 = td["sCa1"]
+                k2 = td["sCb1"]
+                k3 = td["sCc1"]
+                k4 = td["sCd1"]
+                k5 = td["sCe1"]
+                k6 = td["sCf1"]
+                k7 = td["sCg1"]
+                k8 = td["sCh1"]
+
+                partern_assending = str(td["x"])
+                partern_deassending = str(td["z"])
+                keyStrokes = str(td["y"])
+
+
+                keystrokeJoin = " ".join(keyStrokes)
+                ptrnasndng_join = " ".join(partern_assending)
+                ptrndeasndng_join = " ".join(partern_deassending)
+                typing_text = td["Z"]
+                input_field = td["X"]
+
+                key = k1 + k2 + k1 + k3 + k4 + k5 + k3 + k6 + k8 + k7
+
                 ttd_id2 = int(ttd_id)
                 wpm1 = int(wpm)
                 cpm1 = int(cpm)
                 mistakes1 = int(mistakes)
                 typos_id = id_gen2()
+                keyName = "test_typing_key"
+                getKeys = Aunthaticate.objects.filter(aunth_name=keyName)
+                getKey = getKeys.first()
+                if getKey.v_code == key:
+                    if TypingDetails.objects.filter(play_id=ttd_id2).exists():
+                        user_history()
+                        player_d = TypingDetails.objects.get(play_id=ttd_id2)
+                        player_d.wpm = wpm1
+                        player_d.cpm = cpm1
+                        player_d.mistakes = mistakes1
+                        player_d.typo_id = typos_id
+                        player_d.save()
 
-                if TypingDetails.objects.filter(play_id=ttd_id2).exists():
-                    user_history()
-                    player_d = TypingDetails.objects.get(play_id=ttd_id2)
-                    player_d.wpm = wpm1
-                    player_d.cpm = cpm1
-                    player_d.mistakes = mistakes1
-                    player_d.typo_id = typos_id
-                    player_d.save()
-                    return HttpResponse("success")
+
+                        checkPatterns = Typing_parttern.objects.filter(partern_id=ttd_id)
+                        if checkPatterns:
+                            getPatternData = checkPatterns.first()
+                            send_to_pattern_history = Typing_partterns_History.objects.create(
+                                ascending_parttern=getPatternData.ptrnasndng_join,
+                                deascending_parttern=getPatternData.ptrndeasndng_join,
+                                keyStroke_parttern=getPatternData.keystrokeJoin,
+                                finished_parttern=getPatternData.input_field,
+                                given_words=getPatternData.typing_text,
+                                wpm=getPatternData.wpm1,
+                                cpm=getPatternData.cpm1,
+                                mistakes=getPatternData.mistakes1,
+                                pt_name = getPatternData.username,
+                                partern_id=getPatternData.ttd_id,
+                            )
+                            send_to_pattern_history.save()
+                            getPatternData.delete()
+                            create_parttern = Typing_parttern.objects.create(
+                                ascending_parttern=ptrnasndng_join,
+                                deascending_parttern=ptrndeasndng_join,
+                                keyStroke_parttern=keystrokeJoin,
+                                finished_parttern=input_field,
+                                given_words=typing_text,
+                                wpm=wpm1,
+                                cpm=cpm1,
+                                mistakes=mistakes1,
+                                pt_name = username,
+                                partern_id=ttd_id,
+                            )
+                            create_parttern.save()
+                        else:
+                               create_parttern = Typing_parttern.objects.create(
+                                ascending_parttern=ptrnasndng_join,
+                                deascending_parttern=ptrndeasndng_join,
+                                keyStroke_parttern=keystrokeJoin,
+                                finished_parttern=input_field,
+                                given_words=typing_text,
+                                wpm=wpm1,
+                                cpm=cpm1,
+                                mistakes=mistakes1,
+                                pt_name = username,
+                                partern_id=ttd_id, )
+                               create_parttern.save()
+                        return HttpResponse("success")
+                    else:
+                        player_d2 = TypingDetails.objects.create(
+                            wpm=wpm1,
+                            cpm=cpm1,
+                            mistakes=mistakes1,
+                            play_id=ttd_id,
+                            username=username,
+                            typo_id=typos_id,
+                        )
+                        player_d2.save()
+
+                        create_parttern = Typing_parttern.objects.create(
+                            ascending_parttern=ptrnasndng_join,
+                            deascending_parttern=ptrndeasndng_join,
+                            keyStroke_parttern=keystrokeJoin,
+                            finished_parttern=input_field,
+                            given_words=typing_text,
+                            wpm=wpm1,
+                            cpm=cpm1,
+                            mistakes=mistakes1,
+                            partern_id=ttd_id,
+                        )
+                        create_parttern.save()
+                        return HttpResponse("success")
                 else:
-                    player_d2 = TypingDetails.objects.create(
-                        wpm=wpm1,
-                        cpm=cpm1,
-                        mistakes=mistakes1,
-                        play_id=ttd_id,
-                        username=username,
-                        typo_id=typos_id,
-                    )
-                    player_d2.save()
-                    return HttpResponse("success")
+                    return HttpResponse("Bad request method")
             except KeyError:
                 return HttpResponse("Invalid data", status=400)
             except ValueError:
@@ -564,26 +817,39 @@ def typing_details(request):
 
 def get_test_details(request):
     try:
-        getLims = ControlResults.objects.filter(limiter_name="LEADERBOARD")
-        if getLims.exists():
-            getLimit = getLims.first()
-            results = TypingDetails.objects.all().order_by("-wpm")[: getLimit.limiter]
-            results_data = list(results.values())
+        if request.method == "POST":
+            res_dat = json.loads(request.body)
+            userID = res_dat.get("id")
+            getUser = Player.objects.filter(player_id=userID)
+            if getUser.exists():
+                getLims = ControlResults.objects.filter(limiter_name="LEADERBOARD")
+                if getLims.exists():
+                    getLimit = getLims.first()
+                    results = TypingDetails.objects.all().order_by("-wpm")[
+                        : getLimit.limiter
+                    ]
+                    results_data = list(results.values())
 
-            images_data = {}
-            player_ids = set(result["play_id"] for result in results_data)
-            for player_id in player_ids:
-                player = Player.objects.get(player_id=player_id)
-                images_data[player_id] = (
-                    player.profile_pic.url if player.profile_pic else None
-                )
+                    images_data = {}
+                    player_ids = set(result["play_id"] for result in results_data)
+                    for player_id in player_ids:
+                        player = Player.objects.get(player_id=player_id)
+                        images_data[player_id] = (
+                            player.profile_pic.url if player.profile_pic else None
+                        )
 
-            final_results = []
-            for result in results_data:
-                player_id = result["play_id"]
-                result["profile_pic"] = images_data.get(player_id)
-                final_results.append(result)
-            return JsonResponse({"results": final_results})
+                    final_results = []
+                    for result in results_data:
+                        player_id = result["play_id"]
+                        result["profile_pic"] = images_data.get(player_id)
+                        final_results.append(result)
+                    return JsonResponse({"results": final_results})
+                else:
+                    return HttpResponse("Bad request a")
+            else:
+                return HttpResponse("Bad request b")
+        else:
+            return HttpResponse("Bad request c")
     except:
         print("Something went wrong with get_test_details function")
 
@@ -691,8 +957,8 @@ def leaderBoardHistory2(request):
                         return JsonResponse({"results": final_results})
                 else:
                     getMessagess = WinnerAndLooserMessage.objects.filter(
-                            messageId="nonp"
-                        )
+                        messageId="nonp"
+                    )
                     messageTouserr = getMessagess.first()
                     return HttpResponse(f"{messageTouserr.messagesx}")
     except:
@@ -718,10 +984,18 @@ def user_history():
 
 def get_history(request):
     try:
-        history = TypingDetailsHistory.objects.all().order_by(
-            "-date",
-        )
-        return JsonResponse({"history": list(history.values())})
+        if request.method == "POST":
+            request_data = json.loads(request.body)
+            userid = request_data.get("id")
+            history = TypingDetailsHistory.objects.filter(play_id=userid).order_by(
+                "-date",
+            )
+            if history.exists():
+                return JsonResponse({"history": list(history.values())})
+            else:
+                return HttpResponse("No test History")
+        else:
+            return HttpResponse("Bad requests")
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=500)
 
@@ -799,70 +1073,87 @@ def processPayment(request):
             id = paymentDetails["id"]
             tickets = int(ticketss)
 
-            conn = http.client.HTTPSConnection("api-gateway.ctechpay.com")
-            dataList = []
-            boundary = "wL36Yn8afVp8Ag7AmP8qZ0SA4n1v9T"
-            dataList.append(encode("--" + boundary))
-            dataList.append(encode("Content-Disposition: form-data; name=airtel;"))
-
-            dataList.append(encode("Content-Type: {}".format("text/plain")))
-            dataList.append(encode(""))
-
-            dataList.append(encode("1"))
-            dataList.append(encode("--" + boundary))
-            dataList.append(encode("Content-Disposition: form-data; name=phone;"))
-
-            dataList.append(encode("Content-Type: {}".format("text/plain")))
-            dataList.append(encode(""))
-
-            dataList.append(encode(str(number)))
-            dataList.append(encode("--" + boundary))
-            dataList.append(encode("Content-Disposition: form-data; name=amount;"))
-
-            dataList.append(encode("Content-Type: {}".format("text/plain")))
-            dataList.append(encode(""))
-
-            dataList.append(encode(str(amount)))
-            dataList.append(encode("--" + boundary))
-            dataList.append(encode("Content-Disposition: form-data; name=token;"))
-
-            dataList.append(encode("Content-Type: {}".format("text/plain")))
-            dataList.append(encode(""))
-
-            dataList.append(
-                encode(
-                    "UOavDtqLpVp1ZfYEujpjRpEKLplxoY8P24k143qlruchAtrwAvDOVcbj1QtZbCMf"
-                )
+            getPrice = TicketPrice.objects.filter(newPrice=amount)
+            getSubscpton = SubscriptionPrice.objects.filter(
+                newPrice=amount, tkts=tickets
             )
-            dataList.append(encode("--" + boundary + "--"))
-            dataList.append(encode(""))
-            body = b"\r\n".join(dataList)
-            payload = body
-            headers = {
-                "Content-type": "multipart/form-data; boundary={}".format(boundary)
-            }
-            conn.request("POST", "/airtel/access/", payload, headers)
-            res = conn.getresponse()
-            data = res.read()
-            try:
-                nested_json_str = data.decode("utf-8")
-                response_json = json.loads(nested_json_str)
+            if getPrice.exists() or getSubscpton.exists():
+                conn = http.client.HTTPSConnection("api-gateway.ctechpay.com")
+                dataList = []
+                boundary = "wL36Yn8afVp8Ag7AmP8qZ0SA4n1v9T"
+                dataList.append(encode("--" + boundary))
+                dataList.append(encode("Content-Disposition: form-data; name=airtel;"))
 
-                if "data" in response_json and "transaction" in response_json["data"]:
-                    transaction_id = response_json["data"]["transaction"]["id"]
+                dataList.append(encode("Content-Type: {}".format("text/plain")))
+                dataList.append(encode(""))
+
+                dataList.append(encode("1"))
+                dataList.append(encode("--" + boundary))
+                dataList.append(encode("Content-Disposition: form-data; name=phone;"))
+
+                dataList.append(encode("Content-Type: {}".format("text/plain")))
+                dataList.append(encode(""))
+
+                dataList.append(encode(str(number)))
+                dataList.append(encode("--" + boundary))
+                dataList.append(encode("Content-Disposition: form-data; name=amount;"))
+
+                dataList.append(encode("Content-Type: {}".format("text/plain")))
+                dataList.append(encode(""))
+
+                dataList.append(encode(str(amount)))
+                dataList.append(encode("--" + boundary))
+                dataList.append(encode("Content-Disposition: form-data; name=token;"))
+
+                dataList.append(encode("Content-Type: {}".format("text/plain")))
+                dataList.append(encode(""))
+
+                dataList.append(
+                    encode(
+                        "UOavDtqLpVp1ZfYEujpjRpEKLplxoY8P24k143qlruchAtrwAvDOVcbj1QtZbCMf"
+                    )
+                )
+                dataList.append(encode("--" + boundary + "--"))
+                dataList.append(encode(""))
+                body = b"\r\n".join(dataList)
+                payload = body
+                headers = {
+                    "Content-type": "multipart/form-data; boundary={}".format(boundary)
+                }
+                conn.request("POST", "/airtel/access/", payload, headers)
+                res = conn.getresponse()
+                data = res.read()
+                print(data)
+                try:
+                    nested_json_str = data.decode("utf-8")
+                    response_json = json.loads(nested_json_str)
+
+                    if (
+                        "data" in response_json
+                        and "transaction" in response_json["data"]
+                    ):
+                        transaction_id = response_json["data"]["transaction"]["id"]
+                        time.sleep(15)
+                        verify_result = verifyPayment(
+                            transaction_id, tickets, id, amount
+                        )
+                        return HttpResponse(verify_result)
+                    else:
+                        return HttpResponse("Can't process the request right now.")
+                except json.JSONDecodeError:
+                    return HttpResponse("Error decoding JSON response.")
+                except KeyError:
+                    return HttpResponse("Key not found in JSON response.")
+                except Exception as e:
                     time.sleep(15)
-                    verify_result = verifyPayment(transaction_id, tickets, id, amount)
-                    return HttpResponse(verify_result)
-                else:
-                    return HttpResponse("Can't process the request right now.")
-            except json.JSONDecodeError:
-                return HttpResponse("Error decoding JSON response.")
-            except KeyError:
-                return HttpResponse("Key not found in JSON response.")
-            except Exception as e:
-                time.sleep(15)
-                return HttpResponse("Request Failed, Check your internet connnection.")
-
+                    return HttpResponse(
+                        "Request Failed, Check your internet connnection."
+                    )
+            else:
+                time.sleep(5)
+                return HttpResponse("Well well !!! many hackers they have tried...")
+        else:
+            return HttpResponse("Server is currently down..")
     except Exception as e:
         time.sleep(15)
         return HttpResponse(f"Request Failed, Check your internet conection. {e}")
@@ -1019,6 +1310,15 @@ def count_online_players(request):
         return HttpResponse("0", content_type="text/plain", status=200)
 
 
+def count_registerd(request):
+    try:
+        online_players_count = Player.objects.all().count()
+        response_text = str(online_players_count)
+        return HttpResponse(response_text, content_type="text/plain", status=200)
+    except Exception as e:
+        return HttpResponse("0", content_type="text/plain", status=200)
+
+
 def shareTickets(request):
     if request.method == "POST":
         try:
@@ -1144,15 +1444,24 @@ def clearNotification(request):
         checkNot = Notification.objects.filter(notf_id=notId)
         if checkNot.exists():
             checkNot.delete()
-            return HttpResponse("notifications deleted succesifully..")
+            return HttpResponse("notifications deleted successfully..")
         else:
             return HttpResponse("You dont have notifications..")
 
 
 def getTicketsPrices2(request):
     try:
-        ticketPrice = TicketPrice.objects.all()
-        return JsonResponse({"ticketPrice": list(ticketPrice.values())})
+        if request.method == "POST":
+            getDat = json.loads(request.body)
+            userId = getDat["id"]
+            getUser = Player.objects.filter(player_id=userId)
+            if getUser.exists():
+                ticketPrice = TicketPrice.objects.all()
+                return JsonResponse({"ticketPrice": list(ticketPrice.values())})
+            else:
+                return HttpResponse("Bad requests..")
+        else:
+            return HttpResponse("Bad request")
     except Exception as e:
         return HttpResponse("An error occurred while processing the request.")
 
@@ -1164,7 +1473,7 @@ def getPrizes(request):
             userid = request_data.get("id")
             getPlayer = Player.objects.filter(player_id=userid)
             if getPlayer.exists():
-                monetary= Monetary.objects.all()
+                monetary = Monetary.objects.all().order_by("-wpm")
                 return JsonResponse({"monetary": list(monetary.values())})
             else:
                 return HttpResponse("Bad request.")
@@ -1172,7 +1481,6 @@ def getPrizes(request):
             return HttpResponse(f"An error occurred while processing the request. {e}")
     else:
         return HttpResponse("Bad request method. Use POST.")
-    
 
 
 def getQuest(request):
@@ -1182,7 +1490,7 @@ def getQuest(request):
             userid = request_data.get("id")
             getPlayer = Player.objects.filter(player_id=userid)
             if getPlayer.exists():
-                quest= Quest.objects.all()
+                quest = Quest.objects.all()
                 return JsonResponse({"quest": list(quest.values())})
             else:
                 return HttpResponse("Bad request.")

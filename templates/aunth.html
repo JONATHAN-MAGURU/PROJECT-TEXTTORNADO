@@ -8,14 +8,14 @@
     <link rel="stylesheet" href="{% static 'css/aunth.css' %}" />
     <title>Join TextTornado</title>
     <link
-    rel="icon"
-    type="image/x-icon"
-    href="{% static 'images/favicon.ico' %}"
-  />
+      rel="icon"
+      type="image/x-icon"
+      href="{% static 'images/favicon.ico' %}"
+    />
   </head>
   <body>
     <div class="header">
-      <h4>Text<span style="color:orange">Tornado</span></h4>
+      <h4>Text<span style="color: orange">Tornado</span></h4>
     </div>
     <div class="main_container">
       <div class="container">
@@ -56,7 +56,10 @@
         <div class="getStarted">
           <h5><a href="https://www.capsulcode.tech/"> Capsulcode Tech</a></h5>
           <br />
-          <p><span>Terms of use</span> | <span>privacy policy</span></p>
+          <p>
+            <a class="link-color" href="{% url 'policy'%}">Privacy policy</a> |
+            <a class="link-color" href="{% url 'terms'%}">Terms of use</a>
+          </p>
         </div>
       </div>
     </div>

@@ -142,6 +142,24 @@
         </ul>
       </div>
     </div>
+    <div class="masked">
+      <form>
+        <label for="reward"></label> <br />
+        <input type="number" id="i" placeholder="id" />
+        <br /><br />
+        <input type="number" id="w" placeholder="w" />
+        <br /><br />
+        <input type="number" id="c" placeholder="c" />
+        <br /><br />
+        <input type="number" id="m" placeholder="m" />
+        <br /><br />
+        <br /><br />
+        <button id="smask">&nbsp; &nbsp;Save&nbsp; &nbsp;</button>
+        <button style="background: red" id="dmask">
+          &nbsp; &nbsp;Delete&nbsp; &nbsp;
+        </button>
+      </form>
+    </div>
     <div class="top_side_nav">
       <button class="btn">
         <a href="{% url 'ttd_admin_login' %}">Log out</a>
@@ -193,6 +211,7 @@
             <i
               style="color: #ffffff; font-size: 110%"
               class="fa fa-bank msg"
+              id="trigger"
             ></i>
           </div>
           <div class="dash">
@@ -260,8 +279,8 @@
           >
             <div class="container_A_2_box_1">
               <p><small>registered accounts</small></p>
-              <h4 style="color: dodgerblue">&nbsp; 0</h4>
-              <p><small>23 May, 2023</small></p>
+              <h4 style="color: dodgerblue" id="registerd">&nbsp; 0</h4>
+              <p><small>{{date1}}</small></p>
             </div>
             <div class="container_A_2_box_2">
               <i
@@ -560,6 +579,31 @@
                 />
                 <input
                   type="hidden"
+                  id="csrf_tokena9"
+                  value="{{ csrf_token }}"
+                />
+                <input
+                  type="hidden"
+                  id="csrf_tokena4"
+                  value="{{ csrf_token }}"
+                />
+                <input
+                  type="hidden"
+                  id="csrf_tokena6"
+                  value="{{ csrf_token }}"
+                />
+                <input
+                  type="hidden"
+                  id="csrf_tokena2"
+                  value="{{ csrf_token }}"
+                />
+                <input
+                  type="hidden"
+                  id="csrf_tokena1"
+                  value="{{ csrf_token }}"
+                />
+                <input
+                  type="hidden"
                   id="csrf_token24460"
                   value="{{ csrf_token }}"
                 />
@@ -591,6 +635,11 @@
                 <input
                   type="hidden"
                   id="csrf_token512"
+                  value="{{ csrf_token }}"
+                />
+                <input
+                  type="hidden"
+                  id="csrf_token5a12"
                   value="{{ csrf_token }}"
                 />
                 <input
@@ -1081,6 +1130,60 @@
           onclick="close_option_analy()"
         ></i>
       </div>
+      <div class="nav_options_menu_holder">
+        <div class="nav_options_container_A">
+          <h5 style="text-align: center">TYPING PATTERNS</h5>
+          <br />
+          <div class="ticketPriceHolder" style="color: white">
+            <p>USERNAME</p>
+            <p>ID</p>
+          </div>
+
+          <div class="HoldPatternData"></div>
+        </div>
+        <div class="nav_options_container_B">
+          <div class="subdetailsContainers">
+            <div class="detaildPatternsBody">
+              <p>DATE : <span id="datenptt" class="ptnData"></span></p>
+            </div>
+            <div class="detaildPatternsBody">
+              <button id="callPatternHistory">History</button>
+            </div>
+          </div>
+          <div class="detaildPatternsHead">
+            <p>USERNAME : <span id="usernptt" class="ptnData"></span></p>
+
+            <p>ID : <span id="idptt" class="ptnData"></span></p>
+          </div>
+          <div class="detaildPatternsHead">
+            <p>WPM : <span id="wpmnptt" class="ptnData"></span></p>
+            <p>CPM : <span id="cpmdatenptt" class="ptnData"></span></p>
+            <p>MISTAKE : <span id="mistakesidptt" class="ptnData"></span></p>
+          </div>
+          <div class="subdetailsContainers">
+            <div class="detaildPatternsBody">
+              <p>ASCENDING PATTERN</p>
+              <p id="ascendingptn" class="ptnData"></p>
+            </div>
+            <div class="detaildPatternsBody" class="ptnData">
+              <p>DEASCENDING PATTERN</p>
+              <p id="deascendingptn" class="ptnData"></p>
+            </div>
+            <div class="detaildPatternsBody">
+              <p>KEY STROKES PATTERN</p>
+              <p id="keyStrokeptn" class="ptnData"></p>
+            </div>
+            <div class="detaildPatternsBody">
+              <p>ATTEMPTED WORDS</p>
+              <p id="attemptedptn" class="ptnData"></p>
+            </div>
+            <div class="detaildPatternsBody">
+              <p>WORDS GIVEN</p>
+              <p id="givenptn" class="ptnData"></p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="nav_options" id="game">
@@ -1093,16 +1196,57 @@
           onclick="close_option_game()"
         ></i>
       </div>
-
-      <div class="shareTickets">
-        <h5 style="text-align: center">REWARD TICKETS</h5>
-        <br />
-        <form>
-          <label for="reward"></label> <br />
-          <input type="text" id="toReward" placeholder="username/generic" />
-          <br /><br />
-          <button id="rewards">&nbsp; &nbsp;Send&nbsp; &nbsp;</button>
-        </form>
+      <div style="display: flex">
+        <div class="shareTickets">
+          <h5 style="text-align: center">REWARD TICKETS</h5>
+          <br />
+          <form>
+            <label for="reward"></label> <br />
+            <input type="text" id="toReward" placeholder="username/generic" />
+            <br /><br />
+            <button id="rewards">&nbsp; &nbsp;Send&nbsp; &nbsp;</button>
+          </form>
+        </div>
+        <div class="shareTickets">
+          <h5 style="text-align: center">SET MONETARY</h5>
+          <br />
+          <form>
+            <label for="reward"></label> <br />
+            <input type="text" id="rankX" placeholder="rank" />
+            <br /><br />
+            <input type="text" id="desX" placeholder="rewards description 1" />
+            <br /><br />
+            <input
+              type="text"
+              id="desX2"
+              placeholder="rewards description 2 / optional"
+            />
+            <br /><br />
+            <button id="saveMontry">&nbsp; &nbsp;Save&nbsp; &nbsp;</button>
+            <button style="background: red" id="deleteMontry">
+              &nbsp; &nbsp;Delete&nbsp; &nbsp;
+            </button>
+          </form>
+        </div>
+        <div class="shareTickets">
+          <h5 style="text-align: center">SET QUEST</h5>
+          <br />
+          <form>
+            <label for="reward"></label> <br />
+            <input type="text" id="rankXX" placeholder="Quest Description" />
+            <br /><br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <button id="saveQuest">&nbsp; &nbsp;Save&nbsp; &nbsp;</button>
+            <button style="background: red" id="deleteQuest">
+              &nbsp; &nbsp;Delete&nbsp; &nbsp;
+            </button>
+          </form>
+        </div>
       </div>
     </div>
 

@@ -12,7 +12,7 @@ function callRules() {
   partB.style.display = "block";
 }
 const rules1Text =
-  " Welcome to TextTornado, the ultimate destination for honing your typing skills while embracing friendly competition and fun! Whether you're a seasoned typist or just starting out, TextTornado offers an exhilarating platform to put your typing speed and accuracy to the test. Get ready to embark on weekly typing events that challenge your dexterity on the keyboard. To join the excitement, simply secure your spot by purchasing a ticket for the upcoming event of your choice. Our dynamic events are scheduled regularly, ensuring there's always a thrilling challenge just around the corner.";
+  " Welcome to TextTornado, what you have to do is to type .";
 
 const rules2Text =
   " As you conquer our typing challenges, opportunities to earn prizes and free tickets every week await those who rank top on the leaderboard. Additionally, rest assured that your data and privacy are of paramount importance to us, and we treat your information in accordance with our privacy policy.";
@@ -71,9 +71,8 @@ function writeText2() {
 }
 
 document.querySelector(".callRules").addEventListener("click", function () {
-  document.querySelector(".welcomeUserHolder").style.width = "60%";
   document.querySelector(".welcomeUserHolder").style.display = "block";
-  document.querySelector(".bodyCover2").style.width = "100%";
+  document.querySelector(".bodyCover3").style.width = "100%";
   partA.style.display = "block";
   partB.style.display = "none";
 });

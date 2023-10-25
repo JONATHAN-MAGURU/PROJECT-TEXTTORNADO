@@ -39,15 +39,15 @@
       href="{% static 'css/ttd_user_home_style_mobile.css' %}"
     />
   </head>
-  {% for x in player_d%}
+
 
   <body
-    data-username="{{x.username}}"
-    data-ttd-id="{{x.player_id}}"
-    data-number="{{x.number}}"
+    data-username="{{player_d.username}}"
+    data-ttd-id="{{player_d.player_id}}"
+    data-number="{{player_d.number}}"
     id="body"
   >
-    {% endfor %}
+    
     <div class="loader">
       <div class="pl">
         <div class="pl__dot"></div>
@@ -67,15 +67,15 @@
     </div>
     <div class="main_body">
       <div class="StickyFooter">
-        <i class="fas fa-sync rotate"></i>
+        <i class="fas fa-sync rotate displayNoneTAB"></i>
         <p>leaderboard : <span id="leaderboard_status"></span></p>
         <p id="keyOutput"></p>
         <p id="capsOutput"></p>
         <p>status : <span id="actionStatus"></span></p>
-        <p id="location"></p>
-        <p id="country"></p>
-        <p id="city"></p>
-        <p id="district"></p>
+        <p id="location" class="displayNoneTAB"></p>
+        <p id="country" class="displayNoneTAB"></p>
+        <p id="city" class="displayNoneTAB"></p>
+        <p id="district" class="displayNoneTAB"></p>
         <p id="Netoutput"></p>
         <p id="batOutput"></p>
       </div>
@@ -100,7 +100,7 @@
       <div class="outOfTicketsHolder">
         <div class="outOfTicketsHead">
           <h2>You can't start now.</h2>
-          <p style="line-height: 25px">
+          <p style="line-height: 25px; color:gray">
             Typing event is almost over, for that your are not allowed to take a
             typing test.
           </p>
@@ -156,18 +156,18 @@
           />
         </div>
         <div class="choosePaymentHead">
-          <h2>Use Airtel Number</h2>
+          <h4>Use Airtel Number</h4>
         </div>
         <div class="choosePaymentBody">
           <div class="choosePaymentBodyA">
-            {% for x in player_d%}
+            
             <p style="text-align: left; color: gray">
               We only accept payments from Airtel money since you registered
               your account using tnm number
-              <span id="newAirtel">{{x.number}}</span>, so enter airtel number
+              <span id="newAirtel">{{player_d.number}}</span>, so enter airtel number
               to continue with the payments.
             </p>
-            {% endfor %}
+        
           </div>
           <div class="choosePaymentBodyB">
             <br />
@@ -229,15 +229,13 @@
         </div>
       </div>
 
-      <div class="welcomeUserHolder">
+      <div class="welcomeUserHolder" style="z-index: 999999999999999">
         <div class="welcomeUserH">
-          <h3 style="cursor: pointer">
-            Text<span style="color: orange">Tornado</span>
-          </h3>
+          <h5 style="cursor: pointer">
+            Welcome to Text<span style="color: orange">Tornado</span>
+          </h5>
 
-          <p style="font-size: 90%; color: white" id="slogan">
-            Where Speed Meets Accuracy: TextTornado's Typing Velocity!
-          </p>
+          <p id="slogan" class="displayNone">TextTornado's Typing Velocity!</p>
         </div>
         <div class="welcomeUserB">
           <div class="partA">
@@ -278,7 +276,7 @@
 
               <p>
                 Your score will be based on your Words Per Minute(WPM) typing
-                speed. Accurancy is also important, so try to minimize mistakes.
+                speed. Accuracy is also important, so try to minimize mistakes.
                 If you exceeds more than 15 mistakes your typing results will
                 not be processed
               </p>
@@ -334,7 +332,7 @@
               </div>
               <p>
                 We'll track your progress over time. Use this information to see
-                how you're improving by hecking on history section.
+                how you're improving by checking on history section.
               </p>
             </div>
 
@@ -347,7 +345,7 @@
               </div>
               <p>
                 If you encounter technical issues or have feedback, contact our
-                support team at capsualcode@gmail.com or use support section
+                support team at capsulcode@gmail.com or use support section
                 provided.
               </p>
             </div>
@@ -381,9 +379,9 @@
 
       <div class="welcomeUserHolder">
         <div class="welcomeUserH">
-          <h3 style="letter-spacing: 3px; color: orange" id="toAnEnd">
+          <h5 style="letter-spacing: 3px; color: orange" id="toAnEnd">
             EVENT DRAWS TO AN END !!!
-          </h3>
+          </h5>
         </div>
         <div class="eventEndBody">
           <div class="eventEndDivision">
@@ -395,7 +393,8 @@
             <br />
             <div class="winnerOutputMain"></div>
           </div>
-          <div class="eventEndDivision">
+          <br />
+          <div class="eventEndDivision displayNone">
             <br />
             <h5 class="loosertext" id="winnerRemark">
               YOU DIDN'T PARTICIPATE LAST EVENT
@@ -410,7 +409,13 @@
         </div>
 
         <div class="welcomeUserF">
-          <button class="setseen6">
+          <button style="background: #ed143d" class="setseen9 displayNonePC">
+            my results
+          </button>
+          <button class="setseen6 displayNone">
+            <i class="fas fa-headset"></i>&nbsp;customer care
+          </button>
+          <button class="setseen6 displayNonePC">
             <i class="fas fa-headset"></i>&nbsp;customer care
           </button>
           <button class="setseen">continue</button>
@@ -419,10 +424,10 @@
 
       <div class="welcomeUserHolder">
         <div class="welcomeUserH">
-          <h4 style="letter-spacing: 3px; color: orange">
-            NEW EVENT HAS JUST STARTED !!!
-          </h4>
-          <p style="color: gray">
+          <h6 style="letter-spacing: 3px; color: orange" id="eventTitle">
+            REWARDS ARE GIVEN AT THE END OF EVENT
+          </h6>
+          <p class="displayNone" style="color: gray">
             NAME :<span id="nameOfE"></span> &nbsp; TYPE :
             <span id="typeOfE"></span>
           </p>
@@ -434,27 +439,36 @@
         <div class="welcomeUserB2 eventPrizes">
           <div class="HolderQuest">
             <div class="monetary">
-              <h4 style="text-align: center">Monetery</h4>
+              <h4 style="text-align: center">Monetary</h4>
               <div class="viewPrize1"></div>
             </div>
-            <div class="monetary">
+            <div class="monetary displayNone">
               <h4 style="text-align: center">Quests</h4>
               <div class="viewPrize1"></div>
             </div>
           </div>
         </div>
         <div class="welcomeUserF">
-          <button style="background: #ed143d" class="setseen">
+          <button style="background: #ed143d" class="setseen displayNone">
             event rules
+          </button>
+          <button style="background: #ed143d" class="setseenn displayNonePC">
+            event rules
+          </button>
+          <button style="background: #ed143d" class="setseenn displayNonePC">
+            Quests
           </button>
           <button class="setseen">
             <a id="termsLink" href="{% url 'terms' %}">terms of use</a>
           </button>
-          <button class="setseen">Customer care</button>
+          <button class="setseen displayNone">Customer care</button>
           <button class="setseen">continue</button>
         </div>
       </div>
       <div class="spinnerContainer">
+        <br />
+        <br />
+        <br />
         <br />
         <br />
         <br />
@@ -469,6 +483,7 @@
       <div class="covers"></div>
       <div class="bodyCover"></div>
       <div class="bodyCover2"></div>
+      <div class="bodyCover3"></div>
 
       <div class="notifications">
         <div class="notificationsBody">
@@ -478,6 +493,10 @@
             <div class="linex twox"></div>
           </div>
         </div>
+      </div>
+
+      <div class="notificationsmob displayNonePC">
+        <p id="notText2"></p>
       </div>
 
       <div class="alerts">
@@ -528,7 +547,7 @@
         <div class="leaderboardHead">
           <div
             class="userBox"
-            style="font-size: 95%; border: 1px solid #21262d; color: orange"
+            style="font-size: 80%; border: 1px solid #21262d; color: orange"
           >
             <div class="rankLB2" style="color: orange">RANK</div>
             <div
@@ -553,26 +572,56 @@
               style="font-size: 80%; font-weight: 600"
               >Menu</span
             >
-            
           </div>
         </div>
         <div class="navBody displayNonePC">
-          <div class="navProfile displayNonePC" >
+          <div class="navProfile displayNonePC">
             <div>
-              {% for x in player_d%}
-              <img class="pic displayNonePC" src="/images/{{x.profile_pic}}" />
-              {% endfor %}
+              
+              <img class="pic displayNonePC" src="/images/{{player_d.profile_pic}}" />
+
             </div>
             <div class="user_name displayNonePC">
               <div>
-                {% for x in player_d%}
-                <p>{{x.username}}</p>
-                {% endfor %}
+                
+                <p>{{player_d.username}}</p>
+              
               </div>
-              <div id="mngact displayNonePC">manage account</div>
+              <div id="mngact displayNonePC" style="color:gray">manage account</div>
             </div>
           </div>
-         
+          <div class="navProfile3 displayNonePC">
+            <i style="font-size: 110%" class="fas fa-shopping-cart"></i
+            >&nbsp;&nbsp;&nbsp;Buy tickets
+          </div>
+          <div class="navProfile2 displayNonePC">
+            <i style="font-size: 110%" class="fas fa-medal"></i
+            >&nbsp;&nbsp;&nbsp;<span id="vr">view rewards</span>
+          </div>
+          <div class="navProfile2 displayNonePC">
+            <i style="font-size: 110%" class="fas fa-trophy"></i
+            >&nbsp;&nbsp;&nbsp;Leaderboard
+          </div>
+          <div class="navProfile2 displayNonePC">
+            <i style="font-size: 110%" class="fas fa-bolt"></i
+            >&nbsp;&nbsp;&nbsp;Last event
+          </div>
+          <div class="navProfile2 displayNonePC">
+            <i style="font-size: 110%" class="fas fa-lightbulb"></i
+            >&nbsp;&nbsp;&nbsp;Tips
+          </div>
+          <div class="navProfile2 displayNonePC">
+            <i style="font-size: 110%" class="fas fa-file-contract"></i
+            >&nbsp;&nbsp;&nbsp;Terms of use
+          </div>
+          <div class="navProfile2 displayNonePC">
+            <i style="font-size: 110%" class="fas fa-file-contract"></i
+            >&nbsp;&nbsp;&nbsp;Privacy policy
+          </div>
+          <div class="navProfile2 displayNonePC">
+            <i style="font-size: 110%" class="fas fa-sign-out-alt"></i
+            >&nbsp;&nbsp;&nbsp;Logout
+          </div>
         </div>
       </div>
       <div class="container_head2 displayNonePC">
@@ -603,6 +652,7 @@
                 <span class="online"> </span>
               </p>
             </div>
+            <i class="fas fa-expand iconss fulBtn" id="fullscreenButton"></i>
             <i class="fas fa-bars"></i>
           </div>
         </div>
@@ -639,47 +689,56 @@
               <span id="online"> </span>
             </p>
           </div>
-          <!--  <div class="log_out displayNone">
-            <p>PRACTICE</p>
-          </div>-->
         </div>
         <div class="header_box displayNone">
           <div class="log_out buy_tokens displayNone displayNon2">
-            <p>&nbsp;<i class="fas fa-shopping-cart"></i> BUY TICKETS</p>
+            <p>
+              &nbsp;<i class="fas fa-shopping-cart displayNoneTAB"></i> BUY
+              TICKETS
+            </p>
           </div>
           <div class="log_out" id="open_comm">
-            <p><i class="fas fa-comments"></i> &nbsp;COMMENTS</p>
+            <p><i class="fas fa-comments displayNoneTAB"></i> &nbsp;COMMENTS</p>
           </div>
           <div class="log_out callRules">
-            <p><i class="fas fa-lightbulb"></i> &nbsp;TIPS</p>
+            <p><i class="fas fa-lightbulb displayNoneTAB"></i> &nbsp;TIPS</p>
           </div>
         </div>
         <div class="header_box header_box2">
           <i class="fas fa-home displayNonePC iconss"></i>
           <i class="fas fa-comments displayNonePC iconss"></i>
           <i class="fas fa-clock displayNonePC iconss"></i>
-          <i class="fas fa-headset displayNone customerCare iconss"></i>
+          <i
+            class="fas fa-headset customerCare displayNone displayNoneTAB iconss"
+          ></i>
+          <i class="fas fa-headset customerCare2 displayNonePC iconss"></i>
+          <i class="fas fa-headset customerCare3  displayNone displayNoneTAB2 iconss"></i>
+          <i class="fas fa-clock displayNone displayNoneTAB2 iconss"></i>
           <!--<i class="fas fa-cog iconss"></i>-->
-          <i class="fas fa-history history iconss"></i>
+          <i class="fas fa-history history displayNone iconss"></i>
+          <i class="fas fa-history history2 displayNonePC iconss"></i>
           <i class="fas fa-bell iconss notf"></i>
-          <i class="fas fa-expand iconss" id="fullscreenButton"></i>
+          <i
+            class="fas fa-expand iconss displayNone"
+            id="fullscreenButton2"
+          ></i>
           <div class="user_avator player_name displayNone">
             <div class="pic" onclick="openManageAccount()">
-              {% for x in player_d%}
-              <img class="pic" src="/images/{{x.profile_pic}}" />
-              {% endfor %}
+              
+              <img class="pic" src="/images/{{player_d.profile_pic}}" />
+          
             </div>
             <div
-              class="user_name displayNone displayNon2"
+              class="user_name displayNone displayNon2 displayNoneTAB"
               onclick="openManageAccount()"
             >
-              {% for x in player_d%}
-              <p>{{x.username}}</p>
-              {% endfor %}
+              
+              <p>{{player_d.username}}</p>
+              
             </div>
           </div>
 
-          <div class="log_out logout displayNone">
+          <div class="log_out logout displayNone displayNoneTAB">
             <i class="fas fa-sign-out-alt"></i> &nbsp; LOGOUT
           </div>
         </div>
@@ -743,20 +802,20 @@
                 </button>
                 <div class="fonts_holder">
                   <div class="text_holder">
-                    <p id="fontSize"><i class="fas fa-font displayNone"></i></p>
+                    <p id="fontSize"><i class="fas fa-font displayNone displayNoneTAB"></i></p>
                   </div>
                   <select name="" id="fontss"></select>
                 </div>
-                <div class="fonts_holder">
+                <div class="fonts_holder displayNone">
                   <div class="text_holder">
                     <p id="fontSize">
-                      <i class="fas fa-align-left displayNone"></i>
+                      <i class="fas fa-align-left displayNone displayNoneTAB"></i>
                     </p>
                   </div>
                   <select id="alignmentSelector">
+                    <option value="center">Center</option>
                     <option value="justify">Justify</option>
                     <option value="left">Left</option>
-                    <option value="center">Center</option>
                     <option value="right">Right</option>
                     <option value="start">Start</option>
                     <option value="end">End</option>
@@ -765,7 +824,7 @@
                   </select>
                 </div>
 
-                <div class="fonts_holder displayNone">
+                <div class="fonts_holder displayNone displayNoneTAB">
                   <div class="text_holder">
                     <p id="fontSize"><i class="fas fa-text-width"></i></p>
                   </div>
@@ -826,9 +885,14 @@
               </div>
             </div>
             <div class="downBtns">
-              <button class="callResults">LAST EVENT</button>
-              <button class="disNan" id="leaderb">LEADERBOARD</button>
-              <button class="callResults">EVENT PRIZES</button>
+              <button class="callResults displayNone">LAST EVENT</button>
+              <button class="disNan"></button>
+              <button
+                class="callResults displayNone"
+                style="background: #ed143d"
+              >
+                EVENT PRIZES
+              </button>
             </div>
             <br />
           </div>
@@ -837,24 +901,24 @@
       <div class="container_B">
         <div class="timerMainBox">
           <div class="timerHead">
-            <h3 id="eventHasEnded">EVENT ENDS IN</h3>
+            <h4 id="eventHasEnded">EVENT ENDS IN</h4>
           </div>
           <div class="timerBody">
             <div class="timerSubBox">
-              <p style="font-size: 170%; color: orange" id="days">00</p>
-              <p style="font-size: 80%">DAYS</p>
+              <p class="timeDigits" id="days">00</p>
+              <p class="timeText">DAYS</p>
             </div>
             <div class="timerSubBox">
-              <p style="font-size: 170%; color: orange" id="hours">00</p>
-              <p style="font-size: 80%">HOURS</p>
+              <p class="timeDigits" id="hours">00</p>
+              <p class="timeText">HOURS</p>
             </div>
             <div class="timerSubBox">
-              <p style="font-size: 170%; color: orange" id="mins">00</p>
-              <p style="font-size: 80%">MINUTES</p>
+              <p class="timeDigits" id="mins">00</p>
+              <p class="timeText">MINUTES</p>
             </div>
             <div class="timerSubBox">
-              <p style="font-size: 170%; color: orange" id="seconds">00</p>
-              <p style="font-size: 80%">SECONDS</p>
+              <p class="timeDigits" id="seconds">00</p>
+              <p class="timeText">SECONDS</p>
             </div>
           </div>
           <div class="event_d">
@@ -875,24 +939,24 @@
 
         <div class="timerMainBox">
           <div class="timerHead">
-            <h3>NEXT EVENT STARTS IN</h3>
+            <h4>NEXT EVENT STARTS IN</h4>
           </div>
           <div class="timerBody">
             <div class="timerSubBox">
-              <p style="font-size: 170%; color: orange" id="days2">00</p>
-              <p style="font-size: 80%">DAYS</p>
+              <p class="timeDigits" id="days2">00</p>
+              <p class="timeText">DAYS</p>
             </div>
             <div class="timerSubBox">
-              <p style="font-size: 170%; color: orange" id="hours2">00</p>
-              <p style="font-size: 80%">HOURS</p>
+              <p class="timeDigits" id="hours2">00</p>
+              <p class="timeText">HOURS</p>
             </div>
             <div class="timerSubBox">
-              <p style="font-size: 170%; color: orange" id="mins2">00</p>
-              <p style="font-size: 80%">MINUTES</p>
+              <p class="timeDigits" id="mins2">00</p>
+              <p class="timeText">MINUTES</p>
             </div>
             <div class="timerSubBox">
-              <p style="font-size: 170%; color: orange" id="seconds2">00</p>
-              <p style="font-size: 80%">SECONDS</p>
+              <p class="timeDigits" id="seconds2">00</p>
+              <p class="timeText">SECONDS</p>
             </div>
           </div>
           <div class="event_d">
@@ -920,41 +984,33 @@
 
           <div class="mored">
             <div class="mored2" style="padding: 4px">
-              <div class="token_holder_2" style="margin-left: 20px">
+              <div class="token_holder_2">
                 <i
-                  style="font-size: 800%; cursor: pointer"
-                  class="fas fa-ticket-alt tickett1 tickettss"
+                  style="cursor: pointer"
+                  class="fas fa-ticket-alt tickett3 enLarge tickettss"
                 ></i>
                 <i
-                  style="font-size: 800%; cursor: pointer"
-                  class="fas fa-ticket-alt tickett2 tickettss"
+                  style="cursor: pointer"
+                  class="fas fa-ticket-alt tickett4 enLarge tickettss"
                 ></i>
                 <i
-                  style="font-size: 800%; cursor: pointer"
-                  class="fas fa-ticket-alt tickett3 tickettss"
+                  style="cursor: pointer"
+                  class="fas fa-ticket-alt tickett5 enLarge tickettss"
                 ></i>
                 <i
-                  style="font-size: 800%; cursor: pointer"
-                  class="fas fa-ticket-alt tickett4 tickettss"
+                  style="cursor: pointer"
+                  class="fas fa-ticket-alt tickett6 enLarge tickettss"
                 ></i>
                 <i
-                  style="font-size: 800%; cursor: pointer"
-                  class="fas fa-ticket-alt tickett5 tickettss"
+                  style="cursor: pointer"
+                  class="fas fa-ticket-alt tickett7 enLarge tickettss"
                 ></i>
                 <i
-                  style="font-size: 800%; cursor: pointer"
-                  class="fas fa-ticket-alt tickett6 tickettss"
-                ></i>
-                <i
-                  style="font-size: 800%; cursor: pointer"
-                  class="fas fa-ticket-alt tickett7 tickettss"
-                ></i>
-                <i
-                  style="font-size: 800%; cursor: pointer"
-                  class="fas fa-ticket-alt tickett8 tickettss"
+                  style="cursor: pointer"
+                  class="fas fa-ticket-alt tickett8 enLarge tickettss"
                 ></i>
               </div>
-              <br />
+
               <p>
                 With our exclusive subscription package, the
                 <span style="color: #ed143d">TextTornado Pass</span>," you gain
@@ -1048,7 +1104,7 @@
       <div class="options_comments">
         <div class="comment_header">
           <p>Comments</p>
-          <div class="closexx">
+          <div class="closexx displayNone">
             <div class="linex onex"></div>
             <div class="linex twox"></div>
           </div>
@@ -1068,13 +1124,19 @@
                 style="font-size: 130%; margin-top: 2px"
               ></i>
             </button>
-            <div>
+            <div style="width: 85%">
               <input type="hidden" id="csrf_token5" value="{{ csrf_token }}" />
               <input type="hidden" id="csrf_token66" value="{{ csrf_token }}" />
               <input type="hidden" id="csrf_token5" value="{{ csrf_token }}" />
               <input type="hidden" id="csrf_token14" value="{{ csrf_token }}" />
               <input type="hidden" id="csrf_token58" value="{{ csrf_token }}" />
               <input type="hidden" id="csrf_token67" value="{{ csrf_token }}" />
+              <input type="hidden" id="csrf_tokena1" value="{{ csrf_token }}" />
+              <input type="hidden" id="csrf_tokena2" value="{{ csrf_token }}" />
+              <input type="hidden" id="csrf_tokena3" value="{{ csrf_token }}" />
+              <input type="hidden" id="csrf_tokena4" value="{{ csrf_token }}" />
+              <input type="hidden" id="csrf_tokena5" value="{{ csrf_token }}" />
+              <input type="hidden" id="csrf_tokena6" value="{{ csrf_token }}" />
               <input
                 type="hidden"
                 id="csrf_token509"
@@ -1111,19 +1173,20 @@
 
               <input
                 type="text"
-                placeholder="Send a comment."
+                placeholder="Add a comment."
                 class="send-inputcomme comment"
               />
             </div>
-            <div style="width: auto">
+            <div style="width: 15%">
               <button
                 type="submit"
-                style="background: transparent; border-left: 1px solid gray"
+                style="background: transparent; width: 100%; padding: 7px"
               >
                 <i class="fas fa-paper-plane"></i>
               </button>
             </div>
           </form>
+          <br />
         </div>
       </div>
 
@@ -1175,9 +1238,9 @@
                 <span id="userT"></span> click send to continue.
               </p>
             </div>
-            <div style="width: 40%; color: gray; text-align: center">
+            <div style="width: 45%; color: gray; text-align: center">
               <i
-                style="font-size: 500%; color: orange"
+                style="font-size: 300%; color: orange"
                 class="fas fa-users tickettss"
               ></i>
               <p style="font-size: 120%">
@@ -1212,7 +1275,7 @@
         <div class="shareTicketsBody">
           <div class="sharePart">
             <div class="sharePart1">
-              <div class="token_holder" style="width: 80%">
+              <div class="token_holder" style="width: 100%">
                 <i
                   style="font-size: 110%; cursor: pointer"
                   class="fa fa-tag tagg"
@@ -1235,13 +1298,16 @@
               <p>
                 As you sharpen your typing skills and achieve impressive
                 accuracy milestones, you'll have the chance to claim free
-                tickets. These tickets can be your rewards for precision and
-                dedication or surprise gifts to fuel your typing journey. Plus,
-                for our event champions, winning comes with the added perk of
-                earning free tickets. So, whether you're striving for accuracy,
-                celebrating a win, or just feeling lucky, these free tickets are
-                your passport to more thrilling typing challenges and exciting
-                events
+                tickets.
+                <span class="displayNone"
+                  >These tickets can be your rewards for precision and
+                  dedication or surprise gifts to fuel your typing journey.
+                  Plus, for our event champions, winning comes with the added
+                  perk of earning free tickets. So, whether you're striving for
+                  accuracy, celebrating a win, or just feeling lucky, these free
+                  tickets are your passport to more thrilling typing challenges
+                  and exciting events</span
+                >
               </p>
             </div>
           </div>
@@ -1256,12 +1322,12 @@
           <div class="options_header_box">
             <i
               style="font-size: 150%; color: orange; cursor: pointer"
-              class="fas fa-ticket-alt"
+              class="fas fa-ticket-alt displayNone"
             ></i>
             &nbsp;STORE
           </div>
           <div class="options_header_box">
-            <div class="closexx closee">
+            <div class="closexx closee displayNone">
               <div class="linex onex"></div>
               <div class="linex twox"></div>
             </div>
@@ -1270,13 +1336,19 @@
         <div class="token_container">
           <div class="token_containerB">
             <div class="otherOptions">
-              <p><i class="fas fa-share"></i> &nbsp;Share tickets</p>
+              <p>
+                <i class="fas fa-share"></i> &nbsp;Sh<span id="k1">a</span>re
+                tickets
+              </p>
             </div>
             <div class="otherOptions">
               <p><i class="far fa-flag"></i>&nbsp; Claim free tickets</p>
             </div>
-            <div class="otherOptions">
-              <p><i class="fas fa-headset"></i>&nbsp; Customer care</p>
+            <div class="otherOptions displayNone">
+              <p>
+                <i class="fas fa-headset"></i>&nbsp; Custo<span id="k2">m</span
+                >er care
+              </p>
             </div>
           </div>
           <div class="token_containerA">
@@ -1309,8 +1381,8 @@
 
               <div class="token_holder_2">
                 <i
-                  style="font-size: 680%; cursor: pointer"
-                  class="fas fa-ticket-alt tickett3 tickettss"
+                  style="cursor: pointer"
+                  class="fas fa-ticket-alt tickett3 enLarge tickettss"
                 ></i>
               </div>
               <div class="price_holder">
@@ -1348,16 +1420,16 @@
 
               <div class="token_holder_2">
                 <i
-                  style="font-size: 680%; cursor: pointer"
-                  class="fas fa-ticket-alt tickett1 tickettss"
+                  style="cursor: pointer"
+                  class="fas fa-ticket-alt tickett3 enLarge tickettss"
                 ></i>
                 <i
-                  style="font-size: 680%; cursor: pointer"
-                  class="fas fa-ticket-alt tickett2 tickettss"
+                  style="cursor: pointer"
+                  class="fas fa-ticket-alt tickett4 enLarge tickettss"
                 ></i>
                 <i
-                  style="font-size: 680%; cursor: pointer"
-                  class="fas fa-ticket-alt tickett3 tickettss"
+                  style="cursor: pointer"
+                  class="fas fa-ticket-alt tickett5 enLarge tickettss"
                 ></i>
               </div>
               <div class="price_holder">
@@ -1368,7 +1440,9 @@
             </div>
             <div class="token_holder">
               <div class="token_holder_1">
-                <p style="font-weight: 600">LEGENDARY TICKETS</p>
+                <p style="font-weight: 600">
+                  LE<span id="k4">G</span>ENDA<span id="k3">R</span>Y TICKETS
+                </p>
                 <span
                   style="
                     text-align: center;
@@ -1395,24 +1469,24 @@
 
               <div class="token_holder_2">
                 <i
-                  style="font-size: 680%; cursor: pointer"
-                  class="fas fa-ticket-alt tickett1 tickettss"
+                  style="cursor: pointer"
+                  class="fas fa-ticket-alt enLarge tickett1 tickettss"
                 ></i>
                 <i
-                  style="font-size: 680%; cursor: pointer"
-                  class="fas fa-ticket-alt tickett2 tickettss"
+                  style="cursor: pointer"
+                  class="fas fa-ticket-alt enLarge tickett2 tickettss"
                 ></i>
                 <i
-                  style="font-size: 680%; cursor: pointer"
-                  class="fas fa-ticket-alt tickett3 tickettss"
+                  style="cursor: pointer"
+                  class="fas fa-ticket-alt enLarge tickett3 tickettss"
                 ></i>
                 <i
-                  style="font-size: 680%; cursor: pointer"
-                  class="fas fa-ticket-alt tickett4 tickettss"
+                  style="cursor: pointer"
+                  class="fas fa-ticket-alt enLarge tickett4 tickettss"
                 ></i>
                 <i
-                  style="font-size: 680%; cursor: pointer"
-                  class="fas fa-ticket-alt tickett5 tickettss"
+                  style="cursor: pointer"
+                  class="fas fa-ticket-alt enLarge tickett5 tickettss"
                 ></i>
               </div>
               <div class="price_holder">
@@ -1436,16 +1510,18 @@
           <form id="save_data">
             <input type="hidden" id="csrf_token0" value="{{ csrf_token }}" />
             <input type="hidden" id="csrf_token4" value="{{ csrf_token }}" />
+            <input type="hidden" id="csrf_token4a" value="{{ csrf_token }}" />
+            <input type="hidden" id="csrf_token4b" value="{{ csrf_token }}" />
             <input type="hidden" id="csrf_token7" value="{{ csrf_token }}" />
             <input type="hidden" id="csrf_token13" value="{{ csrf_token }}" />
             <input type="hidden" id="csrf_token55" value="{{ csrf_token }}" />
-            {% for x in player_d %}
+            
             <input
               type="text"
               name=""
               id=""
               class="edit1"
-              value="{{x.firstname}}"
+              value="{{player_d.firstname}}"
               placeholder="Firstname"
             />
             <br />
@@ -1454,7 +1530,7 @@
               name=""
               id=""
               class="edit1"
-              value="{{x.lastname}}"
+              value="{{player_d.lastname}}"
               placeholder="Lastname"
             />
             <br />
@@ -1463,33 +1539,40 @@
               name=""
               id=""
               class="edit1"
-              value="{{x.mail}}"
+              value="{{player_d.mail}}"
               placeholder="Email"
             />
+            <input
+              type="text"
+              name=""
+              id=""
+              class="edit1"
+              value="{{player_d.number}}"
+              placeholder="number"
+              disabled
+            />
             <br />
 
             <br />
-            <label for="imageInput">UPLOAD PHOTO</label> <br />
-            <input
-              type="file"
-              id="imageInput"
-              name="image"
-              accept="image/*"
-              placeholder="upload image"
-            />
-            {% endfor %}
+
+          
 
             <div class="manage_account_footer">
+              <button class="settings_box">
+                <input type="submit" value="SAVE CHANGES" />
+              </button>
+              <br />
+              <hr />
               <div class="settings_box change">
                 <p>CHANGE PASSWORD</p>
               </div>
-              <div class="settings_box">
-                <input
-                  type="submit"
-                  value="SAVE"
-                  style="background-color: rgb(13, 23, 33); color: white"
-                />
+              <br />
+              <div class="settings_box upload">
+                <p>UPLOAD PHOTO</p>
               </div>
+              <br />
+              <br />
+              <br />
             </div>
           </form>
         </div>
@@ -1503,7 +1586,7 @@
           </div>
 
           <div class="change_pass_body">
-            <form action="">
+            <form id="save_data3">
               <input type="hidden" id="csrf_token6" value="{{ csrf_token }}" />
               <input type="text" class="edit1" placeholder="Old password" />
               <br />
@@ -1511,12 +1594,38 @@
               <br />
               <input type="text" class="edit1" placeholder="Confirm password" />
               <br />
+              <br />
+              <button class="settings_box">
+                <input type="submit" value="SAVE" />
+              </button>
             </form>
           </div>
-          <div class="change_pass_footer">
-            <div class="settings_box">
-              <p>SAVE</p>
-            </div>
+        </div>
+        <div class="change_pass">
+          <div class="change_pass_header">
+            <p>UPLOAD PROFILE PHOTO</p>
+            <i
+              style="font-size: 100%; cursor: pointer"
+              class="fa fa-close closee5 manage_close2"
+            ></i>
+          </div>
+
+          <div class="change_pass_body">
+            <br />
+            <form id="save_data2">
+              <input
+                type="file"
+                id="imageInput"
+                name="image"
+                accept="image/*"
+                placeholder="upload image"
+              />
+              <br />
+              <br />
+              <button class="settings_box">
+                <input type="submit" value="SAVE" />
+              </button>
+            </form>
           </div>
         </div>
       </div>
@@ -1530,16 +1639,18 @@
         </div>
         <div id="user_profile">
           <div class="user_box">
-            {% for x in player_d%}
-            <img class="ico icom" src="/images/{{x.profile_pic}}" />
-            {% endfor %}
+            
+            <img class="ico icom" src="/images/{{player_d.profile_pic}}" />
+            
 
             <br />
             <br />
             <div class="user_d"></div>
           </div>
           <br />
-          <button class="manage_account">manage account</button>
+          <button class="manage_account">
+            manag<span id="k5">e</span> account
+          </button>
         </div>
       </div>
       <div class="options_logout">
@@ -1559,7 +1670,7 @@
           <p>TEST HISTORY</p>
           <i
             style="font-size: 100%; cursor: pointer"
-            class="fa fa-close closee"
+            class="fa fa-close closee displayNone"
           ></i>
         </div>
         <div class="test_history_holder">
@@ -1568,12 +1679,10 @@
       </div>
       <div class="settings_container" style="overflow: hidden">
         <div class="test_history_header">
-          <p>
-            <i class="fas fa-headset"></i> &nbsp;SUPPORT/HELP/ CUSTOMER CARE
-          </p>
+          <p><i class="fas fa-headset"></i> &nbsp;SUPPORT/CUSTOMER CARE</p>
           <i
             style="font-size: 100%; cursor: pointer"
-            class="fa fa-close closee"
+            class="fa fa-close closee displayNone"
           ></i>
         </div>
         <div class="test_history_holder2">
@@ -1581,18 +1690,16 @@
             Welcome to our dedicated Support and Assistance Center! We
             understand that sometimes you may have questions, concerns, or need
             assistance with various aspects of our platform, from ticket
-            purchases to event inquiries and beyond. In this section, you have
-            the power to reach out to us anytime, and we're here to help, 24/7.
+            purchases to event inquiries and beyon<span id="k6">d</span>. In
+            this section, you have the power to reach out to us anytime, and
+            we're here to help, 24/7.
           </div>
           <br />
         </div>
 
         <form class="issue_input">
           <input type="text" class="customer" placeholder="Write here.." />
-          <button
-            type="submit"
-            style="background: transparent; border-left: 1px solid gray"
-          >
+          <button type="submit" style="background: transparent">
             <i class="fas fa-paper-plane"></i>
           </button>
         </form>
@@ -1644,11 +1751,17 @@
           </div>
         </div>
       </div>
+      <div class="resCover"></div>
+      <div class="analyzer">
+        <div class="spinner"></div>
+      </div>
       <div class="tips">
+        <div class="resHead">
+          <p>
+          TIME UP !!!
+        </p>
+        </div>
         <div class="tips2">
-          <p style="font-size: 150%; letter-spacing: 4px; text-align: center">
-            TIME UP !!!
-          </p>
           <div class="tips1">
             <div>
               <p>
@@ -1662,52 +1775,57 @@
                 <span class="test_D2"></span>
               </p>
             </div>
-            <div class="loaderBoxx">
-              <div class="outer">
-                <div class="inner">
-                  <div id="numberr">0</div>
+            <div>
+              <p style="text-align: center;letter-spacing:4px">ACCURACY</p>
+              <div class="loaderBoxx">
+                <div class="outer">
+                  <div class="inner">
+                    <div id="numberr">0</div>
+                  </div>
                 </div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  version="1.1"
+                  width="200px"
+                  height="200px"
+                >
+                  <defs>
+                    <linearGradient id="GradientColor">
+                      <stop offset="0%" stop-color="#e91e63" />
+                      <stop offset="100%" stop-color="#673ab7" />
+                    </linearGradient>
+                  </defs>
+                  <circle
+                    class="circle3"
+                    cx="70"
+                    cy="70"
+                    r="60"
+                    stroke-linecap="round"
+                    style="--progress: 0"
+                  />
+                </svg>
               </div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                version="1.1"
-                width="200px"
-                height="200px"
-              >
-                <defs>
-                  <linearGradient id="GradientColor">
-                    <stop offset="0%" stop-color="#e91e63" />
-                    <stop offset="100%" stop-color="#673ab7" />
-                  </linearGradient>
-                </defs>
-                <circle
-                  class="circle3"
-                  cx="70"
-                  cy="70"
-                  r="60"
-                  stroke-linecap="round"
-                  style="--progress: 0"
-                />
-              </svg>
-              <br />
             </div>
           </div>
-
           <p id="mistakeError"></p>
+          <p id="recomandation">You can type again to improve your scores on the leaderboard</p>
           <div class="cont_holder">
-            <div class="cont_btn"><p>CONTINUE</p></div>
+            <button class="cont_btn">CONTINUE</button>
+            <button class="cont_btn displayNonePC" style="background: #ed143d">
+              LEADERBOARD
+            </button>
           </div>
         </div>
       </div>
     </div>
     <script src="{% static 'js/ttd_user_home_script.js' %}"></script>
-    <script src="{% static 'js/ttd_typing_logic.js' %}"></script>
+    <script src="{% static 'js/amrdn5747.js' %}"></script>
     <script src="{% static 'js/ttd_getting_data_api.js' %}"></script>
     <script src="{% static 'js/timers.js' %}"></script>
     <script src="{% static 'js/home_typos.js' %}"></script>
     <script src="{% static 'js/events.js' %}"></script>
     <script src="{% static 'js/5747.js' %}"></script>
     <script src="{% static 'js/85747.js' %}"></script>
-    <script src="{% static 'js/3172.js' %}"></script>
+    <script src="{% static 'js/amrdn3172.js' %}"></script>
   </body>
 </html>

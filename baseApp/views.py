@@ -34,6 +34,7 @@ from topApp.models import (
     Notification,
     Support,
     Typing_parttern,
+    Typing_partterns_History,
     Subscription,
 )
 from topApp.views import id_gen, transferData
@@ -1093,6 +1094,47 @@ def getParterns2(request):
             if getAdmin.exists():
                 pattern = Typing_parttern.objects.filter(partern_id=dataId)
                 return JsonResponse({"pattern": list(pattern.values())})
+            else:
+                return HttpResponse("Bad request.")
+        except Exception as e:
+            return HttpResponse(f"An error occurred while processing the request. {e}")
+    else:
+        return HttpResponse("Bad request method. Use POST.")
+
+
+def getAllUserParterns(request):
+    if request.method == "POST":
+        try:
+            request_data = json.loads(request.body)
+            userid = request_data.get("mail")
+            dataId = request_data.get("userID")
+            getAdmin = Admins_details.objects.filter(admin_id=userid)
+            if getAdmin.exists():
+                pattern = Typing_partterns_History.objects.filter(partern_id=dataId).order_by("-Date_partten")
+                if pattern.exists():
+                    return JsonResponse({"pattern": list(pattern.values())})
+                else:
+                    return HttpResponse("NO PATTERNS HISTORY.")
+            else:
+                return HttpResponse("Bad request.")
+        except Exception as e:
+            return HttpResponse(f"An error occurred while processing the request. {e}")
+    else:
+        return HttpResponse("Bad request method. Use POST.")
+        
+def getParternsHistory(request):
+    if request.method == "POST":
+        try:
+            request_data = json.loads(request.body)
+            userid = request_data.get("mail")
+            dataId = request_data.get("userId")
+            getAdmin = Admins_details.objects.filter(admin_id=userid)
+            if getAdmin.exists():
+                pattern = Typing_partterns_History.objects.filter(id=dataId)
+                if pattern.exists():
+                    return JsonResponse({"pattern": list(pattern.values())})
+                else:
+                    return HttpResponse("NO PATTERNS HISTORY.")
             else:
                 return HttpResponse("Bad request.")
         except Exception as e:

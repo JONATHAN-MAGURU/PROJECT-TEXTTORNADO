@@ -59,7 +59,7 @@ MIDDLEWARE = [
 
 
 SESSION_ENGINE = "django.contrib.sessions.backends.db"  # or other session backends
-SESSION_COOKIE_AGE = 36000  # Adjust the session timeout as needed
+SESSION_COOKIE_AGE = 360000  # Adjust the session timeout as needed
 
 
 ROOT_URLCONF = 'texttornado.urls'

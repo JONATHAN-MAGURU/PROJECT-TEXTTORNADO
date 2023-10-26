@@ -379,6 +379,7 @@ li:hover {
   padding: 8px;
   letter-spacing: 4px;
   font-size: small;
+  border-top: 1px solid #2e2f3a;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

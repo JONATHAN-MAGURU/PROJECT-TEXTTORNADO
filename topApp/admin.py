@@ -12,6 +12,7 @@ from topApp.models import (
     LeaderboardHistory,
     Typing_parttern,
     Typing_partterns_History,
+    VerificationTokens,
 )
 
 admin.site.register(Player)
@@ -26,3 +27,4 @@ admin.site.register(Support)
 admin.site.register(Subscription)
 admin.site.register(Typing_parttern)
 admin.site.register(Typing_partterns_History)
+admin.site.register(VerificationTokens)

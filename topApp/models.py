@@ -168,6 +168,7 @@ class Typing_parttern(models.Model):
     verification_token = models.CharField(max_length=99, default="")
     Date_partten = models.DateTimeField(default=timezone.now, blank=True)
 
+
 class Typing_partterns_History(models.Model):
     partern_id = models.IntegerField()
     ascending_parttern = models.CharField(max_length=99999, default="")
@@ -181,3 +182,7 @@ class Typing_partterns_History(models.Model):
     mistakes = models.IntegerField(default=0)
     verification_token = models.CharField(max_length=99, default="")
     Date_partten = models.DateTimeField(default=timezone.now, blank=True)
+
+
+class VerificationTokens(models.Model):
+    verification_token = models.CharField(max_length=99, default="")

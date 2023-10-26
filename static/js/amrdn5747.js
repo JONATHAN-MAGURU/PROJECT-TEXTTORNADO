@@ -5,7 +5,7 @@ const paragraphs = [];
 var checkers = [];
 var checkers2 = [];
 var checkers3 = [];
-const mistakesLimit = 5;
+const mistakesLimit = 15;
 const start = document.querySelector("#start");
 const back = document.querySelector("#back");
 const wrapper = document.querySelector(".wrapper");
@@ -83,11 +83,16 @@ function loadParagraph() {
       checkers.splice(0);
       checkers2.splice(0);
       checkers3.splice(0);
+      getTT();
       hasStartedTyping = true;
     }
     if (event.keyCode === 8) {
       event.preventDefault();
     }
+  });
+
+  inpField.addEventListener("paste", (e) => {
+    e.preventDefault();
   });
 
   typingText.addEventListener("click", function () {
@@ -240,6 +245,7 @@ async function saveDetails() {
   const y = t;
   const x = checkers;
   const z = checkers3;
+  const l = checkers2[0];
   const Z = typingText.innerText;
   const X = inpField.value;
   const t22 = wpmTag.innerText;
@@ -270,6 +276,7 @@ async function saveDetails() {
     z,
     Z,
     X,
+    l,
   };
 
   document.querySelector(".resCover").style.display = "block";
@@ -418,10 +425,9 @@ function getTT() {
       console.error("Error:", xhr.status, xhr.statusText);
     }
   };
-
   xhr.send(jsonData);
 }
 
-window.addEventListener("DOMContentLoaded", () => {
-  getTT();
+inpField.addEventListener("paste", (e) => {
+  e.preventDefault();
 });

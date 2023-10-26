@@ -28,7 +28,9 @@ urlpatterns = [
     path("startTimerTwo", views.startTimerTwo, name="startTimerTwo"),
     path("rewardData", views.rewardData, name="srewardData"),
     path("getParterns", views.getParterns, name="getParterns"),
+    path("getParternsHistory", views.getParternsHistory, name="getParternsHistory"),
     path("getParterns2", views.getParterns2, name="getParterns2"),
+    path("getAllUserParterns", views.getAllUserParterns, name="getAllUserParterns"),
     path(
         "getStartTimerOneCodes",
         views.getStartTimerOneCodes,

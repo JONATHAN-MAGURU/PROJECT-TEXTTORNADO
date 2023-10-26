@@ -17,6 +17,7 @@ from topApp.models import (
     Subscription,
     Typing_parttern,
     Typing_partterns_History,
+    VerificationTokens,
 )
 import random
 import string
@@ -277,7 +278,26 @@ def davinc_amerge2(request):
                 getSpecificData = getUser.first()
                 if getSpecificData.statuss == "online":
                     token = generate_random_token()
-                    return HttpResponse(token)
+                    checkTokens = VerificationTokens.objects.filter(
+                        verification_token=token
+                    )
+                    if checkTokens.exists():
+                        token2 = generate_random_token()
+                        VerificationTokens.objects.create(
+                            verification_token=token2
+                        ).save()
+                        return HttpResponse(token2)
+                    else:
+                        VerificationTokens.objects.create(
+                            verification_token=token
+                        ).save()
+                        return HttpResponse(token)
+                else:
+                    return HttpResponse("Bad request")
+            else:
+                return HttpResponse("Bad request")
+        else:
+            return HttpResponse("Bad request")
 
 
 def checkUsername(request):
@@ -709,12 +729,13 @@ def amargerdon_e2_url01(request):
                 partern_deassending = str(td["z"])
                 keyStrokes = str(td["y"])
 
-
                 keystrokeJoin = " ".join(keyStrokes)
                 ptrnasndng_join = " ".join(partern_assending)
                 ptrndeasndng_join = " ".join(partern_deassending)
                 typing_text = td["Z"]
                 input_field = td["X"]
+
+                jwtToken = td["l"]
 
                 key = k1 + k2 + k1 + k3 + k4 + k5 + k3 + k6 + k8 + k7
 
@@ -725,35 +746,81 @@ def amargerdon_e2_url01(request):
                 typos_id = id_gen2()
                 keyName = "test_typing_key"
                 getKeys = Aunthaticate.objects.filter(aunth_name=keyName)
-                getKey = getKeys.first()
-                if getKey.v_code == key:
-                    if TypingDetails.objects.filter(play_id=ttd_id2).exists():
-                        user_history()
-                        player_d = TypingDetails.objects.get(play_id=ttd_id2)
-                        player_d.wpm = wpm1
-                        player_d.cpm = cpm1
-                        player_d.mistakes = mistakes1
-                        player_d.typo_id = typos_id
-                        player_d.save()
+                checkVerificationtoken = VerificationTokens.objects.filter(
+                    verification_token=jwtToken
+                )
+                if checkVerificationtoken.exists():
+                    getKey = getKeys.first()
+                    if getKey.v_code == key:
+                        checkVerificationtoken.delete()
+                        if TypingDetails.objects.filter(play_id=ttd_id2).exists():
+                            user_history()
+                            player_d = TypingDetails.objects.get(play_id=ttd_id2)
+                            player_d.wpm = wpm1
+                            player_d.cpm = cpm1
+                            player_d.mistakes = mistakes1
+                            player_d.typo_id = typos_id
+                            player_d.save()
 
-
-                        checkPatterns = Typing_parttern.objects.filter(partern_id=ttd_id)
-                        if checkPatterns:
-                            getPatternData = checkPatterns.first()
-                            send_to_pattern_history = Typing_partterns_History.objects.create(
-                                ascending_parttern=getPatternData.ptrnasndng_join,
-                                deascending_parttern=getPatternData.ptrndeasndng_join,
-                                keyStroke_parttern=getPatternData.keystrokeJoin,
-                                finished_parttern=getPatternData.input_field,
-                                given_words=getPatternData.typing_text,
-                                wpm=getPatternData.wpm1,
-                                cpm=getPatternData.cpm1,
-                                mistakes=getPatternData.mistakes1,
-                                pt_name = getPatternData.username,
-                                partern_id=getPatternData.ttd_id,
+                            checkPatterns = Typing_parttern.objects.filter(
+                                partern_id=ttd_id2
                             )
-                            send_to_pattern_history.save()
-                            getPatternData.delete()
+                            if checkPatterns.exists():
+                                getPatternData = checkPatterns.first()
+                                send_to_pattern_history = Typing_partterns_History.objects.create(
+                                    ascending_parttern=getPatternData.ascending_parttern,
+                                    deascending_parttern=getPatternData.deascending_parttern,
+                                    keyStroke_parttern=getPatternData.keyStroke_parttern,
+                                    finished_parttern=getPatternData.finished_parttern,
+                                    given_words=getPatternData.given_words,
+                                    wpm=getPatternData.wpm,
+                                    cpm=getPatternData.cpm,
+                                    mistakes=getPatternData.mistakes,
+                                    pt_name=getPatternData.pt_name,
+                                    partern_id=getPatternData.partern_id,
+                                )
+                                send_to_pattern_history.save()
+                                getPatternData.delete()
+                                create_parttern = Typing_parttern.objects.create(
+                                    ascending_parttern=ptrnasndng_join,
+                                    deascending_parttern=ptrndeasndng_join,
+                                    keyStroke_parttern=keystrokeJoin,
+                                    finished_parttern=input_field,
+                                    given_words=typing_text,
+                                    wpm=wpm1,
+                                    cpm=cpm1,
+                                    mistakes=mistakes1,
+                                    pt_name=username,
+                                    partern_id=ttd_id,
+                                )
+                                create_parttern.save()
+                                return HttpResponse("success")
+                            else:
+                                create_parttern = Typing_parttern.objects.create(
+                                    ascending_parttern=ptrnasndng_join,
+                                    deascending_parttern=ptrndeasndng_join,
+                                    keyStroke_parttern=keystrokeJoin,
+                                    finished_parttern=input_field,
+                                    given_words=typing_text,
+                                    wpm=wpm1,
+                                    cpm=cpm1,
+                                    mistakes=mistakes1,
+                                    pt_name=username,
+                                    partern_id=ttd_id,
+                                )
+                                create_parttern.save()
+                                return HttpResponse("success")
+                        else:
+                            player_d2 = TypingDetails.objects.create(
+                                wpm=wpm1,
+                                cpm=cpm1,
+                                mistakes=mistakes1,
+                                play_id=ttd_id,
+                                username=username,
+                                typo_id=typos_id,
+                            )
+                            player_d2.save()
+
                             create_parttern = Typing_parttern.objects.create(
                                 ascending_parttern=ptrnasndng_join,
                                 deascending_parttern=ptrndeasndng_join,
@@ -763,48 +830,13 @@ def amargerdon_e2_url01(request):
                                 wpm=wpm1,
                                 cpm=cpm1,
                                 mistakes=mistakes1,
-                                pt_name = username,
                                 partern_id=ttd_id,
+                                pt_name=username,
                             )
                             create_parttern.save()
-                        else:
-                               create_parttern = Typing_parttern.objects.create(
-                                ascending_parttern=ptrnasndng_join,
-                                deascending_parttern=ptrndeasndng_join,
-                                keyStroke_parttern=keystrokeJoin,
-                                finished_parttern=input_field,
-                                given_words=typing_text,
-                                wpm=wpm1,
-                                cpm=cpm1,
-                                mistakes=mistakes1,
-                                pt_name = username,
-                                partern_id=ttd_id, )
-                               create_parttern.save()
-                        return HttpResponse("success")
+                            return HttpResponse("success")
                     else:
-                        player_d2 = TypingDetails.objects.create(
-                            wpm=wpm1,
-                            cpm=cpm1,
-                            mistakes=mistakes1,
-                            play_id=ttd_id,
-                            username=username,
-                            typo_id=typos_id,
-                        )
-                        player_d2.save()
-
-                        create_parttern = Typing_parttern.objects.create(
-                            ascending_parttern=ptrnasndng_join,
-                            deascending_parttern=ptrndeasndng_join,
-                            keyStroke_parttern=keystrokeJoin,
-                            finished_parttern=input_field,
-                            given_words=typing_text,
-                            wpm=wpm1,
-                            cpm=cpm1,
-                            mistakes=mistakes1,
-                            partern_id=ttd_id,
-                        )
-                        create_parttern.save()
-                        return HttpResponse("success")
+                        return HttpResponse("not success")
                 else:
                     return HttpResponse("Bad request method")
             except KeyError:

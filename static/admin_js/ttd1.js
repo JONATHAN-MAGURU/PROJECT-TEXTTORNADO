@@ -4,6 +4,7 @@ const rewardBtn = document.querySelector("#rewards");
 const saveMontry = document.querySelector("#saveMontry");
 const saveQuest = document.querySelector("#saveQuest");
 var patternsId = [];
+var patternsId2 = [];
 const substatus = document.querySelector("#substatus");
 const newprice = document.querySelector("#newprice");
 const oldprice = document.querySelector("#oldprice");
@@ -395,11 +396,125 @@ function getDetailedPatterns(userId) {
   xhr.send(json_data);
 }
 
+const callPatternHistory = document.querySelector("#callPatternHistory");
 
-const callPatternHistory = document.querySelector('#callPatternHistory')
+callPatternHistory.addEventListener("click", () => {
+  if (patternsId.length <= 0) {
+    alert("SELECT ONE USER PATTERN INORDER TO VIEW HISTORY");
+  } else {
+    document.querySelector("#transform").innerHTML = "DATE";
+    document.querySelector("#transform2").innerHTML = "";
+    document.getElementsByClassName("HoldPatternData")[0].style.display =
+      "none";
+    document.getElementsByClassName("HoldPatternData")[1].style.display =
+      "block";
+    getAllUserPartens(patternsId);
+  }
+});
 
+function getAllUserPartens(xx) {
+  var partenB = document.getElementsByClassName("HoldPatternData")[1];
+  var xhr = new XMLHttpRequest();
+  const userID = xx[0];
+  const consern = { mail, userID };
 
+  const json_data = JSON.stringify(consern);
+  const csrfToken = document.querySelector("#csrf_token5a12").value;
+  xhr.open("POST", "/getAllUserParterns", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.setRequestHeader("X-CSRFToken", csrfToken);
 
-callPatternHistory.addEventListener('click', ()=>{
-  alert(patternsId)
-})
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      var response = JSON.parse(xhr.responseText);
+      partenB.innerHTML = "";
+      for (var key in response.pattern) {
+        var concernDate = new Date(response.pattern[key].Date_partten);
+
+        var formattedDate = concernDate.toLocaleString("en-US", {
+          month: "2-digit",
+          day: "2-digit",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: true,
+        });
+
+        var temp =
+          '<div class="ticketPriceHolder" data-id="' +
+          response.pattern[key].id +
+          '"><p>' +
+          formattedDate +
+          "</p></div>";
+        partenB.innerHTML += temp;
+      }
+
+      const parternHolders = partenB.querySelectorAll(".ticketPriceHolder");
+      for (const pth of parternHolders) {
+        pth.addEventListener("click", () => {
+          patternsId2.splice(0);
+          patternsId2.push(pth.dataset.id);
+          getDetailedPatternsHistory(pth.dataset.id);
+        });
+      }
+    } else {
+      actionStatus.innerHTML = xhr.status;
+    }
+  };
+
+  xhr.send(json_data);
+}
+
+function getDetailedPatternsHistory(userId) {
+  var xhr = new XMLHttpRequest();
+  const consern = { userId, mail };
+
+  const json_data = JSON.stringify(consern);
+  const csrfToken = document.querySelector("#csrf_token513").value;
+  xhr.open("POST", "/getParternsHistory", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.setRequestHeader("X-CSRFToken", csrfToken);
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      var response = JSON.parse(xhr.responseText);
+      datenptt.innerHTML = "";
+      usernptt.innerHTML = "";
+      idptt.innerHTML = "";
+      wpmnptt.innerHTML = "";
+      cpmdatenptt.innerHTML = "";
+      mistakesidptt.innerHTML = "";
+      ascendingptn.innerHTML = "";
+      deascendingptn.innerHTML = "";
+      keyStrokeptn.innerHTML = "";
+      attemptedptn.innerHTML = "";
+      givenptn.innerHTML = "";
+      for (var key in response.pattern) {
+        var concernDate = new Date(response.pattern[key].Date_partten);
+
+        var formattedDate = concernDate.toLocaleString("en-US", {
+          month: "2-digit",
+          day: "2-digit",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: true,
+        });
+
+        datenptt.innerHTML = formattedDate;
+        usernptt.innerHTML = response.pattern[key].pt_name;
+        idptt.innerHTML = response.pattern[key].partern_id;
+        wpmnptt.innerHTML = response.pattern[key].wpm;
+        cpmdatenptt.innerHTML = response.pattern[key].cpm;
+        mistakesidptt.innerHTML = response.pattern[key].mistakes;
+        ascendingptn.innerHTML = response.pattern[key].ascending_parttern;
+        deascendingptn.innerHTML = response.pattern[key].deascending_parttern;
+        keyStrokeptn.innerHTML = response.pattern[key].keyStroke_parttern;
+        attemptedptn.innerHTML = response.pattern[key].finished_parttern;
+        givenptn.innerHTML = response.pattern[key].given_words;
+      }
+    } else {
+      actionStatus.innerHTML = xhr.status;
+    }
+  };
+  xhr.send(json_data);
+}

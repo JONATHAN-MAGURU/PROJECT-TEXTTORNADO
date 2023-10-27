@@ -335,7 +335,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }, 5000);
 });
 
-document.addEventListener("DOMContentLoaded", function () {
+function get_user_profile() {
   const dat = {
     username,
     id,
@@ -356,7 +356,9 @@ document.addEventListener("DOMContentLoaded", function () {
           document.querySelector(".welcomeUserHolder").style.display = "block";
           document.querySelector(".bodyCover3").style.width = "100%";
         }
-
+        if (response.mydata[key].blocked == "yes") {
+          window.location.reload();
+        }
         var temp =
           "<p>" +
           response.mydata[key].firstname +
@@ -370,8 +372,13 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   };
   xhr1.send(json_dat);
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  get_user_profile();
 });
 
+setInterval(get_user_profile, 6000);
 const leaderboard_status = document.querySelector("#leaderboard_status");
 document.addEventListener("DOMContentLoaded", function () {
   var xhrInProgress = false;

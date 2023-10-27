@@ -27,12 +27,12 @@ const notifications = document.getElementsByClassName("notifications")[0];
 const messages = document.getElementsByClassName("messages")[0];
 const notff_hider = document.getElementById("notff");
 const msgg_hider = document.getElementById("msgg");
-const behaviour = document.querySelector('#behaviour')
+const behaviour = document.querySelector("#behaviour");
 const textarea = document.getElementById("textarea");
 const typing_test = document.getElementById("typing_test");
 const delete_ps = document.getElementsByClassName("delete");
 const typing_test_p = document.getElementsByClassName("typing_test_p");
-const checkedArray = [];
+var checkedArray = [];
 const checkedArray2 = [];
 const toEdit = [];
 const containerAction1 = document.getElementsByClassName("containerAction")[0];
@@ -498,7 +498,7 @@ document
             '"><span class="checkmark3"></span></label>' +
             '<img style="width:30px;height:30px; border-radius:50%;" src="/images/' +
             response.searchResults[key].profile_pic +
-            '">&nbsp;' + 
+            '">&nbsp;' +
             response.searchResults[key].username +
             '<p style="display:none">' +
             response.searchResults[key].player_id +
@@ -654,6 +654,38 @@ function close_msg() {
   msgg_hider.style.height = 0;
   msgg_hider.style.opacity = "0";
 }
+
+document.addEventListener("keydown", function (event) {
+  if (event.key === "F9") {
+    notifications.style.height = 0;
+    notff_hider.style.height = 0;
+    notff_hider.style.opacity = "0";
+    messages.style.height = 0;
+    msgg_hider.style.height = 0;
+    msgg_hider.style.opacity = "0";
+    nav_options_hider.style.width = "0%";
+    admin_opt.style.width = "0%";
+    user_opt.style.width = "0%";
+    comp_opt.style.width = "0%";
+    test_opt.style.width = "0%";
+    mail_opt.style.width = "0%";
+    res_opt.style.width = "0%";
+    supp_opt.style.width = "0%";
+    repo_opt.style.width = "0%";
+    secu_opt.style.width = "0%";
+    game_opt.style.width = "0%";
+    leader_opt.style.width = "0%";
+    analy_opt.style.width = "0%";
+    pay_opt.style.width = "0%";
+  }
+});
+
+document.addEventListener("keydown", function (event) {
+  if (event.ctrlKey && event.shiftKey) {
+    comp_opt.style.width = "85%";
+    nav_options_hider.style.width = "15%";
+  }
+});
 
 function open_admin() {
   admin_opt.style.width = "85%";
@@ -865,3 +897,77 @@ var myChart = new Chart(ctx, {
     },
   },
 });
+
+const blockBtn = document.getElementsByClassName("block")[0];
+const unblockBtn = document.getElementsByClassName("block")[1];
+const deleteBtn = document.getElementsByClassName("block")[2];
+
+blockBtn.addEventListener("click", () => {
+  blockUser(checkedArray2[0]);
+});
+
+function blockUser(userID) {
+  const firstIdOb = { userID, mail };
+  const jsonData = JSON.stringify(firstIdOb);
+  const XHR3 = new XMLHttpRequest();
+  const csrfToken = document.querySelector("#csrf_tokenab9").value;
+  XHR3.open("POST", "/blockUser", true);
+  XHR3.setRequestHeader("Content-Type", "application/json");
+  XHR3.setRequestHeader("X-CSRFToken", csrfToken);
+
+  XHR3.addEventListener("load", function () {
+    if (XHR3.status === 200 && XHR3.readyState === 4) {
+      alert(XHR3.responseText);
+    } else {
+      alert("CAN'T PROCESS REQUEST");
+    }
+  });
+  XHR3.send(jsonData);
+}
+
+unblockBtn.addEventListener("click", () => {
+  unblockUser(checkedArray2[0]);
+});
+
+function unblockUser(userID) {
+  const firstIdOb = { userID, mail };
+  const jsonData = JSON.stringify(firstIdOb);
+  const XHR3 = new XMLHttpRequest();
+  const csrfToken = document.querySelector("#csrf_tokenab99").value;
+  XHR3.open("POST", "/unblockUser", true);
+  XHR3.setRequestHeader("Content-Type", "application/json");
+  XHR3.setRequestHeader("X-CSRFToken", csrfToken);
+
+  XHR3.addEventListener("load", function () {
+    if (XHR3.status === 200 && XHR3.readyState === 4) {
+      alert(XHR3.responseText);
+    } else {
+      alert("CAN'T PROCESS REQUEST");
+    }
+  });
+  XHR3.send(jsonData);
+}
+
+deleteBtn.addEventListener("click", () => {
+  deleteUser(checkedArray2[0]);
+});
+
+function deleteUser(userID) {
+  const firstIdOb = { userID, mail };
+  const jsonData = JSON.stringify(firstIdOb);
+  const XHR3 = new XMLHttpRequest();
+  const csrfToken = document.querySelector("#csrf_tokenab999").value;
+  XHR3.open("POST", "/deleteUser", true);
+  XHR3.setRequestHeader("Content-Type", "application/json");
+  XHR3.setRequestHeader("X-CSRFToken", csrfToken);
+
+  XHR3.addEventListener("load", function () {
+    if (XHR3.status === 200 && XHR3.readyState === 4) {
+      alert(XHR3.responseText);
+      getUser();
+    } else {
+      alert("CAN'T PROCESS REQUEST");
+    }
+  });
+  XHR3.send(jsonData);
+}

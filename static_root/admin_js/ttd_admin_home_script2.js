@@ -3,6 +3,7 @@ const leaderboardToggle = document.getElementById("leaderboard");
 const typingArea = document.getElementById("typingArea");
 const event1 = document.getElementById("event1");
 const event2 = document.getElementById("event2");
+const event3 = document.querySelector("#event3");
 const minsSlider = document.getElementById("minsSlider");
 const maxmumInput = document.getElementById("maxmum");
 const minmumInput = document.getElementById("minmum");
@@ -15,6 +16,12 @@ const startTimerOne = document.getElementById("endEvent");
 const startTimerTwo = document.getElementById("nextEvent");
 const actionStatus = document.querySelector("#actionStatus");
 var messageHolderArray = [];
+
+
+
+xy.addEventListener('click', ()=>{
+  alert("hello")
+})
 frontend.addEventListener("change", function () {
   const firstId = frontend.checked ? 5747 : 85747;
   const firstIdOb = { firstId };
@@ -419,6 +426,51 @@ setInterval(function () {
           event2.checked = false;
         } else {
           event2.checked = true;
+        }
+      }
+    } else {
+      console.log("Request failed.  Returned status of " + xhr.status);
+    }
+  };
+  xhr.send();
+}, 3000);
+
+event3.addEventListener("change", function () {
+  alert("checked");
+  if (leaderboardToggle.checked || typingArea.chacked) {
+    document.querySelector("#eventWarn").innerHTML =
+      "switch off leaderboard and type area first";
+  } else {
+    const firstId = event3.checked ? 15747 : 185747;
+    const firstIdOb = { firstId };
+    const jsonData = JSON.stringify(firstIdOb);
+    const XHR3 = new XMLHttpRequest();
+    const csrfToken = document.querySelector("#csrf_tokenx19").value;
+    XHR3.open("POST", "/starEvent3", true);
+    XHR3.setRequestHeader("Content-Type", "application/json");
+    XHR3.setRequestHeader("X-CSRFToken", csrfToken);
+    XHR3.addEventListener("load", function () {
+      if (XHR3.status === 200 && XHR3.readyState === 4) {
+        console.log(XHR3.responseText);
+      } else {
+        console.log("something went wrong");
+      }
+    });
+    XHR3.send(jsonData);
+  }
+});
+
+setInterval(function () {
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", "/getEvent3Code");
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      var response = JSON.parse(xhr.responseText);
+      for (var key in response.codes) {
+        if (response.codes[key].eventId == 185747) {
+          event3.checked = false;
+        } else {
+          event3.checked = true;
         }
       }
     } else {
@@ -1046,8 +1098,6 @@ function getLimitations() {
   };
   xhr.send(json_data);
 }
-
-
 
 function sendRequest2() {
   const xhr = new XMLHttpRequest();

@@ -18,6 +18,7 @@ from baseApp.models import (
     TypingArea,
     Event1,
     Event2,
+    Event3,
     Countdown,
     Countdown2,
     Monetary,
@@ -36,12 +37,17 @@ from topApp.models import (
     Typing_parttern,
     Typing_partterns_History,
     Subscription,
+    Comments,
+    TypingDetailsHistory,
+    TicketPurchase,
+    LeaderboardHistory,
+
 )
 from topApp.views import id_gen, transferData
 import random
 import time
 from django.core.exceptions import ObjectDoesNotExist
-
+from django.views.decorators.csrf import csrf_exempt
 
 def ttd_admin_login(request):
     return render(request, "ttd_admin_login.html")
@@ -50,7 +56,7 @@ def ttd_admin_login(request):
 def ttd_admin_signin(request):
     return render(request, "ttd_admin_signin.html")
 
-
+@csrf_exempt
 def ttd_admin_homepage(request):
     if request.method == "POST":
         username = request.POST["username"]
@@ -251,6 +257,10 @@ def getEvent1Code(request):
 
 def getEvent2Code(request):
     codes = Event2.objects.all()
+    return JsonResponse({"codes": list(codes.values())})
+
+def getEvent3Code(request):
+    codes = Event3.objects.all()
     return JsonResponse({"codes": list(codes.values())})
 
 
@@ -567,6 +577,50 @@ def starEvent2(request):
 
             elif code1 == 15747:
                 getCode = Event2.objects.get(eventId=185747)
+                getCode.eventId = code1
+                getCode.save()
+
+                Player.objects.all().update(results="seen")
+                code2 = 5747
+                getCode3 = Leaderboard.objects.get(leaderBoardId=85747)
+                getCode3.leaderBoardId = code2
+                getCode3.save()
+                time.sleep(5)
+                getCode2 = TypingArea.objects.get(typingAreaId=85747)
+                getCode2.typingAreaId = code2
+                getCode2.save()
+                return HttpResponse("UPDATED SUCCESSFULLY...")
+            else:
+                return HttpResponse("UPDATE FAILED...")
+        except json.JSONDecodeError as e:
+            return HttpResponse(f"Error parsing JSON: {e}")
+        except Event2.DoesNotExist as e:
+            return HttpResponse("Event2 does not exist with the given eventId")
+        except Leaderboard.DoesNotExist as e:
+            return HttpResponse(
+                "Leaderboard does not exist with the given leaderBoardId"
+            )
+        except TypingArea.DoesNotExist as e:
+            return HttpResponse("TypingArea does not exist with the given typingAreaId")
+        except Exception as e:
+            return HttpResponse(f"An error occurred: {e}")
+    else:
+        return HttpResponse("Invalid request method")
+    
+def starEvent3(request):
+    if request.method == "POST":
+        try:
+            code = json.loads(request.body)
+            code1 = code.get("firstId")
+            print(code1)
+            if code1 == 185747:
+                getCode = Event3.objects.get(eventId=15747)
+                getCode.eventId = code1
+                getCode.save()
+                return HttpResponse("UPDATED SUCCESSFULLY...")
+
+            elif code1 == 15747:
+                getCode = Event3.objects.get(eventId=185747)
                 getCode.eventId = code1
                 getCode.save()
 
@@ -1110,7 +1164,9 @@ def getAllUserParterns(request):
             dataId = request_data.get("userID")
             getAdmin = Admins_details.objects.filter(admin_id=userid)
             if getAdmin.exists():
-                pattern = Typing_partterns_History.objects.filter(partern_id=dataId).order_by("-Date_partten")
+                pattern = Typing_partterns_History.objects.filter(
+                    partern_id=dataId
+                ).order_by("-Date_partten")
                 if pattern.exists():
                     return JsonResponse({"pattern": list(pattern.values())})
                 else:
@@ -1121,7 +1177,8 @@ def getAllUserParterns(request):
             return HttpResponse(f"An error occurred while processing the request. {e}")
     else:
         return HttpResponse("Bad request method. Use POST.")
-        
+
+
 def getParternsHistory(request):
     if request.method == "POST":
         try:
@@ -1141,3 +1198,121 @@ def getParternsHistory(request):
             return HttpResponse(f"An error occurred while processing the request. {e}")
     else:
         return HttpResponse("Bad request method. Use POST.")
+
+
+def searchPatterns(request):
+    if request.method == "POST":
+        try:
+            request_data = json.loads(request.body)
+            userid = request_data.get("mail")
+            dataId = request_data.get("searchDat")
+            getAdmin = Admins_details.objects.filter(admin_id=userid)
+            if getAdmin.exists():
+                patterns = Typing_parttern.objects.filter(pt_name__icontains=dataId)
+                if patterns.exists():
+                    pattern_data = list(patterns.values())
+                    return JsonResponse({"pattern": pattern_data})
+                else:
+                    return HttpResponse("NO PATTERNS HISTORY.")
+            else:
+                return HttpResponse("Bad request.")
+        except Exception as e:
+            return HttpResponse(f"An error occurred while processing the request. {e}")
+    else:
+        return HttpResponse("Bad request method. Use POST.")
+    
+def blockUser(request):
+    if request.method == "POST":
+        try:
+            request_data = json.loads(request.body)
+            userid = request_data.get("mail")
+            dataId = request_data.get("userID")
+            getAdmin = Admins_details.objects.filter(admin_id=userid)
+            if getAdmin.exists():
+                getPlayer = Player.objects.filter(player_id = dataId).first()
+                if getPlayer.blocked == "yes":
+                    return HttpResponse(f"User {getPlayer.username} blocked already previously.")
+                else:
+                    getPlayer.blocked = "yes"
+                    getPlayer.save()
+                    return HttpResponse(f"User {getPlayer.username} successfully blocked.")
+            else:
+                return HttpResponse("Bad request.")
+        except Exception as e:
+            return HttpResponse(f"An error occurred while processing the request. {e}")
+    else:
+        return HttpResponse("Bad request method. Use POST.")
+    
+def unblockUser(request):
+    if request.method == "POST":
+        try:
+            request_data = json.loads(request.body)
+            userid = request_data.get("mail")
+            dataId = request_data.get("userID")
+            getAdmin = Admins_details.objects.filter(admin_id=userid)
+            if getAdmin.exists():
+                getPlayer = Player.objects.filter(player_id = dataId).first()
+                if getPlayer.blocked == "no":
+                    return HttpResponse(f"User {getPlayer.username} is not blocked.")
+                else:
+                    getPlayer.blocked = "no"
+                    getPlayer.save()
+                    return HttpResponse(f"User {getPlayer.username} successfully unblocked.")
+            else:
+                return HttpResponse("Bad request.")
+        except Exception as e:
+            return HttpResponse(f"An error occurred while processing the request. {e}")
+    else:
+        return HttpResponse("Bad request method. Use POST.")
+    
+def deleteUser(request):
+    if request.method == "POST":
+        try:
+            request_data = json.loads(request.body)
+            userid = request_data.get("mail")
+            dataId = request_data.get("userID")
+            getAdmin = Admins_details.objects.filter(admin_id=userid)
+            if getAdmin.exists():
+                getPlayer = Player.objects.filter(player_id = dataId).first()
+                getPlayer.delete()
+                getTickets = Tickets.objects.filter(tickets_id = dataId).first()
+                getTickets.delete()
+                getNotifications = Notification.objects.filter(notf_id = dataId)
+                if getNotifications.exists():
+                    getNotifications.delete()
+                getComments = Comments.objects.filter(player_id2 = dataId)
+                if getComments.exists():
+                    getComments.delete()
+                getTypingPatternsH = Typing_partterns_History.objects.filter(partern_id=dataId)
+                if getTypingPatternsH.exists():
+                    getTypingPatternsH.delete()
+                getTypingP = Typing_parttern.objects.filter(partern_id = dataId)
+                if getTypingP.exists():
+                    getTypingP.delete()
+                getTypingRes = TypingDetails.objects.filter(play_id = dataId)
+                if getTypingRes.exists():
+                    getTypingRes.delete()
+                getSubscription =Subscription.objects.filter(subscriptionId = dataId)
+                if getSubscription.exists():
+                    getSubscription.delete()
+                getSupport = Support.objects.filter(source_id = dataId)
+                if getSupport.exists():
+                    getSupport.exists()
+                getTicketsH = TicketPurchase.objects.filter(tickets_id=dataId)
+                if getTicketsH.exists():
+                    getTicketsH.delete()
+                getTypingHistory = TypingDetailsHistory.objects.filter(play_id = dataId)
+                if getTypingHistory.exists():
+                    getTypingHistory.delete()
+                getLeaderBH = LeaderboardHistory.objects.filter(play_id=dataId)
+                if getLeaderBH.exists():
+                    getLeaderBH.delete()
+                return HttpResponse(f"User Successfully deleted.")
+            else:
+                return HttpResponse("Bad request.")
+        except Exception as e:
+            return HttpResponse(f"An error occurred while processing the request. {e}")
+    else:
+        return HttpResponse("Bad request method. Use POST.")
+
+

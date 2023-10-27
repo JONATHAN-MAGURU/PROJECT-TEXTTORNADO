@@ -39,6 +39,7 @@ class Player(AbstractBaseUser, PermissionsMixin):
     password = models.CharField(max_length=100)
     number = models.CharField(max_length=100)
     width = models.IntegerField()
+    blocked = models.CharField(max_length=100, default="no")
     height = models.IntegerField()
     player_id = models.IntegerField()
     v_code = models.IntegerField()

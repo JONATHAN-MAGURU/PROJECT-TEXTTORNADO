@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/terms.css' %}" />
+    <title>Blocked account</title>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{% static 'images/favicon.ico' %}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="header">
+      <h4>Text<span style="color: orange">Tornado</span></h4>
+    </div>
+    <div class="main_container">
+      <div class="container">
+        <div class="container_sub" style="text-align: center; color: gray">
+          <h4>READ OUR TERMS OF USE TO AVOID FUTURE ACCOUNT9 SUSPENSIONS</h4>
+        </div>
+        <div class="getStarted">
+          <h5><a href="https://www.capsulcode.tech/"> Capsulcode Tech</a></h5>
+          <br />
+          <p>
+            <a class="link-color" href="{% url 'policy'%}">Privacy policy</a> |
+            <a class="link-color" href="{% url 'terms'%}">Terms of use</a>
+          </p>
+        </div>
+      </div>
+      <div class="containerB">
+        <div
+          class="header_container"
+          style="display: flex; justify-content: center"
+        >
+          <img alt="blocked" src="/images/Blocked.webp" style="width: 250px" />
+        </div>
+        <div class="header_container" style="text-align:center">
+          <h1>Hello {{player_d.username}}, your account has been blocked</h1>
+          <br />
+          <p>
+            We regret to inform you that your TextTornado.com account has been
+            temporarily suspended due to a violation of our terms of use. During
+            this suspension, you won't be able to access your account. To have
+            your account reinstated, please review our terms of use, acknowledge
+            the violation, and reply to this message with a brief statement
+            indicating your understanding and commitment to compliance. We take
+            this matter seriously and value your cooperation in maintaining a
+            respectful and safe community. If you have questions, feel free to
+            contact our support team at capsulcode@gmail.com.
+          </p>
+        </div>
+        <div
+          class="header_container"
+          style="
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-self: center;
+            align-items: center;
+          "
+        >
+          <img
+            style="width: 70px; height: 70px; border-radius: 50%"
+            src="/images/{{player_d.profile_pic}}"
+          />
+          <p>{{player_d.firstname}} {{player_d.lastname}}</p>
+          <p>{{player_d.number}}</p>
+          <p>{{player_d.mail}}</p>
+          <p>status : Blocked</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

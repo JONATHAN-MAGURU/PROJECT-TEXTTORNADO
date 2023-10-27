@@ -11,6 +11,7 @@ from baseApp.models import (
     TypingArea,
     Event1,
     Event2,
+    Event3,
     Countdown,
     Countdown2,
     TextBehaviour,
@@ -34,6 +35,7 @@ admin.site.register(Leaderboard)
 admin.site.register(TypingArea)
 admin.site.register(Event1)
 admin.site.register(Event2)
+admin.site.register(Event3)
 admin.site.register(Countdown)
 admin.site.register(Countdown2)
 admin.site.register(TextBehaviour)

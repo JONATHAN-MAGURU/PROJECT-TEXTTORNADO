@@ -454,11 +454,11 @@
           ></span
           ><span> <sup id="numOfChecked2"></sup></span
         ></label>
-        <button class="">ACTIVATE</button>
-        <button class="">DEACTIVATE</button>
-        <button id="viewDetails">VIEW DETAILS</button>
-        <button class="deleteBtn2">DELETE</button>
-        <button id="cancel">CANCEL</button>
+        <button class="block">Block</button>
+        <button class="block">Unblock</button>
+        <button id="viewDetails">View detailss</button>
+        <button class="block">Delete</button>
+        <button id="cancel">Cancel</button>
       </div>
       <div class="nav_options_menu_header">
         <p>USERS</p>
@@ -584,6 +584,21 @@
                 />
                 <input
                   type="hidden"
+                  id="csrf_tokenab9"
+                  value="{{ csrf_token }}"
+                />
+                <input
+                  type="hidden"
+                  id="csrf_tokenab99"
+                  value="{{ csrf_token }}"
+                />
+                <input
+                  type="hidden"
+                  id="csrf_tokenab999"
+                  value="{{ csrf_token }}"
+                />
+                <input
+                  type="hidden"
                   id="csrf_tokena4"
                   value="{{ csrf_token }}"
                 />
@@ -640,6 +655,21 @@
                 <input
                   type="hidden"
                   id="csrf_token5a12"
+                  value="{{ csrf_token }}"
+                />
+                <input
+                  type="hidden"
+                  id="csrf_token5ab12"
+                  value="{{ csrf_token }}"
+                />
+                <input
+                  type="hidden"
+                  id="csrf_token5aa12"
+                  value="{{ csrf_token }}"
+                />
+                <input
+                  type="hidden"
+                  id="csrf_token5aaa12"
                   value="{{ csrf_token }}"
                 />
                 <input
@@ -803,6 +833,7 @@
             <input type="hidden" id="csrf_token59" value="{{ csrf_token }}" />
             <input type="hidden" id="csrf_token239" value="{{ csrf_token }}" />
             <input type="hidden" id="csrf_token19" value="{{ csrf_token }}" />
+            <input type="hidden" id="csrf_tokenx19" value="{{ csrf_token }}" />
             <input type="hidden" id="csrf_token66" value="{{ csrf_token }}" />
             <textarea
               id="textarea"
@@ -918,7 +949,21 @@
             <p>TYPE : Multilingual Marvel</p>
           </div>
         </div>
-        <div class="eventHolder"></div>
+        <div class="eventHolder">
+          <div class="box2">
+            <div class="switch-toggle">
+              <br />
+              <h4 style="text-align: center">EVENT 3</h4>
+              <br />
+              <input type="checkbox" id="event3" />
+              <label for="event3"></label>
+            </div>
+          </div>
+          <div class="desc">
+            <p>NAME : Speedy Showdown</p>
+            <p>TYPE : Random Text Marathon</p>
+          </div>
+        </div>
         <div class="eventHolder"></div>
         <div class="eventHolder"></div>
         <div class="eventHolder"></div>
@@ -1124,6 +1169,10 @@
     <div class="nav_options" id="analy">
       <div class="nav_options_menu_header">
         <p>ANALYSIS</p>
+        <form id="searchForm5">
+          <input type="search" placeholder="Search..." id="search5" required />
+        </form>
+        <button id="refreshAnalsis">refresh</button>
         <i
           style="color: #ffffff; font-size: 150%"
           class="fa fa-close msg"
@@ -1140,7 +1189,8 @@
           </div>
 
           <div class="HoldPatternData"></div>
-          <div class="HoldPatternData" style="display:none"></div>
+          <div class="HoldPatternData" style="display: none"></div>
+          <div class="HoldPatternData" style="display: none"></div>
         </div>
         <div class="nav_options_container_B">
           <div class="subdetailsContainers">

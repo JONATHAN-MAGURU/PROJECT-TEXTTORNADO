@@ -378,12 +378,10 @@ function updateTickets() {
 
   XHR3.addEventListener("load", function () {
     if (XHR3.status === 200 && XHR3.readyState === 4) {
-      console.log(XHR3.responseText);
       fetchTicketData(id);
     } else {
       console.log("Something went wrong");
     }
-
     isRequestPending = false;
   });
 
@@ -413,9 +411,10 @@ function getTT() {
   const xhr = new XMLHttpRequest();
   const data = { id, sCa1, sCb1, sCc1, sCd1, sCe1, sCf1, sCg1, sCh1, username };
   const jsonData = JSON.stringify(data);
+  const csrfToken = document.querySelector("#csrf_tokenaaa5").value;
   xhr.open("POST", "/davinc_amerge2", true);
   xhr.setRequestHeader("Content-Type", "application/json");
-
+  xhr.setRequestHeader("X-CSRFToken", csrfToken);
   xhr.onload = function () {
     if (xhr.status === 200) {
       const response = xhr.responseText;
@@ -431,3 +430,5 @@ function getTT() {
 inpField.addEventListener("paste", (e) => {
   e.preventDefault();
 });
+
+

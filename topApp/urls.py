@@ -7,6 +7,7 @@ urlpatterns = [
     path("ttd_user_login/", views.ttd_user_login, name="ttd_user_login"),
     path("resetPassword/", views.resetPassword, name="resetPassword"),
     path("terms/", views.terms, name="terms"),
+    path("blocked/", views.blocked, name="blocked"),
     path("davinc_amerge2", views.davinc_amerge2, name="davinc_amerge2"),
     path("policy/", views.policy, name="policy"),
     path("ttd_user_login/amargerdon_e1", views.amargerdon_e1, name="amargerdon_e1"),

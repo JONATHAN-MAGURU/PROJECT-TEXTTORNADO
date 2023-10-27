@@ -319,6 +319,7 @@ document.addEventListener("DOMContentLoaded", function () {
             patternsId.splice(0);
             patternsId.push(pth.dataset.id);
             getDetailedPatterns(pth.dataset.id);
+            pth.style.color = "white";
           });
         }
       } else {
@@ -406,6 +407,8 @@ callPatternHistory.addEventListener("click", () => {
     document.querySelector("#transform2").innerHTML = "";
     document.getElementsByClassName("HoldPatternData")[0].style.display =
       "none";
+    document.getElementsByClassName("HoldPatternData")[2].style.display =
+      "none";
     document.getElementsByClassName("HoldPatternData")[1].style.display =
       "block";
     getAllUserPartens(patternsId);
@@ -419,7 +422,7 @@ function getAllUserPartens(xx) {
   const consern = { mail, userID };
 
   const json_data = JSON.stringify(consern);
-  const csrfToken = document.querySelector("#csrf_token5a12").value;
+  const csrfToken = document.querySelector("#csrf_token5ab12").value;
   xhr.open("POST", "/getAllUserParterns", true);
   xhr.setRequestHeader("Content-Type", "application/json");
   xhr.setRequestHeader("X-CSRFToken", csrfToken);
@@ -470,7 +473,7 @@ function getDetailedPatternsHistory(userId) {
   const consern = { userId, mail };
 
   const json_data = JSON.stringify(consern);
-  const csrfToken = document.querySelector("#csrf_token513").value;
+  const csrfToken = document.querySelector("#csrf_token5aaa12").value;
   xhr.open("POST", "/getParternsHistory", true);
   xhr.setRequestHeader("Content-Type", "application/json");
   xhr.setRequestHeader("X-CSRFToken", csrfToken);
@@ -518,3 +521,77 @@ function getDetailedPatternsHistory(userId) {
   };
   xhr.send(json_data);
 }
+
+document.querySelector("#refreshAnalsis").addEventListener("click", () => {
+  document.querySelector("#transform").innerHTML = "USERNAME";
+  document.querySelector("#transform2").innerHTML = "ID";
+  document.getElementsByClassName("HoldPatternData")[0].style.display = "block";
+  document.getElementsByClassName("HoldPatternData")[1].style.display = "none";
+  document.getElementsByClassName("HoldPatternData")[2].style.display = "none";
+  document.getElementsByClassName("HoldPatternData")[2].innerHTML = "";
+  document.getElementsByClassName("HoldPatternData")[1].innerHTML = "";
+  datenptt.innerHTML = "";
+  usernptt.innerHTML = "";
+  idptt.innerHTML = "";
+  wpmnptt.innerHTML = "";
+  cpmdatenptt.innerHTML = "";
+  mistakesidptt.innerHTML = "";
+  ascendingptn.innerHTML = "";
+  deascendingptn.innerHTML = "";
+  keyStrokeptn.innerHTML = "";
+  attemptedptn.innerHTML = "";
+  givenptn.innerHTML = "";
+
+  patternsId.splice(0);
+  patternsId2.splice(0);
+});
+
+document.getElementById("searchForm5").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const searchDat = document.querySelector("#search5").value;
+
+  var xhr = new XMLHttpRequest();
+  const consern = { searchDat, mail };
+  const json_data = JSON.stringify(consern);
+  const csrfToken = document.querySelector("#csrf_token5aa12").value;
+  xhr.open("POST", "/searchPatterns", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.setRequestHeader("X-CSRFToken", csrfToken);
+  const searchRes = document.getElementsByClassName("HoldPatternData")[2];
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      var response = JSON.parse(xhr.responseText);
+      document.getElementsByClassName("HoldPatternData")[0].style.display =
+        "none";
+      document.getElementsByClassName("HoldPatternData")[1].style.display =
+        "none";
+      searchRes.style.display = "block";
+      searchRes.innerHTML = "";
+      for (var key in response.pattern) {
+        var temp =
+          '<div class="ticketPriceHolder" data-id="' +
+          response.pattern[key].partern_id +
+          '"><p>' +
+          response.pattern[key].pt_name +
+          "</p><p>" +
+          response.pattern[key].partern_id +
+          "</p></div>";
+        searchRes.innerHTML += temp;
+      }
+
+      const parternHolders = searchRes.querySelectorAll(".ticketPriceHolder");
+      for (const pth of parternHolders) {
+        pth.addEventListener("click", () => {
+          patternsId.splice(0);
+          patternsId.push(pth.dataset.id);
+          getDetailedPatterns(pth.dataset.id);
+          pth.style.color = "white";
+        });
+      }
+    } else {
+      actionStatus.innerHTML = xhr.status;
+    }
+  };
+
+  xhr.send(json_data);
+});

@@ -81,6 +81,10 @@ def ttd_user_signin(request):
     return render(request, "ttd_user_signin.html")
 
 
+def blocked(request):
+    return render(request, "blocked.html")
+
+
 """
 def amargerdon_e1(request):
     if request.method == "POST":
@@ -104,6 +108,7 @@ def amargerdon_e1(request):
 """
 
 
+@csrf_exempt
 def amargerdon_e1(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -111,10 +116,13 @@ def amargerdon_e1(request):
 
         player = Player.objects.filter(username=username, password=password).first()
         if player:
-            login(request, player)
-            textBehaviour = TextBehaviour.objects.first()
-            baseApp.views.paragraph(textBehaviour.name)
-            return render(request, "amargerdon_e1.html", {"player_d": player})
+            if player.blocked == "no":
+                login(request, player)
+                textBehaviour = TextBehaviour.objects.first()
+                baseApp.views.paragraph(textBehaviour.name)
+                return render(request, "amargerdon_e1.html", {"player_d": player})
+            else:
+                return render(request, "blocked.html", {"player_d": player})
         else:
             return render(
                 request,
@@ -706,145 +714,135 @@ def setToseen(request):
 
 
 def amargerdon_e2_url01(request):
-    try:
-        if request.method == "POST":
-            try:
-                td = json.loads(request.body)
-                wpm = td["t22"]
-                cpm = td["tkd21"]
-                mistakes = td["tk34"]
-                username = td["serverC22ache"]
-                ttd_id = td["serverCachedt2"]
+    if request.method == "POST":
+        td = json.loads(request.body)
+        wpm = td["t22"]
+        cpm = td["tkd21"]
+        mistakes = td["tk34"]
+        username = td["serverC22ache"]
+        ttd_id = td["serverCachedt2"]
 
-                k1 = td["sCa1"]
-                k2 = td["sCb1"]
-                k3 = td["sCc1"]
-                k4 = td["sCd1"]
-                k5 = td["sCe1"]
-                k6 = td["sCf1"]
-                k7 = td["sCg1"]
-                k8 = td["sCh1"]
+        k1 = td["sCa1"]
+        k2 = td["sCb1"]
+        k3 = td["sCc1"]
+        k4 = td["sCd1"]
+        k5 = td["sCe1"]
+        k6 = td["sCf1"]
+        k7 = td["sCg1"]
+        k8 = td["sCh1"]
 
-                partern_assending = str(td["x"])
-                partern_deassending = str(td["z"])
-                keyStrokes = str(td["y"])
+        partern_assending = str(td["x"])
+        partern_deassending = str(td["z"])
+        keyStrokes = str(td["y"])
 
-                keystrokeJoin = " ".join(keyStrokes)
-                ptrnasndng_join = " ".join(partern_assending)
-                ptrndeasndng_join = " ".join(partern_deassending)
-                typing_text = td["Z"]
-                input_field = td["X"]
+        keystrokeJoin = " ".join(keyStrokes)
+        ptrnasndng_join = " ".join(partern_assending)
+        ptrndeasndng_join = " ".join(partern_deassending)
+        typing_text = td["Z"]
+        input_field = td["X"]
 
-                jwtToken = td["l"]
+        jwtToken = td["l"]
 
-                key = k1 + k2 + k1 + k3 + k4 + k5 + k3 + k6 + k8 + k7
+        key = k1 + k2 + k1 + k3 + k4 + k5 + k3 + k6 + k8 + k7
 
-                ttd_id2 = int(ttd_id)
-                wpm1 = int(wpm)
-                cpm1 = int(cpm)
-                mistakes1 = int(mistakes)
-                typos_id = id_gen2()
-                keyName = "test_typing_key"
-                getKeys = Aunthaticate.objects.filter(aunth_name=keyName)
-                checkVerificationtoken = VerificationTokens.objects.filter(
-                    verification_token=jwtToken
-                )
-                if checkVerificationtoken.exists():
-                    getKey = getKeys.first()
-                    if getKey.v_code == key:
-                        checkVerificationtoken.delete()
-                        if TypingDetails.objects.filter(play_id=ttd_id2).exists():
-                            user_history()
-                            player_d = TypingDetails.objects.get(play_id=ttd_id2)
-                            player_d.wpm = wpm1
-                            player_d.cpm = cpm1
-                            player_d.mistakes = mistakes1
-                            player_d.typo_id = typos_id
-                            player_d.save()
+        ttd_id2 = int(ttd_id)
+        wpm1 = int(wpm)
+        cpm1 = int(cpm)
+        mistakes1 = int(mistakes)
+        typos_id = id_gen2()
+        keyName = "test_typing_key"
+        getKeys = Aunthaticate.objects.filter(aunth_name=keyName)
+        checkVerificationtoken = VerificationTokens.objects.filter(
+            verification_token=jwtToken
+        )
+        if checkVerificationtoken.exists():
+            getKey = getKeys.first()
+            if getKey.v_code == key:
+                checkVerificationtoken.delete()
+                if TypingDetails.objects.filter(play_id=ttd_id2).exists():
+                    user_history()
+                    player_d = TypingDetails.objects.get(play_id=ttd_id2)
+                    player_d.wpm = wpm1
+                    player_d.cpm = cpm1
+                    player_d.mistakes = mistakes1
+                    player_d.typo_id = typos_id
+                    player_d.save()
 
-                            checkPatterns = Typing_parttern.objects.filter(
-                                partern_id=ttd_id2
-                            )
-                            if checkPatterns.exists():
-                                getPatternData = checkPatterns.first()
-                                send_to_pattern_history = Typing_partterns_History.objects.create(
-                                    ascending_parttern=getPatternData.ascending_parttern,
-                                    deascending_parttern=getPatternData.deascending_parttern,
-                                    keyStroke_parttern=getPatternData.keyStroke_parttern,
-                                    finished_parttern=getPatternData.finished_parttern,
-                                    given_words=getPatternData.given_words,
-                                    wpm=getPatternData.wpm,
-                                    cpm=getPatternData.cpm,
-                                    mistakes=getPatternData.mistakes,
-                                    pt_name=getPatternData.pt_name,
-                                    partern_id=getPatternData.partern_id,
-                                )
-                                send_to_pattern_history.save()
-                                getPatternData.delete()
-                                create_parttern = Typing_parttern.objects.create(
-                                    ascending_parttern=ptrnasndng_join,
-                                    deascending_parttern=ptrndeasndng_join,
-                                    keyStroke_parttern=keystrokeJoin,
-                                    finished_parttern=input_field,
-                                    given_words=typing_text,
-                                    wpm=wpm1,
-                                    cpm=cpm1,
-                                    mistakes=mistakes1,
-                                    pt_name=username,
-                                    partern_id=ttd_id,
-                                )
-                                create_parttern.save()
-                                return HttpResponse("success")
-                            else:
-                                create_parttern = Typing_parttern.objects.create(
-                                    ascending_parttern=ptrnasndng_join,
-                                    deascending_parttern=ptrndeasndng_join,
-                                    keyStroke_parttern=keystrokeJoin,
-                                    finished_parttern=input_field,
-                                    given_words=typing_text,
-                                    wpm=wpm1,
-                                    cpm=cpm1,
-                                    mistakes=mistakes1,
-                                    pt_name=username,
-                                    partern_id=ttd_id,
-                                )
-                                create_parttern.save()
-                                return HttpResponse("success")
-                        else:
-                            player_d2 = TypingDetails.objects.create(
-                                wpm=wpm1,
-                                cpm=cpm1,
-                                mistakes=mistakes1,
-                                play_id=ttd_id,
-                                username=username,
-                                typo_id=typos_id,
-                            )
-                            player_d2.save()
-
-                            create_parttern = Typing_parttern.objects.create(
-                                ascending_parttern=ptrnasndng_join,
-                                deascending_parttern=ptrndeasndng_join,
-                                keyStroke_parttern=keystrokeJoin,
-                                finished_parttern=input_field,
-                                given_words=typing_text,
-                                wpm=wpm1,
-                                cpm=cpm1,
-                                mistakes=mistakes1,
-                                partern_id=ttd_id,
-                                pt_name=username,
-                            )
-                            create_parttern.save()
-                            return HttpResponse("success")
+                    checkPatterns = Typing_parttern.objects.filter(partern_id=ttd_id2)
+                    if checkPatterns.exists():
+                        getPatternData = checkPatterns.first()
+                        send_to_pattern_history = Typing_partterns_History.objects.create(
+                            ascending_parttern=getPatternData.ascending_parttern,
+                            deascending_parttern=getPatternData.deascending_parttern,
+                            keyStroke_parttern=getPatternData.keyStroke_parttern,
+                            finished_parttern=getPatternData.finished_parttern,
+                            given_words=getPatternData.given_words,
+                            wpm=getPatternData.wpm,
+                            cpm=getPatternData.cpm,
+                            mistakes=getPatternData.mistakes,
+                            pt_name=getPatternData.pt_name,
+                            partern_id=getPatternData.partern_id,
+                        )
+                        send_to_pattern_history.save()
+                        getPatternData.delete()
+                        create_parttern = Typing_parttern.objects.create(
+                            ascending_parttern=ptrnasndng_join,
+                            deascending_parttern=ptrndeasndng_join,
+                            keyStroke_parttern=keystrokeJoin,
+                            finished_parttern=input_field,
+                            given_words=typing_text,
+                            wpm=wpm1,
+                            cpm=cpm1,
+                            mistakes=mistakes1,
+                            pt_name=username,
+                            partern_id=ttd_id,
+                        )
+                        create_parttern.save()
+                        return HttpResponse("success")
                     else:
-                        return HttpResponse("not success")
+                        create_parttern = Typing_parttern.objects.create(
+                            ascending_parttern=ptrnasndng_join,
+                            deascending_parttern=ptrndeasndng_join,
+                            keyStroke_parttern=keystrokeJoin,
+                            finished_parttern=input_field,
+                            given_words=typing_text,
+                            wpm=wpm1,
+                            cpm=cpm1,
+                            mistakes=mistakes1,
+                            pt_name=username,
+                            partern_id=ttd_id,
+                        )
+                        create_parttern.save()
+                        return HttpResponse("success")
                 else:
-                    return HttpResponse("Bad request method")
-            except KeyError:
-                return HttpResponse("Invalid data", status=400)
-            except ValueError:
-                return HttpResponse("Invalid data format", status=400)
-    except Exception as e:
-        return HttpResponse("An error occurred", status=500)
+                    player_d2 = TypingDetails.objects.create(
+                        wpm=wpm1,
+                        cpm=cpm1,
+                        mistakes=mistakes1,
+                        play_id=ttd_id,
+                        username=username,
+                        typo_id=typos_id,
+                    )
+                    player_d2.save()
+
+                    create_parttern = Typing_parttern.objects.create(
+                        ascending_parttern=ptrnasndng_join,
+                        deascending_parttern=ptrndeasndng_join,
+                        keyStroke_parttern=keystrokeJoin,
+                        finished_parttern=input_field,
+                        given_words=typing_text,
+                        wpm=wpm1,
+                        cpm=cpm1,
+                        mistakes=mistakes1,
+                        partern_id=ttd_id,
+                        pt_name=username,
+                    )
+                    create_parttern.save()
+                    return HttpResponse("success")
+            else:
+                return HttpResponse("not success")
+        else:
+            return HttpResponse("Bad request method")
 
 
 def get_test_details(request):

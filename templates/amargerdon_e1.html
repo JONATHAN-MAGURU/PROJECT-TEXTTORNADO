@@ -40,14 +40,12 @@
     />
   </head>
 
-
   <body
     data-username="{{player_d.username}}"
     data-ttd-id="{{player_d.player_id}}"
     data-number="{{player_d.number}}"
     id="body"
   >
-    
     <div class="loader">
       <div class="pl">
         <div class="pl__dot"></div>
@@ -100,7 +98,7 @@
       <div class="outOfTicketsHolder">
         <div class="outOfTicketsHead">
           <h2>You can't start now.</h2>
-          <p style="line-height: 25px; color:gray">
+          <p style="line-height: 25px; color: gray">
             Typing event is almost over, for that your are not allowed to take a
             typing test.
           </p>
@@ -160,14 +158,12 @@
         </div>
         <div class="choosePaymentBody">
           <div class="choosePaymentBodyA">
-            
             <p style="text-align: left; color: gray">
               We only accept payments from Airtel money since you registered
               your account using tnm number
-              <span id="newAirtel">{{player_d.number}}</span>, so enter airtel number
-              to continue with the payments.
+              <span id="newAirtel">{{player_d.number}}</span>, so enter airtel
+              number to continue with the payments.
             </p>
-        
           </div>
           <div class="choosePaymentBodyB">
             <br />
@@ -577,17 +573,18 @@
         <div class="navBody displayNonePC">
           <div class="navProfile displayNonePC">
             <div>
-              
-              <img class="pic displayNonePC" src="/images/{{player_d.profile_pic}}" />
-
+              <img
+                class="pic displayNonePC"
+                src="/images/{{player_d.profile_pic}}"
+              />
             </div>
             <div class="user_name displayNonePC">
               <div>
-                
                 <p>{{player_d.username}}</p>
-              
               </div>
-              <div id="mngact displayNonePC" style="color:gray">manage account</div>
+              <div id="mngact displayNonePC" style="color: gray">
+                manage account
+              </div>
             </div>
           </div>
           <div class="navProfile3 displayNonePC">
@@ -712,7 +709,9 @@
             class="fas fa-headset customerCare displayNone displayNoneTAB iconss"
           ></i>
           <i class="fas fa-headset customerCare2 displayNonePC iconss"></i>
-          <i class="fas fa-headset customerCare3  displayNone displayNoneTAB2 iconss"></i>
+          <i
+            class="fas fa-headset customerCare3 displayNone displayNoneTAB2 iconss"
+          ></i>
           <i class="fas fa-clock displayNone displayNoneTAB2 iconss"></i>
           <!--<i class="fas fa-cog iconss"></i>-->
           <i class="fas fa-history history displayNone iconss"></i>
@@ -724,17 +723,13 @@
           ></i>
           <div class="user_avator player_name displayNone">
             <div class="pic" onclick="openManageAccount()">
-              
               <img class="pic" src="/images/{{player_d.profile_pic}}" />
-          
             </div>
             <div
               class="user_name displayNone displayNon2 displayNoneTAB"
               onclick="openManageAccount()"
             >
-              
               <p>{{player_d.username}}</p>
-              
             </div>
           </div>
 
@@ -802,14 +797,18 @@
                 </button>
                 <div class="fonts_holder">
                   <div class="text_holder">
-                    <p id="fontSize"><i class="fas fa-font displayNone displayNoneTAB"></i></p>
+                    <p id="fontSize">
+                      <i class="fas fa-font displayNone displayNoneTAB"></i>
+                    </p>
                   </div>
                   <select name="" id="fontss"></select>
                 </div>
                 <div class="fonts_holder displayNone">
                   <div class="text_holder">
                     <p id="fontSize">
-                      <i class="fas fa-align-left displayNone displayNoneTAB"></i>
+                      <i
+                        class="fas fa-align-left displayNone displayNoneTAB"
+                      ></i>
                     </p>
                   </div>
                   <select id="alignmentSelector">
@@ -1137,6 +1136,11 @@
               <input type="hidden" id="csrf_tokena4" value="{{ csrf_token }}" />
               <input type="hidden" id="csrf_tokena5" value="{{ csrf_token }}" />
               <input type="hidden" id="csrf_tokena6" value="{{ csrf_token }}" />
+              <input
+                type="hidden"
+                id="csrf_tokenaaa5"
+                value="{{ csrf_token }}"
+              />
               <input
                 type="hidden"
                 id="csrf_token509"
@@ -1515,7 +1519,7 @@
             <input type="hidden" id="csrf_token7" value="{{ csrf_token }}" />
             <input type="hidden" id="csrf_token13" value="{{ csrf_token }}" />
             <input type="hidden" id="csrf_token55" value="{{ csrf_token }}" />
-            
+
             <input
               type="text"
               name=""
@@ -1554,8 +1558,6 @@
             <br />
 
             <br />
-
-          
 
             <div class="manage_account_footer">
               <button class="settings_box">
@@ -1639,9 +1641,7 @@
         </div>
         <div id="user_profile">
           <div class="user_box">
-            
             <img class="ico icom" src="/images/{{player_d.profile_pic}}" />
-            
 
             <br />
             <br />
@@ -1673,9 +1673,7 @@
             class="fa fa-close closee displayNone"
           ></i>
         </div>
-        <div class="test_history_holder">
-          <div class="test_history_box"></div>
-        </div>
+        <div class="test_history_holder"></div>
       </div>
       <div class="settings_container" style="overflow: hidden">
         <div class="test_history_header">
@@ -1757,9 +1755,7 @@
       </div>
       <div class="tips">
         <div class="resHead">
-          <p>
-          TIME UP !!!
-        </p>
+          <p>TIME UP !!!</p>
         </div>
         <div class="tips2">
           <div class="tips1">
@@ -1776,7 +1772,7 @@
               </p>
             </div>
             <div>
-              <p style="text-align: center;letter-spacing:4px">ACCURACY</p>
+              <p style="text-align: center; letter-spacing: 4px">ACCURACY</p>
               <div class="loaderBoxx">
                 <div class="outer">
                   <div class="inner">
@@ -1808,7 +1804,9 @@
             </div>
           </div>
           <p id="mistakeError"></p>
-          <p id="recomandation">You can type again to improve your scores on the leaderboard</p>
+          <p id="recomandation">
+            You can type again to improve your scores on the leaderboard
+          </p>
           <div class="cont_holder">
             <button class="cont_btn">CONTINUE</button>
             <button class="cont_btn displayNonePC" style="background: #ed143d">
